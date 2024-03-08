@@ -6,7 +6,8 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        "main-bg": "#0B023E"
+        "main-bg": "#0B023E",
+        "button-purple": "#635CFF",
       },
         fontFamily: {
           poppins: ["Poppins", "sans-serif"],
