@@ -7,6 +7,7 @@ module.exports = {
     extend: {
       colors: {
         "main-bg": "#0B023E",
+        "drop-down-blue": "#f7f7f7",
         "button-purple": "#635CFF",
       },
         fontFamily: {
