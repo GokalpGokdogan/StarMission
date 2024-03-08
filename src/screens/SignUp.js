@@ -111,21 +111,6 @@ const SignUp = () => {
                     onChange={handleEmailChange}
                     className="bg-transparent border border-gray-300 rounded-lg p-2 mb-4 text-white w-full"
                 />
-                <label htmlFor="country" className="mt-2 text-white text-sm">Country</label>
-                <select
-                    id="country"
-                    name="country"
-                    value = {countryId}
-                    onChange={handleCountryChange}
-                    className="bg-transparent border border-gray-300 rounded-lg p-2 mb-4 text-white w-full "
-                >
-                    <option value='0' className="text-black" defaultValue>Select Country</option>
-                    {countriesList.map((item, index) => (
-                        <option className="text-black" key={index+1} value={index+1}>
-                            {item.name}
-                        </option>
-                    ))}
-                </select>
                 <label htmlFor="phone-number" className="mt-2 text-white text-sm">Phone Number</label>
                 <div className="mt-2 grid grid-cols-1 gap-x-2 gap-y-8 sm:grid-cols-12">
                     <div className="sm:col-span-3">
@@ -153,6 +138,21 @@ const SignUp = () => {
                         />
                     </div>
                 </div>
+                <label htmlFor="country" className="mt-2 text-white text-sm">Country</label>
+                <select
+                    id="country"
+                    name="country"
+                    value = {countryId}
+                    onChange={handleCountryChange}
+                    className="bg-transparent border border-gray-300 rounded-lg p-2 mb-4 text-white w-full "
+                >
+                    <option value='0' className="text-black" defaultValue>Select Country</option>
+                    {countriesList.map((item, index) => (
+                        <option className="text-black" key={index+1} value={index+1}>
+                            {item.name}
+                        </option>
+                    ))}
+                </select>
                 <div className="mt-2 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
                     <div className="sm:col-span-3">
                         <label htmlFor="birth-date" className="mt-2 text-white text-sm">Birth Date</label>
