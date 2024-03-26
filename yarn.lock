@@ -1861,6 +1861,18 @@
     "@svgr/plugin-svgo" "^5.5.0"
     loader-utils "^2.0.0"
 
+"@tabler/icons-react@^3.1.0":
+  version "3.1.0"
+  resolved "https://registry.npmjs.org/@tabler/icons-react/-/icons-react-3.1.0.tgz"
+  integrity sha512-k/WTlax2vbj/LpxvaJ+BmaLAAhVUgyLj4Ftgaczz66tUSNzqrAZXCFdOU7cRMYPNVBqyqE2IdQd2rzzhDEJvkw==
+  dependencies:
+    "@tabler/icons" "3.1.0"
+
+"@tabler/icons@3.1.0":
+  version "3.1.0"
+  resolved "https://registry.npmjs.org/@tabler/icons/-/icons-3.1.0.tgz"
+  integrity sha512-CpZGyS1IVJKFcv88yZ2sYZIpWWhQ6oy76BQKQ5SF0fGgOqgyqKdBGG/YGyyMW632on37MX7VqQIMTzN/uQqmFg==
+
 "@testing-library/dom@^8.5.0":
   version "8.20.1"
   resolved "https://registry.npmjs.org/@testing-library/dom/-/dom-8.20.1.tgz"

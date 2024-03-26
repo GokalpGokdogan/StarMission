@@ -9,6 +9,7 @@ module.exports = {
         "main-bg": "#140D3B",
         "drop-down-blue": "#f7f7f7",
         "button-purple": "#635CFF",
+        "darker-bg": "#140D3B",
       },
         fontFamily: {
           poppins: ["Poppins", "sans-serif"],
