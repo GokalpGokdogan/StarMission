@@ -79,9 +79,9 @@ const SignUp = () => {
                 <div className="flex items-center justify-center mb-4">
                     <h2 className="text-6xl font-bold mt-4 mb-4 text-white">StarMission</h2>
                 </div>
-                <label htmlFor="email" className="mt-2 text-white text-lg text-center">Sign Up!</label>
+                <label htmlFor="email" className="text-white text-lg text-center">Sign Up!</label>
 
-                <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+                <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
                     <div className="sm:col-span-3">
                         <label htmlFor="first-name" className="mt-6 text-white text-sm">First Name</label>
                         <input
