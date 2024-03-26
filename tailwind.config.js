@@ -10,6 +10,9 @@ module.exports = {
         "drop-down-blue": "#f7f7f7",
         "button-purple": "#635CFF",
         "darker-bg": "#140D3B",
+        "main-text": "#2B3674",
+        "sub-text": "#A3AED0",
+        "grey-bg": "#F4F7FE"
       },
         fontFamily: {
           poppins: ["Poppins", "sans-serif"],

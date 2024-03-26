@@ -1,6 +1,7 @@
 import logo from './logo.svg';
 import Login from './screens/Login';
 import SignUp from "./screens/SignUp";
+import PastMissions from "./components/PastMissions";
 import { BrowserRouter as Router, Routes, Route} from "react-router-dom";
 import Sidebar from './components/SideBar';
 import { useState } from 'react';
@@ -22,9 +23,10 @@ function App() {
                             <div className={`flex flex-col w-full h-full transition-all duration-300 ${open ? 'pl-72' : "pl-0"} `}>
                                 <div className='flex-1 h-full'>
                                     <Routes>
-                                    <Route path="/" element={<Login />} />
-                                    <Route path="/sign-up" element={<SignUp />} />
-                                    <Route path="/login" element={<Login />} />
+                                        <Route path="/" element={<Login />} />
+                                        <Route path="/sign-up" element={<SignUp />} />
+                                        <Route path="/login" element={<Login />} />
+                                        <Route path="/past-missions" element={<PastMissions />}/>
                                     </Routes>
                                 </div>
                             </div>
