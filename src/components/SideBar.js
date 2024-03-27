@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { NavLink } from 'react-router-dom';
 import {
     IconChevronDown, IconChevronUp,
-    IconChevronsLeft, IconChevronsRight
+    IconChevronsLeft, IconChevronsRight, IconSquareChevronsLeftFilled
 } from '@tabler/icons-react';
 
 
@@ -19,6 +19,10 @@ const Sidebar = ({ open, setOpen, setHref, active, setActive }) => {
             title: 'Login',
             link: 'login'
         },
+        {
+            title: 'Dashboard',
+            link: 'dashboard'
+        },
       
     ]
 
@@ -29,15 +33,15 @@ const Sidebar = ({ open, setOpen, setHref, active, setActive }) => {
                 <div className={`text-right pr-1 pb-1 relative`}>
                 <button type="button"
                         // className={`hover:bg-slate-100 ${open ? 'p-2' : ''} rounded-lg text-dark-title`}
-                        className='absolute rounded-full -right-2.5 top-3 w-5 border-2 border-opacity-50 dark:border-opacity-50 bg-primary-bg border-primary-text text-primary-text dark:bg-dark-primary-bg dark:border-dark-secondary-text dark:text-dark-secondary-text hover:scale-110'
+                        className='absolute rounded-full -right-2.5 top-3 w-5 border-2 border-opacity-50 bg-sub-text hover:scale-110'
                         onClick={() => {
                             setOpen((prev) => !prev);
                         }}>
                         {
                             open ?
-                                <IconChevronsLeft className='w-4 h-4' />
+                                <IconChevronsLeft className='w-4 h-4 text-white' />
                                 :
-                                <IconChevronsRight className='w-4 h-4' />
+                                <IconChevronsRight className='w-4 h-4 text-white' />
                         }
                     </button>
                 </div >
@@ -47,7 +51,7 @@ const Sidebar = ({ open, setOpen, setHref, active, setActive }) => {
                     {
                         Menu.map((item, index) => {
                             return (
-                                <li key={index} className={`font-poppins text-white p-2 transition-all duration-300 ${active === item.title ? 'font-bold' : ' '}`}>
+                                <li key={index} className={`font-poppins text-sub-text ${active === item.title ? 'text-white font-semibold' : ' '}`}>
                                     <NavLink to={item.link} className=''
                                         onClick={(e) => {
                                             if (!open) {
