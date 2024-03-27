@@ -46,9 +46,14 @@ const Sidebar = ({ open, setOpen, setHref, active, setActive }) => {
                     </button>
                 </div >
             </header >
-            <nav className={`flex w-full justify-center items-center mt-5 transition-all duration-300 ${open ? 'pl-5' : ''}`}>
+            <nav className={`flex w-full justify-center items-center transition-all duration-300 ${open ? 'pl-5' : ''}`}>
                 <ul className='w-full'>
+                <div className={`flex flex-row justify-start items-center p-2 rounded-xl`} >
+                <p className={`font-poppins font-bold text-white py-8 px-2 justify-start flex relative transition-all duration-300 ${!open ? '-inset-x-96' : 'inset-x-0'} text-xl`} style={{ borderBottom: '1px solid white', fontSize:'26px' }}>StarMission</p>
+
+                </div>
                     {
+
                         Menu.map((item, index) => {
                             return (
                                 <li key={index} className={`font-poppins text-sub-text ${active === item.title ? 'text-white font-semibold' : ' '}`}>
@@ -78,7 +83,7 @@ const Sidebar = ({ open, setOpen, setHref, active, setActive }) => {
                                         }}
                                     >
                                         <div className={`flex flex-row justify-start items-center p-2 rounded-xl`} >
-                                            <p className={`flex relative transition-all duration-300 ${!open ? '-inset-x-96' : 'inset-x-0'} text-xl`}>{item.title}</p>
+                                            <p className={`flex relative transition-all duration-300 ${!open ? '-inset-x-96' : 'inset-x-0'} text-lg`}>{item.title}</p>
             
                                         </div>
                                     </NavLink>

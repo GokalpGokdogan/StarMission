@@ -22,7 +22,7 @@ function App() {
                                 <Sidebar open={open} setOpen={setOpen} setHref={setHref} darkMode={darkMode} active={active} setActive={setActive} />
                             </div>
                             <div className={`flex flex-col w-full h-full transition-all duration-300 ${open ? 'pl-56' : "pl-0"} `}>
-                                <div className='flex-1 h-full'>
+                                <div className='flex-1'>
                                     <Routes>
                                         <Route path="/" element={<Login />} />
                                         <Route path="/sign-up" element={<SignUp />} />
