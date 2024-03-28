@@ -23,6 +23,10 @@ const Sidebar = ({ open, setOpen, setHref, active, setActive }) => {
             title: 'Dashboard',
             link: 'dashboard'
         },
+        {
+            title: 'Applications',
+            link: 'applications'
+        },
       
     ]
 
@@ -30,10 +34,10 @@ const Sidebar = ({ open, setOpen, setHref, active, setActive }) => {
     return (
         <div className='bg-darker-bg h-full'>
             <header className='' >
-                <div className={`text-right pr-1 pb-1 relative`}>
+                <div className={`text-right pr-1 pb-1 relative flex`}>
                 <button type="button"
                         // className={`hover:bg-slate-100 ${open ? 'p-2' : ''} rounded-lg text-dark-title`}
-                        className='absolute rounded-full -right-2.5 top-3 w-5 border-2 border-opacity-50 bg-sub-text hover:scale-110'
+                        className='absolute rounded-full -right-2.5 mt-80 flex w-5 border-2 border-opacity-50 bg-sub-text hover:scale-110'
                         onClick={() => {
                             setOpen((prev) => !prev);
                         }}>

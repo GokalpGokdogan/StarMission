@@ -6,6 +6,7 @@ import { BrowserRouter as Router, Routes, Route} from "react-router-dom";
 import Sidebar from './components/SideBar';
 import { useState } from 'react';
 import Dashboard from './screens/Dashboard';
+import Applications from './screens/Applications';
 
 function App() {
 
@@ -29,6 +30,7 @@ function App() {
                                         <Route path="/dashboard" element={<Dashboard />} />
                                         <Route path="/login" element={<Login />} />
                                         <Route path="/past-missions" element={<PastMissions />}/>
+                                        <Route path="/applications" element={<Applications />}/>
                                     </Routes>
                                 </div>
                             </div>
