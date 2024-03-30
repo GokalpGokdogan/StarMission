@@ -1,6 +1,6 @@
 import React from "react";
 
-const MissionPost = ({title, company, location}) => {
+const SingleApplication = ({name, mission, nationality}) => {
     return (
         <li className="flex justify-center py-1 px-2">
             <div className="flex" style={{ width : "654px" }}>
@@ -9,13 +9,13 @@ const MissionPost = ({title, company, location}) => {
                     <img width="60" height="60" src="https://seekvectorlogo.com/wp-content/uploads/2018/02/nasa-vector-logo.png" />
                 </div>
                 <div className="min-w-0 flex-auto">
-                    <p className="text-sm font-semibold leading-6 text-main-text">{title}</p>
-                    <p className="truncate text-xs font-semibold leading-5 text-sub-text">{company}</p>
-                    <p className="truncate text-xs leading-5 text-sub-text">{location}</p>
+                    <p className="text-sm font-semibold leading-6 text-main-text">{name}</p>
+                    <p className="truncate text-xs font-semibold leading-5 text-sub-text">{mission}</p>
+                    <p className="truncate text-xs leading-5 text-sub-text">{nationality}</p>
                 </div>
                 <div className="flex items-center justify-center mb-2 mt-2 mr-2">
                     <button type="button" className={`w-20 bg-button-purple text-white text-sm py-2 rounded-xl`}>
-                    Apply
+                    View
                     </button>
                 </div>
             </div>
@@ -24,4 +24,4 @@ const MissionPost = ({title, company, location}) => {
     )
 };
 
-export default MissionPost
+export default SingleApplication

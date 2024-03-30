@@ -7,6 +7,8 @@ import Sidebar from './components/SideBar';
 import { useState } from 'react';
 import Dashboard from './screens/Dashboard';
 import Applications from './screens/Applications';
+import MissionPostings from './screens/MissionPostings';
+import ApplicationsCompany from './screens/ApplicationsCompany';
 
 function App() {
 
@@ -31,6 +33,8 @@ function App() {
                                         <Route path="/login" element={<Login />} />
                                         <Route path="/past-missions" element={<PastMissions />}/>
                                         <Route path="/applications" element={<Applications />}/>
+                                        <Route path="/mission-postings" element={<MissionPostings />}/>
+                                        <Route path="/applications-company" element={<ApplicationsCompany />}/>
                                     </Routes>
                                 </div>
                             </div>
