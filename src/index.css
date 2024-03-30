@@ -8,3 +8,44 @@
     scroll-behavior: auto;
     font-family: 'Poppins', sans-serif;
 }
+
+.ant-table-wrapper {
+    height: 100%;
+  
+    .ant-spin-nested-loading {
+      height: 100%;
+  
+      .ant-spin-container {
+        height: 100%;
+        display: flex;
+        flex-flow: column nowrap;
+  
+        .ant-table {
+          flex: auto;
+          overflow: hidden;
+          border-radius: 12px;
+  
+          .ant-table-container {
+            height: 100%;
+            display: flex;
+            flex-flow: column nowrap;
+        
+            
+  
+            .ant-table-header {
+              flex: none;
+            }
+  
+            .ant-table-body {
+              flex: auto;
+              overflow: scroll;
+            }
+          }
+        }
+  
+        .ant-table-pagination {
+          flex: none;
+        }
+      }
+    }
+  }
