@@ -19,27 +19,27 @@ function App() {
     const [active, setActive] = useState("Login");
 
   return (
-    <div className="transition-all duration-300 h-screen"  >
-                        <Router >
-                        <div className={`fixed inset-y-0 left-0 ${open ? 'w-56' : 'w-0'} transition-all duration-300 z-50 bg-darker-bg`}>
-                                <Sidebar open={open} setOpen={setOpen} setHref={setHref} darkMode={darkMode} active={active} setActive={setActive} />
-                            </div>
-                            <div className={`flex flex-col w-full h-full transition-all duration-300 ${open ? 'pl-56' : "pl-0"} `}>
-                                <div className='flex-1'>
-                                    <Routes>
-                                        <Route path="/" element={<Login />} />
-                                        <Route path="/sign-up" element={<SignUp />} />
-                                        <Route path="/dashboard" element={<Dashboard />} />
-                                        <Route path="/login" element={<Login />} />
-                                        <Route path="/past-missions" element={<PastMissions />}/>
-                                        <Route path="/applications" element={<Applications />}/>
-                                        <Route path="/mission-postings" element={<MissionPostings />}/>
-                                        <Route path="/applications-company" element={<ApplicationsCompany />}/>
-                                    </Routes>
-                                </div>
-                            </div>
-                        </Router>
-                    </div>
+    <div className="transition-all duration-300 h-screen bg-home-bg">
+    <Router>
+        <div className={`fixed inset-y-0 left-0 ${open ? 'w-56' : 'w-0'} transition-all duration-300 z-50 bg-darker-bg`}>
+            <Sidebar open={open} setOpen={setOpen} setHref={setHref} darkMode={darkMode} active={active} setActive={setActive} />
+        </div>
+        <div className={`flex flex-col w-full h-full transition-all duration-300 ${open ? 'pl-56' : "pl-0"} `}>
+            <div className='flex-1'>
+                <Routes>
+                    <Route path="/" element={<Login />} />
+                    <Route path="/sign-up" element={<SignUp />} />
+                    <Route path="/dashboard" element={<Dashboard />} />
+                    <Route path="/login" element={<Login />} />
+                    <Route path="/past-missions" element={<PastMissions />} />
+                    <Route path="/applications" element={<Applications />} />
+                    <Route path="/mission-postings" element={<MissionPostings />} />
+                    <Route path="/applications-company" element={<ApplicationsCompany />} />
+                </Routes>
+            </div>
+        </div>
+    </Router>
+</div>
   );
 }
 

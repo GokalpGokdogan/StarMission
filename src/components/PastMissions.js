@@ -3,7 +3,7 @@ import SinglePastMission from './SinglePastMission'
 const PastMissions = () =>{
     return (
         <div>
-            <ul className="flex-auto flex-col flex min-w-0 p-4 border rounded-xl border-transparent border-10 bg-grey-bg shadow-lg">
+            <ul className="flex-auto flex-col flex p-4 border rounded-xl border-transparent border-10 bg-grey-bg shadow-lg">
                 <div className="flex items-center justify-between">
                     <h2 className="text-xl text-main-text font-semibold px-2 mb-4">Past Missions</h2>
                 </div>

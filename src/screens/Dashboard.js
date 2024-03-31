@@ -22,11 +22,10 @@ const dataSource = [
       progress: 'In progress',
       date: '10-02-2022',
     },
-
-  ];
+];
 
 const Dashboard = () => {
-    const [isCompany, setIsCompany] = useState(false);
+    const [isCompany, setIsCompany] = useState(true);
 
   return (
     isCompany ? 
@@ -35,7 +34,8 @@ const Dashboard = () => {
             <div className='h-16 bg-main-bg flex box-shadow shadow-sm'>
                 <p className='font-poppins font-bold text-white text-2xl p-4 ml-2 justify-start'>Dashboard</p>
             </div>
-            <div className=" grid grid-cols-2 grid-rows-2 p-4 gap-4">
+            <div className=''>
+            <div className=" grid grid-cols-2 grid-rows-2 gap-4">
                 <div className="flex items-center justify-center">
                     <PastMissions />
                 </div>
@@ -50,6 +50,7 @@ const Dashboard = () => {
                         <ApplicationsTable dataSource={dataSource}/>
                     </div>
                 </div>
+            </div>
             </div>
         </div>
     ):

@@ -3,6 +3,7 @@ import {Link, Route} from 'react-router-dom';
 import SearchBar from '../components/SearchBar';
 import SingleApplication from '../components/SingleApplication'
 
+
 const ApplicationCompany = () => {
 
   return (
