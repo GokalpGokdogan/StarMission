@@ -1,6 +1,5 @@
 const express = require('express');
 const router = express.Router();
-const db = require('../database'); // adjust the path according to your project structure
 
 // Get all users
 
