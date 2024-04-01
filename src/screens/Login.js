@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import {Link, Route} from 'react-router-dom';
+import { login } from '../Requests';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -62,7 +63,7 @@ const Login = () => {
         </div>
         <label htmlFor="signup" className="mb-2 text-white text-sm">Don't have an account? <Link to="/sign-up" className="text-blue-500">Sign up</Link></label>
         <div className="flex items-center justify-center mb-4 mt-4">
-          <button type="submit" className={`w-32 bg-button-purple text-white py-2 rounded-lg font-bold`}>
+          <button type="submit" className={`w-32 bg-button-purple text-white py-2 rounded-lg font-bold`} onClick={()=> login(email, password)}>
             Login
           </button>
         </div> 
