@@ -19,4 +19,8 @@ app.use((err, req, res, next) => {
 });
 
 app.use('/user', userRouter);
-app.use('/', logRegRoute);
+app.use('/logReg', logRegRoute);
+
+app.listen(3001, () => {
+    console.log('Server is running on port 3001');
+});
