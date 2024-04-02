@@ -14,10 +14,11 @@ const SignUp = () => {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [countryId, setCountryId] = useState(0);
+    const [nationality, setNationality] = useState('0');
     const [phoneCode, setPhoneCode] = useState(''); // Default phone code
     const [phoneNumber, setPhoneNumber] = useState('');
     const [birth_date, setBirthDate] = useState('');
+    const [sex, setSex] = useState('');
     const [showNamePlaceholder, setShowNamePlaceholder] = useState(true);
     const [showEmailPlaceholder, setShowEmailPlaceholder] = useState(true);
     const [showPasswordPlaceholder, setShowPasswordPlaceholder] = useState(true);
@@ -69,12 +70,18 @@ const SignUp = () => {
 
 
     const handleCountryChange = (e) => {
-        setCountryId(e.target.value);
+        setNationality(e.target.value);
+        console.log(e.target.value);
     }
 
     const handleBirthdateChange = (e) => {
         console.log(e.target.value)
         setBirthDate(e.target.value);
+    }
+
+    const handleGenderChange = (e) => {
+        console.log(e.target.value)
+        setSex(e.target.value);
     }
 
     const checkValidity = () => {
@@ -221,13 +228,13 @@ const SignUp = () => {
                         <select
                             id="country"
                             name="country"
-                            value={countryId}
+                            value={nationality}
                             onChange={handleCountryChange}
                             className="bg-transparent border border-gray-300 rounded-lg p-2 mb-4 text-white w-full "
                         >
-                            <option value='0' className="text-black" defaultValue>Select Country</option>
+                            <option className="text-black" defaultValue='0'>Select Country</option>
                             {countriesList.map((item, index) => (
-                                <option className="text-black" key={index + 1} value={index + 1}>
+                                <option className="text-black" key={index + 1} value={item.name}>
                                     {item.name}
                                 </option>
                             ))}
@@ -249,6 +256,8 @@ const SignUp = () => {
                                     id="gender"
                                     name="gender"
                                     className="bg-transparent border border-gray-300 rounded-lg p-2 mb-4 text-white w-full "
+                                    value={sex}
+                                    onChange={handleGenderChange}
                                 >
                                     <option className="text-black" defaultValue>Select Gender</option>
                                     <option className="text-black" >Woman</option>
@@ -268,7 +277,7 @@ const SignUp = () => {
                         />
                         <label htmlFor="signup" className="mb-2 text-white text-sm">Already have an account? <Link to="/login" className="text-blue-500">Login</Link></label>
                         <div className="flex items-center justify-center mb-4 mt-4">
-                            <button type="submit" className={`w-32 bg-button-purple text-white py-2 rounded-lg font-bold`} onClick={() => registerAstronaut(name, email, phoneNumber, birth_date, password)}>
+                            <button type="submit" className={`w-32 bg-button-purple text-white py-2 rounded-lg font-bold`} onClick={() => registerAstronaut(name, email, phoneNumber, nationality, birth_date, sex, password)}>
                                 Sign Up
                             </button>
                         </div> </div>

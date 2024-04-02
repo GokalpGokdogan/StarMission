@@ -2,10 +2,12 @@
 
 /*
     This is a POST request which registers an astronaut user. Sample input parameters and values are shown below:
-    {name: 'Öykü Demir', email: 'oykudemir@gmail.com', phone: '+905345814048', birth_date: '2003-06-01', password: 'oykuslayqueenbossbitch'}
+    {name: 'Öykü Demir', email: 'oykudemir@gmail.com', phone: '+905345814048', nationality:'Turkey', birth_date: '2003-06-01', sex:'Female'
+    password: 'oykuslayqueenbossbitch'}
 */
-export const registerAstronaut = async (name, email, phone, birth_date, password) => {
-    const body = { 'name': name, 'email': email, 'phone': phone, 'birth_date':birth_date, 'password': password }
+
+export const registerAstronaut = async (name, email, phone, nationality, birth_date, sex, password) => {
+    const body = { 'name': name, 'email': email, 'phone': phone, 'nationality': nationality ,'birth_date':birth_date, 'sex':sex, 'password': password }
    /* let res = await axios({
         method: 'post',
         url: `http://${API_HOST}/registerAstronaut`,
