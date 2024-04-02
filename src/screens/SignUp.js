@@ -9,8 +9,6 @@ import Alert from '@mui/material/Alert';
 import { registerAstronaut, registerCompany } from '../Requests';
 
 
-/*I commented country and gender choices since I'm not sure if we should add them in here or edit profile*/
-
 const SignUp = () => {
     const [isCompany, setIsCompany] = useState(false);
     const [name, setName] = useState('');
@@ -219,7 +217,7 @@ const SignUp = () => {
                                 />
                             </div>
                         </div>
-                       {/*  <label htmlFor="country" className="mt-2 text-white text-sm">Country</label>
+                        <label htmlFor="country" className="mt-2 text-white text-sm">Country</label>
                         <select
                             id="country"
                             name="country"
@@ -233,9 +231,9 @@ const SignUp = () => {
                                     {item.name}
                                 </option>
                             ))}
-                        </select> */}
-{/*                         <div className="mt-2 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
- */}                            <div className="sm:col-span-3">
+                        </select>
+                        <div className="mt-2 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+                            <div className="sm:col-span-3">
                                 <label htmlFor="birth-date" className="mt-2 text-white text-sm">Birth Date</label>
                                 <input
                                     type="birth-date"
@@ -245,7 +243,7 @@ const SignUp = () => {
                                     onChange={handleBirthdateChange}
                                 />
                             </div>
-                            {/* <div className="sm:col-span-3">
+                            <div className="sm:col-span-3">
                                 <label htmlFor="gender" className="mt-2 text-white text-sm">Gender</label>
                                 <select
                                     id="gender"
@@ -258,9 +256,9 @@ const SignUp = () => {
                                     <option className="text-black" >Other</option>
                                     <option className="text-black" >Prefer Not to Say</option>
                                 </select>
-                            </div> */}
-{/*                         </div>
- */}                        <label htmlFor="password" className="mt-2 text-white text-sm">Password</label>
+                            </div>
+                        </div>
+                        <label htmlFor="password" className="mt-2 text-white text-sm">Password</label>
                         <input
                             type="password"
                             placeholder="Min. 8 characters"
