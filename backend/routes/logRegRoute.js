@@ -20,16 +20,13 @@ router.post('/register', async(req, res) => {
     try {
         const response = await logResController.register(req.body);
         res.status(200).send(response);
-        console.log(response, "response test 1");
     } catch (error) {
         if (error.code === 'ER_DUP_ENTRY') {
-            console.log("Email already exists");
-            res.status(400).send("Email already exists");
+            res.status(400).send("ERROR_EMAIL_EXISTS");
         } else {
             res.status(400).send("An error occurred: "+ error);
         }
     }
-    
     
 });
 

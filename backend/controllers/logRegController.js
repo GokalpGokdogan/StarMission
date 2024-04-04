@@ -22,12 +22,9 @@ const register = async (data) => {
     
     db.query(query, [name, email, phone, password, creationDate], (err, result, fields) => {
         if (err) {
-            // console.log(err);
             reject(err);
         }
         else{
-
-            console.log(result, "successful registration");
             resolve(result);
         }
     }
