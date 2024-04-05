@@ -10,7 +10,7 @@ export const registerAstronaut = async (name, email, phone, nationality, birth_d
     const body = { 'name': name, 'email': email, 'phone': phone, 'nationality': nationality ,'birth_date':birth_date, 'sex':sex, 'password': password }
    /* let res = await axios({
         method: 'post',
-        url: `http://${API_HOST}/registerAstronaut`,
+        url: `localhost:3001/logReg/registerAstronaut`,
         //headers: {'Content-Type': 'application/json',},
         data: body,
     })
@@ -28,7 +28,7 @@ export const registerCompany = async (name, email, phone, password) => {
     const body = { 'name': name, 'email': email, 'phone': phone, 'password': password }
    /* let res = await axios({
         method: 'post',
-        url: `http://${API_HOST}/registerAstronaut`,
+        url: `localhost:3001/logReg/registerCompany`,
         //headers: {'Content-Type': 'application/json',},
         data: body,
     })
@@ -47,7 +47,7 @@ export const login = async (email, password) => {
     const body = {'email': email, 'password': password }
     /*let res = await axios({
         method: 'post',
-        url: `http://${API_HOST}/login`,
+        url: `localhost:3001/logReg/login`,
         headers: {'Content-Type': 'application/json',},
         data: body,
         withCredentials: true
