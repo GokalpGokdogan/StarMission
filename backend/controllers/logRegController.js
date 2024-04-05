@@ -1,11 +1,4 @@
-const e = require('express');
 const db = require('../database');
-
-// Get all users
-
-
-
-
 
 // Register
 const register = async (data) => {
