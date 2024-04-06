@@ -1,27 +1,79 @@
+const e = require('express');
 const db = require('../database');
 
+// Get all users
+
+
+
+
+
 // Register
-const register = async (data) => {
+const registerAstronaut = async (data) => {
     // get user data
     return new Promise((resolve, reject) => {
 
-    const name = data.name //? data.name : null;
-    const email = data.email //? data.email : null;
-    const phone = data.phone //? data.phone : null;
-    const password = data.password //? req.body.password : null;
+    const name = data.name; //? data.name : null;
+    const email = data.email; //? data.email : null;
+    const phone = data.phone; //? data.phone : null;
+    const password = data.password; //? req.body.password : null;
     const creationDate = new Date();
 
-    let query = 'INSERT INTO user(name, email, phone, password, creation_date) VALUES (?, ?, ?, ?, ?)';
+    const nationality = data.nationality;
+    const birth_date = data.birth_date;
+    const sex = data.sex;
+
+    let queryUser = 'INSERT INTO user(name, email, phone, password, creation_date) VALUES (?, ?, ?, ?, ?); ';
+    let queryAstronaut = 'INSERT INTO astronaut(user_id, nationality, birth_date, sex) VALUES (?, ?, ?, ?); ';
     
-    db.query(query, [name, email, phone, password, creationDate], (err, result, fields) => {
+    db.query(queryUser, [name, email, phone, password, creationDate], (err, result, fields) => {
         if (err) {
-            // console.log(err);
             reject(err);
         }
         else{
+            const insertedID = result.insertId;
+            db.query(queryAstronaut, [insertedID, nationality, birth_date, sex], (err, result, fields) => {
+                if(err){
+                    reject(err);
+                }
+                else{
+                    resolve(result);
+                }
+            });
+        }
+    }
+    );
+    
+})
+};
 
-            console.log(result, "successful registration");
-            resolve(result);
+// Register Company
+const registerCompany = async (data) => {
+    // get user data
+    return new Promise((resolve, reject) => {
+
+    const name = data.name; //? data.name : null;
+    const email = data.email; //? data.email : null;
+    const phone = data.phone; //? data.phone : null;
+    const password = data.password; //? req.body.password : null;
+    const creationDate = new Date();
+
+    let queryUser = 'INSERT INTO user(name, email, phone, password, creation_date) VALUES (?, ?, ?, ?, ?); ';
+    let queryCompany = 'INSERT INTO company(user_id) VALUES (?); ';
+    
+    db.query(queryUser, [name, email, phone, password, creationDate], (err, result, fields) => {
+        if (err) {
+            reject(err);
+        }
+        else{
+            const insertedID = result.insertId;
+            db.query(queryCompany, [insertedID], (err, result, fields) => {
+                if(err){
+                    reject(err);
+                }
+                else{
+                    resolve(result);
+                }
+            });
         }
     }
     );
@@ -46,5 +98,6 @@ const login = async(data) => {
     });
 };
 
-exports.register = register;
+exports.registerAstronaut = registerAstronaut;
+exports.registerCompany = registerCompany;
 exports.login = login;

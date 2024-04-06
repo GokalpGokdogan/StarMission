@@ -4,8 +4,10 @@ const manageEmployeesController = require('../../controllers/company/manageEmplo
 
 //! Test
 // Get employees with filters  
+
 // Body: {companyId: int, searchedName: str, profession: str, minAge: int, maxAge: int
 // sex: str, minWeight: int, maxWeight: int, minHeight: int, maxHeight: int, nationality: str}
+
 router.get('/getEmployees', async(req, res) => {
     try {
         const response = await manageEmployeesController.getEmployees(req.body);
@@ -20,6 +22,7 @@ router.get('/getEmployees', async(req, res) => {
         }
     }
 });
+
 
 //! Test
 // Get employee data
