@@ -1,6 +1,7 @@
 import axios from 'axios';
 
-const API_HOST = "localhost:3001"
+const API_HOST = "localhost:3001";
+axios.defaults.withCredentials = true;
 
 //Commented parts in request bodies are because there isn't an actual backend connected right now.
 
@@ -46,19 +47,19 @@ export const registerCompany = async (name, email, phone, password) => {
 */
 
 export const login = async (email, password) => {
-    const body = {'email': email, 'password': password }
-    /*let res = await axios({
-        method: 'post',
+    let res = await axios({
+        method: 'get',
         url: `http://${API_HOST}/logReg/login`,
-        headers: {'Content-Type': 'application/json',},
-        data: body,
+        headers: {'Content-Type': 'application/json'},
+        params: {
+            email: email,
+            password: password
+        },
         withCredentials: true
-    })
-    if (res.data && res.data.redirect) {
+    });
+    if (res.status === 200) {
         // Manually handle the redirect
-        window.location.href = res.data.redirect;
+        window.location.href = '/dashboard';
     }
     console.log(res.data);
-    return res.data*/
-    console.log(body);
-}
+};

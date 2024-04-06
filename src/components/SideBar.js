@@ -6,29 +6,9 @@ import {
 } from '@tabler/icons-react';
 
 
-const Sidebar = ({ open, setOpen, setHref, active, setActive }) => {
+const Sidebar = ({ open, setOpen, setHref, active, setActive, menu }) => {
     const [subOpen, setSubOpen] = useState(false)
     const [activeSub, setActiveSub] = useState("");
-
-    const Menu = [
-        {
-            title: 'Sign Up',
-            link: 'sign-up'
-        },
-        {
-            title: 'Login',
-            link: 'login'
-        },
-        {
-            title: 'Dashboard',
-            link: 'dashboard'
-        },
-        {
-            title: 'Applications',
-            link: 'applications'
-        },
-      
-    ]
 
 
     return (
@@ -58,7 +38,7 @@ const Sidebar = ({ open, setOpen, setHref, active, setActive }) => {
                 </div>
                     {
 
-                        Menu.map((item, index) => {
+                        menu.map((item, index) => {
                             return (
                                 <li key={index} className={`font-poppins text-sub-text ${active === item.title ? 'text-white font-semibold' : ' '}`}>
                                     <NavLink to={item.link} className=''
@@ -69,20 +49,7 @@ const Sidebar = ({ open, setOpen, setHref, active, setActive }) => {
                                                     setSubOpen(true)
                                                 }
                                             }
-                                            if (item.title === 'Search') {
-                                                if (!subOpen && !(active.includes('Search') || active.includes('Synopsis'))) {
-                                                    setHref("Past Search")
-                                                    setActiveSub("Past Search")
-                                                    setSubOpen(true)
-                                                }
-                                                else
-                                                    e.preventDefault()
-                                            }
-                                            else {
-                                                setHref(item.title)
-                                                setSubOpen(false)
-                                                setActiveSub("Past Search")
-                                            }
+                                            setHref(item.title)
                                             setActive(item.title)
                                         }}
                                     >

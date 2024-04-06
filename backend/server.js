@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const app = express();
+const cookieParser = require('cookie-parser');
 
 
 // routers
@@ -9,8 +10,9 @@ const logRegRoute = require('./routes/logRegRoute');
 const manageEmployeesRoute = require('./routes/company/manageEmployeesRoute');
 const applicationsRoute = require('./routes/company/applicationsRoute');
 
-app.use(cors());
+app.use(cors({origin: true, credentials: true}));
 app.use(express.json());
+app.use(cookieParser());
 
 app.use((req, res, next) => {
     console.log(req.path, req.method);

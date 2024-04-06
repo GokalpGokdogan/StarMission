@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import {Link, Route} from 'react-router-dom';
 import MissionPost from '../components/MissionPost'
 import SearchBar from '../components/SearchBar';
 

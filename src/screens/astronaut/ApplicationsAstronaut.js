@@ -1,31 +1,31 @@
 import React, { useState } from 'react';
 import {Link, Route} from 'react-router-dom';
-import ApplicationsTable from '../components/ApplicationsTable';
+import ApplicationsTable from '../../components/ApplicationsTable';
 import { SearchOutlined } from '@ant-design/icons';
 
 const dataSource = [
     {
       key: '1',
-      name: 'Habibe',
+      name: 'Asteroid',
       progress: 'Accepted',
       date: '10-02-2022',
     },
     {
       key: '2',
-      name: 'Öykü',
+      name: 'Misyon',
       progress: 'Rejected',
       date: '10-02-2022',
     },
     {
       key: '3',
-      name: 'Doruk',
+      name: 'Amk',
       progress: 'In progress',
       date: '10-02-2022',
     },
 
   ];
 
-const Applications = () => {
+const ApplicationsAstronaut = () => {
 
     const[searchText, setSearchText] = useState('');
 
@@ -48,4 +48,4 @@ const Applications = () => {
 };
 
 
-export default Applications;
+export default ApplicationsAstronaut;

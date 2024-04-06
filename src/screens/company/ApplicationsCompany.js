@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import {Link, Route} from 'react-router-dom';
-import SearchBar from '../components/SearchBar';
-import SingleApplication from '../components/SingleApplication'
+import SearchBar from '../../components/SearchBar';
+import SingleApplication from '../../components/SingleApplication'
 
 
-const ApplicationCompany = () => {
+const ApplicationsCompany = () => {
 
   return (
     <div className="bg-home-bg h-full">
@@ -25,4 +25,4 @@ const ApplicationCompany = () => {
 };
 
 
-export default ApplicationCompany;
+export default ApplicationsCompany;

@@ -47,9 +47,12 @@ router.post('/registerCompany', async(req, res) => {
     
 });
 
+//ABLALAR O ZAMAN BUNDAN SONRA GET YAPARKENE BEN SİZE PARAMS'TAN GÖNDERECEM O YÜZDEN BODY DİİL QUERY'DEN ÇEKECENİZ SAYGILAR <3333
+
 router.get('/login', async(req, res) => {
     try{
-        const response = await logResController.login(req.body);
+        const response = await logResController.login(req.query);
+        res.cookie('user_id', req.query.email);
         res.status(200).send(response);
     } catch (error) {
         res.status(400).send("An error occurred: " + error);

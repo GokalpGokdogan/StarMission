@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {Link, Route} from 'react-router-dom';
 import { login } from '../Requests';
 
@@ -29,6 +29,11 @@ const Login = () => {
     // Handle forgot password logic
     console.log("Forgot password clicked");
   };
+
+  useEffect (() => {
+    console.log(email);
+    console.log(password);
+  }, [email, password]);
 
 
   return (
