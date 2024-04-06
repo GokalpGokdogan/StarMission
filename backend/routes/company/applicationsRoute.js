@@ -42,3 +42,4 @@ router.get('/getApplicantData', async(req, res) => {
 });
 
 
+module.exports = router;
