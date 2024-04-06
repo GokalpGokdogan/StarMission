@@ -10,6 +10,12 @@ const getEmployees = async (data) => {
         const profession = data.profession;
         const minAge = data.minAge;
         const maxAge = data.maxAge;
+        const sex = data.sex;
+        const minWeight = data.minWeight;
+        const maxWeight = data.maxWeight;
+        const minHeight = data.minHeight;
+        const maxHeight = data.maxHeight;
+        const nationality = data.nationality;
 
 
         db.query(`
@@ -19,8 +25,16 @@ const getEmployees = async (data) => {
                 AND (CASE WHEN ? IS NOT NULL THEN a.name LIKE ? ELSE 1 END) 
                 AND (CASE WHEN ? IS NOT NULL THEN a.profession = ? ELSE 1 END) 
                 AND (CASE WHEN ? IS NOT NULL THEN TIMESTAMPDIFF(YEAR,  a.birth_date, CURDATE()) >= ? ELSE 1 END) 
-                AND (CASE WHEN ? IS NOT NULL THEN TIMESTAMPDIFF(YEAR,  a.birth_date, CURDATE()) <= ? ELSE 1 END`,
-                [selfCompanyId, searchedName, searchedName, profession, profession, minAge, minAge, maxAge, maxAge], 
+                AND (CASE WHEN ? IS NOT NULL THEN TIMESTAMPDIFF(YEAR,  a.birth_date, CURDATE()) <= ? ELSE 1 END)
+                AND (CASE WHEN ? IS NOT NULL THEN a.sex = ? ELSE 1 END)
+                AND (CASE WHEN ? IS NOT NULL THEN a.nationality = ? ELSE 1 END)
+                AND (CASE WHEN ? IS NOT NULL THEN a.height >= ? ELSE 1 END)
+                AND (CASE WHEN ? IS NOT NULL THEN a.height <= ? ELSE 1 END)
+                AND (CASE WHEN ? IS NOT NULL THEN a.weight >= ? ELSE 1 END)
+                AND (CASE WHEN ? IS NOT NULL THEN a.weight <= ? ELSE 1 END)`,
+                [selfCompanyId, searchedName, searchedName, profession, profession, minAge, minAge, 
+                    maxAge, maxAge, sex, sex,nationality, nationality, minHeight, minHeight, 
+                    maxHeight, maxHeight, minWeight, minWeight, maxWeight, maxWeight], 
                 (err, result) => {
                     if (err) {
                         reject(err);
