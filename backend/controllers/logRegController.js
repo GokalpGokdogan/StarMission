@@ -84,7 +84,8 @@ const registerCompany = async (data) => {
 const login = async(data) => {
     return new Promise((resolve, reject) => {
         const { email, password } = data;
-        db.query('SELECT * FROM user WHERE user.email = ? AND user.password = ?', [email, password], (err, result) => {
+        console.log(data);
+        db.query('SELECT * FROM user u WHERE u.email = ? AND u.password = ?', [email, password], (err, result) => {
             if (err) {
                 reject(err);
             }

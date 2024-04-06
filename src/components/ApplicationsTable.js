@@ -1,52 +1,38 @@
 import React, { useEffect, useState } from 'react'
-import { EditOutlined } from '@ant-design/icons';
+import { CheckCircleFilled, CloseCircleFilled } from '@ant-design/icons';
 import {Table, Popconfirm } from 'antd';
 
-const ApplicationsTable = ({ searchText, personbanks, handleEdit }) => {
+const ApplicationsTable = ({ searchText, dataSource, handleEdit }) => {
    // const [data, setData] = useState([]);
 
-   const dataSource = [
-    {
-      key: '1',
-      name: 'Mike',
-      age: 32,
-      address: '10 Downing Street',
-    },
-    {
-      key: '2',
-      name: 'John',
-      age: 42,
-      address: '10 Downing Street',
-    },
-
-  ];
   
   const columns = [
     {
       title: 'Name',
       dataIndex: 'name',
       key: 'name',
+      filteredValue: [searchText],
+      onFilter: (value, record) => {
+          return record.name.toLowerCase().includes(value.toLowerCase());
+      },
     },
     {
-      title: 'Age',
-      dataIndex: 'age',
-      key: 'age',
+      title: 'Progress',
+      dataIndex: 'progress',
+      key: 'progress',
       render: (text, record, index) => (
         <>
-            <button
-                onClick={() => handleEdit(record)}
-                className=" text-primary-bright dark:text-dark-primary-bright rounded-2xl text-sm py-1 px-4"
-            >
-                <EditOutlined className='mr-2' /> Edit
-            </button>
-          
+        <div className='flex flex-row gap-2'>
+           <CheckCircleFilled style={record.progress == 'Rejected' ? {color: '#FF3B30'} : (record.progress == 'Accepted' ? {color: '#51C080'} : {color: '#FFCE20'})}/>
+           <p>{record.progress}</p>
+           </div>
         </>
-    )
+    ) 
     },
     {
-      title: 'Address',
-      dataIndex: 'address',
-      key: 'address',
+      title: 'Date',
+      dataIndex: 'date',
+      key: 'date',
     },
   ];
 

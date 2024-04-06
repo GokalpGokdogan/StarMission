@@ -24,7 +24,8 @@
           flex: auto;
           overflow: hidden;
           border-radius: 12px;
-  
+          font-weight: 600;
+          color: #2b3674;
           .ant-table-container {
             height: 100%;
             display: flex;
@@ -32,8 +33,11 @@
         
             
   
-            .ant-table-header {
+            .ant-table-thead .ant-table-cell {
               flex: none;
+              color: #A3AED0;
+              font-weight: 400;
+              background-color: white;
             }
   
             .ant-table-body {
