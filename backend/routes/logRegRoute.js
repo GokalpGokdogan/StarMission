@@ -1,7 +1,17 @@
 const express = require('express');
+const db = require('../database');
 const router = express.Router();
 const logResController = require('../controllers/logRegController');
 
+// Get all users
+
+router.get('/getUsers', (req, res) => {
+    
+});
+
+router.get('/sign-up', (req, res) => {
+    res.send("Whaduuuuo");
+});
 
 // Register Astronaut
 router.post('/registerAstronaut', async(req, res) => {
