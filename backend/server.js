@@ -9,6 +9,7 @@ const cookieParser = require('cookie-parser');
 const logRegRoute = require('./routes/logRegRoute');
 const manageEmployeesRoute = require('./routes/company/manageEmployeesRoute');
 const applicationsRoute = require('./routes/company/applicationsRoute');
+const missionPostingsRoute = require('./routes/company/missionPostingsRoute');
 
 app.use(cors({origin: true, credentials: true}));
 app.use(express.json());
@@ -30,6 +31,7 @@ app.use((err, req, res, next) => {
 app.use('/logReg', logRegRoute);
 app.use('/company/manageEmployees', manageEmployeesRoute);
 app.use('/company/applications', applicationsRoute);
+app.use('/company/missionPostings', missionPostingsRoute);
 
 app.listen(3001, () => {
     console.log('Server is running on port 3001');
