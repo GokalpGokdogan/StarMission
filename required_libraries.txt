@@ -12,3 +12,5 @@ for frontend:
 cd frontend
 npm install
 npm start
+
+SIDE NOTE: if you encounter "nodemon is not recognized" error, install nodemon globally via "npm install -g nodemon"
