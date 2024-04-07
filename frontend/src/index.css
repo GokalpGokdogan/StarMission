@@ -1,0 +1,64 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap");
+
+* {
+    scroll-behavior: auto;
+    font-family: 'Poppins', sans-serif;
+}
+
+
+.css-x7o5da-MuiPaper-root-MuiAlert-root {
+  background-color: rgb(229, 160, 160) !important;
+}
+
+.css-x7o5da-MuiPaper-root-MuiAlert-root .MuiAlert-icon {
+  align-self: flex-start !important;
+}
+
+.ant-table-wrapper {
+    height: 100%;
+  
+    .ant-spin-nested-loading {
+      height: 100%;
+  
+      .ant-spin-container {
+        height: 100%;
+        display: flex;
+        flex-flow: column nowrap;
+  
+        .ant-table {
+          flex: auto;
+          overflow: hidden;
+          border-radius: 12px;
+          font-weight: 600;
+          color: #2b3674;
+          .ant-table-container {
+            height: 100%;
+            display: flex;
+            flex-flow: column nowrap;
+        
+            
+  
+            .ant-table-thead .ant-table-cell {
+              flex: none;
+              color: #A3AED0;
+              font-weight: 400;
+              background-color: white;
+            }
+  
+            .ant-table-body {
+              flex: auto;
+              overflow: scroll;
+            }
+          }
+        }
+  
+        .ant-table-pagination {
+          flex: none;
+        }
+      }
+    }
+  }

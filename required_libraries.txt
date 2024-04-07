@@ -1,0 +1,14 @@
+for backend:
+cd backend
+npm install
+
+OR
+
+install these if they don't exist in package.json:
+npm install express cors cookie-parser dotenv mysql
+npm install nodemon --save-dev
+
+for frontend:
+cd frontend
+npm install
+npm start
