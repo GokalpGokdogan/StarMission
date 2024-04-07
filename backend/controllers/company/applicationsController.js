@@ -1,4 +1,3 @@
-const { query } = require('express');
 const db = require('../../database');
 
 //! Test ~ Delete this when tested
@@ -7,7 +6,7 @@ const db = require('../../database');
 
 const getApplicantData = async (data) => {
     return new Promise((resolve, reject) => {
-        const employeeId = data.employeeId;
+        const {employeeId} = data;
         db.query(`SELECT * FROM astronaut a, user u WHERE u.user_id = a.user_id AND a.user_id = ?`,
             [employeeId], 
             (err, result) => {
@@ -34,18 +33,12 @@ const getApplicantData = async (data) => {
 const getApplications = async (data) => {
     return new Promise((resolve, reject) => {
         
-        const selfCompanyId = data.companyId;
-        const searchedName = data.searchedName;
-        const profession = data.profession;
-        const minAge = data.minAge;
-        const maxAge = data.maxAge;
-        const sex = data.sex;
-        const minWeight = data.minWeight;
-        const maxWeight = data.maxWeight;
-        const minHeight = data.minHeight;
-        const maxHeight = data.maxHeight;
-        const nationality = data.nationality;
-        const missionName = data.missionName;
+
+
+        const { selfCompanyId, searchedName, profession, 
+            minAge, maxAge, sex, minWeight, maxWeight, 
+            minHeight, maxHeight, nationality, missionName } = data;
+
 
         let query = `SELECT * FROM astronaut a, space_mission s, company c, applied_mission m
                     WHERE a.user_id = m.astronaut_id AND s.mission_id = m.mission_id 
@@ -94,6 +87,4 @@ const getApplications = async (data) => {
 
 
 
-
-exports.getApplicantData = getApplicantData;
-exports.getApplications = getApplications;
+module.exports = { getApplicantData, getApplications };

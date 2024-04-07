@@ -3,15 +3,6 @@ const db = require('../database');
 const router = express.Router();
 const logResController = require('../controllers/logRegController');
 
-// Get all users
-
-router.get('/getUsers', (req, res) => {
-    
-});
-
-router.get('/sign-up', (req, res) => {
-    res.send("Whaduuuuo");
-});
 
 // Register Astronaut
 router.post('/registerAstronaut', async(req, res) => {
@@ -52,7 +43,16 @@ router.post('/registerCompany', async(req, res) => {
 router.get('/login', async(req, res) => {
     try{
         const response = await logResController.login(req.query);
-        res.cookie('user_id', req.query.email);
+        let id = response[0].user_id;
+        const user_type = await logResController.getUserType(id);
+        
+        // delete all cookies
+        const cookieNames = Object.keys(req.cookies);
+        cookieNames.forEach(cookieName => {
+            res.clearCookie(cookieName);
+        });
+        
+        res.cookie('user_type', user_type);
         res.status(200).send(response);
     } catch (error) {
         res.status(400).send("An error occurred: " + error);
