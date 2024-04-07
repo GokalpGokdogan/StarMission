@@ -84,7 +84,6 @@ const registerCompany = async (data) => {
 const login = async(data) => {
     return new Promise((resolve, reject) => {
         const { email, password } = data;
-        console.log(data);
         db.query('SELECT * FROM user u WHERE u.email = ? AND u.password = ?', [email, password], (err, result) => {
             if (err) {
                 reject(err);
@@ -99,6 +98,33 @@ const login = async(data) => {
     });
 };
 
+// get user type
+const getUserType = async(data) => {
+    return new Promise((resolve, reject) => {
+        const id = data;
+        db.query('SELECT * FROM astronaut u WHERE u.user_id = ?', [id], (err, result) => {
+            if (err || result.length == 0) {
+                db.query('SELECT * FROM company u WHERE u.user_id = ?', [id], (err, result) => {
+                    if (err) {
+                        reject(err);
+                    }
+                    else if (result.length == 0) {
+                        resolve("admin");
+                    }
+                    else {
+                        resolve('company');
+                    }
+                });
+                
+            }
+            else {
+                resolve('astronaut');
+            }
+        });
+    });
+};
+
 exports.registerAstronaut = registerAstronaut;
 exports.registerCompany = registerCompany;
 exports.login = login;
+exports.getUserType = getUserType;
