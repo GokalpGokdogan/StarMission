@@ -101,7 +101,7 @@ const login = async(data) => {
 // get user type
 const getUserType = async(data) => {
     return new Promise((resolve, reject) => {
-        const id = data;
+        const {id} = data;
         db.query('SELECT * FROM astronaut u WHERE u.user_id = ?', [id], (err, result) => {
             if (err || result.length == 0) {
                 db.query('SELECT * FROM company u WHERE u.user_id = ?', [id], (err, result) => {
@@ -124,7 +124,4 @@ const getUserType = async(data) => {
     });
 };
 
-exports.registerAstronaut = registerAstronaut;
-exports.registerCompany = registerCompany;
-exports.login = login;
-exports.getUserType = getUserType;
+module.exports = { registerAstronaut, registerCompany, login, getUserType };

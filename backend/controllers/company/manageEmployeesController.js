@@ -5,18 +5,9 @@ const db = require('../../database');
 const getEmployees = async (data) => {
     return new Promise((resolve, reject) => {
         
-        const selfCompanyId = data.companyId;
-        const searchedName = data.searchedName;
-        const profession = data.profession;
-        const minAge = data.minAge;
-        const maxAge = data.maxAge;
-        const sex = data.sex;
-        const minWeight = data.minWeight;
-        const maxWeight = data.maxWeight;
-        const minHeight = data.minHeight;
-        const maxHeight = data.maxHeight;
-        const nationality = data.nationality;
 
+        const {selfCompanyId, searchedName, profession, minAge, maxAge, 
+            sex, minWeight, maxWeight, minHeight, maxHeight, nationality} = data;
 
         db.query(`
                 SELECT * FROM astronaut a, space_mission s, company c, mission_of m
@@ -57,7 +48,7 @@ const getEmployees = async (data) => {
 
 const getEmployeeData = async (data) => {
     return new Promise((resolve, reject) => {
-        const employeeId = data.employeeId;
+        const {employeeId} = data;
         db.query(`SELECT * FROM astronaut a, user u WHERE u.user_id = a.user_id AND a.user_id = ?`,
             [employeeId], 
             (err, result) => {
@@ -83,8 +74,8 @@ const getEmployeeData = async (data) => {
 
 const fireEmployee = async (data) => {
     return new Promise((resolve, reject) => {
-        const employee_id = data.employee_id;
-        const mission_id = data.mission_id;
+        
+        const { employee_id, mission_id } = data;
         
         let query = `UPDATE mission_of SET leaving_date = CURDATE() WHERE user_id = ? AND mission_id = ?`;
         db.query(query,
@@ -107,6 +98,4 @@ const fireEmployee = async (data) => {
 
 
 
-exports.getEmployees = getEmployees;
-exports.getEmployeeData = getEmployeeData;
-exports.fireEmployee = fireEmployee;
+module.exports = { getEmployees, getEmployeeData, fireEmployee}
