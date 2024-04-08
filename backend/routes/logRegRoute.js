@@ -53,6 +53,7 @@ router.get('/login', async(req, res) => {
         });
         
         res.cookie('user_type', user_type);
+        res.cookie('user_id', id);
         res.status(200).send(response);
     } catch (error) {
         res.status(400).send("An error occurred: " + error);
