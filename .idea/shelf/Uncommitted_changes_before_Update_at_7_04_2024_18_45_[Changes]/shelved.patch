@@ -1,0 +1,82 @@
+Index: src/App.js
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import logo from './logo.svg';\r\nimport Login from './screens/Login';\r\nimport SignUp from \"./screens/SignUp\";\r\nimport PastMissions from \"./components/PastMissions\";\r\nimport { BrowserRouter as Router, Routes, Route} from \"react-router-dom\";\r\nimport Sidebar from './components/SideBar';\r\nimport { useState } from 'react';\r\nimport Dashboard from './screens/Dashboard';\r\nimport Applications from './screens/Applications';\r\nimport MissionPostings from './screens/MissionPostings';\r\nimport ApplicationsCompany from './screens/ApplicationsCompany';\r\n\r\nfunction App() {\r\n\r\n    const [login, setLogin] = useState(true);\r\n    const [open, setOpen] = useState(false);\r\n    const [href, setHref] = useState(\"Login\");\r\n    const [darkMode, setDarkMode] = useState(false);\r\n    const [active, setActive] = useState(\"Login\");\r\n\r\n  return (\r\n    <div className=\"transition-all duration-300 h-screen\"  >\r\n                        <Router >\r\n                        <div className={`fixed inset-y-0 left-0 ${open ? 'w-56' : 'w-0'} transition-all duration-300 z-50 bg-darker-bg`}>\r\n                                <Sidebar open={open} setOpen={setOpen} setHref={setHref} darkMode={darkMode} active={active} setActive={setActive} />\r\n                            </div>\r\n                            <div className={`flex flex-col w-full h-full transition-all duration-300 ${open ? 'pl-56' : \"pl-0\"} `}>\r\n                                <div className='flex-1'>\r\n                                    <Routes>\r\n                                        <Route path=\"/\" element={<Login />} />\r\n                                        <Route path=\"/sign-up\" element={<SignUp />} />\r\n                                        <Route path=\"/dashboard\" element={<Dashboard />} />\r\n                                        <Route path=\"/login\" element={<Login />} />\r\n                                        <Route path=\"/past-missions\" element={<PastMissions />}/>\r\n                                        <Route path=\"/applications\" element={<Applications />}/>\r\n                                        <Route path=\"/mission-postings\" element={<MissionPostings />}/>\r\n                                        <Route path=\"/applications-company\" element={<ApplicationsCompany />}/>\r\n                                    </Routes>\r\n                                </div>\r\n                            </div>\r\n                        </Router>\r\n                    </div>\r\n  );\r\n}\r\n\r\nexport default App;\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/App.js b/src/App.js
+--- a/src/App.js	(revision 4d6d6e234b00267e22cfa27dda264483be01abd5)
++++ b/src/App.js	(date 1711880839815)
+@@ -2,6 +2,7 @@
+ import Login from './screens/Login';
+ import SignUp from "./screens/SignUp";
+ import PastMissions from "./components/PastMissions";
++import MissionApplicant from "./components/MissionApplicant";
+ import { BrowserRouter as Router, Routes, Route} from "react-router-dom";
+ import Sidebar from './components/SideBar';
+ import { useState } from 'react';
+@@ -10,6 +11,7 @@
+ import MissionPostings from './screens/MissionPostings';
+ import ApplicationsCompany from './screens/ApplicationsCompany';
+ 
++
+ function App() {
+ 
+     const [login, setLogin] = useState(true);
+@@ -32,6 +34,7 @@
+                                         <Route path="/dashboard" element={<Dashboard />} />
+                                         <Route path="/login" element={<Login />} />
+                                         <Route path="/past-missions" element={<PastMissions />}/>
++                                        <Route path="/mission-applicant" element={<MissionApplicant />}/>
+                                         <Route path="/applications" element={<Applications />}/>
+                                         <Route path="/mission-postings" element={<MissionPostings />}/>
+                                         <Route path="/applications-company" element={<ApplicationsCompany />}/>
+Index: src/components/MissionApplicant.js
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/components/MissionApplicant.js b/src/components/MissionApplicant.js
+new file mode 100644
+--- /dev/null	(date 1712504726623)
++++ b/src/components/MissionApplicant.js	(date 1712504726623)
+@@ -0,0 +1,37 @@
++import React from "react";
++
++const MissionApplicant = () => {
++    return (
++        <div className="flex flex-col w-full min-w-0 py-2 border rounded-xl border-transparent p-2 mt-10 mb-10 mr-10 ml-10 border-10 bg-white shadow-lg">
++            <div className="flex">
++                <div className="flex items-center">
++                    <img width="120" height="120" src="https://seekvectorlogo.com/wp-content/uploads/2018/02/nasa-vector-logo.png" />
++                </div>
++                <div className="flex flex-col flex-1">
++                    <h2 className="text-2xl text-main-text font-semibold mb-4">Hans Stark</h2>
++                    <div className="flex justify-between">
++                        <div className="">
++                            <p className="text-sm font-medium leading-6 text-main-text">Nationality: Germany</p>
++                            <p className="text-sm font-medium leading-6 text-main-text">Profession: Scientist</p>
++                            <p className="text-sm font-medium leading-6 text-main-text">Gender: male</p>
++                            <p className="truncate text-sm font-medium leading-6 text-main-text">Address: Cart Curt Street, Cart, Curt</p>
++                        </div>
++                        <div className="">
++                            <p className="text-sm font-medium leading-6 text-main-text">Nationality: Germany</p>
++                            <p className="text-sm font-medium leading-6 text-main-text">Profession: Scientist</p>
++                            <p className="text-sm font-medium leading-6 text-main-text">Gender: male</p>
++                            <p className="truncate text-sm font-medium leading-6 text-main-text">Address: Cart Curt Street, Cart, Curt</p>
++                        </div>
++                    </div>
++                </div>
++            </div>
++            <div className="flex-auto flex-col flex min-w-0 mt-2 p-2 border rounded-xl border-transparent border-10 bg-grey-bg">
++                <p className="truncate text-sm font-medium leading-6 text-main-text">Neden calismak istedigim burda yaziyo olacak</p>
++            </div>
++            <button className="mt-4" style={{width: '150px', height: '30px',padding: '10px 20px', backgroundColor: '#4CAF50', color: 'white', border: 'none', borderRadius: '5px', cursor: 'pointer', textAlign: 'center', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>Click Me</button>
++        </div>
++
++    )
++}
++
++export default MissionApplicant
+\ No newline at end of file

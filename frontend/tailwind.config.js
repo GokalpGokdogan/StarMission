@@ -9,6 +9,8 @@ module.exports = {
         "main-bg": "#140D3B",
         "drop-down-blue": "#f7f7f7",
         "button-purple": "#635CFF",
+        "button-red": "#ea3636",
+        "button-green": "#4CAF50",
         "darker-bg": "#140D3B",
         "main-text": "#2B3674",
         "sub-text": "#A3AED0",

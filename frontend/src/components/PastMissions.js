@@ -1,5 +1,24 @@
 import React from "react";
 import SinglePastMission from './SinglePastMission'
+
+const missions = [
+    {
+        title: 'DDO Research',
+        location: 'Ankara, Turkey'
+    },
+    {
+        title: 'Operation GT',
+        location: 'Texas, USA'
+    },
+    {
+        title: 'Finding Water in Mars',
+        location: 'Mars'
+    },
+    {
+        title: 'Space Discovery',
+        location: 'Andromeda Galaxy'
+    },
+];
 const PastMissions = () =>{
     return (
         <div>
@@ -7,9 +26,9 @@ const PastMissions = () =>{
                 <div className="flex items-center justify-between">
                     <h2 className="text-xl text-main-text font-semibold px-2 mb-4">Past Missions</h2>
                 </div>
-                <SinglePastMission title="DDO Research" location="Ankara, Turkey"/>
-                <SinglePastMission title="Operation GT" location="Texas, USA"/>
-                <SinglePastMission title="Finding Water in Mars" location="Mars"/>
+                {missions.map(mission => (
+                    <SinglePastMission title={mission.title} location={mission.location}/>
+                ))}
             </ul>
         </div>
     )

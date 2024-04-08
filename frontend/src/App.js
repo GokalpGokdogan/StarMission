@@ -1,12 +1,14 @@
 import Login from './screens/Login';
 import SignUp from "./screens/SignUp";
 import PastMissions from "./components/PastMissions";
+import MissionApplicant from "./components/MissionApplicant";
 import { BrowserRouter as Router, Routes, Route, Navigate, Outlet } from "react-router-dom";
 import Sidebar from './components/SideBar';
 import { useState } from 'react';
 import DashboardCompany from './screens/company/DashboardCompany';
 import ApplicationsAstronaut from './screens/astronaut/ApplicationsAstronaut';
 import MissionPostings from './screens/MissionPostings';
+import CreateMission from './screens/CreateMission';
 import ApplicationsCompany from './screens/company/ApplicationsCompany';
 
 function App() {
@@ -70,6 +72,8 @@ function App() {
                                 <Route path="/" element={<Login />} />
                                 <Route path="/sign-up" element={<SignUp />} />
                                 <Route path="/past-missions" element={<PastMissions />} />
+                                <Route path="/mission-applicant" element={<MissionApplicant />} />
+                                <Route path="/create-mission" element={<CreateMission />} />
                                 <Route element={<Auth allowedRoles={["company"]} />}>
                                     <Route path="/company-dashboard" element={<DashboardCompany />} />
                                     <Route path="/company-applications" element={<ApplicationsCompany />} />
