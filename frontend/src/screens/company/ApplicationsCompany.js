@@ -3,6 +3,33 @@ import {Link, Route} from 'react-router-dom';
 import SearchBar from '../../components/SearchBar';
 import SingleApplication from '../../components/SingleApplication'
 
+const dataSource = [
+  {
+    key: '1',
+    name: 'Lisa George',
+    mission: 'Space Mission',
+    nationality: 'United Kingdom',
+  },
+  {
+    key: '2',
+    name: 'Tevfik Emre Sungur',
+    mission: 'Asteroid Ceres',
+    nationality: 'Turkey',
+  },
+  {
+    key: '3',
+    name: 'Gökalp Gökdoğan',
+    mission: 'Finding Water in Mars',
+    nationality: 'Turkey',
+  },
+ 
+  {
+    key: '4',
+    name: 'Hans Stark',
+    mission: 'Space Discovery',
+    nationality: 'Germany',
+  }
+];
 
 const ApplicationsCompany = () => {
 
@@ -15,10 +42,14 @@ const ApplicationsCompany = () => {
           <SearchBar input="INPUT"/>
         </div>
         <div>
-            <SingleApplication name="Lisa George" mission="Space Mission" nationality="United Kingdom"/>
-            <SingleApplication name="Tevfik Emre Sungur" mission="Asteroid Ceres" nationality="Turkey"/>
-            <SingleApplication name="Gökalp Gökdoğan" mission="Finding Water in Mars" nationality="Turkey"/>
-            <SingleApplication name="Hans Stark" mission="Space Discovery" nationality="Germany"/>
+        {dataSource.map(application => (
+              <SingleApplication
+                key={application.key}
+                name={application.name}
+                mission={application.mission}
+                nationality={application.nationality}
+              />
+            ))}
         </div>
     </div>
   );
