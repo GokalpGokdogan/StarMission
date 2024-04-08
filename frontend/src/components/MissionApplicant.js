@@ -45,13 +45,13 @@ const MissionApplicant = () => {
             <div className= "flex justify-end">
                 <form class="flex">
                     <div className="flex mt-4 mb-2 mr-4">
-                        <span className="h-10 flex-shrink-0 z-10 inline-flex items-center py-2 px-3 text-sm font-medium text-center text-gray-900 bg-gray-100 border border-e-0 border-gray-300 dark:border-gray-700 dark:text-white rounded-s-lg focus:ring-4 focus:outline-none focus:ring-gray-300 dark:bg-gray-600 dark:focus:ring-gray-800" type="button">Start Date:</span>
+                        <span className="h-10 flex-shrink-0 z-10 inline-flex items-center py-2 px-3 text-sm font-medium text-center text-gray-900 bg-gray-100 border border-e-0 border-gray-300 rounded-s-lg focus:ring-4 focus:outline-none focus:ring-gray-300" type="button">Start Date:</span>
                         <div className="relative w-28">
                             <input className="h-10 block p-2 w-full z-20 text-sm text-gray-900 bg-gray-50 rounded-e-lg rounded-s-gray-100 rounded-s-2 border border-gray-300" placeholder="dd.mm.yyyy" required />
                         </div>
                     </div>
                     <div className="flex mt-4 mb-2 mr-4">
-                        <span className="h-10 flex-shrink-0 z-10 inline-flex items-center py-2 px-3 text-sm font-medium text-center text-gray-900 bg-gray-100 border border-e-0 border-gray-300 dark:border-gray-700 dark:text-white rounded-s-lg focus:ring-4 focus:outline-none focus:ring-gray-300 dark:bg-gray-600 dark:focus:ring-gray-800" type="button">Salary:</span>
+                        <span className="h-10 flex-shrink-0 z-10 inline-flex items-center py-2 px-3 text-sm font-medium text-center text-gray-900 bg-gray-100 border border-e-0 border-gray-300  focus:ring-4 focus:outline-none focus:ring-gray-300" type="button">Salary:</span>
                         <div className="relative w-28">
                             <input className="h-10 block p-2 w-full z-20 text-sm text-gray-900 bg-gray-50 rounded-e-lg rounded-s-gray-100 rounded-s-2 border border-gray-300" placeholder="Enter Salary" required />
                         </div>
