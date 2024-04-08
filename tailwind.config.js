@@ -15,7 +15,7 @@ module.exports = {
         "main-text": "#2B3674",
         "sub-text": "#A3AED0",
         "grey-bg": "#F4F7FE",
-        "home-bg": "#E6E9F7"
+        "home-bg": "#E6E9F7",
       },
         fontFamily: {
           poppins: ["Poppins", "sans-serif"],

@@ -68,7 +68,7 @@ const Login = () => {
         </div>
         <label htmlFor="signup" className="mb-2 text-white text-sm">Don't have an account? <Link to="/sign-up" className="text-blue-500">Sign up</Link></label>
         <div className="flex items-center justify-center mb-4 mt-4">
-          <button type="submit" className={`w-32 bg-button-purple text-white py-2 rounded-lg font-bold`} onClick={()=> login(email, password)}>
+          <button type="submit" className={`w-32 bg-button-purple text-white transition-colors duration-300 ease-in-out hover:bg-indigo-700 hover:text-gray-100 hover:shadow-lg py-2 rounded-lg font-bold`} onClick={()=> login(email, password)}>
             Login
           </button>
         </div> 
