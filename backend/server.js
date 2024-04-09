@@ -5,7 +5,6 @@ const cookieParser = require('cookie-parser');
 
 
 // routers
-
 const logRegRoute = require('./routes/logRegRoute');
 const manageEmployeesRoute = require('./routes/company/manageEmployeesRoute');
 const applicationsRoute = require('./routes/company/applicationsRoute');
@@ -29,7 +28,6 @@ app.use((err, req, res, next) => {
 
 
 // routes
-
 app.use('/logReg', logRegRoute);
 
 app.use('/company/manageEmployees', manageEmployeesRoute);

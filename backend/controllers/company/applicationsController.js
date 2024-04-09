@@ -79,12 +79,176 @@ const getApplications = async (data) => {
 }
 
 
-//TODO: accept application
+//! Test ~ Delete this when tested
+// Accept application (company decides)
+
+const acceptApplicationC = async (data) => {
+    return new Promise((resolve, reject) => {
+        const {astronautId, missionId, salary, startDate} = data;
+        // application_status: 0~Processing, 1~Accepted, 2~Rejected
+        db.query(`UPDATE applied_mission SET application_status = 1 WHERE astronaut_id = ? AND mission_id = ?`,
+            [astronautId, missionId], 
+            (err, result) => {
+                if (err) {
+                    reject(err);
+                }
+                else {
+                    console.log(result, "successful accept application");
+                    db.query(`INSERT INTO mission_of (astronaut_id, mission_id, salary, start_date) VALUES (?, ?, ?, ?)`,
+                        [astronautId, missionId, salary, startDate], 
+                        (err2, result2) => {
+                            if (err2) {
+                                reject(err2);
+                            }
+                            else {
+                                console.log(result2, "successful insert into astronaut_mission");
+                                resolve(result2);
+                            }
+                        }
+                    );
+                }
+            }
+        );
+
+        
 
 
-//TODO: reject application
+
+    });
+}
+
+//! Test ~ Delete this when tested
+// Accept application (astronaut decides)
+
+const acceptApplicationA = async (data) => {
+    return new Promise((resolve, reject) => {
+        const {astronautId, missionId, salary, startDate} = data;
+        // application_status: 0~Processing, 1~Accepted, 2~Rejected
+        db.query(`UPDATE applied_mission SET application_status = 1 WHERE astronaut_id = ? AND mission_id = ?`,
+            [astronautId, missionId], 
+            (err, result) => {
+                if (err) {
+                    reject(err);
+                }
+                else {
+                    console.log(result, "successful accept application");
+
+                    db.query(`INSERT INTO mission_of (astronaut_id, mission_id, salary, start_date) VALUES (?, ?, ?, ?)`,
+                        [astronautId, missionId, salary, startDate], 
+                        (err2, result2) => {
+                            if (err2) {
+                                reject(err2);
+                            }
+                            else {
+                                console.log(result2, "successful insert into mission_of");
+                                resolve(result2);
+                            }
+                        });
+                    
+                    
+                }
+            }
+        );
+
+        
+
+    });
+}
+
+//! This can be used if frontend doesn't want to provide salary and start date
+// const acceptApplicationA = async (data) => {
+//     return new Promise((resolve, reject) => {
+//         const {astronautId, missionId} = data;
+//         // application_status: 0~Processing, 1~Accepted, 2~Rejected
+//         db.query(`UPDATE applied_mission SET application_status = 1 WHERE astronaut_id = ? AND mission_id = ?`,
+//             [astronautId, missionId], 
+//             (err, result) => {
+//                 if (err) {
+//                     reject(err);
+//                 }
+//                 else {
+//                     console.log(result, "successful accept application");
+
+//                     db.query(`SELECT * FROM applied_mission WHERE astronaut_id = ? AND mission_id = ?`,
+//                         [astronautId, missionId], 
+//                         (err2, result2) => {
+//                             if (err2) {
+//                                 reject(err2);
+//                             }
+//                             else {
+//                                 console.log(result2, "successful get application");
+
+//                                 db.query(`INSERT INTO mission_of (astronaut_id, mission_id, salary, start_date) VALUES (?, ?, ?, ?)`,
+//                                     [astronautId, missionId, result2[0].salary, result2[0].start_date], 
+//                                     (err3, result3) => {
+//                                         if (err3) {
+//                                             reject(err3);
+//                                         }
+//                                         else {
+//                                             console.log(result3, "successful insert into mission_of");
+//                                             resolve(result3);
+//                                         }
+//                                     }
+//                                 );
+//                             }
+//                         }
+//                     );
+//                 }
+//             }
+//         );
+
+        
+
+//     });
+// }
+
+//! Test ~ Delete this when tested
+// Get application data
+
+const getApplicationData = async (data) => {
+    return new Promise((resolve, reject) => {
+        const {astronautId, missionId} = data;
+        db.query(`SELECT * FROM applied_mission WHERE astronaut_id = ? AND mission_id = ?`,
+            [astronautId, missionId], 
+            (err, result) => {
+                if (err) {
+                    reject(err);
+                }
+                else if (result.length === 0) {
+                    reject("ER_FIND_NONE");     // No application found with this id
+                }
+                else {
+                    console.log(result, "successful get application data");
+                    resolve(result);
+                }
+            }
+        );
+    });
+}
+
+//! Test ~ Delete this when tested
+// Reject application
+
+const rejectApplication = async (data) => {
+    return new Promise((resolve, reject) => {
+        const {astronautId, missionId} = data;
+        // application_status: 0~Processing, 1~Accepted, 2~Rejected
+        db.query(`UPDATE applied_mission SET application_status = 2 WHERE astronaut_id = ? AND mission_id = ?`,
+            [astronautId, missionId], 
+            (err, result) => {
+                if (err) {
+                    reject(err);
+                }
+                else {
+                    console.log(result, "successful reject application");
+                    resolve(result);
+                }
+            }
+        );
+    });
+}
 
 
 
 
-module.exports = { getApplicantData, getApplications };
+module.exports = { getApplicantData, getApplications, acceptApplicationC, acceptApplicationA, getApplicationData, rejectApplication};
