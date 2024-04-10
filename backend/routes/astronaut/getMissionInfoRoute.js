@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { getCurrentMission } = require("../../controllers/astronaut/getMissionInfoController.js");
+const { getCurrentMission , getPastMissions, getRecentMissions} = require("../../controllers/astronaut/getMissionInfoController.js");
 
 router.get('/getCurrentMission', async(req, res) => {
     try {
@@ -10,7 +10,6 @@ router.get('/getCurrentMission', async(req, res) => {
         if(astronaut_id && user_type == "astronaut"){
             const response = await getCurrentMission(astronaut_id);
             res.status(200).send(response);
-            console.log(response, "Test: get applications with filters");
         }
         else{
             res.status(400).send("NOT_AUTHORIZED_USER");
@@ -21,6 +20,52 @@ router.get('/getCurrentMission', async(req, res) => {
         }
         else {
             res.status(400).send("An error occurred in get current missions for astronaut" + error);
+        }
+    }
+});
+
+router.get('/getPastMissions', async(req, res) => {
+    try {
+        const astronaut_id = req.cookies.user_id;
+        const user_type = req.cookies.user_type;
+
+        if(astronaut_id && user_type == "astronaut"){
+            const response = await getPastMissions(astronaut_id);
+            res.status(200).send(response);
+        }
+        else{
+            res.status(400).send("NOT_AUTHORIZED_USER");
+        }
+    } catch (error) {
+        if (error === "ER_FIND_NONE") {
+            res.status(400).send("ER_FIND_NONE");
+        }
+        else {
+            res.status(400).send("An error occurred in get past missions for astronaut" + error);
+        }
+    }
+});
+
+router.get('/getRecentMissions', async(req, res) => {
+    try {
+        const astronaut_id = req.cookies.user_id;
+        const user_type = req.cookies.user_type;
+
+        const data = req.query;
+
+        if(astronaut_id && user_type == "astronaut"){
+            const response = await getRecentMissions(astronaut_id, data);
+            res.status(200).send(response);
+        }
+        else{
+            res.status(400).send("NOT_AUTHORIZED_USER");
+        }
+    } catch (error) {
+        if (error === "ER_FIND_NONE") {
+            res.status(400).send("No recent mission postings");
+        }
+        else {
+            res.status(400).send("An error occurred in get recent mission postings for astronaut" + error);
         }
     }
 });
