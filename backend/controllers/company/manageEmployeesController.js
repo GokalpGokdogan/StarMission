@@ -22,7 +22,7 @@ const getEmployees = async (data) => {
                 AND (CASE WHEN ? IS NOT NULL THEN a.height >= ? ELSE 1 END)
                 AND (CASE WHEN ? IS NOT NULL THEN a.height <= ? ELSE 1 END)
                 AND (CASE WHEN ? IS NOT NULL THEN a.weight >= ? ELSE 1 END)
-                AND (CASE WHEN ? IS NOT NULL THEN a.weight <= ? ELSE 1 END)`,
+                AND (CASE WHEN ? IS NOT NULL THEN a.weight <= ? ELSE 1 END);`,
                 [selfCompanyId, searchedName, searchedName, profession, profession, minAge, minAge, 
                     maxAge, maxAge, sex, sex,nationality, nationality, minHeight, minHeight, 
                     maxHeight, maxHeight, minWeight, minWeight, maxWeight, maxWeight], 
