@@ -143,12 +143,11 @@ const ManageEmployees = () => {
                         </div>
                         {employees.map(emp => (
                             <SingleEmployee
-                                key={emp.key}
                                 name={emp.name}
-                                missions={emp.missions}
+                                missions={["mission"]}
                                 profession={emp.profession}
                                 age={emp.age}
-                                location={emp.location}
+                                location={"location"}
                             />
                         ))}
                     </div>
