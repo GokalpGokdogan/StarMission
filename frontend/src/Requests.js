@@ -65,7 +65,6 @@ export const login = async (email, password) => {
 };
 
 export const getEmployees = async (companyId) => {
-    const body = { 'selfCompanyId': companyId}
     let res = await axios({
         method: 'get',
         url: `http://${API_HOST}/company/manageEmployees/getEmployees`,
