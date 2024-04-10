@@ -64,6 +64,22 @@ export const login = async (email, password) => {
     console.log(res.data);
 };
 
+export const getEmployees = async (companyId) => {
+    const body = { 'selfCompanyId': companyId}
+    let res = await axios({
+        method: 'get',
+        url: `http://${API_HOST}/company/manageEmployees/getEmployees`,
+        headers: {'Content-Type': 'application/json'},
+        params: {
+            selfCompanyId: companyId,
+        },
+        withCredentials: true
+    });
+
+    console.log(res.data);
+    return res.data;
+};
+
 /*
     This is a GET request which get past missions for specific astronaut.
     No inputs are required;

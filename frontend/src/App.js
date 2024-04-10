@@ -10,6 +10,8 @@ import ApplicationsAstronaut from './screens/astronaut/ApplicationsAstronaut';
 import MissionPostings from './screens/MissionPostings';
 import CreateMission from './screens/CreateMission';
 import ApplicationsCompany from './screens/company/ApplicationsCompany';
+import SingleEmployee from "./components/SingleEmployee";
+import ManageEmployees from "./screens/ManageEmployees";
 
 function App() {
 
@@ -83,6 +85,7 @@ function App() {
                                     <Route path="/my-applications" element={<ApplicationsAstronaut />} />
                                 </Route>
                                 <Route path="/mission-postings" element={<MissionPostings />} />
+                                <Route path="/manage-employees" element={<ManageEmployees />} />
                             </Routes>
                         </div>
                     </div>
