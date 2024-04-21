@@ -67,7 +67,7 @@ const getLeadingFirmNames = async (data) => {
 const getMissionData = async (data) => {
     return new Promise((resolve, reject) => {
         const { missionId } = data;
-        let query = `SELECT * FROM space_mission s, company c WHERE s.mission_id = ? AND c.company_id = s.leading_firm_id`;
+        let query = `SELECT DISTINCT * FROM space_mission s, company c WHERE s.mission_id = ? AND c.company_id = s.leading_firm_id`;
         db.query(query, [missionId], (err, result) => {
             if (err) {
                 reject(err);

@@ -11,7 +11,7 @@ router.get('/getApplications', async(req, res) => {
 
         if(astronaut_id && user_type == "astronaut"){
             const response = await getApplications(astronaut_id, data);
-            res.status(200).send(response);
+            res.status(200).json(response);
         }
         else{
             res.status(400).send("NOT_AUTHORIZED_USER");
@@ -30,7 +30,7 @@ router.post('/applyToMission', async(req, res) => {
 
         if(astronaut_id && user_type == "astronaut"){
             const response = await applyToMission(astronaut_id, data);
-            res.status(200).send(response);
+            res.status(200).json(response);
         }
         else{
             res.status(400).send("NOT_AUTHORIZED_USER");

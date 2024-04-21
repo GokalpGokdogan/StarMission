@@ -9,7 +9,7 @@ router.get('/getCurrentMission', async(req, res) => {
 
         if(astronaut_id && user_type == "astronaut"){
             const response = await getCurrentMission(astronaut_id);
-            res.status(200).send(response);
+            res.status(200).json(response);
         }
         else{
             res.status(400).send("NOT_AUTHORIZED_USER");
@@ -31,7 +31,7 @@ router.get('/getPastMissions', async(req, res) => {
 
         if(astronaut_id && user_type == "astronaut"){
             const response = await getPastMissions(astronaut_id);
-            res.status(200).send(response);
+            res.status(200).json(response);
         }
         else{
             res.status(400).send("NOT_AUTHORIZED_USER");
@@ -55,7 +55,7 @@ router.get('/getRecentMissions', async(req, res) => {
 
         if(astronaut_id && user_type == "astronaut"){
             const response = await getRecentMissions(astronaut_id, data);
-            res.status(200).send(response);
+            res.status(200).json(response);
         }
         else{
             res.status(400).send("NOT_AUTHORIZED_USER");
