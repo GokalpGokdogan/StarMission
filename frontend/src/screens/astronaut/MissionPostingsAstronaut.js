@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import Select from 'react-select';
-import MissionPost from '../components/MissionPost';
-import SearchBar from '../components/SearchBar';
+import MissionPost from '../../components/MissionPost';
+import SearchBar from '../../components/SearchBar';
 import { DateRange } from 'react-date-range';
 import 'react-date-range/dist/styles.css'; // main style file
 import 'react-date-range/dist/theme/default.css'; // theme css file
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 
 const dataSource = [
   {
@@ -51,7 +53,7 @@ const options = [
   { value: 'Ankara, Turkey', label: 'Ankara, Turkey' }
 ];
 
-const MissionPostings = () => {
+const MissionPostingsAstronaut = () => {
   const [selectedDateRange, setSelectedDateRange] = useState([
     {
       startDate: new Date(),
@@ -64,6 +66,7 @@ const MissionPostings = () => {
   const [selectedCompany, setSelectedCompany] = useState('');
   const [minBudget, setMinBudget] = useState('');
   const [maxBudget, setMaxBudget] = useState('');
+  const [isExpanded, setIsExpanded] = useState(false);
 
   const handleLocationChange = (selectedOption) => {
     setSelectedLocation(selectedOption);
@@ -92,15 +95,25 @@ const MissionPostings = () => {
           <h2 className="text-lg font-semibold mb-1 text-main-text">Filters</h2>
           {/* Date Range Picker */}
           <div className="mb-2">
-            <label className="block mb-1 text-main-text">Start and End Dates</label>
-            <DateRange
+            <div className='flex flex-row justify-between'>
+              <label className="block mb-1 text-main-text">Start and End Dates</label>
+              <button onClick={()=> setIsExpanded(!isExpanded)}>
+                {!isExpanded ? <ExpandMoreIcon className='bg-to-blue-500'/> : <ExpandLessIcon/>}
+                
+              </button>
+            </div>
+            {
+              isExpanded ? 
+              <DateRange
               editableDateInputs={true}
               onChange={item => setSelectedDateRange([item.selection])}
               moveRangeOnFirstSelection={false}
               ranges={selectedDateRange}
               style={{ width: '100%' }} // Set width to 100%
               className="w-full"
-            />
+            /> : <></>
+            }
+
           </div>
           {/* Location Dropdown */}
           <div className="mb-4">
@@ -169,6 +182,7 @@ const MissionPostings = () => {
                 title={post.title}
                 company={post.company}
                 location={post.location}
+                type="astronaut"
               />
             ))}
         </div>
@@ -178,4 +192,4 @@ const MissionPostings = () => {
   );
 };
 
-export default MissionPostings;
+export default MissionPostingsAstronaut;

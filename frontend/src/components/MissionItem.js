@@ -1,6 +1,6 @@
 import React from "react";
 
-const MissionPost = ({title, company, location, type, handleOnClick}) => {
+const MissionItem = ({title, company, location}) => {
     return (
         <li className="flex justify-center py-1 px-2">
             <div className="flex" style={{ width : "654px" }}>
@@ -13,15 +13,10 @@ const MissionPost = ({title, company, location, type, handleOnClick}) => {
                     <p className="truncate text-xs font-semibold leading-5 text-sub-text">{company}</p>
                     <p className="truncate text-xs leading-5 text-sub-text">{location}</p>
                 </div>
-                <div className="flex items-center justify-center mb-2 mt-2 mr-2">
-                    <button type="button" className={`w-28 bg-button-purple text-white text-sm py-2 rounded-xl hover:bg-indigo-700`} onClick={handleOnClick}>
-                    {type === "astronaut" ? "Apply" : "Bid to Mission"}
-                    </button>
-                </div>
             </div>
             </div>
         </li>
     )
 };
 
-export default MissionPost
+export default MissionItem

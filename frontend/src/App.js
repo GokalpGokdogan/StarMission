@@ -7,9 +7,12 @@ import Sidebar from './components/SideBar';
 import { useState } from 'react';
 import DashboardCompany from './screens/company/DashboardCompany';
 import ApplicationsAstronaut from './screens/astronaut/ApplicationsAstronaut';
-import MissionPostings from './screens/MissionPostings';
+import MissionPostingsAstronaut from './screens/astronaut/MissionPostingsAstronaut';
+import MissionPostingsCompany from './screens/company/MissionPostingsCompany';
 import CreateMission from './screens/CreateMission';
 import ApplicationsCompany from './screens/company/ApplicationsCompany';
+import LeadingMissions from './screens/company/LeadingMissions';
+import PartneredMissions from './screens/company/PartneredMissions';
 
 function App() {
 
@@ -17,7 +20,7 @@ function App() {
     const [open, setOpen] = useState(false);
     const [href, setHref] = useState("Login");
     const [active, setActive] = useState("Login");
-    const [role, setRole] = useState("astronaut");
+    const [role, setRole] = useState("company");
 
     const Auth = ({ allowedRoles }) => {
 
@@ -39,6 +42,18 @@ function App() {
                     {
                         title: 'Applications',
                         link: 'company-applications'
+                    },
+                    {
+                        title: 'Mission Postings',
+                        link: 'company-mission-postings'
+                    },
+                    {
+                        title: 'Leading Missions',
+                        link: 'leading-missions'
+                    },
+                    {
+                        title: 'Partnered Missions',
+                        link: 'partnered-missions'
                     }
                 ];
             case 'astronaut':
@@ -50,6 +65,10 @@ function App() {
                     {
                         title: 'Applications',
                         link: 'my-applications'
+                    },
+                    {
+                        title: 'Mission Postings',
+                        link: 'mission-postings'
                     }
                 ];
             default:
@@ -77,12 +96,15 @@ function App() {
                                 <Route element={<Auth allowedRoles={["company"]} />}>
                                     <Route path="/company-dashboard" element={<DashboardCompany />} />
                                     <Route path="/company-applications" element={<ApplicationsCompany />} />
+                                    <Route path="/company-mission-postings" element={<MissionPostingsCompany />} />
+                                    <Route path="/leading-missions" element={<LeadingMissions/>} />
+                                    <Route path="/partnered-missions" element={<PartneredMissions/>} />
                                 </Route>
                                 <Route element={<Auth allowedRoles={["astronaut"]} />}>
                                     <Route path="/dashboard" element={<DashboardCompany />} />
                                     <Route path="/my-applications" element={<ApplicationsAstronaut />} />
+                                    <Route path="/mission-postings" element={<MissionPostingsAstronaut />} />
                                 </Route>
-                                <Route path="/mission-postings" element={<MissionPostings />} />
                             </Routes>
                         </div>
                     </div>
