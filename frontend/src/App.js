@@ -107,7 +107,6 @@ function App() {
                                     <Route path="/my-applications" element={<ApplicationsAstronaut />} />
                                     <Route path="/mission-postings" element={<MissionPostingsAstronaut />} />
                                 </Route>
-                                <Route path="/mission-postings" element={<MissionPostings />} />
                                 <Route path="/manage-employees" element={<ManageEmployees />} />
                             </Routes>
                         </div>
