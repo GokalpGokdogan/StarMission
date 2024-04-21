@@ -30,12 +30,12 @@ const registerAstronaut = async (data) => {
         }
         else{
             const insertedID = result.insertId;
-            db.query(queryAstronaut, [insertedID, nationality, birth_date, sex], (err, result, fields) => {
-                if(err){
-                    reject(err);
+            db.query(queryAstronaut, [insertedID, nationality, birth_date, sex], (err2, result2, fields) => {
+                if(err2){
+                    reject(err2);
                 }
                 else{
-                    resolve(result);
+                    resolve(result2);
                 }
             });
         }
@@ -65,12 +65,12 @@ const registerCompany = async (data) => {
         }
         else{
             const insertedID = result.insertId;
-            db.query(queryCompany, [insertedID], (err, result, fields) => {
-                if(err){
-                    reject(err);
+            db.query(queryCompany, [insertedID], (err2, result2, fields) => {
+                if(err2){
+                    reject(err2);
                 }
                 else{
-                    resolve(result);
+                    resolve(result2);
                 }
             });
         }

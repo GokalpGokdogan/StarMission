@@ -13,6 +13,8 @@ import CreateMission from './screens/CreateMission';
 import ApplicationsCompany from './screens/company/ApplicationsCompany';
 import LeadingMissions from './screens/company/LeadingMissions';
 import PartneredMissions from './screens/company/PartneredMissions';
+import SingleEmployee from "./components/SingleEmployee";
+import ManageEmployees from "./screens/ManageEmployees";
 
 function App() {
 
@@ -105,6 +107,8 @@ function App() {
                                     <Route path="/my-applications" element={<ApplicationsAstronaut />} />
                                     <Route path="/mission-postings" element={<MissionPostingsAstronaut />} />
                                 </Route>
+                                <Route path="/mission-postings" element={<MissionPostings />} />
+                                <Route path="/manage-employees" element={<ManageEmployees />} />
                             </Routes>
                         </div>
                     </div>

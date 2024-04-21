@@ -4,16 +4,14 @@ const db = require('../../database');
 // Get employees with filters
 const getEmployees = async (data) => {
     return new Promise((resolve, reject) => {
-        
-
         const {selfCompanyId, searchedName, profession, minAge, maxAge, 
             sex, minWeight, maxWeight, minHeight, maxHeight, nationality} = data;
 
         db.query(`
-                SELECT * FROM astronaut a, space_mission s, company c, mission_of m
-                WHERE a.user_id = m.astronaut_id AND s.mission_id = m.mission_id 
-                AND c.user_id = s.leading_firm_id AND c.company_id = ? 
-                AND (CASE WHEN ? IS NOT NULL THEN a.name LIKE ? ELSE 1 END) 
+                SELECT DISTINCT u.*, a.*, TIMESTAMPDIFF(YEAR,  a.birth_date, CURDATE()) AS age FROM user u, astronaut a, space_mission s, company c, mission_of m
+                WHERE a.user_id = m.astronaut_id AND s.mission_id = m.mission_id AND a.user_id = u.user_id
+                AND c.user_id = s.leading_firm_id AND c.user_id = ?
+                AND (CASE WHEN ? IS NOT NULL THEN u.name LIKE ? ELSE 1 END) 
                 AND (CASE WHEN ? IS NOT NULL THEN a.profession = ? ELSE 1 END) 
                 AND (CASE WHEN ? IS NOT NULL THEN TIMESTAMPDIFF(YEAR,  a.birth_date, CURDATE()) >= ? ELSE 1 END) 
                 AND (CASE WHEN ? IS NOT NULL THEN TIMESTAMPDIFF(YEAR,  a.birth_date, CURDATE()) <= ? ELSE 1 END)
@@ -22,10 +20,10 @@ const getEmployees = async (data) => {
                 AND (CASE WHEN ? IS NOT NULL THEN a.height >= ? ELSE 1 END)
                 AND (CASE WHEN ? IS NOT NULL THEN a.height <= ? ELSE 1 END)
                 AND (CASE WHEN ? IS NOT NULL THEN a.weight >= ? ELSE 1 END)
-                AND (CASE WHEN ? IS NOT NULL THEN a.weight <= ? ELSE 1 END)`,
-                [selfCompanyId, searchedName, searchedName, profession, profession, minAge, minAge, 
+                AND (CASE WHEN ? IS NOT NULL THEN a.weight <= ? ELSE 1 END);`,
+                [selfCompanyId, searchedName, searchedName, profession, profession, minAge, minAge,
                     maxAge, maxAge, sex, sex,nationality, nationality, minHeight, minHeight, 
-                    maxHeight, maxHeight, minWeight, minWeight, maxWeight, maxWeight], 
+                    maxHeight, maxHeight, minWeight, minWeight, maxWeight, maxWeight],
                 (err, result) => {
                     if (err) {
                         reject(err);

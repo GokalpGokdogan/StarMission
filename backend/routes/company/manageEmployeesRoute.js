@@ -10,7 +10,7 @@ const manageEmployeesController = require('../../controllers/company/manageEmplo
 
 router.get('/getEmployees', async(req, res) => {
     try {
-        const response = await manageEmployeesController.getEmployees(req.body);
+        const response = await manageEmployeesController.getEmployees(req.query);
         res.status(200).send(response);
         console.log(response, "Test: get employees with filters");
     } catch (error) {
@@ -29,7 +29,7 @@ router.get('/getEmployees', async(req, res) => {
 // Body: {employeeId: int}
 router.get('/getEmployeeData', async(req, res) => {
     try {
-        const response = await manageEmployeesController.getEmployeeData(req.body);
+        const response = await manageEmployeesController.getEmployeeData(req.query);
         res.status(200).send(response);
         console.log(response, "Test: get employee data");
     } catch (error) {

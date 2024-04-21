@@ -63,3 +63,48 @@ export const login = async (email, password) => {
     }
     console.log(res.data);
 };
+
+export const getEmployees = async (companyId) => {
+    let res = await axios({
+        method: 'get',
+        url: `http://${API_HOST}/company/manageEmployees/getEmployees`,
+        headers: {'Content-Type': 'application/json'},
+        params: {
+            selfCompanyId: companyId,
+        },
+        withCredentials: true
+    });
+
+    console.log(res.data);
+    return res.data;
+};
+
+/*
+    This is a GET request which get past missions for specific astronaut.
+    No inputs are required;
+    btw bu taslak ha.. baya saçma bu, frontçular bura sizde skjfhk -Tevfo xoxo
+*/
+
+export const getPastMissions = async () => {
+
+    return new Promise(async (resolve, reject) => {
+        let res = await axios({
+            method: 'get',
+            url: `http://${API_HOST}/astronaut/getMissionInfo/getPastMissions`,
+            headers: {'Content-Type': 'application/json'},
+            withCredentials: true
+        });
+        if (res.status === 200) {
+            resolve(res.data);
+        }
+        else if(res.status === 400 && res.data === "NOT_AUTHORIZED_USER"){  // the logged in user is not astronaut
+            reject("NOT_AUTHORIZED_USER");
+            // to be continued...
+        }
+        else if(res.status === 400 && res.data === "ER_FIND_NONE"){ // there is no past mission
+            resolve([]);
+            // to be continued...
+        }
+        console.log(res.data);
+    });
+};

@@ -1,5 +1,8 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import SinglePastMission from './SinglePastMission'
+import { getPastMissions } from '../Requests';
+
+
 
 const missions = [
     {
@@ -18,7 +21,7 @@ const missions = [
         title: 'Space Discovery',
         location: 'Andromeda Galaxy'
     },
-];
+]; 
 const PastMissions = () =>{
     return (
         <div>
