@@ -8,6 +8,7 @@ import { useState } from 'react';
 import DashboardCompany from './screens/company/DashboardCompany';
 import ApplicationsAstronaut from './screens/astronaut/ApplicationsAstronaut';
 import MissionPostingsAstronaut from './screens/astronaut/MissionPostingsAstronaut';
+import MissionDetailsAstronaut from './screens/astronaut/MissionDetailsAstronaut';
 import MissionPostingsCompany from './screens/company/MissionPostingsCompany';
 import CreateMission from './screens/CreateMission';
 import ApplicationsCompany from './screens/company/ApplicationsCompany';
@@ -23,7 +24,7 @@ function App() {
     const [open, setOpen] = useState(false);
     const [href, setHref] = useState("Login");
     const [active, setActive] = useState("Login");
-    const [role, setRole] = useState("company");
+    const [role, setRole] = useState("astronaut");
 
     const Auth = ({ allowedRoles }) => {
 
@@ -108,6 +109,7 @@ function App() {
                                     <Route path="/dashboard" element={<DashboardCompany />} />
                                     <Route path="/my-applications" element={<ApplicationsAstronaut />} />
                                     <Route path="/mission-postings" element={<MissionPostingsAstronaut />} />
+                                    <Route path="/astronaut-mission-details" element={<MissionDetailsAstronaut />} />
                                 </Route>
                                 <Route path="/manage-employees" element={<ManageEmployees />} />
                             </Routes>

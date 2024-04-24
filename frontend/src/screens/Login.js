@@ -20,7 +20,7 @@ const Login = () => {
   };
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Add login functionality here
+    login(email, password);
   };
   const handleCheckboxChange = (e) => {
     setIsChecked(e.target.checked);
@@ -46,6 +46,7 @@ const Login = () => {
         <label htmlFor="email" className="mt-6 text-white text-sm">Email</label>
         <input
           type="email"
+          id="email"
           placeholder="mail@tubitak.com"
           value={email}
           onChange={handleEmailChange}
@@ -54,6 +55,7 @@ const Login = () => {
         <label htmlFor="password" className="mt-2 text-white text-sm">Password</label>
         <input
           type="password"
+          id="password"
           placeholder="Min. 8 characters"
           value={password}
           onChange={handlePasswordChange}
@@ -66,7 +68,7 @@ const Login = () => {
           </div>
           <button type="button" className="text-white text-sm cursor-pointer" onClick={handleForgotPasswordClick}>Forgot password?</button>
         </div>
-        <label htmlFor="signup" className="mb-2 text-white text-sm">Don't have an account? <Link to="/sign-up" className="text-blue-500">Sign up</Link></label>
+        <label className="mb-2 text-white text-sm">Don't have an account? <Link to="/sign-up" className="text-blue-500">Sign up</Link></label>
         <div className="flex items-center justify-center mb-4 mt-4">
           <button type="submit" className={`w-32 bg-button-purple text-white transition-colors duration-300 ease-in-out hover:bg-indigo-700 hover:text-gray-100 hover:shadow-lg py-2 rounded-lg font-bold`} onClick={()=> login(email, password)}>
             Login
