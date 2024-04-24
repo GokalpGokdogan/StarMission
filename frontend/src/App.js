@@ -13,6 +13,7 @@ import CreateMission from './screens/CreateMission';
 import ApplicationsCompany from './screens/company/ApplicationsCompany';
 import LeadingMissions from './screens/company/LeadingMissions';
 import PartneredMissions from './screens/company/PartneredMissions';
+import MissionDetailsCompany from './screens/company/MissionDetailsCompany';
 import SingleEmployee from "./components/SingleEmployee";
 import ManageEmployees from "./screens/ManageEmployees";
 import DashboardAstronaut from './screens/astronaut/DashboardAstronaut'; 
@@ -102,6 +103,7 @@ function App() {
                                     <Route path="/company-mission-postings" element={<MissionPostingsCompany />} />
                                     <Route path="/leading-missions" element={<LeadingMissions/>} />
                                     <Route path="/partnered-missions" element={<PartneredMissions/>} />
+                                    <Route path="/mission-details" element={<MissionDetailsCompany/>}/>
                                 </Route>
                                 <Route element={<Auth allowedRoles={["astronaut"]} />}>
                                     <Route path="/dashboard" element={<DashboardAstronaut />} />
