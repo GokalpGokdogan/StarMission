@@ -79,6 +79,21 @@ export const getEmployees = async (companyId) => {
     return res.data;
 };
 
+export const getMissionPostings = async (companyId) => {
+    let res = await axios({
+        method: 'get',
+        url: `http://${API_HOST}/company/missionPostings/getMissionPostings`,
+        headers: {'Content-Type': 'application/json'},
+        params: {
+            companyId: companyId,
+        },
+        withCredentials: true
+    });
+
+    console.log(res.data);
+    return res.data;
+};
+
 /*
     This is a GET request which get past missions for specific astronaut.
     No inputs are required;
