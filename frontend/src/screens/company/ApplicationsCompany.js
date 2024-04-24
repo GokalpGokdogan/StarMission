@@ -68,11 +68,11 @@ const ApplicationsCompany = () => {
           <SearchBar input="INPUT"/>
         </div>
         <div>
-        {dataSource.map(application => (
+        {applications.map(application => (
               <SingleApplication
                 key={application.key}
-                name={application.name}
-                mission={application.mission}
+                name={application.astronaut_name}
+                mission={application.name}
                 nationality={application.nationality}
               />
             ))}
