@@ -15,6 +15,7 @@ import LeadingMissions from './screens/company/LeadingMissions';
 import PartneredMissions from './screens/company/PartneredMissions';
 import SingleEmployee from "./components/SingleEmployee";
 import ManageEmployees from "./screens/ManageEmployees";
+import DashboardAstronaut from './screens/astronaut/DashboardAstronaut'; 
 
 function App() {
 
@@ -103,7 +104,7 @@ function App() {
                                     <Route path="/partnered-missions" element={<PartneredMissions/>} />
                                 </Route>
                                 <Route element={<Auth allowedRoles={["astronaut"]} />}>
-                                    <Route path="/dashboard" element={<DashboardCompany />} />
+                                    <Route path="/dashboard" element={<DashboardAstronaut />} />
                                     <Route path="/my-applications" element={<ApplicationsAstronaut />} />
                                     <Route path="/mission-postings" element={<MissionPostingsAstronaut />} />
                                 </Route>
