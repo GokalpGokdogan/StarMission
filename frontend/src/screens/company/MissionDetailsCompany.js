@@ -1,7 +1,10 @@
-import React, { useState } from 'react';
+import React, { Fragment, useState } from 'react';
 import { Link, Route } from 'react-router-dom';
+import BidModal from '../../components/BidModal';
 
+//Kodun indentationı bozuk, daha sonra düzeltilsin!!!!
 const MissionDetailsCompany = () => {
+  const [showModal, setShowModal] = useState(false);
   const dataSource = {
     title: 'Asteroid Ceres',
     company: 'NASA',
@@ -14,26 +17,29 @@ const MissionDetailsCompany = () => {
       'Follow safety protocols during experiments.',
       'Report any anomalies immediately.',
       'Wear appropriate space suit at all times.',
-      'Follow safety protocols during experiments.',
-      'Report any anomalies immediately.',
-      'Wear appropriate space suit at all times.',
-      'Follow safety protocols during experiments.',
-      'Report any anomalies immediately.',
-      'Wear appropriate space suit at all times.',
-      'Follow safety protocols during experiments.',
-      'Report any anomalies immediately.',
-      'Wear appropriate space suit at all times.',
-      'Follow safety protocols during experiments.',
-      'Report any anomalies immediately.',
-      'Wear appropriate space suit at all times.',
-      'Follow safety protocols during experiments.',
-      'Report any anomalies immediately.'
+      'Follow safety protocols during experiments.'
     ]
   }; 
 
   const [searchText, setSearchText] = useState('');
+  const [amount, setAmount] = useState('');
+  const [showAmountPlaceholder, setShowAmountPlaceholder] = useState(true);
+  const [description, setDescription] = useState('');
+  const [showDescriptionPlaceholder, setShowDescriptionPlaceholder] = useState(true);
+
+  const handleAmountChange = (e) => {
+    setAmount(e.target.value);
+    setShowAmountPlaceholder(e.target.value === '');
+  };
+
+  const handleDescriptionChange = (e) => {
+    setDescription(e.target.value);
+    setShowDescriptionPlaceholder(e.target.value === '');
+  };
+  
 
   return (
+    <Fragment>
     <div className="bg-home-bg min-h-screen">
       <div className='h-16 bg-main-bg flex box-shadow shadow-sm'>
         <p className='font-poppins font-bold text-white text-2xl p-4 ml-2 justify-start'>View Mission</p>
@@ -64,15 +70,54 @@ const MissionDetailsCompany = () => {
               </p>
             </div>
             <div className="flex justify-end mr-8 mt-16 mb-4">
-              <button type="button" className="w-32 bg-button-purple text-white text-sm px-2 py-3 rounded-xl">
+              <button type="button" className="w-32 bg-button-purple text-white text-sm px-2 py-3 rounded-xl" onClick={() => setShowModal(true)}>
                 Bid to Mission
               </button>
+              <BidModal isVisible={showModal} onClose={() => setShowModal(false)}>  
+                    <h2 className="text-3xl font-bold text-main-text mt-8 ml-12">Bid to {dataSource.title}</h2>
+                    <div className="flex items-center ml-8 mt-8">
+                    <img width="90" height="90" src="https://seekvectorlogo.com/wp-content/uploads/2018/02/nasa-vector-logo.png" alt="NASA Logo" />
+                    <div>
+                      <p className="text-xl font-semibold leading-5 mt-3 text-main-text">{dataSource.company}</p>
+                      <p className="truncate text-base leading-5 text-sub-text">{dataSource.location}</p>
+                      <p className="truncate text-sm leading-5 text-sub-text">Mission Start-End: {dataSource.startDate} - {dataSource.endDate}</p>
+                    </div>
+                  </div>
+                  
+                  <h2 className="text-sm font-bold text-main-text mt-8 ml-8">Amount</h2>
+                  <input
+                    type="amount"
+                    placeholder="Enter amount in dollars"
+                    value={amount}
+                    onChange={handleAmountChange}
+                    className="bg-transparent border border-gray-300 rounded-lg p-2 ml-8 mb-4 w-64"
+                  />
+                  <h2 className="text-sm font-bold text-main-text mt-4 ml-8">Description</h2>
+                  <textarea
+                    type="description"
+                    placeholder="Enter description"
+                    value={description}
+                    onChange={handleDescriptionChange}
+                    className="flex flex-col border bg-grey-bg w-128 h-32 rounded-lg p-2 mb-4 ml-8 mr-8 resize-none" // Removed height and added resize-none
+                    row={3}// Initial number of rows
+                  />
+                 
+                 <div className="flex justify-end mr-8 mb-4">
+                 <button type="button" className="w-32 bg-button-purple text-white text-sm px-2 py-3 rounded-xl" onClick={() => setShowModal(false)}>
+                    Close
+                  </button>
+                  <button type="button" className="w-32 bg-button-purple text-white text-sm px-2 py-3 rounded-xl ml-4" onClick={() => setShowModal(false)}>
+                    Bid to Mission
+                  </button>
+                </div>
+              </BidModal>
             </div>
-
           </div>
         </div>
       </div>
     </div>
+    </Fragment>
+    
   );
 };
 
