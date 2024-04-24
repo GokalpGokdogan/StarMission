@@ -10,17 +10,16 @@ const getMissionPostings = async (data) => {
         const { companyId, searchedName, startDate, endDate, location, 
             leadingCompanyName, minBudget, maxBudget } = data;
 
-        let query = `SELECT * FROM space_mission s, company c, partner_firm p 
-                    WHERE (c.company_id = s.leading_firm_id AND c.company_id <> ? 
-                    AND NOT EXISTS (SELECT * FROM partner_firm p WHERE p.mission_id = s.mission_id AND p.company_id = @user_id))
-                    AND (CASE WHEN ? IS NOT NULL THEN s.name LIKE ? ELSE 1 END) 
-                    AND (CASE WHEN ? IS NOT NULL THEN s.start_date >= ? ELSE 1 END) 
-                    AND (CASE WHEN ? IS NOT NULL THEN s.end_date <= ? ELSE 1 END)
-                    AND (CASE WHEN ? IS NOT NULL THEN s.location = ? ELSE 1 END)
-                    AND (CASE WHEN ? IS NOT NULL THEN c.name LIKE ? ELSE 1 END)
-                    AND (CASE WHEN ? IS NOT NULL THEN s.budget >= ? ELSE 1 END)
-                    AND (CASE WHEN ? IS NOT NULL THEN s.budget <= ? ELSE 1 END)`;
-        db.query(query, [companyId, companyId, companyId, searchedName, searchedName, startDate, startDate, endDate, endDate, 
+            let query = `SELECT * FROM space_mission as s, company as c, user as u
+            WHERE (c.user_id = s.leading_firm_id AND c.user_id <> ? AND c.user_id = u.user_id)
+            AND (CASE WHEN ? IS NOT NULL THEN s.name LIKE ? ELSE 1 END) 
+            AND (CASE WHEN ? IS NOT NULL THEN s.start_date >= ? ELSE 1 END) 
+            AND (CASE WHEN ? IS NOT NULL THEN s.end_date <= ? ELSE 1 END)
+            AND (CASE WHEN ? IS NOT NULL THEN s.location = ? ELSE 1 END)
+            AND (CASE WHEN ? IS NOT NULL THEN u.name LIKE ? ELSE 1 END)
+            AND (CASE WHEN ? IS NOT NULL THEN s.budget >= ? ELSE 1 END)
+            AND (CASE WHEN ? IS NOT NULL THEN s.budget <= ? ELSE 1 END)`;
+        db.query(query, [companyId, searchedName, searchedName, startDate, startDate, endDate, endDate, 
             location, location, leadingCompanyName, leadingCompanyName, minBudget, minBudget, maxBudget, maxBudget], 
             (err, result) => {
                 if (err) {

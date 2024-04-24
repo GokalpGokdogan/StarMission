@@ -1,7 +1,25 @@
 import axios from 'axios';
 
 const API_HOST = "localhost:3001";
+
 axios.defaults.withCredentials = true;
+
+
+function parseUserString(userString) {
+    const userKeyValuePairs = userString.split(';');
+  
+    const userObject = {};
+  
+    for (const pair of userKeyValuePairs) {
+      const [key, value] = pair.trim().split('=');
+      userObject[key] = value;
+    }
+  
+    return userObject;
+  }
+
+  
+
 
 //Commented parts in request bodies are because there isn't an actual backend connected right now.
 
@@ -57,10 +75,23 @@ export const login = async (email, password) => {
         },
         withCredentials: true
     });
+
+    const userObject = parseUserString(document.cookie);
+    
+    console.log(userObject.user_type); // Output: "company"
+    console.log("id:" + userObject.user_id);
+
     if (res.status === 200) {
-        // Manually handle the redirect
-        window.location.href = '/dashboard';
+        if(userObject.user_type == "company")
+        {
+            window.location.href = '/company-dashboard';
+        }
+        else
+        {
+            window.location.href = '/dashboard';
+        }
     }
+     
     console.log(res.data);
 };
 
@@ -78,6 +109,53 @@ export const getEmployees = async (companyId) => {
     console.log(res.data);
     return res.data;
 };
+
+export const getMissionPostings = async (companyId) => {
+    let res = await axios({
+        method: 'get',
+        url: `http://${API_HOST}/company/missionPostings/getMissionPostings`,
+        headers: {'Content-Type': 'application/json'},
+        params: {
+            companyId: companyId,
+        },
+        withCredentials: true
+    });
+
+    console.log(res.data);
+    return res.data;
+};
+
+export const getApplications = async (selfCompanyId, searchedName, profession, minAge, maxAge, sex, minWeight, maxWeight,
+minHeight, maxHeight, nationality, missionName) => {
+    let res = await axios({
+        method: 'get',
+        url: `http://${API_HOST}/company/applications/getApplications`,
+        headers: {'Content-Type': 'application/json'},
+        params: {
+            selfCompanyId: selfCompanyId,
+            searchedName: searchedName,
+            profession: profession,
+            minAge: minAge,
+            maxAge: maxAge,
+            sex: sex,
+            minWeight: minWeight,
+            maxWeight: maxWeight,
+            minHeight: minHeight,
+            maxHeight: maxHeight,
+            nationality: nationality,
+            missionName: missionName,
+        },
+        withCredentials: true
+    });
+
+    if(res.data == "No applications found with these filters")
+    {
+        console.log("ahah")
+    }
+
+    console.log(res.data);
+    return res.data;
+}
 
 /*
     This is a GET request which get past missions for specific astronaut.
