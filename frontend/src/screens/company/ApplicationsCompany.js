@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import {Link, Route} from 'react-router-dom';
 import SearchBar from '../../components/SearchBar';
 import SingleApplication from '../../components/SingleApplication'
-import { getApplications } from '../../Requests';
 
 const dataSource = [
   {
@@ -32,32 +31,7 @@ const dataSource = [
   }
 ];
 
-
 const ApplicationsCompany = () => {
-
-  const [applications, setApplications] = useState([]);
-
-  useEffect(() => {
-      const fetchApplications = async () => {
-          try{
-              const apps = await getApplications(64);
-              if(apps == "No applications found with these filters")
-              {
-                console.log("ahah")
-              }
-              else
-              {
-                setApplications(apps);
-                console.log(apps);
-              }
-              
-          } catch (error){
-              console.error('Error fetching apps:', error);
-          }
-      };
-
-      fetchApplications();
-  }, []);
 
   return (
     <div className="bg-home-bg h-full">
@@ -68,11 +42,11 @@ const ApplicationsCompany = () => {
           <SearchBar input="INPUT"/>
         </div>
         <div>
-        {applications.map(application => (
+        {dataSource.map(application => (
               <SingleApplication
                 key={application.key}
-                name={application.astronaut_name}
-                mission={application.name}
+                name={application.name}
+                mission={application.mission}
                 nationality={application.nationality}
               />
             ))}

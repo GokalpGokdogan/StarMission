@@ -24,7 +24,7 @@ const dataSource = [
     },
 ];
 
-const DashboardAstronaut = () => {
+const DashboardCompany = () => {
 
   return (
         <div className="bg-home-bg h-full">
@@ -43,8 +43,7 @@ const DashboardAstronaut = () => {
                 </div>
                 <div className="flex items-center justify-center shadow-">
                     <div style={{ width: '530px', height: '250px' }} className='shadow-lg'>
-                       {/*  <ApplicationsTable dataSource={dataSource} /> */}
-                       amk
+                        <ApplicationsTable dataSource={dataSource} />
                     </div>
                 </div>
             </div>
@@ -54,4 +53,4 @@ const DashboardAstronaut = () => {
 };
 
 
-export default DashboardAstronaut;
+export default DashboardCompany;
