@@ -6,9 +6,9 @@ const db = require('../../database');
 
 const getApplicantData = async (data) => {
     return new Promise((resolve, reject) => {
-        const {employeeId} = data;
+        const {astronautId} = data;
         db.query(`SELECT * FROM astronaut a, user u WHERE u.user_id = a.user_id AND a.user_id = ?`,
-            [employeeId], 
+            [astronautId], 
             (err, result) => {
                 if (err) {
                     reject(err);
