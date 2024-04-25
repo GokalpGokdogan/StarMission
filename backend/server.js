@@ -34,14 +34,14 @@ app.use((err, req, res, next) => {
 // routes
 app.use('/logReg', logRegRoute);
 
-app.use('/company/manageEmployees', manageEmployeesRoute);
+app.use('/company/manageEmployees', manageEmployeesRoute); 
 app.use('/company/applications', applicationsRoute);
-app.use('/company/missionPostings', missionPostingsRoute);
-app.use('/company/myBids', myBidsRoute);
-app.use('/company/createMission', createMissionRoute);
+app.use('/company/missionPostings', missionPostingsRoute); 
 
-app.use('/astronaut/getMissionInfo', getMissionInfoRoute);
-app.use('/astronaut/manageApplications', manageApplicationsRoute);
+app.use('/company/myBids', myBidsRoute); 
+app.use('/company/createMission', createMissionRoute); 
+app.use('/astronaut/getMissionInfo', getMissionInfoRoute); 
+app.use('/astronaut/manageApplications', manageApplicationsRoute); 
 
 app.listen(3001, () => {
     console.log('Server is running on port 3001');
