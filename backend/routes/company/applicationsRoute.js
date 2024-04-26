@@ -23,7 +23,7 @@ router.get('/getApplications', async(req, res) => {
         res.status(200).send(response);
     } catch (error) {
         if (error === "ER_FIND_NONE") {
-            res.status(400).send("No applications found with these filters");
+            res.status(204).send("No applications found with these filters");
         }
         else {
             res.status(400).send("An error occurred in get applications with filters: " + error);
@@ -49,7 +49,7 @@ router.get('/getApplicantData', async(req, res) => {
         res.status(200).send(response);
     } catch (error) {
         if (error === "ER_FIND_NONE") {
-            res.status(400).send("No applicant found with this id");
+            res.status(204).send("No applicant found with this id");
         }
         else {
             res.status(400).send("An error occurred in get applicant data: " + error);
@@ -134,7 +134,7 @@ router.get('/getApplicationData', async(req, res) => {
         res.status(200).send(response);
     } catch (error) {
         if (error === "ER_FIND_NONE") {
-            res.status(400).send("No application found with this id");
+            res.status(204).send("No application found with this id");
         }
         else {
             res.status(400).send("An error occurred in get application data: " + error);

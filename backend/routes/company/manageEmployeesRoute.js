@@ -21,7 +21,7 @@ router.get('/getEmployees', async(req, res) => {
         console.log(response, "Test: get employees with filters");
     } catch (error) {
         if (error === "ER_FIND_NONE") {
-            res.status(400).send("No employees found with these filters");
+            res.status(204).send("No employees found with these filters");
         }
         else {
             res.status(400).send("An error occurred in get employees with filters: " + error);
@@ -47,7 +47,7 @@ router.get('/getEmployeeData', async(req, res) => {
         console.log(response, "Test: get employee data");
     } catch (error) {
         if (error === "ER_FIND_NONE") {
-            res.status(400).send("No employee found with this id");
+            res.status(204).send("No employee found with this id");
         }
         else {
             res.status(400).send("An error occurred in get employee data: " + error);
@@ -71,7 +71,7 @@ router.post('/fireEmployee', async(req, res) => {
         console.log(response, "Test: fire employee");
     } catch (error) {
         if (error === "ER_FIND_NONE") {
-            res.status(400).send("No employee found working on the mission with this id");
+            res.status(204).send("No employee found working on the mission with this id");
         }
         else {
             res.status(400).send("An error occurred in fire employee: " + error);
