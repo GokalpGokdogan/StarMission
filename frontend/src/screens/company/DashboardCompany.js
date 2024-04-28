@@ -3,7 +3,7 @@ import {Link, Route} from 'react-router-dom';
 import SimpleList from '../../components/SimpleList';
 import ApplicationsTable from '../../components/ApplicationsTable';
 import DashboardTable from '../../components/DashboardTable';
-import { getLeadingMissions, getApplications, getMyBids } from '../../Requests';
+import { getLeadingMissions, getApplications, getMyBids, getMissionPostings } from '../../Requests';
 import { useUser } from '../../UserProvider';
 
 //PASTMISSIONS COMPONENT SHRINKS IN EMPTY DATA ARRAY!!!!!!!!!!!!!
@@ -14,6 +14,7 @@ const DashboardCompany = () => {
   const [leadingMissions, setLeadingMissions] = useState([]);
   const [applications, setApplications] = useState([]);
   const [myBids, setMyBids] = useState([]);
+  const [recentMissions, setRecentMissions] = useState([]);
 
   const fetchMyBids = async () => {
     try{
@@ -31,6 +32,24 @@ const DashboardCompany = () => {
     } catch (error){
         console.error('Error fetching apps:', error);
     }
+};
+
+const fetchRecentMissions = async () => {
+  try{
+      const miss = await getMissionPostings(userId);
+      if(miss == "No applications found with these filters")
+      {
+        console.log("ahah")
+      }
+      else
+      {
+        setRecentMissions(miss);
+        console.log(miss);
+      }
+      
+  } catch (error){
+      console.error('Error fetching missions:', error);
+  }
 };
 
 
@@ -74,61 +93,8 @@ const DashboardCompany = () => {
     fetchLeadingMissions();
     fetchApplications();
     fetchMyBids();
+    fetchRecentMissions();
 }, []);
-
-const[searchText, setSearchText] = useState('');
-const dataSource = [
-    {
-      key: '1',
-      name: 'Asteroid',
-      progress: 'Accepted',
-      date: '10-02-2022',
-    },
-    {
-      key: '2',
-      name: 'Misyon',
-      progress: 'Rejected',
-      date: '10-02-2022',
-    },
-    {
-      key: '3',
-      name: 'Nehir Demir',
-      progress: 'In progress',
-      date: '10-02-2022',
-    },
-
-  ];
-
-  const columns = [
-    {
-      title: 'Name',
-      dataIndex: 'name',
-      key: 'name',
-      filteredValue: [searchText],
-      onFilter: (value, record) => {
-          return record.name.toLowerCase().includes(value.toLowerCase());
-      },
-    },
-    {
-      title: 'Progress',
-      dataIndex: 'progress',
-      key: 'progress',
-      render: (text, record, index) => (
-        <>
-        <div className='flex flex-row gap-2'>
-  {/*            <CheckCircleFilled style={record.progress == 'Rejected' ? {color: '#FF3B30'} : (record.progress == 'Accepted' ? {color: '#51C080'} : {color: '#FFCE20'})}/>
-  */}           <p>{record.progress}</p>
-            </div>
-        </>
-    ) 
-    },
-    {
-      title: 'Date',
-      dataIndex: 'date',
-      key: 'date',
-    },
-  ];
-
 
   return (
         <div className="bg-home-bg h-full">
@@ -147,7 +113,7 @@ const dataSource = [
                    <DashboardTable data={myBids}/>
                 </div>
                 <div className="flex items-center justify-center">
-                    <SimpleList data={leadingMissions} />
+                    <SimpleList title={"Recent Missions"}  data={recentMissions} type={'mission'}/>
                 </div>
 
             </div>

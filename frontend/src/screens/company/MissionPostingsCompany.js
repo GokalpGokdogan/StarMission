@@ -1,8 +1,35 @@
 import React, { useEffect, useState } from 'react';
 import MissionPost from '../../components/MissionPost'
 import SearchBar from '../../components/SearchBar';
+import { getMissionPostings } from '../../Requests';
+import { useUser } from '../../UserProvider';
 
 const MissionPostingsCompany = () => {
+
+  const {userId} = useUser();
+  const [recentMissions, setRecentMissions] = useState([]);
+
+  const fetchRecentMissions = async () => {
+    try{
+        const miss = await getMissionPostings(userId);
+        if(miss === "No applications found with these filters")
+        {
+          console.log("ahah")
+        }
+        else
+        {
+          setRecentMissions(miss);
+          console.log(miss);
+        }
+        
+    } catch (error){
+        console.error('Error fetching missions:', error);
+    }
+  };
+
+  useEffect(() => {
+    fetchRecentMissions();
+}, []);
 
   return (
     <div className="bg-home-bg h-full">
@@ -13,12 +40,15 @@ const MissionPostingsCompany = () => {
           <SearchBar input="INPUT"/>
         </div>
         <div>
-            <MissionPost title="Space Discovery" company="NASA" location="Washington DC, United States" type="company"/>
-            <MissionPost title="Asteroid Ceres" company="NASA" location="Washington DC, United States" type="company"/>
-            <MissionPost title="Mesosphere AIM" company="NASA" location="Washington DC, United States" type="company"/>
-            <MissionPost title="Finding Water in Mars" company="NASA" location="Washington DC, United States" type="company"/>
-            <MissionPost title="Operation GT" company="NASA" location="Texas, USA" type="company"/>
-            <MissionPost title="Hedef Uzay 2024" company="Tübitak" location="Ankara, Turkey" type="company"/>
+          {recentMissions.map(post => (
+              <MissionPost
+                key={post.key}
+                title={post.name}
+                company={post.company_name}
+                location={post.location}
+                type="company"
+              />
+            ))}
         </div>
     </div>
   );

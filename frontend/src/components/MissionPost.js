@@ -15,7 +15,7 @@ const MissionPost = ({title, company, location, type, handleOnClick}) => {
                 </div>
                 <div className="flex items-center justify-center mb-2 mt-2 mr-2">
                     <button type="button" className={`w-28 bg-button-purple text-white text-sm py-2 rounded-xl hover:bg-indigo-700`} onClick={handleOnClick}>
-                    {type === "astronaut" ? "Apply" : "Bid to Mission"}
+                    {type === "astronaut" ? "Apply" : "View Details"}
                     </button>
                 </div>
             </div>
