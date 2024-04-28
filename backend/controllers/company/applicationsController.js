@@ -1,14 +1,14 @@
 const db = require('../../database');
 
-//! Test ~ Delete this when tested
+
 // Get applicant data
 // assumed user id will be provided
 
 const getApplicantData = async (data) => {
     return new Promise((resolve, reject) => {
-        const {employeeId} = data;
+        const {astronautId} = data;
         db.query(`SELECT * FROM astronaut a, user u WHERE u.user_id = a.user_id AND a.user_id = ?`,
-            [employeeId], 
+            [astronautId], 
             (err, result) => {
                 if (err) {
                     reject(err);
@@ -26,14 +26,16 @@ const getApplicantData = async (data) => {
 }
 
 
-//! Test ~ Delete this when tested
+
 // get applications with filters
 // assumed companyId will be provided
 
 const getApplications = async (data) => {
     return new Promise((resolve, reject) => {
         
-        const { selfCompanyId, searchedName, profession, 
+
+
+        const { companyId, missionId, searchedName, profession, 
             minAge, maxAge, sex, minWeight, maxWeight, 
             minHeight, maxHeight, nationality, missionName } = data;
 
@@ -57,7 +59,7 @@ const getApplications = async (data) => {
                     //AND (CASE WHEN ? IS NOT NULL THEN s.mission_name LIKE ? ELSE 1 END) 
 
             db.query(query,
-                [selfCompanyId, searchedName, searchedName, profession, profession, minAge, minAge, 
+                [companyId, missionId, searchedName, searchedName, profession, profession, minAge, minAge, 
                     maxAge, maxAge, sex, sex,nationality, nationality, minHeight, minHeight, 
                     maxHeight, maxHeight, minWeight, minWeight, maxWeight, maxWeight, missionName, missionName], 
                 (err, result) => {
@@ -68,7 +70,6 @@ const getApplications = async (data) => {
                         reject("ER_FIND_NONE");     // No applicants found with these filters
                     }
                     else {
-                        console.log(result, "successful get applicants with filters");
                         resolve(result);
                     }
                 }
@@ -84,7 +85,7 @@ const acceptApplicationC = async (data) => {
     return new Promise((resolve, reject) => {
         const {astronautId, missionId, salary, startDate} = data;
         // application_status: 0~Processing, 1~Accepted, 2~Rejected
-        db.query(`UPDATE applied_mission SET application_status = 1 WHERE astronaut_id = ? AND mission_id = ?`,
+        db.query(`UPDATE applied_mission SET application_status = 'Accepted' WHERE astronaut_id = ? AND mission_id = ?`,
             [astronautId, missionId], 
             (err, result) => {
                 if (err) {
@@ -92,7 +93,7 @@ const acceptApplicationC = async (data) => {
                 }
                 else {
                     console.log(result, "successful accept application");
-                    db.query(`INSERT INTO mission_of (astronaut_id, mission_id, salary, start_date) VALUES (?, ?, ?, ?)`,
+                    db.query(`INSERT INTO mission_of (astronaut_id, mission_id, salary, starting_date) VALUES (?, ?, ?, ?)`,
                         [astronautId, missionId, salary, startDate], 
                         (err2, result2) => {
                             if (err2) {
@@ -100,7 +101,7 @@ const acceptApplicationC = async (data) => {
                             }
                             else {
                                 console.log(result2, "successful insert into astronaut_mission");
-                                resolve(result2);
+                                resolve("successful accept application");
                             }
                         }
                     );
@@ -200,13 +201,13 @@ const acceptApplicationA = async (data) => {
 //     });
 // }
 
-//! Test ~ Delete this when tested
+
 // Get application data
 
 const getApplicationData = async (data) => {
     return new Promise((resolve, reject) => {
         const {astronautId, missionId} = data;
-        db.query(`SELECT * FROM applied_mission WHERE astronaut_id = ? AND mission_id = ?`,
+        db.query(`SELECT * FROM applied_mission a WHERE a.astronaut_id = ? AND a.mission_id = ?`,
             [astronautId, missionId], 
             (err, result) => {
                 if (err) {
@@ -216,7 +217,6 @@ const getApplicationData = async (data) => {
                     reject("ER_FIND_NONE");     // No application found with this id
                 }
                 else {
-                    console.log(result, "successful get application data");
                     resolve(result);
                 }
             }
@@ -231,10 +231,11 @@ const rejectApplication = async (data) => {
     return new Promise((resolve, reject) => {
         const {astronautId, missionId} = data;
         // application_status: 0~Processing, 1~Accepted, 2~Rejected
-        db.query(`UPDATE applied_mission SET application_status = 2 WHERE astronaut_id = ? AND mission_id = ?`,
+        db.query(`UPDATE applied_mission SET application_status = 'Rejected' WHERE astronaut_id = ? AND mission_id = ?`,
             [astronautId, missionId], 
             (err, result) => {
                 if (err) {
+                    console.log(err);
                     reject(err);
                 }
                 else {

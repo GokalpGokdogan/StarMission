@@ -5,7 +5,6 @@ import Cookies from 'js-cookie';
 
 
 const API_HOST = "localhost:3001";
-
 axios.defaults.withCredentials = true;
 
 

@@ -16,7 +16,7 @@ router.get('/getCurrentMission', async(req, res) => {
         }
     } catch (error) {
         if (error === "ER_FIND_NONE") {
-            res.status(400).send("No current missions available for this astronaut");
+            res.status(204).send("No current missions available for this astronaut");
         }
         else {
             res.status(400).send("An error occurred in get current missions for astronaut" + error);
@@ -38,7 +38,7 @@ router.get('/getPastMissions', async(req, res) => {
         }
     } catch (error) {
         if (error === "ER_FIND_NONE") {
-            res.status(400).send("ER_FIND_NONE");
+            res.status(204).send("ER_FIND_NONE");
         }
         else {
             res.status(400).send("An error occurred in get past missions for astronaut" + error);
@@ -62,7 +62,7 @@ router.get('/getRecentMissions', async(req, res) => {
         }
     } catch (error) {
         if (error === "ER_FIND_NONE") {
-            res.status(400).send("No recent mission postings");
+            res.status(204).send("No recent mission postings");
         }
         else {
             res.status(400).send("An error occurred in get recent mission postings for astronaut" + error);

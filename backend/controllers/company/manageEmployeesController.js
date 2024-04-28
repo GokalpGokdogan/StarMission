@@ -1,14 +1,14 @@
 const db = require('../../database');
 
-//! Test ~ Delete this when tested
+
 // Get employees with filters
 const getEmployees = async (data) => {
     return new Promise((resolve, reject) => {
-        const {selfCompanyId, searchedName, profession, minAge, maxAge, 
+        const {companyId, searchedName, profession, minAge, maxAge, 
             sex, minWeight, maxWeight, minHeight, maxHeight, nationality} = data;
 
         db.query(`
-                SELECT DISTINCT u.*, a.*, TIMESTAMPDIFF(YEAR,  a.birth_date, CURDATE()) AS age FROM user u, astronaut a, space_mission s, company c, mission_of m
+                SELECT DISTINCT *, TIMESTAMPDIFF(YEAR,  a.birth_date, CURDATE()) AS age FROM user u, astronaut a, space_mission s, company c, mission_of m
                 WHERE a.user_id = m.astronaut_id AND s.mission_id = m.mission_id AND a.user_id = u.user_id
                 AND c.user_id = s.leading_firm_id AND c.user_id = ?
                 AND (CASE WHEN ? IS NOT NULL THEN u.name LIKE ? ELSE 1 END) 
@@ -21,7 +21,7 @@ const getEmployees = async (data) => {
                 AND (CASE WHEN ? IS NOT NULL THEN a.height <= ? ELSE 1 END)
                 AND (CASE WHEN ? IS NOT NULL THEN a.weight >= ? ELSE 1 END)
                 AND (CASE WHEN ? IS NOT NULL THEN a.weight <= ? ELSE 1 END);`,
-                [selfCompanyId, searchedName, searchedName, profession, profession, minAge, minAge,
+                [companyId, searchedName, searchedName, profession, profession, minAge, minAge,
                     maxAge, maxAge, sex, sex,nationality, nationality, minHeight, minHeight, 
                     maxHeight, maxHeight, minWeight, minWeight, maxWeight, maxWeight],
                 (err, result) => {
@@ -40,15 +40,15 @@ const getEmployees = async (data) => {
     });
 }
 
-//! Test ~ Delete this when tested
+
 // Get employee data
 // assumed user id will be provided
 
 const getEmployeeData = async (data) => {
     return new Promise((resolve, reject) => {
-        const {employeeId} = data;
+        const {astronautId} = data;
         db.query(`SELECT * FROM astronaut a, user u WHERE u.user_id = a.user_id AND a.user_id = ?`,
-            [employeeId], 
+            [astronautId], 
             (err, result) => {
                 if (err) {
                     reject(err);
@@ -66,18 +66,18 @@ const getEmployeeData = async (data) => {
 }
 
 
-//! Test ~ Delete this when tested
+
 // Fire employee
 // assumed user id and mission id will be provided
 
 const fireEmployee = async (data) => {
     return new Promise((resolve, reject) => {
         
-        const { employee_id, mission_id } = data;
+        const { astronautId, missionId } = data;
         
-        let query = `UPDATE mission_of SET leaving_date = CURDATE() WHERE user_id = ? AND mission_id = ?`;
+        let query = `UPDATE mission_of SET leaving_date = CURDATE() WHERE astronaut_id = ? AND mission_id = ?`;
         db.query(query,
-            [employee_id, mission_id], 
+            [astronautId, missionId], 
             (err, result) => {
                 if (err) {
                     reject(err);

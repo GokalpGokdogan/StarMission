@@ -8,6 +8,7 @@ import { useState, useContext, useEffect } from 'react';
 import DashboardCompany from './screens/company/DashboardCompany';
 import ApplicationsAstronaut from './screens/astronaut/ApplicationsAstronaut';
 import MissionPostingsAstronaut from './screens/astronaut/MissionPostingsAstronaut';
+import MissionDetailsAstronaut from './screens/astronaut/MissionDetailsAstronaut';
 import MissionPostingsCompany from './screens/company/MissionPostingsCompany';
 import CreateMission from './screens/CreateMission';
 import ApplicationsCompany from './screens/company/ApplicationsCompany';
