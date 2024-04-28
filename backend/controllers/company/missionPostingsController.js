@@ -81,6 +81,9 @@ const getMissionData = async (data) => {
                 if(result[0].important_notes){
                     result[0].important_notes = result[0].important_notes.split("$$$$");
                 }
+                else{
+                    result[0].important_notes = [];
+                }
                 resolve(result);
             }
         });
