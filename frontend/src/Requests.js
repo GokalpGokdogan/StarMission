@@ -179,7 +179,6 @@ export const getLeadingMissions = async (companyId, name, start_date, end_date, 
     return res.data;
 }
 
-
 export const getApplicationData = async (astronaut_id, mission_id, applied_date) => {
     let res = await axios({
         method: 'get',
@@ -200,6 +199,26 @@ export const getApplicationData = async (astronaut_id, mission_id, applied_date)
     console.log(res.data);
     return res.data;
 }
+
+export const getMyBids = async (companyId) => {
+    let res = await axios({
+        method: 'get',
+        url: `http://${API_HOST}/company/myBids/getMyBids`,
+        headers: { 'Content-Type': 'application/json' },
+        params: {
+           companyId: companyId,
+        },
+        withCredentials: true
+    });
+
+    if (res.status == 204) {
+        console.log("No bids found with these filters")
+    }
+
+    console.log(res.data);
+    return res.data;
+}
+
 
 /*
     This is a GET request which get past missions for specific astronaut.

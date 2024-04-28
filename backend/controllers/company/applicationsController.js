@@ -33,8 +33,6 @@ const getApplicantData = async (data) => {
 const getApplications = async (data) => {
     return new Promise((resolve, reject) => {
 
-
-
         const { companyId, missionId, searchedName, profession,
             minAge, maxAge, sex, minWeight, maxWeight,
             minHeight, maxHeight, nationality, missionName } = data;
@@ -53,7 +51,8 @@ const getApplications = async (data) => {
                     AND (CASE WHEN ? IS NOT NULL THEN a.height <= ? ELSE 1 END)
                     AND (CASE WHEN ? IS NOT NULL THEN a.weight >= ? ELSE 1 END)
                     AND (CASE WHEN ? IS NOT NULL THEN a.weight <= ? ELSE 1 END)
-                    AND (CASE WHEN ? IS NOT NULL THEN s.name = ? ELSE 1 END)`;
+                    AND (CASE WHEN ? IS NOT NULL THEN s.name = ? ELSE 1 END)
+                    ORDER BY applied_date DESC`;
 
         // if mission name is like a search bar, then use the following line
         //AND (CASE WHEN ? IS NOT NULL THEN s.mission_name LIKE ? ELSE 1 END) 

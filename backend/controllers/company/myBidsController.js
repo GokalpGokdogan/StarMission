@@ -4,8 +4,8 @@ const getMyBids = async (data) => {
     return new Promise((resolve, reject) => {
         
         const { companyId } = data;
-        let query = `SELECT DISTINCT * FROM mission_bid b 
-                    WHERE b.bidding_company_id = ? ORDER BY b.bid_date DESC;`;
+        let query = `SELECT DISTINCT b.*, s.name FROM mission_bid b, space_mission s 
+                    WHERE s.mission_id = b.mission_id AND b.bidding_company_id = ? ORDER BY b.bid_date DESC;`;
         db.query(query, [companyId], (err, result) => {
                 if (err) {
                     reject(err);

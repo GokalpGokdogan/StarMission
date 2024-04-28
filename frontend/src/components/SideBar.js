@@ -36,7 +36,6 @@ const Sidebar = ({ open, setOpen, setHref, active, setActive, menu }) => {
 
                 </div>
                     {
-
                         menu.map((item, index) => {
                             return (
                                 <li key={index} className={`font-poppins text-sub-text ${active === item.title ? 'text-white font-semibold' : ' '}`}>
