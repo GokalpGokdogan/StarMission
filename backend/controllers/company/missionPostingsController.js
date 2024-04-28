@@ -78,7 +78,9 @@ const getMissionData = async (data) => {
                 reject("ER_FIND_NONE");     // No mission found
             }
             else {
-                console.log(result, "successful get mission data");
+                if(result[0].important_notes){
+                    result[0].important_notes = result[0].important_notes.split("$$$$");
+                }
                 resolve(result);
             }
         });

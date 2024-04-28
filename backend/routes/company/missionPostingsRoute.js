@@ -59,7 +59,7 @@ router.get('/getMissionData', async (req, res) => {
         res.status(200).json(result);
     }
     catch (err) {
-        res.status(400).json(err);
+        res.status(400).send(err);
     }
 });
 
@@ -86,5 +86,5 @@ router.post('/bidToMission', async (req, res) => {
         res.status(400).json(err);
     }
 });
-
+ 
 module.exports = router;
