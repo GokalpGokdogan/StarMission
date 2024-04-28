@@ -22,7 +22,7 @@ router.post('/', async(req, res) => {
         const response = await createMission(data);
         res.status(200).send(response);
     } catch (error) {
-        res.status(400).send("An error occured while creating mission: ", error);
+        res.status(400).send("An error occured while creating mission: "+ error);
     }
 });
 

@@ -1,7 +1,6 @@
 import { useState } from "react";
 
-function AddDynamicInputFields() {
-    const [inputs, setInputs] = useState([{ note: ""}]);
+function AddDynamicInputFields({inputs, setInputs}) {
 
     const handleAddInput = () => {
         setInputs([...inputs, { note: ""}]);

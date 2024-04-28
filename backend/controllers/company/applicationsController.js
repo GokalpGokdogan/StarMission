@@ -38,7 +38,7 @@ const getApplications = async (data) => {
             minHeight, maxHeight, nationality, missionName } = data;
 
 
-        let query = `SELECT u.*, a.*, s.*, m.*,u.name AS astronaut_name,  FROM user u, astronaut a, space_mission s, company c, applied_mission m
+        let query = `SELECT u.*, a.*, s.*, m.*,u.name AS astronaut_name FROM user u, astronaut a, space_mission s, company c, applied_mission m
                     WHERE u.user_id = a.user_id AND a.user_id = m.astronaut_id AND s.mission_id = m.mission_id 
                     AND c.user_id = s.leading_firm_id AND c.user_id = ? 
                     AND (CASE WHEN ? IS NOT NULL THEN u.name LIKE ? ELSE 1 END) 

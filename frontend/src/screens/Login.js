@@ -1,6 +1,9 @@
-import React, { useEffect, useState } from 'react';
-import {Link, Route} from 'react-router-dom';
+import React, { useEffect, useState, useContext } from 'react';
+import { UserContext } from '../UserProvider';
+import {Link, Route, Navigate, useNavigate} from 'react-router-dom';
 import { login } from '../Requests';
+import { useUser } from '../UserProvider';
+
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -8,6 +11,9 @@ const Login = () => {
   const [showEmailPlaceholder, setShowEmailPlaceholder] = useState(true);
   const [showPasswordPlaceholder, setShowPasswordPlaceholder] = useState(true);
   const [isChecked, setIsChecked] = useState(false);
+  const navigate = useNavigate();
+  const {setUserType} = useUser();
+
 
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
@@ -17,10 +23,6 @@ const Login = () => {
   const handlePasswordChange = (e) => {
     setPassword(e.target.value);
     setShowPasswordPlaceholder(e.target.value === '');
-  };
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Add login functionality here
   };
   const handleCheckboxChange = (e) => {
     setIsChecked(e.target.checked);
@@ -35,6 +37,11 @@ const Login = () => {
     console.log(password);
   }, [email, password]);
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    await login(email, password, navigate, setUserType);
+  };
+  
 
   return (
     <div className="flex items-center justify-center bg-main-bg h-screen">
@@ -68,7 +75,7 @@ const Login = () => {
         </div>
         <label htmlFor="signup" className="mb-2 text-white text-sm">Don't have an account? <Link to="/sign-up" className="text-blue-500">Sign up</Link></label>
         <div className="flex items-center justify-center mb-4 mt-4">
-          <button type="submit" className={`w-32 bg-button-purple text-white transition-colors duration-300 ease-in-out hover:bg-indigo-700 hover:text-gray-100 hover:shadow-lg py-2 rounded-lg font-bold`} onClick={()=> login(email, password)}>
+          <button type="submit" className={`w-32 bg-button-purple text-white transition-colors duration-300 ease-in-out hover:bg-indigo-700 hover:text-gray-100 hover:shadow-lg py-2 rounded-lg font-bold`}>
             Login
           </button>
         </div> 

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import MissionPost from '../../components/MissionPost'
 import SearchBar from '../../components/SearchBar';
 

@@ -1,24 +1,12 @@
 import axios from 'axios';
+import { parseUserString } from './UserProvider';
+import { useNavigate } from 'react-router-dom';
+import Cookies from 'js-cookie';
+
 
 const API_HOST = "localhost:3001";
 
 axios.defaults.withCredentials = true;
-
-
-function parseUserString(userString) {
-    const userKeyValuePairs = userString.split(';');
-  
-    const userObject = {};
-  
-    for (const pair of userKeyValuePairs) {
-      const [key, value] = pair.trim().split('=');
-      userObject[key] = value;
-    }
-  
-    return userObject;
-  }
-
-  
 
 
 //Commented parts in request bodies are because there isn't an actual backend connected right now.
@@ -30,11 +18,11 @@ function parseUserString(userString) {
 */
 
 export const registerAstronaut = async (name, email, phone, nationality, birth_date, sex, password) => {
-    const body = { 'name': name, 'email': email, 'phone': phone, 'nationality': nationality ,'birth_date':birth_date, 'sex':sex, 'password': password }
+    const body = { 'name': name, 'email': email, 'phone': phone, 'nationality': nationality, 'birth_date': birth_date, 'sex': sex, 'password': password }
     let res = await axios({
         method: 'post',
         url: `http://${API_HOST}/logReg/registerAstronaut`,
-        headers: {'Content-Type': 'application/json',},
+        headers: { 'Content-Type': 'application/json', },
         data: body,
     })
     console.log(res.data);
@@ -51,7 +39,7 @@ export const registerCompany = async (name, email, phone, password) => {
     let res = await axios({
         method: 'post',
         url: `http://${API_HOST}/logReg/registerCompany`,
-        headers: {'Content-Type': 'application/json',},
+        headers: { 'Content-Type': 'application/json', },
         data: body,
     })
     console.log(res.data);
@@ -64,11 +52,12 @@ export const registerCompany = async (name, email, phone, password) => {
     {email: 'databossadmin@gmail.com', password: 'oykuslayqueenbossbitch'}
 */
 
-export const login = async (email, password) => {
+export const login = async (email, password, navigate, setUserType) => {
+
     let res = await axios({
         method: 'get',
         url: `http://${API_HOST}/logReg/login`,
-        headers: {'Content-Type': 'application/json'},
+        headers: { 'Content-Type': 'application/json' },
         params: {
             email: email,
             password: password
@@ -76,30 +65,25 @@ export const login = async (email, password) => {
         withCredentials: true
     });
 
-    const userObject = parseUserString(document.cookie);
-    
-    console.log(userObject.user_type); // Output: "company"
-    console.log("id:" + userObject.user_id);
 
-    if (res.status === 200) {
-        if(userObject.user_type == "company")
-        {
-            window.location.href = '/company-dashboard';
-        }
-        else
-        {
-            window.location.href = '/dashboard';
+    console.log("res:" + res.status);
+    if (res.status == 200) {
+        if (Cookies.get('user_type') === "company") {
+            setUserType('company');
+            navigate("/company-dashboard"); // Redirect to company dashboard
+        } else {
+            setUserType('astronaut');
+            navigate("/dashboard"); // Redirect to user dashboard
         }
     }
-     
-    console.log(res.data);
+   
 };
 
 export const getEmployees = async (companyId) => {
     let res = await axios({
         method: 'get',
         url: `http://${API_HOST}/company/manageEmployees/getEmployees`,
-        headers: {'Content-Type': 'application/json'},
+        headers: { 'Content-Type': 'application/json' },
         params: {
             selfCompanyId: companyId,
         },
@@ -114,7 +98,7 @@ export const getMissionPostings = async (companyId) => {
     let res = await axios({
         method: 'get',
         url: `http://${API_HOST}/company/missionPostings/getMissionPostings`,
-        headers: {'Content-Type': 'application/json'},
+        headers: { 'Content-Type': 'application/json' },
         params: {
             companyId: companyId,
         },
@@ -126,11 +110,11 @@ export const getMissionPostings = async (companyId) => {
 };
 
 export const getApplications = async (selfCompanyId, searchedName, profession, minAge, maxAge, sex, minWeight, maxWeight,
-minHeight, maxHeight, nationality, missionName) => {
+    minHeight, maxHeight, nationality, missionName) => {
     let res = await axios({
         method: 'get',
         url: `http://${API_HOST}/company/applications/getApplications`,
-        headers: {'Content-Type': 'application/json'},
+        headers: { 'Content-Type': 'application/json' },
         params: {
             selfCompanyId: selfCompanyId,
             searchedName: searchedName,
@@ -148,13 +132,28 @@ minHeight, maxHeight, nationality, missionName) => {
         withCredentials: true
     });
 
-    if(res.data == "No applications found with these filters")
-    {
+    if (res.data == "No applications found with these filters") {
         console.log("ahah")
     }
 
     console.log(res.data);
     return res.data;
+}
+
+export const createMission = async (companyId, name, location, start_date, end_date, description, budget, important_notes) => {
+    const body = {
+        'companyId': companyId, 'name': name, 'location': location, 'start_date': start_date, 'end_date': end_date, 'description': description,
+        'budget': budget,
+        'important_notes': important_notes
+    }
+    let res = await axios({
+        method: 'post',
+        url: `http://${API_HOST}/company/createMission/`,
+        headers: { 'Content-Type': 'application/json', },
+        data: body,
+    })
+    console.log(res.data);
+    return res.data
 }
 
 /*
@@ -169,17 +168,17 @@ export const getPastMissions = async () => {
         let res = await axios({
             method: 'get',
             url: `http://${API_HOST}/astronaut/getMissionInfo/getPastMissions`,
-            headers: {'Content-Type': 'application/json'},
+            headers: { 'Content-Type': 'application/json' },
             withCredentials: true
         });
         if (res.status === 200) {
             resolve(res.data);
         }
-        else if(res.status === 400 && res.data === "NOT_AUTHORIZED_USER"){  // the logged in user is not astronaut
+        else if (res.status === 400 && res.data === "NOT_AUTHORIZED_USER") {  // the logged in user is not astronaut
             reject("NOT_AUTHORIZED_USER");
             // to be continued...
         }
-        else if(res.status === 400 && res.data === "ER_FIND_NONE"){ // there is no past mission
+        else if (res.status === 400 && res.data === "ER_FIND_NONE") { // there is no past mission
             resolve([]);
             // to be continued...
         }

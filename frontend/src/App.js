@@ -4,7 +4,7 @@ import PastMissions from "./components/PastMissions";
 import MissionApplicant from "./components/MissionApplicant";
 import { BrowserRouter as Router, Routes, Route, Navigate, Outlet } from "react-router-dom";
 import Sidebar from './components/SideBar';
-import { useState } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import DashboardCompany from './screens/company/DashboardCompany';
 import ApplicationsAstronaut from './screens/astronaut/ApplicationsAstronaut';
 import MissionPostingsAstronaut from './screens/astronaut/MissionPostingsAstronaut';
@@ -16,19 +16,33 @@ import PartneredMissions from './screens/company/PartneredMissions';
 import MissionDetailsCompany from './screens/company/MissionDetailsCompany';
 import SingleEmployee from "./components/SingleEmployee";
 import ManageEmployees from "./screens/ManageEmployees";
-import DashboardAstronaut from './screens/astronaut/DashboardAstronaut'; 
+import DashboardAstronaut from './screens/astronaut/DashboardAstronaut';
+import { UserProvider, useUser } from './UserProvider';
+import UserContext from './UserProvider';
+import { parseUserString } from './UserProvider';
+import Cookies from 'js-cookie';
 
 function App() {
+    return (
+            <AppContent />
+    );
+}
+
+export default App;
+
+
+function AppContent() {
 
     const [isLoggedIn, setLoggedIn] = useState(false);
     const [open, setOpen] = useState(false);
     const [href, setHref] = useState("Login");
     const [active, setActive] = useState("Login");
-    const [role, setRole] = useState("company");
+    const { userType } = useUser();
 
     const Auth = ({ allowedRoles }) => {
+        console.log("usertype:" + userType);
 
-        return allowedRoles.includes(role) ? (
+        return allowedRoles.includes(userType) ? (
             <Outlet />
         ) : (
             <Navigate to="/" replace />
@@ -80,43 +94,42 @@ function App() {
         }
     };
 
-    const menu = getMenuForRole(role);
+    const menu = getMenuForRole(userType);
 
 
     return (
-            <div className="transition-all duration-300 h-screen bg-home-bg">
-                <Router>
-                    <div className={`fixed inset-y-0 left-0 ${open ? 'w-56' : 'w-0'} transition-all duration-300 z-50 bg-darker-bg`}>
-                        <Sidebar open={open} setOpen={setOpen} setHref={setHref} active={active} setActive={setActive} menu={menu} />
+        <div className="transition-all duration-300 h-screen bg-home-bg">
+            <Router>
+                <div className={`fixed inset-y-0 left-0 ${open ? 'w-56' : 'w-0'} transition-all duration-300 z-50 bg-darker-bg`}>
+                    <Sidebar open={open} setOpen={setOpen} setHref={setHref} active={active} setActive={setActive} menu={menu} />
+                </div>
+                <div className={`flex flex-col w-full h-full transition-all duration-300 ${open ? 'pl-56' : "pl-0"} `}>
+                    <div className='flex-1'>
+                        <Routes>
+                            <Route path="/" element={<Login />} />
+                            <Route path="/sign-up" element={<SignUp />} />
+                            <Route path="/past-missions" element={<PastMissions />} />
+                            <Route path="/mission-applicant" element={<MissionApplicant />} />
+                            <Route path="/create-mission" element={<CreateMission />} />
+                            <Route element={<Auth allowedRoles={["company"]} />}>
+                                <Route path="/company-dashboard" element={<DashboardCompany />} />
+                                <Route path="/company-applications" element={<ApplicationsCompany />} />
+                                <Route path="/company-mission-postings" element={<MissionPostingsCompany />} />
+                                <Route path="/leading-missions" element={<LeadingMissions />} />
+                                <Route path="/partnered-missions" element={<PartneredMissions />} />
+                                <Route path="/mission-details" element={<MissionDetailsCompany />} />
+                            </Route>
+                            <Route element={<Auth allowedRoles={["astronaut"]} />}>
+                                <Route path="/dashboard" element={<DashboardAstronaut />} />
+                                <Route path="/my-applications" element={<ApplicationsAstronaut />} />
+                                <Route path="/mission-postings" element={<MissionPostingsAstronaut />} />
+                            </Route>
+                            <Route path="/manage-employees" element={<ManageEmployees />} />
+                        </Routes>
                     </div>
-                    <div className={`flex flex-col w-full h-full transition-all duration-300 ${open ? 'pl-56' : "pl-0"} `}>
-                        <div className='flex-1'>
-                            <Routes>
-                                <Route path="/" element={<Login />} />
-                                <Route path="/sign-up" element={<SignUp />} />
-                                <Route path="/past-missions" element={<PastMissions />} />
-                                <Route path="/mission-applicant" element={<MissionApplicant />} />
-                                <Route path="/create-mission" element={<CreateMission />} />
-                                <Route element={<Auth allowedRoles={["company"]} />}>
-                                    <Route path="/company-dashboard" element={<DashboardCompany />} />
-                                    <Route path="/company-applications" element={<ApplicationsCompany />} />
-                                    <Route path="/company-mission-postings" element={<MissionPostingsCompany />} />
-                                    <Route path="/leading-missions" element={<LeadingMissions/>} />
-                                    <Route path="/partnered-missions" element={<PartneredMissions/>} />
-                                    <Route path="/mission-details" element={<MissionDetailsCompany/>}/>
-                                </Route>
-                                <Route element={<Auth allowedRoles={["astronaut"]} />}>
-                                    <Route path="/dashboard" element={<DashboardAstronaut />} />
-                                    <Route path="/my-applications" element={<ApplicationsAstronaut />} />
-                                    <Route path="/mission-postings" element={<MissionPostingsAstronaut />} />
-                                </Route>
-                                <Route path="/manage-employees" element={<ManageEmployees />} />
-                            </Routes>
-                        </div>
-                    </div>
-                </Router>
-            </div>
+                </div>
+            </Router>
+        </div>
+
     );
 }
-
-export default App;
