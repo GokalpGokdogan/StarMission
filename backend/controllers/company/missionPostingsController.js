@@ -69,7 +69,7 @@ const getLeadingFirmNames = async (data) => {
 const getMissionData = async (data) => {
     return new Promise((resolve, reject) => {
         const { missionId } = data;
-        let query = `SELECT DISTINCT * FROM space_mission s, company c, user u WHERE s.mission_id = ? AND c.user_id = s.leading_firm_id AND c.user_id = u.user_id`;
+        let query = `SELECT DISTINCT s.*, u.name AS company_name FROM space_mission s, company c, user u WHERE s.mission_id = ? AND c.user_id = s.leading_firm_id AND c.user_id = u.user_id`;
         db.query(query, [missionId], (err, result) => {
             if (err) {
                 reject(err);
@@ -84,7 +84,7 @@ const getMissionData = async (data) => {
                 else{
                     result[0].important_notes = [];
                 }
-                resolve(result);
+                resolve(result[0]);
             }
         });
     });

@@ -46,6 +46,7 @@ const MissionPostingsCompany = () => {
                 title={post.name}
                 company={post.company_name}
                 location={post.location}
+                id={post.mission_id}
                 type="company"
               />
             ))}

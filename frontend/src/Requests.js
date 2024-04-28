@@ -107,6 +107,21 @@ export const getMissionPostings = async (companyId) => {
     return res.data;
 };
 
+export const getMissionData = async (missionId) => {
+    let res = await axios({
+        method: 'get',
+        url: `http://${API_HOST}/company/missionPostings/getMissionData`,
+        headers: { 'Content-Type': 'application/json' },
+        params: {
+            missionId: missionId,
+        },
+        withCredentials: true
+    });
+
+    console.log(res.data);
+    return res.data;
+};
+
 export const getApplications = async (companyId, searchedName, profession, minAge, maxAge, sex, minWeight, maxWeight,
     minHeight, maxHeight, nationality, missionName) => {
     let res = await axios({
