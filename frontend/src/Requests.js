@@ -51,8 +51,7 @@ export const registerCompany = async (name, email, phone, password) => {
     {email: 'databossadmin@gmail.com', password: 'oykuslayqueenbossbitch'}
 */
 
-export const login = async (email, password, navigate, setUserType) => {
-
+export const login = async (email, password, navigate, setUserType, setUserId) => {
     let res = await axios({
         method: 'get',
         url: `http://${API_HOST}/logReg/login`,
@@ -64,20 +63,20 @@ export const login = async (email, password, navigate, setUserType) => {
         withCredentials: true
     });
 
-
-    console.log("res:" + res.status);
     if (res.status == 200) {
         if (Cookies.get('user_type') === "company") {
             setUserType('company');
+            setUserId(Cookies.get('user_id'));
             navigate("/company-dashboard"); // Redirect to company dashboard
         } else {
             setUserType('astronaut');
+            setUserId(Cookies.get('user_id'));
             navigate("/dashboard"); // Redirect to user dashboard
         }
     }
-   
 };
 
+//company functions
 export const getEmployees = async (companyId) => {
     let res = await axios({
         method: 'get',
@@ -108,14 +107,14 @@ export const getMissionPostings = async (companyId) => {
     return res.data;
 };
 
-export const getApplications = async (selfCompanyId, searchedName, profession, minAge, maxAge, sex, minWeight, maxWeight,
+export const getApplications = async (companyId, searchedName, profession, minAge, maxAge, sex, minWeight, maxWeight,
     minHeight, maxHeight, nationality, missionName) => {
     let res = await axios({
         method: 'get',
         url: `http://${API_HOST}/company/applications/getApplications`,
         headers: { 'Content-Type': 'application/json' },
         params: {
-            selfCompanyId: selfCompanyId,
+            companyId: companyId,
             searchedName: searchedName,
             profession: profession,
             minAge: minAge,
@@ -153,6 +152,53 @@ export const createMission = async (companyId, name, location, start_date, end_d
     })
     console.log(res.data);
     return res.data
+}
+
+export const getLeadingMissions = async (companyId, name, start_date, end_date, location, min_budget, max_budget) => {
+    let res = await axios({
+        method: 'get',
+        url: `http://${API_HOST}/company/ledMissions/getLedMissions`,
+        headers: { 'Content-Type': 'application/json' },
+        params: {
+            companyId: companyId,
+            name: name,
+            start_date: start_date,
+            end_date: end_date,
+            location: location,
+            min_budget: min_budget,
+            max_budget: max_budget
+        },
+        withCredentials: true
+    });
+
+    if (res.status == 204) {
+        console.log("No missions found with these filters")
+    }
+
+    console.log(res.data);
+    return res.data;
+}
+
+
+export const getApplicationData = async (astronaut_id, mission_id, applied_date) => {
+    let res = await axios({
+        method: 'get',
+        url: `http://${API_HOST}/company/applications/getApplicationData`,
+        headers: { 'Content-Type': 'application/json' },
+        params: {
+            astronaut_id: astronaut_id,
+            mission_id: mission_id,
+            applied_date: applied_date
+        },
+        withCredentials: true
+    });
+
+    if (res.status == 204) {
+        console.log("No applications found with these filters")
+    }
+
+    console.log(res.data);
+    return res.data;
 }
 
 /*

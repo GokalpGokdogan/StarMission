@@ -6,9 +6,9 @@ const db = require('../../database');
 
 const getApplicantData = async (data) => {
     return new Promise((resolve, reject) => {
-        const {astronautId} = data;
+        const { astronautId } = data;
         db.query(`SELECT * FROM astronaut a, user u WHERE u.user_id = a.user_id AND a.user_id = ?`,
-            [astronautId], 
+            [astronautId],
             (err, result) => {
                 if (err) {
                     reject(err);
@@ -32,15 +32,15 @@ const getApplicantData = async (data) => {
 
 const getApplications = async (data) => {
     return new Promise((resolve, reject) => {
-        
 
 
-        const { companyId, missionId, searchedName, profession, 
-            minAge, maxAge, sex, minWeight, maxWeight, 
+
+        const { companyId, missionId, searchedName, profession,
+            minAge, maxAge, sex, minWeight, maxWeight,
             minHeight, maxHeight, nationality, missionName } = data;
 
 
-        let query = `SELECT u.*, a.*, s.*, m.*,u.name AS astronaut_name FROM user u, astronaut a, space_mission s, company c, applied_mission m
+        let query = `SELECT u.*, a.*, s.*, m.*,u.name AS astronaut_name, DATE(m.applied_date) AS applied_date FROM user u, astronaut a, space_mission s, company c, applied_mission m
                     WHERE u.user_id = a.user_id AND a.user_id = m.astronaut_id AND s.mission_id = m.mission_id 
                     AND c.user_id = s.leading_firm_id AND c.user_id = ? 
                     AND (CASE WHEN ? IS NOT NULL THEN u.name LIKE ? ELSE 1 END) 
@@ -55,24 +55,24 @@ const getApplications = async (data) => {
                     AND (CASE WHEN ? IS NOT NULL THEN a.weight <= ? ELSE 1 END)
                     AND (CASE WHEN ? IS NOT NULL THEN s.name = ? ELSE 1 END)`;
 
-                    // if mission name is like a search bar, then use the following line
-                    //AND (CASE WHEN ? IS NOT NULL THEN s.mission_name LIKE ? ELSE 1 END) 
+        // if mission name is like a search bar, then use the following line
+        //AND (CASE WHEN ? IS NOT NULL THEN s.mission_name LIKE ? ELSE 1 END) 
 
-            db.query(query,
-                [companyId, missionId, searchedName, searchedName, profession, profession, minAge, minAge, 
-                    maxAge, maxAge, sex, sex,nationality, nationality, minHeight, minHeight, 
-                    maxHeight, maxHeight, minWeight, minWeight, maxWeight, maxWeight, missionName, missionName], 
-                (err, result) => {
-                    if (err) {
-                        reject(err);
-                    }
-                    else if (result.length === 0) {
-                        reject("ER_FIND_NONE");     // No applicants found with these filters
-                    }
-                    else {
-                        resolve(result);
-                    }
+        db.query(query,
+            [companyId, missionId, searchedName, searchedName, profession, profession, minAge, minAge,
+                maxAge, maxAge, sex, sex, nationality, nationality, minHeight, minHeight,
+                maxHeight, maxHeight, minWeight, minWeight, maxWeight, maxWeight, missionName, missionName],
+            (err, result) => {
+                if (err) {
+                    reject(err);
                 }
+                else if (result.length === 0) {
+                    reject("ER_FIND_NONE");     // No applicants found with these filters
+                }
+                else {
+                    resolve(result);
+                }
+            }
         );
     });
 }
@@ -83,10 +83,10 @@ const getApplications = async (data) => {
 
 const acceptApplicationC = async (data) => {
     return new Promise((resolve, reject) => {
-        const {astronautId, missionId, salary, startDate} = data;
+        const { astronautId, missionId, salary, startDate } = data;
         // application_status: 0~Processing, 1~Accepted, 2~Rejected
         db.query(`UPDATE applied_mission SET application_status = 'Accepted' WHERE astronaut_id = ? AND mission_id = ?`,
-            [astronautId, missionId], 
+            [astronautId, missionId],
             (err, result) => {
                 if (err) {
                     reject(err);
@@ -94,7 +94,7 @@ const acceptApplicationC = async (data) => {
                 else {
                     console.log(result, "successful accept application");
                     db.query(`INSERT INTO mission_of (astronaut_id, mission_id, salary, starting_date) VALUES (?, ?, ?, ?)`,
-                        [astronautId, missionId, salary, startDate], 
+                        [astronautId, missionId, salary, startDate],
                         (err2, result2) => {
                             if (err2) {
                                 reject(err2);
@@ -109,7 +109,7 @@ const acceptApplicationC = async (data) => {
             }
         );
 
-        
+
 
 
 
@@ -121,10 +121,10 @@ const acceptApplicationC = async (data) => {
 
 const acceptApplicationA = async (data) => {
     return new Promise((resolve, reject) => {
-        const {astronautId, missionId, salary, startDate} = data;
+        const { astronautId, missionId, salary, startDate } = data;
         // application_status: 0~Processing, 1~Accepted, 2~Rejected
         db.query(`UPDATE applied_mission SET application_status = 1 WHERE astronaut_id = ? AND mission_id = ?`,
-            [astronautId, missionId], 
+            [astronautId, missionId],
             (err, result) => {
                 if (err) {
                     reject(err);
@@ -133,7 +133,7 @@ const acceptApplicationA = async (data) => {
                     console.log(result, "successful accept application");
 
                     db.query(`INSERT INTO mission_of (astronaut_id, mission_id, salary, start_date) VALUES (?, ?, ?, ?)`,
-                        [astronautId, missionId, salary, startDate], 
+                        [astronautId, missionId, salary, startDate],
                         (err2, result2) => {
                             if (err2) {
                                 reject(err2);
@@ -143,13 +143,13 @@ const acceptApplicationA = async (data) => {
                                 resolve(result2);
                             }
                         });
-                    
-                    
+
+
                 }
             }
         );
 
-        
+
 
     });
 }
@@ -196,7 +196,7 @@ const acceptApplicationA = async (data) => {
 //             }
 //         );
 
-        
+
 
 //     });
 // }
@@ -206,9 +206,9 @@ const acceptApplicationA = async (data) => {
 
 const getApplicationData = async (data) => {
     return new Promise((resolve, reject) => {
-        const {astronautId, missionId} = data;
-        db.query(`SELECT * FROM applied_mission a WHERE a.astronaut_id = ? AND a.mission_id = ?`,
-            [astronautId, missionId], 
+        const { astronaut_id, mission_id, applied_date } = data;
+        db.query(`SELECT * FROM applied_mission a WHERE a.astronaut_id = ? AND a.mission_id = ? AND a.applied_date = ?;`,
+            [astronaut_id, mission_id, applied_date],
             (err, result) => {
                 if (err) {
                     reject(err);
@@ -229,10 +229,10 @@ const getApplicationData = async (data) => {
 
 const rejectApplication = async (data) => {
     return new Promise((resolve, reject) => {
-        const {astronautId, missionId} = data;
+        const { astronautId, missionId } = data;
         // application_status: 0~Processing, 1~Accepted, 2~Rejected
         db.query(`UPDATE applied_mission SET application_status = 'Rejected' WHERE astronaut_id = ? AND mission_id = ?`,
-            [astronautId, missionId], 
+            [astronautId, missionId],
             (err, result) => {
                 if (err) {
                     console.log(err);
@@ -250,4 +250,4 @@ const rejectApplication = async (data) => {
 
 
 
-module.exports = { getApplicantData, getApplications, acceptApplicationC, acceptApplicationA, getApplicationData, rejectApplication};
+module.exports = { getApplicantData, getApplications, acceptApplicationC, acceptApplicationA, getApplicationData, rejectApplication };

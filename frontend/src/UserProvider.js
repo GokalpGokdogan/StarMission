@@ -4,6 +4,9 @@ import Cookies from 'js-cookie';
 export const getUserType = () => {
     return Cookies.get('user_type');
 }
+export const getUserId = () => {
+    return Cookies.get('user_id');
+}
 
 export const parseUserString = (userString) => {
     const userKeyValuePairs = userString.split(';');
@@ -22,9 +25,10 @@ export const UserContext = createContext();
 
 export const UserProvider = ({ children }) => {
     const [userType, setUserType] = useState(Cookies.get('user_type'));
+    const [userId, setUserId] = useState(Cookies.get('user_id'));
 
     return (
-        <UserContext.Provider value={{ userType, setUserType }}>
+        <UserContext.Provider value={{ userType, setUserType, userId, setUserId }}>
             {children}
         </UserContext.Provider>
     );

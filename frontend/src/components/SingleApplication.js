@@ -1,6 +1,8 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
+import { getApplicationData } from "../Requests";
 
-const SingleApplication = ({name, mission, nationality}) => {
+const SingleApplication = ({name, mission, nationality, astronaut_id, mission_id, applied_date }) => {
+  
     return (
         <li className="flex justify-center py-1 px-2">
             <div className="flex" style={{ width : "654px" }}>
@@ -14,7 +16,7 @@ const SingleApplication = ({name, mission, nationality}) => {
                     <p className="truncate text-xs leading-5 text-sub-text">{nationality}</p>
                 </div>
                 <div className="flex items-center justify-center mb-2 mt-2 mr-2">
-                    <button type="button" className={`w-20 bg-button-purple text-white text-sm py-2 rounded-xl`}>
+                    <button type="button" className={`w-20 bg-button-purple text-white text-sm py-2 rounded-xl`} onClick={()=> {console.log("applied date:" + applied_date); getApplicationData(astronaut_id, mission_id, applied_date)}}>
                     View
                     </button>
                 </div>

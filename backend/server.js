@@ -12,7 +12,7 @@ const applicationsRoute = require('./routes/company/applicationsRoute');
 const missionPostingsRoute = require('./routes/company/missionPostingsRoute');
 const myBidsRoute = require('./routes/company/myBidsRoute');
 const createMissionRoute = require('./routes/company/createMissionRoute');
-
+const ledMissionsRoute = require('./routes/company/ledMissionsRoute');
 const getMissionInfoRoute = require("./routes/astronaut/getMissionInfoRoute");
 const manageApplicationsRoute = require("./routes/astronaut/manageApplicationsRoute");
 
@@ -37,6 +37,7 @@ app.use('/logReg', logRegRoute);
 app.use('/company/manageEmployees', manageEmployeesRoute); 
 app.use('/company/applications', applicationsRoute);
 app.use('/company/missionPostings', missionPostingsRoute); 
+app.use('/company/ledMissions', ledMissionsRoute);
 
 app.use('/company/myBids', myBidsRoute); 
 app.use('/company/createMission', createMissionRoute); 

@@ -1,6 +1,6 @@
 import Login from './screens/Login';
 import SignUp from "./screens/SignUp";
-import PastMissions from "./components/PastMissions";
+import SimpleList from "./components/SimpleList";
 import MissionApplicant from "./components/MissionApplicant";
 import { BrowserRouter as Router, Routes, Route, Navigate, Outlet } from "react-router-dom";
 import Sidebar from './components/SideBar';
@@ -109,7 +109,7 @@ function AppContent() {
                         <Routes>
                             <Route path="/" element={<Login />} />
                             <Route path="/sign-up" element={<SignUp />} />
-                            <Route path="/past-missions" element={<PastMissions />} />
+                            <Route path="/past-missions" element={<SimpleList />} />
                             <Route path="/mission-applicant" element={<MissionApplicant />} />
                             <Route path="/create-mission" element={<CreateMission />} />
                             <Route element={<Auth allowedRoles={["company"]} />}>

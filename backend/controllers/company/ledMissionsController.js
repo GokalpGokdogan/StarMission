@@ -13,7 +13,7 @@ const getLedMissions = async (data) => {
                 AND (CASE WHEN ? IS NOT NULL THEN s.budget >= ? ELSE 1 END)
                 AND (CASE WHEN ? IS NOT NULL THEN s.budget <= ? ELSE 1 END)
                 ORDER BY s.end_date;`;
-        db.query(query, [companyId, name, start_date, end_date, location, min_budget, max_budget], (err, result) => {
+        db.query(query, [companyId, name, name, start_date, start_date, end_date, end_date, location, location, min_budget, min_budget, max_budget, max_budget], (err, result) => {
                 if (err) {
                     reject(err);
                 }

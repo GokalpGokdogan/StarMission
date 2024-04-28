@@ -1,10 +1,39 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {Link, Route} from 'react-router-dom';
-import PastMissions from '../../components/PastMissions';
+import SimpleList from '../../components/SimpleList';
 import ApplicationsTable from '../../components/ApplicationsTable';
 import DashboardTable from '../../components/DashboardTable';
+import { getLeadingMissions } from '../../Requests';
+import { useUser } from '../../UserProvider';
+
+//PASTMISSIONS COMPONENT SHRINKS IN EMPTY DATA ARRAY!!!!!!!!!!!!!
 
 const DashboardCompany = () => {
+
+  const {userId} = useUser();
+  const [leadingMissions, setLeadingMissions] = useState([]);
+
+  const fetchLeadingMissions = async () => {
+    try{
+        const leading = await getLeadingMissions(userId);
+        if(leading == "No applications found with these filters")
+        {
+          console.log("ahah")
+        }
+        else
+        {
+          setLeadingMissions(leading);
+          console.log(leading);
+        }
+        
+    } catch (error){
+        console.error('Error fetching apps:', error);
+    }
+};
+
+  useEffect(() => {
+    fetchLeadingMissions();
+}, []);
 
 const[searchText, setSearchText] = useState('');
 const dataSource = [
@@ -68,16 +97,16 @@ const dataSource = [
             <div className='p-4'>
             <div className=" grid grid-cols-2 grid-rows-2 gap-4">
                 <div className="flex items-center justify-center">
-                    <PastMissions />
+                    <SimpleList title={"Leading Missions"} data={leadingMissions}/>
                 </div>
                 <div className=" flex items-center justify-center">
-                    <PastMissions />
+                    <SimpleList data={leadingMissions} />
                 </div>
                 <div className="flex items-center justify-center">
-                    <PastMissions />
+                    <SimpleList data={leadingMissions} />
                 </div>
                 <div className="flex items-center justify-center shadow-">
-                        <DashboardTable/>
+                   <DashboardTable/>
                 </div>
             </div>
             </div>

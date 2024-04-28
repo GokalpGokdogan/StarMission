@@ -1,7 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {Link, Route} from 'react-router-dom';
 import SearchBar from '../../components/SearchBar';
 import SingleApplication from '../../components/SingleApplication'
+import { getApplications } from '../../Requests';
+import Cookie from 'js-cookie';
+import { useUser } from '../../UserProvider';
 
 const dataSource = [
   {
@@ -33,6 +36,33 @@ const dataSource = [
 
 const ApplicationsCompany = () => {
 
+  const {userId} = useUser();
+  const [applications, setApplications] = useState([]);
+  const [formattedDate, setFormattedDate] = useState('');
+
+  useEffect(() => {
+    const fetchApplications = async () => {
+        try{
+            const apps = await getApplications(userId);
+            if(apps == "No applications found with these filters")
+            {
+              console.log("ahah")
+            }
+            else
+            {
+              setApplications(apps);
+              console.log(apps);
+            }
+            
+        } catch (error){
+            console.error('Error fetching apps:', error);
+        }
+    };
+
+    fetchApplications();
+}, []);
+
+
   return (
     <div className="bg-home-bg h-full">
         <div className='h-16 bg-main-bg flex box-shadow shadow-sm'>
@@ -42,12 +72,15 @@ const ApplicationsCompany = () => {
           <SearchBar input="INPUT"/>
         </div>
         <div>
-        {dataSource.map(application => (
+        {applications.map(application => (
               <SingleApplication
                 key={application.key}
-                name={application.name}
-                mission={application.mission}
+                name={application.astronaut_name}
+                mission={application.name}
                 nationality={application.nationality}
+                applied_date={application.applied_date}
+                mission_id={application.mission_id}
+                astronaut_id={application.astronaut_id}
               />
             ))}
         </div>

@@ -6,7 +6,8 @@ const db = mysql.createConnection({
     user: process.env.MY_USER,
     password: process.env.MY_PASSWORD,
     database: "StarMission",
-    connectionLimit: 10
+    connectionLimit: 10,
+    dateStrings: 'date'
 });
 
 db.connect((err) => {

@@ -13,8 +13,8 @@ const Login = () => {
   const [isChecked, setIsChecked] = useState(false);
   const navigate = useNavigate();
   const {setUserType} = useUser();
-
-
+  const {setUserId} = useUser();
+  
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
     setShowEmailPlaceholder(e.target.value === '');
@@ -39,7 +39,7 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await login(email, password, navigate, setUserType);
+    await login(email, password, navigate, setUserType, setUserId);
   };
   
 

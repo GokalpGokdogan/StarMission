@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import {Link, Route} from 'react-router-dom';
-import PastMissions from '../../components/PastMissions';
+import SimpleList from '../../components/SimpleList';
 import ApplicationsTable from '../../components/ApplicationsTable';
 
 const dataSource = [
@@ -24,7 +24,7 @@ const dataSource = [
     },
 ];
 
-const DashboardCompany = () => {
+const DashboardAstronaut = () => {
 
   return (
         <div className="bg-home-bg h-full">
@@ -33,13 +33,13 @@ const DashboardCompany = () => {
             </div>
             <div className=" grid grid-cols-2 grid-rows-2 p-4 gap-4">
                 <div className="flex items-center justify-center">
-                    <PastMissions />
+                    <SimpleList />
                 </div>
                 <div className=" flex items-center justify-center">
-                    <PastMissions />
+                    <SimpleList />
                 </div>
                 <div className="flex items-center justify-center">
-                    <PastMissions />
+                    <SimpleList />
                 </div>
                 <div className="flex items-center justify-center shadow-">
                     <div style={{ width: '530px', height: '250px' }} className='shadow-lg'>
@@ -53,4 +53,4 @@ const DashboardCompany = () => {
 };
 
 
-export default DashboardCompany;
+export default DashboardAstronaut;

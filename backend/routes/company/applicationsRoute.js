@@ -123,12 +123,12 @@ router.post('/acceptApplicationA', async(req, res) => {
 router.get('/getApplicationData', async(req, res) => {
     try {
 
-        //! Test ~ When connected to frontend, delete this if block
+       /*  //! Test ~ When connected to frontend, delete this if block
         if(!req.query.companyId){
             console.log("No companyId in query, using cookie");
-            let companyId = req.cookies.companyId;
+            let companyId = req.cookies.user_id;
             req.query.companyId = companyId;
-        }
+        } */
 
         const response = await applicationsController.getApplicationData(req.query);
         res.status(200).send(response);
