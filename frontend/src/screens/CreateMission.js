@@ -52,7 +52,7 @@ const CreateMission = () => {
                 <h2 className="mb-4 text-xl font-bold text-main-text">Create New Mission</h2>
                 <form onSubmit={(e) => {
                     e.preventDefault(); // Prevent default form submission behavior
-                    createMission(64, name, location, start_date, end_date, description, 1400, important_notes);
+                    createMission(64, name, location, start_date, end_date, description, 0, important_notes);
                 }}>
                     <div className="grid gap-4 sm:grid-cols-2 sm:gap-6">
                         <div className="sm:col-span-2">

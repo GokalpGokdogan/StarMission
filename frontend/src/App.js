@@ -25,7 +25,7 @@ import Cookies from 'js-cookie';
 
 function App() {
     return (
-            <AppContent />
+        <AppContent />
     );
 }
 
@@ -41,7 +41,6 @@ function AppContent() {
     const { userType } = useUser();
 
     const Auth = ({ allowedRoles }) => {
-        console.log("usertype:" + userType);
 
         return allowedRoles.includes(userType) ? (
             <Outlet />

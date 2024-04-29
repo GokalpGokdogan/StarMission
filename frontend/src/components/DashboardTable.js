@@ -64,7 +64,7 @@ const DashboardTable = ({data}) => {
 
   return (
     <div className="w-full">
-      <ul className="flex-auto flex-col flex p-4 border rounded-xl border-transparent border-10 bg-grey-bg shadow-lg h-full">
+      <ul className="flex-auto flex-col flex p-4 border rounded-xl border-transparent border-10 bg-grey-bg shadow-lg h-full min-h-64">
         <div className="flex items-center justify-between">
           <h2 className="text-xl text-main-text font-semibold px-2 mb-4">My Bids</h2>
         </div>

@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import { NavLink } from 'react-router-dom';
+import React, { useState, useEffect } from 'react'
+import { NavLink, useLocation } from 'react-router-dom';
 import {
     IconChevronsLeft, IconChevronsRight
 } from '@tabler/icons-react';
@@ -8,6 +8,16 @@ import {
 const Sidebar = ({ open, setOpen, setHref, active, setActive, menu }) => {
     const [subOpen, setSubOpen] = useState(false)
     const [activeSub, setActiveSub] = useState("");
+    const location = useLocation();
+
+    useEffect(() => {
+        const currentPath = location.pathname;
+        console.log(currentPath);
+        
+        const activeMenuItem = menu.find(item => currentPath.startsWith(item.link));
+        console.log(activeMenuItem)
+        setActive(activeMenuItem ? activeMenuItem.title : '');
+    }, [location.pathname, menu]);
 
 
     return (
@@ -41,12 +51,6 @@ const Sidebar = ({ open, setOpen, setHref, active, setActive, menu }) => {
                                 <li key={index} className={`font-poppins text-sub-text ${active === item.title ? 'text-white font-semibold' : ' '}`}>
                                     <NavLink to={item.link} className=''
                                         onClick={(e) => {
-                                            if (!open) {
-                                                if (item.title === 'Search') {
-                                                    setOpen(true)
-                                                    setSubOpen(true)
-                                                }
-                                            }
                                             setHref(item.title)
                                             setActive(item.title)
                                         }}
