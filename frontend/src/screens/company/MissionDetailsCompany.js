@@ -26,22 +26,22 @@ const MissionDetailsCompany = () => {
     }
 };
 
-  const [showModal, setShowModal] = useState(false);
- /*  const dataSource = {
+ const [showModal, setShowModal] = useState(false);
+ /*const dataSource = {
     title: 'Asteroid Ceres',
     company: 'NASA',
     location: 'United States, Washington DC',
     startDate: '07.02.2024',
     endDate: '24.03.2024',
-    description: 'Asteroid Ceres is an extensive and ambitious mission aimed at unraveling the enigmatic mysteries surrounding the orbital dynamics of celestial bodies within our solar system. As a vital member of a carefully selected crew of 20 individuals, you will embark on a journey spanning vast expanses, conducting intricate scientific experiments across a myriad of locations, traversing an awe-inspiring distance of 1.545 billion kilometers. With each passing month, the culmination of your efforts will be meticulously documented, requiring thorough analysis and interpretation of intricate statistical data to unveil the secrets hidden within the cosmic tapestry. Successfully completing this monumental undertaking will not only mark a significant milestone in your career but also grant you unparalleled opportunities to delve into further exploration, delving into the depths of space to study celestial phenomena, including the enigmatic dark holes scattered throughout the vast expanse of the Milky Way galaxy.',
-    importantNotes: [
+    description: 'Astethn aimed at unra',
+    important_notes: [
       'Wear appropriate space suit at all times.',
       'Follow safety protocols during experiments.',
       'Report any anomalies immediately.',
       'Wear appropriate space suit at all times.',
-      'Follow safety protocols during experiments.'
+      'Follow safety protocols during experiments.',
     ]
-  }; */
+  };*/
 
   useEffect(() => {
     fetchMissionData();
@@ -71,7 +71,7 @@ const MissionDetailsCompany = () => {
           <p className='font-poppins font-bold text-white text-2xl p-4 ml-2 justify-start'>View Mission</p>
         </div>
         <div className="flex justify-center">
-          <div className="flex flex-col justify-center" style={{ width: '1600px', minHeight: '700px' }}>
+          <div className="flex flex-col justify-center" style={{ width: '1600px', minHeight: '250px' }}>
             <div className='flex-auto flex-col flex p-4 mb-10 ml-60 mr-60 mt-10 border rounded-xl border-transparent border-10 bg-white shadow-lg'>
               <h2 className="text-3xl font-bold text-main-text mt-8 ml-12">{missionData.name}</h2>
               <div className="flex items-center ml-8 mt-8">
@@ -82,19 +82,24 @@ const MissionDetailsCompany = () => {
                   <p className="truncate text-sm leading-5 text-sub-text">Mission Start-End: {missionData.start_date} - {missionData.end_date}</p>
                 </div>
               </div>
-              <div className="flex flex-col px-1 py-1 ml-8 mr-8 mt-8 mb-4 w-128 bg-grey-bg rounded-xl">
-                <p className="text-sm font-semibold leading-5 ml-3 mr-3 mt-3 text-sub-text">{missionData.description}</p>
+              <div className="flex flex-col px-1 py-5 ml-8 mr-8 mt-8 mb-4 w-128 bg-grey-bg rounded-xl">
+                <p className="text-sm font-semibold leading-5 ml-3 mr-3 text-sub-text">{missionData.description}</p>
               </div>
-              <h2 className="text-xl font-bold text-main-text mt-4 ml-8">Important Notes</h2>
-              <div className="flex flex-col px-1 py-1 ml-8 mr-8 mt-2 w-128 bg-grey-bg rounded-xl">
-                <p className="text-sm font-semibold leading-5 mb-1 mt-1 ml-3 mr-3 text-sub-text">
-                  <ul className="list-disc list-inside">
-                    {missionData.important_notes?.map((note, index) => (
-                      <li key={index} className="text-sm">{note}</li>
-                    ))}
-                  </ul>
-                </p>
-              </div>
+
+               {missionData.important_notes && missionData.important_notes.length > 0 && (
+              <>
+                <h2 className="text-xl font-bold text-main-text mt-4 ml-8">Important Notes</h2>
+                <div className="flex flex-col px-1 py-1 ml-8 mr-8 mt-2 w-128 bg-grey-bg rounded-xl">
+                  <p className="text-sm font-semibold leading-5 mb-1 mt-1 ml-3 mr-3 text-sub-text">
+                    <ul className="list-disc list-inside">
+                      {missionData.important_notes.map((note, index) => (
+                        <li key={index} className="text-sm">{note}</li>
+                      ))}
+                    </ul>
+                  </p>
+                </div>
+              </>
+              )}
               <div className="flex justify-end mr-8 mt-16 mb-4">
                 <button type="button" className="w-32 bg-button-purple text-white text-sm px-2 py-3 rounded-xl" onClick={() => setShowModal(true)}>
                   Bid to Mission
