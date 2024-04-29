@@ -1,18 +1,18 @@
 import React from "react";
 
 const applicant =
-    {
-        fullName: 'Hans Stark',
-        nationality: 'Germany',
-        profession: 'Scientist',
-        gender: 'Male',
-        address: 'Cart Curt Street, Cart, Curt',
-        age: 28,
-        height: 183,
-        weight: 77,
-        birthday: '27.05.1995',
-        coverLetter: 'Neden calismak istedigim burda yaziyo olacak',
-    }
+{
+    fullName: 'Hans Stark',
+    nationality: 'Germany',
+    profession: 'Scientist',
+    gender: 'Male',
+    address: 'Cart Curt Street, Cart, Curt',
+    age: 28,
+    height: 183,
+    weight: 77,
+    birthday: '27.05.1995',
+    coverLetter: 'Neden calismak istedigim burda yaziyo olacak',
+}
 
 const MissionApplicant = () => {
     return (

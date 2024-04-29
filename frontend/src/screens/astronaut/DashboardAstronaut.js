@@ -33,7 +33,7 @@ const DashboardAstronaut = () => {
             </div>
             <div className=" grid grid-cols-2 grid-rows-2 p-4 gap-4">
                 <div className="flex items-center justify-center">
-                    <SimpleList />
+                    <SimpleList/>
                 </div>
                 <div className=" flex items-center justify-center">
                     <SimpleList />

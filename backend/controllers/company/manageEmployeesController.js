@@ -8,7 +8,7 @@ const getEmployees = async (data) => {
             sex, minWeight, maxWeight, minHeight, maxHeight, nationality} = data;
 
         db.query(`
-                SELECT DISTINCT *, TIMESTAMPDIFF(YEAR,  a.birth_date, CURDATE()) AS age FROM user u, astronaut a, space_mission s, company c, mission_of m
+                SELECT DISTINCT *, u.name AS astronaut_name, TIMESTAMPDIFF(YEAR,  a.birth_date, CURDATE()) AS age FROM user u, astronaut a, space_mission s, company c, mission_of m
                 WHERE a.user_id = m.astronaut_id AND s.mission_id = m.mission_id AND a.user_id = u.user_id
                 AND c.user_id = s.leading_firm_id AND c.user_id = ?
                 AND (CASE WHEN ? IS NOT NULL THEN u.name LIKE ? ELSE 1 END) 

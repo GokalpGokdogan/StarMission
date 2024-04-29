@@ -83,7 +83,7 @@ export const getEmployees = async (companyId) => {
         url: `http://${API_HOST}/company/manageEmployees/getEmployees`,
         headers: { 'Content-Type': 'application/json' },
         params: {
-            selfCompanyId: companyId,
+            companyId: companyId,
         },
         withCredentials: true
     });

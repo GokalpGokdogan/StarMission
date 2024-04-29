@@ -62,7 +62,7 @@ const MissionDetailsAstronaut = () => {
                 </ul>
               </p>
             </div>
-            <div className="flex justify-end mr-8 mt-16 mb-4">
+            <div className="flex justify-end mr-8 mt-16 mb-4 z-50">
               <button type="button" className="w-auto bg-button-purple text-white text-sm px-2 py-3 rounded-xl" onClick={() => setShowModal(true)}>
                 Apply to Mission
               </button>

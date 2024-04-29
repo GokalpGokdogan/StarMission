@@ -16,7 +16,7 @@ import LeadingMissions from './screens/company/LeadingMissions';
 import PartneredMissions from './screens/company/PartneredMissions';
 import MissionDetailsCompany from './screens/company/MissionDetailsCompany';
 import SingleEmployee from "./components/SingleEmployee";
-import ManageEmployees from "./screens/ManageEmployees";
+import ManageEmployees from "./screens/company/ManageEmployees";
 import DashboardAstronaut from './screens/astronaut/DashboardAstronaut';
 import { UserProvider, useUser } from './UserProvider';
 import UserContext from './UserProvider';
@@ -60,10 +60,14 @@ function AppContent() {
                     {
                         title: 'Applications',
                         link: 'company-applications'
+                    },                    
+                    {
+                        title: 'My Bids',
+                        link: 'company-dashboard'
                     },
                     {
-                        title: 'Mission Postings',
-                        link: 'company-mission-postings'
+                        title: 'Manage Employees',
+                        link: 'manage-employees'
                     },
                     {
                         title: 'Leading Missions',
@@ -72,7 +76,15 @@ function AppContent() {
                     {
                         title: 'Partnered Missions',
                         link: 'partnered-missions'
-                    }
+                    },
+                    {
+                        title: 'Past Missions',
+                        link: 'past-missions'
+                    },
+                    {
+                        title: 'Mission Posts',
+                        link: 'company-mission-postings'
+                    },
                 ];
             case 'astronaut':
                 return [
@@ -100,7 +112,7 @@ function AppContent() {
     return (
         <div className="transition-all duration-300 h-screen bg-home-bg">
             <Router>
-                <div className={`fixed inset-y-0 left-0 ${open ? 'w-56' : 'w-0'} transition-all duration-300 z-50 bg-darker-bg`}>
+                <div className={`fixed inset-y-0 left-0 ${open ? 'w-56' : 'w-0'} transition-all duration-300 z-8 bg-darker-bg`}>
                     <Sidebar open={open} setOpen={setOpen} setHref={setHref} active={active} setActive={setActive} menu={menu} />
                 </div>
                 <div className={`flex flex-col w-full h-full transition-all duration-300 ${open ? 'pl-56' : "pl-0"} `}>
@@ -118,13 +130,13 @@ function AppContent() {
                                 <Route path="/leading-missions" element={<LeadingMissions />} />
                                 <Route path="/partnered-missions" element={<PartneredMissions />} />
                                 <Route path="/mission-details/:missionId" element={<MissionDetailsCompany />} />
+                                <Route path="/manage-employees" element={<ManageEmployees />} />
                             </Route>
                             <Route element={<Auth allowedRoles={["astronaut"]} />}>
                                 <Route path="/dashboard" element={<DashboardAstronaut />} />
                                 <Route path="/my-applications" element={<ApplicationsAstronaut />} />
                                 <Route path="/mission-postings" element={<MissionPostingsAstronaut />} />
                             </Route>
-                            <Route path="/manage-employees" element={<ManageEmployees />} />
                         </Routes>
                     </div>
                 </div>

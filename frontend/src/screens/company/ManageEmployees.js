@@ -1,12 +1,13 @@
 import React, {useEffect, useState} from 'react';
 import Select from 'react-select';
-import MissionPost from '../components/MissionPost';
-import SearchBar from '../components/SearchBar';
+import MissionPost from '../../components/MissionPost';
+import SearchBar from '../../components/SearchBar';
 import { DateRange } from 'react-date-range';
 import 'react-date-range/dist/styles.css'; // main style file
 import 'react-date-range/dist/theme/default.css';
-import SingleEmployee from "../components/SingleEmployee";
-import {getEmployees} from "../Requests"; // theme css file
+import SingleEmployee from "../../components/SingleEmployee";
+import {getEmployees} from "../../Requests"; // theme css file
+import { useUser } from '../../UserProvider';
 
 const options = [
     { value: 'Washington DC, United States', label: 'Washington DC, United States' },
@@ -16,11 +17,12 @@ const options = [
 
 const ManageEmployees = () => {
     const [employees, setEmployees] = useState([]);
+    const {userId} = useUser();
 
     useEffect(() => {
         const fetchEmployees = async () => {
             try{
-                const employees = await getEmployees(29);
+                const employees = await getEmployees(userId);
                 setEmployees(employees);
             } catch (error){
                 console.error('Error fetching employees:', error);
@@ -62,7 +64,7 @@ const ManageEmployees = () => {
     return (
         <div className="bg-home-bg h-full flex flex-col">
             <div className='h-16 bg-main-bg flex box-shadow shadow-sm'>
-                <p className='font-poppins font-bold text-white text-2xl p-4 ml-2 justify-start'>Mission Postings</p>
+                <p className='font-poppins font-bold text-white text-2xl p-4 ml-2 justify-start'>Manage Employees</p>
             </div>
             <div className="flex">
                 {/* Left container with filters */}
@@ -141,13 +143,13 @@ const ManageEmployees = () => {
                         <div className="mt-6 mb-4">
                             <SearchBar input="INPUT" />
                         </div>
-                        {employees.map(emp => (
+                        {employees?.map(emp => (
                             <SingleEmployee
-                                name={emp.name}
-                                missions={["mission"]}
-                                profession={emp.profession}
+                                name={emp.astronaut_name}
+                                missions={[emp.name]}
+                                profession={emp.profession ? emp.profession : "No jobs specified"}
                                 age={emp.age}
-                                location={"location"}
+                                location={emp.location ? emp.location: "No location specified"}
                             />
                         ))}
                     </div>

@@ -8,7 +8,7 @@ const BidModal = ({isVisible, onClose, children}) => {
     }
 
     return (
-       <div className='fixed inset-0 bg-black bg-opacity-25 
+       <div className='fixed inset-0 bg-black bg-opacity-25 z-100
         backdrop-blur-sm flex justify-center items-center' id="wrapper" 
         onClick={handleClose}>
             <div className="w-[2000px] flex flex-col justify-center">
