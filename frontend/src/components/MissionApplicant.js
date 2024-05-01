@@ -18,7 +18,7 @@ const MissionApplicant = ({application}) => {
             }
             else
             {
-                setApplicant(app[0]);
+                setApplicant(app);
                 console.log(app);
             }
 
