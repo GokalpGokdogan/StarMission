@@ -12,7 +12,7 @@ router.get('/getCurrentMission', async(req, res) => {
             res.status(200).json(response);
         }
         else{
-            res.status(400).send("NOT_AUTHORIZED_USER");
+            res.status(401).send("NOT_AUTHORIZED_USER");
         }
     } catch (error) {
         if (error === "ER_FIND_NONE") {
@@ -34,7 +34,7 @@ router.get('/getPastMissions', async(req, res) => {
             res.status(200).json(response);
         }
         else{
-            res.status(400).send("NOT_AUTHORIZED_USER");
+            res.status(401).send("NOT_AUTHORIZED_USER");
         }
     } catch (error) {
         if (error === "ER_FIND_NONE") {
@@ -58,7 +58,7 @@ router.get('/getRecentMissions', async(req, res) => {
             res.status(200).json(response);
         }
         else{
-            res.status(400).send("NOT_AUTHORIZED_USER");
+            res.status(401).send("NOT_AUTHORIZED_USER");
         }
     } catch (error) {
         if (error === "ER_FIND_NONE") {

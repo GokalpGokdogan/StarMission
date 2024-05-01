@@ -14,7 +14,7 @@ router.get('/getApplications', async(req, res) => {
             res.status(200).json(response);
         }
         else{
-            res.status(400).send("NOT_AUTHORIZED_USER");
+            res.status(401).send("NOT_AUTHORIZED_USER");
         }
     } catch (error) {
             res.status(400).send("An error occurred in get current missions for astronaut" + error);
@@ -33,11 +33,11 @@ router.post('/applyToMission', async(req, res) => {
             res.status(200).json(response);
         }
         else{
-            res.status(400).send("NOT_AUTHORIZED_USER");
+            res.status(401).send("NOT_AUTHORIZED_USER");
         }
     } catch (error) {
         if(error === "ALREADY_AVAILABLE_APPLICATION"){
-            res.status(400).send("Application is already made and in progress.");
+            res.status(409).send("Application is already made and in progress.");
         }
         else{
             res.status(400).send("An error occurred in get recent mission postings for astronaut" + error);

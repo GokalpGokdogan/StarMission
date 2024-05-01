@@ -235,32 +235,117 @@ export const getMyBids = async (companyId) => {
 }
 
 
-/*
-    This is a GET request which get past missions for specific astronaut.
-    No inputs are required;
-    btw bu taslak ha.. baya saçma bu, frontçular bura sizde skjfhk -Tevfo xoxo
-*/
+
+
+
+// Astronaut functions
+
+
+export const getCurrentMission = async () => {
+    let res = await axios({
+        method: 'get',
+        url: `http://${API_HOST}/astronaut/getMissionInfo/getCurrentMission`,
+        headers: { 'Content-Type': 'application/json' },
+        params: {},
+        withCredentials: true
+    });
+
+    if (res.status == 204) {
+        console.log("No current missions available for this astronaut")
+    }
+    else if (res.status == 401) {
+        console.log("NOT_AUTHORIZED_USER")
+    }
+    else if(res.status == 400){
+        console.log("An error occurred in get current missions for astronaut" + res.data);
+    }
+    else {
+        console.log(res.data);
+    }
+    return res.data;
+        
+}
 
 export const getPastMissions = async () => {
-
-    return new Promise(async (resolve, reject) => {
-        let res = await axios({
-            method: 'get',
-            url: `http://${API_HOST}/astronaut/getMissionInfo/getPastMissions`,
-            headers: { 'Content-Type': 'application/json' },
-            withCredentials: true
-        });
-        if (res.status === 200) {
-            resolve(res.data);
-        }
-        else if (res.status === 400 && res.data === "NOT_AUTHORIZED_USER") {  // the logged in user is not astronaut
-            reject("NOT_AUTHORIZED_USER");
-            // to be continued...
-        }
-        else if (res.status === 400 && res.data === "ER_FIND_NONE") { // there is no past mission
-            resolve([]);
-            // to be continued...
-        }
-        console.log(res.data);
+    let res = await axios({
+        method: 'get',
+        url: `http://${API_HOST}/astronaut/getMissionInfo/getPastMissions`,
+        headers: { 'Content-Type': 'application/json' },
+        params: {},
+        withCredentials: true
     });
-};
+
+    if (res.status == 204) {
+        console.log("No past missions available for this astronaut")
+    }
+    else if (res.status == 401) {
+        console.log("NOT_AUTHORIZED_USER")
+    }
+    else if(res.status == 400){
+        console.log("An error occurred in get past missions for astronaut" + res.data);
+    }
+    else {
+        console.log(res.data);
+    }
+    return res.data;
+}
+
+
+export const getRecentMissions = async (searchedName, startDate, endDate, location,
+    leadingCompanyName, minBudget, maxBudget) => {
+    const query = { searchedName: searchedName, startDate: startDate, endDate: endDate, location: location, 
+                    leadingCompanyName: leadingCompanyName, minBudget: minBudget, maxBudget: maxBudget}
+    let res = await axios({
+        method: 'get',
+        url: `http://${API_HOST}/astronaut/getMissionInfo/getRecentMissions`,
+        headers: { 'Content-Type': 'application/json' },
+        params: query,
+        withCredentials: true
+    });
+
+    if (res.status == 204) {
+        console.log("No mission postings found with these filters")
+    }
+    else if (res.status == 400) {
+        console.log("An error occurred in get mission postings with filters" + res.data);
+    }
+    else if(res.status == 401){
+        console.log("NOT_AUTHORIZED_USER")
+    }
+    else {
+        console.log(res.data);
+    }
+    return res.data;
+}
+   
+
+export const applyToMission = async (mission_id, cover_letter) => {
+    const body = { 'mission_id': mission_id, 'cover_letter': cover_letter }
+        
+    let res = await axios({
+        method: 'get',
+        url: `http://${API_HOST}/astronaut/manageApplications/applyToMission`,
+        headers: { 'Content-Type': 'application/json' },
+        data: body,
+        withCredentials: true
+    });
+
+    if (res.status == 204) {
+        console.log("No mission postings found with these filters")
+    }
+    else if (res.status == 400) {
+        console.log("An error occurred in get mission postings with filters" + res.data);
+    }
+    else if(res.status == 401){
+        console.log("NOT_AUTHORIZED_USER")
+    }
+    else if(res.status == 409){
+        console.log("Application is already made and in progress.")
+    }
+    else {
+        console.log(res.data);
+    }
+    return res.data;
+}
+
+
