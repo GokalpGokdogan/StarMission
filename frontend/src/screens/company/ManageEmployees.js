@@ -6,7 +6,7 @@ import { DateRange } from 'react-date-range';
 import 'react-date-range/dist/styles.css'; // main style file
 import 'react-date-range/dist/theme/default.css';
 import SingleEmployee from "../../components/SingleEmployee";
-import {getEmployees} from "../../Requests"; // theme css file
+import {getEmployees} from "../../Requests"; 
 import { useUser } from '../../UserProvider';
 const options = [
     { value: 'Washington DC, United States', label: 'Washington DC, United States' },
