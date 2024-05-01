@@ -92,12 +92,13 @@ export const getEmployees = async (companyId) => {
     return res.data;
 };
 
-export const getEmployeeData = async (astronautId) => {
+export const getEmployeeData = async (companyId, astronautId) => {
     let res = await axios({
         method: 'get',
         url: `http://${API_HOST}/company/manageEmployees/getEmployeeData`,
         headers: { 'Content-Type': 'application/json' },
         params: {
+            companyId: companyId,
             astronautId: astronautId,
         },
         withCredentials: true
