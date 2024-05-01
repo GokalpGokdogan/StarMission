@@ -46,14 +46,10 @@ router.get('/login', async(req, res) => {
         let id = response[0].user_id;
         const user_type = await logResController.getUserType(id);
         
-        // delete all cookies
-        const cookieNames = Object.keys(req.cookies);
-        cookieNames.forEach(cookieName => {
-            res.clearCookie(cookieName);
-        });
+        const expiryDate = new Date(Date.now() + 60 * 60 * 1000); // 1 hour
         
-        res.cookie('user_type', user_type);
-        res.cookie('user_id', id);
+        res.cookie('user_type', user_type, { expires: expiryDate });
+        res.cookie('user_id', id, { expires: expiryDate });
         res.status(200).send(response);
     } catch (error) {
         res.status(400).send("An error occurred: " + error);
