@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import AddDynamicInputFields from "../components/AddDynamicInputFields";
-import { createMission } from "../Requests";
+import AddDynamicInputFields from "../../components/AddDynamicInputFields";
+import { createMission } from "../../Requests";
 
 const CreateMission = () => {
     const [name, setName] = useState('');

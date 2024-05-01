@@ -9,7 +9,7 @@ import DashboardCompany from './screens/company/DashboardCompany';
 import ApplicationsAstronaut from './screens/astronaut/ApplicationsAstronaut';
 import MissionPostingsAstronaut from './screens/astronaut/MissionPostingsAstronaut';
 import MissionPostingsCompany from './screens/company/MissionPostingsCompany';
-import CreateMission from './screens/CreateMission';
+import CreateMission from './screens/company/CreateMission';
 import ApplicationsCompany from './screens/company/ApplicationsCompany';
 import LeadingMissions from './screens/company/LeadingMissions';
 import PartneredMissions from './screens/company/PartneredMissions';
@@ -130,7 +130,6 @@ function AppContent() {
                             <Route path="/sign-up" element={<SignUp />} />
                             <Route path="/past-missions" element={<SimpleList />} />
                             <Route path="/mission-applicant" element={<MissionApplicant />} />
-                            <Route path="/create-mission" element={<CreateMission />} />
                             <Route element={<Auth allowedRoles={["company"]} />}>
                                 <Route path="/company-dashboard" element={<DashboardCompany />} />
                                 <Route path="/company-applications" element={<ApplicationsCompany />} />
@@ -142,6 +141,7 @@ function AppContent() {
                                 <Route path="/employee-details/:employeeId" element={<EmployeeDetailsCompany />} />
                                 <Route path="/manage-employees" element={<ManageEmployees />} />
                                 <Route path="/my-bids" element={<MyBidsCompany />} />
+                                <Route path="/create-mission" element={<CreateMission />} />
                             </Route>
                             <Route element={<Auth allowedRoles={["astronaut"]} />}>
                                 <Route path="/dashboard" element={<DashboardAstronaut />} />
