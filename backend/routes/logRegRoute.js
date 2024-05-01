@@ -38,7 +38,6 @@ router.post('/registerCompany', async(req, res) => {
     
 });
 
-//ABLALAR O ZAMAN BUNDAN SONRA GET YAPARKENE BEN SİZE PARAMS'TAN GÖNDERECEM O YÜZDEN BODY DİİL QUERY'DEN ÇEKECENİZ SAYGILAR <3333
 
 router.get('/login', async(req, res) => {
     try{

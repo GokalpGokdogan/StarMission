@@ -17,6 +17,12 @@ import MissionDetailsCompany from './screens/company/MissionDetailsCompany';
 import EmployeeDetailsCompany from './screens/company/EmployeeDetailsCompany';
 import ManageEmployees from "./screens/company/ManageEmployees";
 import DashboardAstronaut from './screens/astronaut/DashboardAstronaut';
+import { UserProvider, useUser } from './UserProvider';
+import UserContext from './UserProvider';
+import { parseUserString } from './UserProvider';
+import Cookies from 'js-cookie';
+import { useNavigate } from 'react-router-dom';
+
 import {useUser } from './UserProvider';
 import MissionApplicantCompany from "./screens/company/MissionApplicantCompany";
 
@@ -35,15 +41,21 @@ function AppContent() {
     const [open, setOpen] = useState(false);
     const [href, setHref] = useState("Login");
     const [active, setActive] = useState("Login");
-    const { userType } = useUser();
+    const { userType, userId } = useUser();
 
     const Auth = ({ allowedRoles }) => {
+        const { userType } = useUser();
+        const userId = Cookies.get('user_id'); // Directly check the cookie for user ID
 
-        return allowedRoles.includes(userType) ? (
-            <Outlet />
-        ) : (
-            <Navigate to="/" replace />
-        );
+        console.log(userType)
+    
+        
+        if (!userId || !allowedRoles.includes(userType)) {
+            // If userId is not present or the userType is not allowed, redirect to login
+            return <Navigate to="/" replace />;
+        }
+    
+        return <Outlet />;
     };
 
     const getMenuForRole = (role) => {

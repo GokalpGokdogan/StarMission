@@ -4,6 +4,20 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { UserProvider } from './UserProvider';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+
+axios.interceptors.response.use(response => {
+  return response;
+}, error => {
+  if (error.response && error.response.status === 401) { // Assuming 401 means session expired
+    // Redirect to login
+    const navigate = useNavigate();
+    navigate('/');
+  }
+  return Promise.reject(error);
+});
+
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
