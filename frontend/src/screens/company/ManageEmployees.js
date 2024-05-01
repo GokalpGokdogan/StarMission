@@ -139,8 +139,8 @@ const ManageEmployees = () => {
                 </div>
                 {/* Right container with mission postings */}
                 <div className="w-3/4 p-4">
-                    <div className="flex flex-wrap">
-                        <div className="mt-6 mb-4">
+                    <div className="flex flex-wrap h-full">
+                        <div className="mt-6 mb-4 h-auto">
                             <SearchBar input="INPUT" />
                         </div>
                         {employees && employees.length > 0 ? 
@@ -154,7 +154,9 @@ const ManageEmployees = () => {
                                 astronaut_id={emp.astronaut_id}
                             />
                         ))) : (
-                            <p>No data</p>
+                            <div className="flex justify-center w-[60%] h-[80%]">
+                                <p className="text-3xl font-semibold leading-6 text-main-text mt-[30%]" >No data</p>
+                            </div>
                         )}
                     </div>
                 </div>

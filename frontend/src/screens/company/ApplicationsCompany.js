@@ -42,8 +42,8 @@ const ApplicationsCompany = () => {
         <div class="flex justify-center mt-6 mb-12">
           <SearchBar input="INPUT"/>
         </div>
-        <div>
-        {applications && applications.map(application => (
+        <div className="h-full">
+        {applications ? ( applications.map(application => (
               <SingleApplication
                 key={application.key}
                 name={application.astronaut_name}
@@ -53,7 +53,11 @@ const ApplicationsCompany = () => {
                 mission_id={application.mission_id}
                 astronaut_id={application.astronaut_id}
               />
-            ))}
+            )) ): (
+              <div className="flex justify-center w-full h-3/5">
+                  <p className="text-3xl font-semibold leading-6 text-main-text my-auto" >No data</p>
+              </div>
+            )}
         </div>
     </div>
   );
