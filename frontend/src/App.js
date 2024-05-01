@@ -9,7 +9,7 @@ import DashboardCompany from './screens/company/DashboardCompany';
 import ApplicationsAstronaut from './screens/astronaut/ApplicationsAstronaut';
 import MissionPostingsAstronaut from './screens/astronaut/MissionPostingsAstronaut';
 import MissionPostingsCompany from './screens/company/MissionPostingsCompany';
-import CreateMission from './screens/CreateMission';
+import CreateMission from './screens/company/CreateMission';
 import ApplicationsCompany from './screens/company/ApplicationsCompany';
 import LeadingMissions from './screens/company/LeadingMissions';
 import PartneredMissions from './screens/company/PartneredMissions';
