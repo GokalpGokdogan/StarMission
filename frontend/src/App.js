@@ -22,8 +22,6 @@ import UserContext from './UserProvider';
 import { parseUserString } from './UserProvider';
 import Cookies from 'js-cookie';
 import { useNavigate } from 'react-router-dom';
-
-import {useUser } from './UserProvider';
 import MissionApplicantCompany from "./screens/company/MissionApplicantCompany";
 
 function App() {
