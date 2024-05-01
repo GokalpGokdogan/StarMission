@@ -7,6 +7,7 @@ const db = mysql.createConnection({
     password: process.env.MY_PASSWORD,
     database: "StarMission",
     connectionLimit: 10,
+    multipleStatements: true,
     dateStrings: 'date'
 });
 
