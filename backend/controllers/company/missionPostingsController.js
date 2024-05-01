@@ -68,7 +68,7 @@ const getLeadingFirmNames = async (data) => {
 
 const getMissionData = async (data) => {
     return new Promise((resolve, reject) => {
-        const { missionId } = data;
+        const { missionId } = data;4
         let query = `SELECT DISTINCT s.*, u.name AS company_name FROM space_mission s, company c, user u WHERE s.mission_id = ? AND c.user_id = s.leading_firm_id AND c.user_id = u.user_id`;
         db.query(query, [missionId], (err, result) => {
             if (err) {
@@ -92,7 +92,6 @@ const getMissionData = async (data) => {
 
 
 // Bid To Mission
-
 const bidToMission = async (data) => {
     return new Promise((resolve, reject) => {
         const { companyId, missionId, amount, description } = data;
@@ -100,7 +99,7 @@ const bidToMission = async (data) => {
         // application_status: 0~Pending, 1~Accepted, 2~Rejected
 
         let query = `INSERT INTO mission_bid (requested_amount, description, mission_id, bid_date, bid_status, bidding_company_id) 
-                    VALUES (?, ?, ?, CURDATE(), 0, ?)`;
+                    VALUES (?, ?, ?, CURDATE(), 'In progress', ?)`;
         db.query(query, [amount, description, missionId, companyId], (err, result) => {
             if (err) {
                 reject(err);
