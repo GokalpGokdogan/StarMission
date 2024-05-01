@@ -45,8 +45,6 @@ const LeadingMissions = () => {
               <MissionItem
                 title={mission.name}
                 location={mission.location}
-                type={"leading"}
-                id={mission.mission_id}
               />
               </div>
             ))):(
