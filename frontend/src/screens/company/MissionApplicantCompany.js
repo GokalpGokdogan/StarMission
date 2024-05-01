@@ -31,15 +31,14 @@ const MissionApplicantCompany = () => {
     }, []);
 
     return (
-    <div className="bg-home-bg h-full min-h-screen flex flex-col">
-        <div className='h-16 bg-main-bg flex box-shadow shadow-sm'>
-            <p className='font-poppins font-bold text-white text-2xl p-4 ml-2 justify-start'>Application</p>
+        <div className="bg-home-bg h-full">
+            <div className='h-16 bg-main-bg flex box-shadow shadow-sm'>
+                <p className='font-poppins font-bold text-white text-2xl p-4 ml-2 justify-start'>Application</p>
+            </div>
+            <div className="flex justify-center">
+                <MissionApplicant application={applicationData}/>
+            </div>
         </div>
-        <div className="flex flex-grow justify-center items-center">
-            <MissionApplicant application={applicationData}/>
-        </div>
-    </div>
-
     );
 };
 

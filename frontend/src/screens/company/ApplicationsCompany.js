@@ -4,10 +4,13 @@ import SearchBar from '../../components/SearchBar';
 import SingleApplication from '../../components/SingleApplication'
 import { getApplications } from '../../Requests';
 import { useUser } from '../../UserProvider';
+
 const ApplicationsCompany = () => {
+
   const {userId} = useUser();
   const [applications, setApplications] = useState([]);
   const [formattedDate, setFormattedDate] = useState('');
+
   useEffect(() => {
     const fetchApplications = async () => {
         try{
@@ -26,18 +29,21 @@ const ApplicationsCompany = () => {
             console.error('Error fetching apps:', error);
         }
     };
+
     fetchApplications();
 }, []);
+
+
   return (
     <div className="bg-home-bg h-full">
         <div className='h-16 bg-main-bg flex box-shadow shadow-sm'>
             <p className='font-poppins font-bold text-white text-2xl p-4 ml-2 justify-start'>Applications</p>
         </div>
         <div class="flex justify-center mt-6 mb-12">
-          <SearchBar/>
+          <SearchBar input="INPUT"/>
         </div>
-        <div>
-        {applications && applications.map(application => (  
+        <div className="h-full">
+        {applications ? ( applications.map(application => (
               <SingleApplication
                 key={application.key}
                 name={application.astronaut_name}
@@ -47,9 +53,15 @@ const ApplicationsCompany = () => {
                 mission_id={application.mission_id}
                 astronaut_id={application.astronaut_id}
               />
-            ))}
+            )) ): (
+              <div className="flex justify-center w-full h-3/5">
+                  <p className="text-3xl font-semibold leading-6 text-main-text my-auto" >No data</p>
+              </div>
+            )}
         </div>
     </div>
   );
 };
+
+
 export default ApplicationsCompany;

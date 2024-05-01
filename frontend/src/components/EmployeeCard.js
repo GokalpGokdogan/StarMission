@@ -1,14 +1,14 @@
 import React from "react";
 
-const EmployeeCard = ({ employee }) => {
+const EmployeeCard = ({employee}) => {
     return (
-        <div className="flex justify-center items-center w-full"> {/* Ensured full width */}
-            <div className="flex flex-col max-w-4xl w-full h-96 p-8 border rounded-xl bg-white shadow-lg justify-between"> {/* Adjusted to fill width */}
+        <div className="flex justify-center items-center h-full">
+            <div className="flex flex-col w-full max-w-4xl p-8 border rounded-xl h-96 bg-white shadow-lg justify-between">
                 <div className="flex">
                     <div className="flex items-center">
-                        <img width="120" height="120" src="https://seekvectorlogo.com/wp-content/uploads/2018/02/nasa-vector-logo.png" alt="NASA Logo" />
+                        <img width="120" height="120" src="https://seekvectorlogo.com/wp-content/uploads/2018/02/nasa-vector-logo.png" />
                     </div>
-                    <div className="flex flex-col flex-1">
+                    <div className="flex flex-col flex-1 ">
                         <h2 className="text-2xl text-main-text font-semibold mb-4">{employee.name}</h2>
                         <div className="flex justify-between">
                             <div>
@@ -27,7 +27,7 @@ const EmployeeCard = ({ employee }) => {
                     </div>
                 </div>
                 <div className="flex justify-end">
-                    <button className="h-10 mt-4 mr-4 bg-button-red" style={{ padding: '10px 20px', color: 'white', border: 'none', borderRadius: '5px', cursor: 'pointer', textAlign: 'center', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>Fire Astronaut</button>
+                    <button className="h-10 mt-4 mr-4 bg-button-red" style={{padding: '10px 20px', color: 'white', border: 'none', borderRadius: '5px', cursor: 'pointer', textAlign: 'center', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>Fire Astronaut</button>
                 </div>
             </div>
         </div>
