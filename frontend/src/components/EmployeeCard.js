@@ -1,19 +1,6 @@
 import React from "react";
 
-const applicant =
-{
-    fullName: 'Hans Stark',
-    nationality: 'Germany',
-    profession: 'Scientist',
-    gender: 'Male',
-    address: 'Cart Curt Street, Cart, Curt',
-    age: 28,
-    height: 183,
-    weight: 77,
-    birthday: '27.05.1995',
-    coverLetter: 'Neden calismak istedigim burda yaziyo olacak',
-}
-const MissionApplicant = () => {
+const EmployeeCard = ({employee}) => {
     return (
         <div className="flex justify-center items-center min-h-screen">
             <div className="flex flex-col w-full max-w-4xl py-2 border rounded-xl bg-white shadow-lg">
@@ -22,25 +9,22 @@ const MissionApplicant = () => {
                         <img width="120" height="120" src="https://seekvectorlogo.com/wp-content/uploads/2018/02/nasa-vector-logo.png" />
                     </div>
                     <div className="flex flex-col flex-1">
-                        <h2 className="text-2xl text-main-text font-semibold mb-4">Hans Stark</h2>
+                        <h2 className="text-2xl text-main-text font-semibold mb-4">{employee.name}</h2>
                         <div className="flex justify-between">
                             <div>
-                                <p className="text-sm font-medium leading-6 text-main-text">Nationality: {applicant.nationality}</p>
-                                <p className="text-sm font-medium leading-6 text-main-text">Profession: {applicant.profession}</p>
-                                <p className="text-sm font-medium leading-6 text-main-text">Gender: {applicant.gender}</p>
-                                <p className="truncate text-sm font-medium leading-6 text-main-text">Address: {applicant.address}</p>
+                                <p className="text-sm font-medium leading-6 text-main-text">Nationality: {employee.nationality}</p>
+                                <p className="text-sm font-medium leading-6 text-main-text">Profession: {employee.profession}</p>
+                                <p className="text-sm font-medium leading-6 text-main-text">Gender: {employee.sex}</p>
+                                <p className="truncate text-sm font-medium leading-6 text-main-text">Address: {employee.address}</p>
                             </div>
                             <div>
-                                <p className="text-sm font-medium leading-6 text-main-text">Age: {applicant.age}</p>
-                                <p className="text-sm font-medium leading-6 text-main-text">Height: {applicant.height} cm</p>
-                                <p className="text-sm font-medium leading-6 text-main-text">Weight: {applicant.weight} kg</p>
-                                <p className="text-sm font-medium leading-6 text-main-text">Birthday: {applicant.birthday}</p>
+                                <p className="text-sm font-medium leading-6 text-main-text">Age: {employee.birth_date}</p>
+                                <p className="text-sm font-medium leading-6 text-main-text">Height: {employee.height} cm</p>
+                                <p className="text-sm font-medium leading-6 text-main-text">Weight: {employee.weight} kg</p>
+                                <p className="text-sm font-medium leading-6 text-main-text">Birthday: {employee.birth_date}</p>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div className="flex-auto flex-col flex min-w-0 mt-2 p-2 border rounded-xl bg-grey-bg">
-                    <p className="truncate text-sm font-medium leading-6 text-main-text">{applicant.coverLetter}</p>
                 </div>
                 <div className="flex justify-end">
                     <form className="flex">
@@ -65,4 +49,4 @@ const MissionApplicant = () => {
     )
 }
 
-export default MissionApplicant;
+export default EmployeeCard;

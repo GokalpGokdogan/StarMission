@@ -58,7 +58,7 @@ const getEmployeeData = async (data) => {
                 }
                 else {
                     console.log(result, "successful get employee data");
-                    resolve(result);
+                    resolve(result[0]);
                 }
             }
         );
