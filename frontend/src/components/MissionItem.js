@@ -13,6 +13,11 @@ const MissionItem = ({title, company, location}) => {
                     <p className="truncate text-xs font-semibold leading-5 text-sub-text">{company}</p>
                     <p className="truncate text-xs leading-5 text-sub-text">{location}</p>
                 </div>
+                <div className="flex items-center justify-center mb-2 mt-2 mr-2">
+                    <button type="button" className={`w-20 bg-button-purple text-white text-sm py-2 rounded-xl`}>
+                    View
+                    </button>
+                </div>
             </div>
             </div>
         </li>
