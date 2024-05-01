@@ -20,7 +20,9 @@ const SimpleList = ({ title, data, type }) => {
                         ))
                     )
                 ) : (
-                    <p>No data</p>
+                    <div className="flex justify-center w-full h-full my-auto">
+                        <p className="text-xl font-semibold leading-6 text-main-text my-auto" >No data</p>
+                    </div>
                 )}
             </ul>
         </div>
