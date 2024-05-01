@@ -10,10 +10,10 @@ const getEmployees = async (data) => {
         db.query(`
                 SELECT DISTINCT *, u.name AS astronaut_name, TIMESTAMPDIFF(YEAR,  a.birth_date, CURDATE()) AS age FROM user u, astronaut a, space_mission s, company c, mission_of m
                 WHERE a.user_id = m.astronaut_id AND s.mission_id = m.mission_id AND a.user_id = u.user_id
-                AND c.user_id = s.leading_firm_id AND c.user_id = ?
+                AND c.user_id = s.leading_firm_id AND c.user_id = ? AND m.leaving_date IS NULL
                 AND (CASE WHEN ? IS NOT NULL THEN u.name LIKE ? ELSE 1 END) 
                 AND (CASE WHEN ? IS NOT NULL THEN a.profession = ? ELSE 1 END) 
-                AND (CASE WHEN ? IS NOT NULL THEN TIMESTAMPDIFF(YEAR,  a.birth_date, CURDATE()) >= ? ELSE 1 END) 
+                AND (CASE WHEN ? IS NOT NULL THEN TIMESTAMPDIFF(YEAR,  a.birth_date, CURDATE()) >= ? ELSE 1 END)
                 AND (CASE WHEN ? IS NOT NULL THEN TIMESTAMPDIFF(YEAR,  a.birth_date, CURDATE()) <= ? ELSE 1 END)
                 AND (CASE WHEN ? IS NOT NULL THEN a.sex = ? ELSE 1 END)
                 AND (CASE WHEN ? IS NOT NULL THEN a.nationality = ? ELSE 1 END)
@@ -58,14 +58,12 @@ const getEmployeeData = async (data) => {
                 }
                 else {
                     console.log(result, "successful get employee data");
-                    resolve(result[0]);
+                    resolve(result);
                 }
             }
         );
     });
 }
-
-
 
 // Fire employee
 // assumed user id and mission id will be provided
