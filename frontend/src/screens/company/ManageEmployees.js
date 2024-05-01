@@ -143,7 +143,8 @@ const ManageEmployees = () => {
                         <div className="mt-6 mb-4">
                             <SearchBar input="INPUT" />
                         </div>
-                        {employees?.map(emp => (
+                        {employees && employees.length > 0 ? 
+                       (employees.map(emp => (
                             <SingleEmployee
                                 name={emp.astronaut_name}
                                 missions={[emp.name]}
@@ -152,7 +153,9 @@ const ManageEmployees = () => {
                                 location={emp.location ? emp.location: "No location specified"}
                                 astronaut_id={emp.astronaut_id}
                             />
-                        ))}
+                        ))) : (
+                            <p>No data</p>
+                        )}
                     </div>
                 </div>
             </div>
