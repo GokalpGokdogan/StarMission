@@ -110,7 +110,7 @@ const fetchRecentMissions = async () => {
                     <SimpleList title={"Applications"} data={applications} type={'application'}/>
                 </div>                
                 <div className="flex items-center justify-center px-12">
-                   <DashboardTable data={myBids}/>
+                   <DashboardTable data={myBids} showHeader={true}/>
                 </div>
                 <div className="flex items-center justify-center px-12">
                     <SimpleList title={"Recent Missions"}  data={recentMissions} type={'mission'}/>

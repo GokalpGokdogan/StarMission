@@ -23,6 +23,7 @@ import { parseUserString } from './UserProvider';
 import Cookies from 'js-cookie';
 import { useNavigate } from 'react-router-dom';
 import MissionApplicantCompany from "./screens/company/MissionApplicantCompany";
+import MyBidsCompany from './screens/company/MyBidsCompany';
 
 function App() {
     return (
@@ -70,7 +71,7 @@ function AppContent() {
                     },                    
                     {
                         title: 'My Bids',
-                        link: 'company-dashboard'
+                        link: 'my-bids'
                     },
                     {
                         title: 'Manage Employees',
@@ -140,6 +141,7 @@ function AppContent() {
                                 <Route path="/application-details/:astronautId/:missionId/:appliedDate" element={<MissionApplicantCompany />} />
                                 <Route path="/employee-details/:employeeId" element={<EmployeeDetailsCompany />} />
                                 <Route path="/manage-employees" element={<ManageEmployees />} />
+                                <Route path="/my-bids" element={<MyBidsCompany />} />
                             </Route>
                             <Route element={<Auth allowedRoles={["astronaut"]} />}>
                                 <Route path="/dashboard" element={<DashboardAstronaut />} />

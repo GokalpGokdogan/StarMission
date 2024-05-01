@@ -36,7 +36,7 @@ const MissionApplicant = ({ application }) => {
     }, [application]);
 
     return (
-        <div className="flex justify-center items-center min-h-screen h-full">
+        <div className="flex justify-center items-center">
             {isLoading ? 
                 (
                     <div className="text-center">
