@@ -143,6 +143,7 @@ const ManageEmployees = () => {
                         <div className="mt-6 mb-4 h-auto">
                             <SearchBar input="INPUT" />
                         </div>
+                        
                         {employees && employees.length > 0 ? 
                        (employees.map(emp => (
                             <SingleEmployee

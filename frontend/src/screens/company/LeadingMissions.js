@@ -40,13 +40,13 @@ const LeadingMissions = () => {
         <div class="flex justify-center mt-6 mb-12">
           <SearchBar input="INPUT"/>
         </div>
-        <div className="h-full">
             {leadingMissions && leadingMissions.length > 0? (leadingMissions.map(mission => (
               <div>
-              <p>{mission.name}a</p>
               <MissionItem
                 title={mission.name}
                 location={mission.location}
+                type={"leading"}
+                id={mission.mission_id}
               />
               </div>
             ))):(
@@ -55,7 +55,6 @@ const LeadingMissions = () => {
               </div>
             )}
         </div>
-    </div>
   );
 };
 
