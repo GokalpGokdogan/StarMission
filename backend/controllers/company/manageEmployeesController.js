@@ -47,7 +47,7 @@ const getEmployees = async (data) => {
 const getEmployeeData = async (data) => {
     return new Promise((resolve, reject) => {
         const {astronautId} = data;
-        db.query(`SELECT * FROM astronaut a, user u WHERE u.user_id = a.user_id AND a.user_id = ?`,
+        db.query(`SELECT *, TIMESTAMPDIFF(YEAR,  a.birth_date, CURDATE()) AS age FROM astronaut a, user u WHERE u.user_id = a.user_id AND a.user_id = ?`,
             [astronautId], 
             (err, result) => {
                 if (err) {
