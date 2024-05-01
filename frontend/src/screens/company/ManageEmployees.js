@@ -150,6 +150,7 @@ const ManageEmployees = () => {
                                 profession={emp.profession ? emp.profession : "No jobs specified"}
                                 age={emp.age}
                                 location={emp.location ? emp.location: "No location specified"}
+                                astronaut_id={emp.astronaut_id}
                             />
                         ))}
                     </div>

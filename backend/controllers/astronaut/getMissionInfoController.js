@@ -42,7 +42,7 @@ const getPastMissions = async (astronaut_id) => {
 const getRecentMissions = async (astronaut_id, data) => {
     return new Promise((resolve, reject) => {
 
-        const { companyId, searchedName, startDate, endDate, location,
+        const { searchedName, startDate, endDate, location,
             leadingCompanyName, minBudget, maxBudget } = data;
 
         let query = `SELECT DISTINCT * FROM space_mission s WHERE
@@ -54,7 +54,7 @@ const getRecentMissions = async (astronaut_id, data) => {
                     AND (CASE WHEN ? IS NOT NULL THEN c.name LIKE ? ELSE 1 END)
                     AND (CASE WHEN ? IS NOT NULL THEN s.budget >= ? ELSE 1 END)
                     AND (CASE WHEN ? IS NOT NULL THEN s.budget <= ? ELSE 1 END)`;
-        db.query(query, [astronaut_id, companyId, companyId, companyId, searchedName, searchedName, startDate, startDate, endDate, endDate, 
+        db.query(query, [astronaut_id, searchedName, searchedName, startDate, startDate, endDate, endDate, 
             location, location, leadingCompanyName, leadingCompanyName, minBudget, minBudget, maxBudget, maxBudget], 
             (err, result) => {
                 if (err) {
