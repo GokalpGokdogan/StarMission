@@ -1,6 +1,4 @@
 import axios from 'axios';
-import { parseUserString } from './UserProvider';
-import { useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
 
 
@@ -129,6 +127,22 @@ export const getMissionData = async (missionId) => {
         headers: { 'Content-Type': 'application/json' },
         params: {
             missionId: missionId,
+        },
+        withCredentials: true
+    });
+
+    console.log(res.data);
+    return res.data;
+};
+
+export const getAstronautData = async (astronautId) => {
+    let res = await axios({
+        method: 'get',
+        // IT IS NOT AN EMPLOYEE????? getAstronautData or something?
+        url: `http://${API_HOST}/company/manageEmployees/getEmployeeData`,
+        headers: { 'Content-Type': 'application/json' },
+        params: {
+            astronautId: astronautId,
         },
         withCredentials: true
     });
@@ -278,7 +292,7 @@ export const getCurrentMission = async () => {
         console.log(res.data);
     }
     return res.data;
-        
+
 }
 
 export const getPastMissions = async () => {
@@ -308,7 +322,7 @@ export const getPastMissions = async () => {
 
 export const getRecentMissions = async (searchedName, startDate, endDate, location,
     leadingCompanyName, minBudget, maxBudget) => {
-    const query = { searchedName: searchedName, startDate: startDate, endDate: endDate, location: location, 
+    const query = { searchedName: searchedName, startDate: startDate, endDate: endDate, location: location,
                     leadingCompanyName: leadingCompanyName, minBudget: minBudget, maxBudget: maxBudget}
     let res = await axios({
         method: 'get',
@@ -332,11 +346,11 @@ export const getRecentMissions = async (searchedName, startDate, endDate, locati
     }
     return res.data;
 }
-   
+
 
 export const applyToMission = async (mission_id, cover_letter) => {
     const body = { 'mission_id': mission_id, 'cover_letter': cover_letter }
-        
+
     let res = await axios({
         method: 'get',
         url: `http://${API_HOST}/astronaut/manageApplications/applyToMission`,

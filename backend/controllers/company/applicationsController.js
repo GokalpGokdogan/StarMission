@@ -216,7 +216,7 @@ const getApplicationData = async (data) => {
                     reject("ER_FIND_NONE");     // No application found with this id
                 }
                 else {
-                    resolve(result);
+                    resolve(result[0]);
                 }
             }
         );

@@ -4,11 +4,10 @@ import SimpleList from "./components/SimpleList";
 import MissionApplicant from "./components/MissionApplicant";
 import { BrowserRouter as Router, Routes, Route, Navigate, Outlet } from "react-router-dom";
 import Sidebar from './components/SideBar';
-import { useState, useContext, useEffect } from 'react';
+import { useState } from 'react';
 import DashboardCompany from './screens/company/DashboardCompany';
 import ApplicationsAstronaut from './screens/astronaut/ApplicationsAstronaut';
 import MissionPostingsAstronaut from './screens/astronaut/MissionPostingsAstronaut';
-import MissionDetailsAstronaut from './screens/astronaut/MissionDetailsAstronaut';
 import MissionPostingsCompany from './screens/company/MissionPostingsCompany';
 import CreateMission from './screens/CreateMission';
 import ApplicationsCompany from './screens/company/ApplicationsCompany';
@@ -16,13 +15,10 @@ import LeadingMissions from './screens/company/LeadingMissions';
 import PartneredMissions from './screens/company/PartneredMissions';
 import MissionDetailsCompany from './screens/company/MissionDetailsCompany';
 import EmployeeDetailsCompany from './screens/company/EmployeeDetailsCompany';
-import SingleEmployee from "./components/SingleEmployee";
 import ManageEmployees from "./screens/company/ManageEmployees";
 import DashboardAstronaut from './screens/astronaut/DashboardAstronaut';
-import { UserProvider, useUser } from './UserProvider';
-import UserContext from './UserProvider';
-import { parseUserString } from './UserProvider';
-import Cookies from 'js-cookie';
+import {useUser } from './UserProvider';
+import MissionApplicantCompany from "./screens/company/MissionApplicantCompany";
 
 function App() {
     return (
@@ -131,6 +127,7 @@ function AppContent() {
                                 <Route path="/leading-missions" element={<LeadingMissions />} />
                                 <Route path="/partnered-missions" element={<PartneredMissions />} />
                                 <Route path="/mission-details/:missionId" element={<MissionDetailsCompany />} />
+                                <Route path="/application-details/:astronautId/:missionId/:appliedDate" element={<MissionApplicantCompany />} />
                                 <Route path="/employee-details/:employeeId" element={<EmployeeDetailsCompany />} />
                                 <Route path="/manage-employees" element={<ManageEmployees />} />
                             </Route>

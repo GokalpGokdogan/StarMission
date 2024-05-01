@@ -1,5 +1,5 @@
-import React, {useState, useEffect} from "react";
-import { getApplicationData } from "../Requests";
+import React from "react";
+import {NavLink} from "react-router-dom";
 
 const SingleApplication = ({name, mission, nationality, astronaut_id, mission_id, applied_date }) => {
   
@@ -16,9 +16,12 @@ const SingleApplication = ({name, mission, nationality, astronaut_id, mission_id
                     <p className="truncate text-xs leading-5 text-sub-text">{nationality}</p>
                 </div>
                 <div className="flex items-center justify-center mb-2 mt-2 mr-2">
-                    <button type="button" className={`w-20 bg-button-purple text-white text-sm py-2 rounded-xl`} onClick={()=> {console.log("applied date:" + applied_date); getApplicationData(astronaut_id, mission_id, applied_date)}}>
-                    View
-                    </button>
+                    <NavLink
+                        to={`/application-details/${astronaut_id}/${mission_id}/${applied_date}`}
+                        className={`w-20 bg-button-purple text-white text-sm py-2 rounded-xl hover:bg-indigo-700 flex justify-center`}
+                    >
+                        View
+                    </NavLink>
                 </div>
             </div>
             </div>
