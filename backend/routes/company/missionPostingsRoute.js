@@ -63,6 +63,22 @@ router.get('/getMissionData', async (req, res) => {
     }
 });
 
+router.get('/getPartnerMissions', async (req, res) => {
+    try {
+        const data = req.query;
+        const result = await missionPostingsController.getPartnerMissions(data);
+        res.status(200).json(result);
+    }
+    catch (err) {
+        if(err === "ER_FIND_NONE"){
+            res.status(204).send("No partner missions found.");
+        }
+        else{
+            res.status(400).send(err);
+        }   
+    }
+});
+
 
 
 // Bid To Mission

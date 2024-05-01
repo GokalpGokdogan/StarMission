@@ -40,6 +40,41 @@ const getMissionPostings = async (data) => {
     });
 }
 
+const getPartnerMissions = async (data) => {
+    return new Promise((resolve, reject) => {
+        
+        const { companyId, searchedName, startDate, endDate, location, 
+            leadingCompanyName, minBudget, maxBudget } = data;
+
+            let query = `SELECT s.*, u.name AS company_name FROM space_mission as s, partner_firm p, company c, user u
+                            WHERE (p.mission_id = s.mission_id AND p.company_id = ? AND c.user_id = u.user_id AND c.user_id = p.company_id AND s.leading_firm_id <> c.user_id)
+                            AND s.end_date >= CURDATE()
+                            AND (CASE WHEN ? IS NOT NULL THEN s.name LIKE ? ELSE 1 END) 
+                            AND (CASE WHEN ? IS NOT NULL THEN s.start_date >= ? ELSE 1 END) 
+                            AND (CASE WHEN ? IS NOT NULL THEN s.end_date <= ? ELSE 1 END)
+                            AND (CASE WHEN ? IS NOT NULL THEN s.location = ? ELSE 1 END)
+                            AND (CASE WHEN ? IS NOT NULL THEN u.name LIKE ? ELSE 1 END)
+                            AND (CASE WHEN ? IS NOT NULL THEN s.budget >= ? ELSE 1 END)
+                            AND (CASE WHEN ? IS NOT NULL THEN s.budget <= ? ELSE 1 END)
+                            ORDER BY s.creation_date DESC;`;
+            db.query(query, [companyId, searchedName, searchedName, startDate, startDate, endDate, endDate, 
+            location, location, leadingCompanyName, leadingCompanyName, minBudget, minBudget, maxBudget, maxBudget], 
+            (err, result) => {
+                if (err) {
+                    reject(err);
+                }
+                else if (result.length === 0) {
+                    reject("ER_FIND_NONE");     // No partner missions found with these filters
+                }
+                else {
+                    console.log(result, "successful get partner missions with filters");
+                    resolve(result);
+                }
+            }
+            );
+    });
+}
+
 
 // leadingFirmNames
 
@@ -112,5 +147,4 @@ const bidToMission = async (data) => {
     });
 }
 
-
-module.exports = { getMissionPostings, getLeadingFirmNames, getMissionData, bidToMission };
+module.exports = { getMissionPostings, getLeadingFirmNames, getMissionData, bidToMission , getPartnerMissions};
