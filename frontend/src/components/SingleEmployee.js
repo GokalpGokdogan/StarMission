@@ -11,8 +11,9 @@ const SingleEmployee = ({ name, missions, profession, age, location, astronaut_i
                     </div>
                     <div className="min-w-0 flex-auto">
                         <p className="text-sm font-semibold leading-6 text-main-text">{name}</p>
+                        <p className="truncate text-xs font-semibold leading-5 text-sub-text">{profession}, {age}</p>
                         <div className="flex">
-                            <p className="truncate text-xs leading-5 text-main-text">Current Missions:&nbsp;</p>
+                            <p className="truncate text-xs leading-5 text-main-text">Current Mission:&nbsp;</p>
                             {missions.map((mission, index) => (
                                 <Fragment key={index}>
                                     <p className="truncate text-xs leading-5 text-sub-text">{mission}</p>
@@ -20,8 +21,6 @@ const SingleEmployee = ({ name, missions, profession, age, location, astronaut_i
                                 </Fragment>
                             ))}
                         </div>
-
-                        <p className="truncate text-xs font-semibold leading-5 text-sub-text">{profession}, {age}</p>
                         <div className="flex">
                             <svg className="h-3 w-3 text-red-600 mt-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
@@ -29,6 +28,7 @@ const SingleEmployee = ({ name, missions, profession, age, location, astronaut_i
                             </svg>
                             <p className="truncate text-xs leading-5 text-sub-text">{location}</p>
                         </div>
+
                     </div>
                     <div className="flex items-end justify-end mr-2">
                         {/*  <a href="#" className={`text-button-purple text-sm py-2 text-center`}>
