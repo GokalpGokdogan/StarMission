@@ -16,6 +16,8 @@ const ledMissionsRoute = require('./routes/company/ledMissionsRoute');
 const getMissionInfoRoute = require("./routes/astronaut/getMissionInfoRoute");
 const manageApplicationsRoute = require("./routes/astronaut/manageApplicationsRoute");
 
+const createViewsRoute = require("./routes/admin/createViewsRoute");
+
 app.use(cors({origin: true, credentials: true}));
 app.use(express.json());
 app.use(cookieParser());
@@ -43,6 +45,8 @@ app.use('/company/myBids', myBidsRoute);
 app.use('/company/createMission', createMissionRoute); 
 app.use('/astronaut/getMissionInfo', getMissionInfoRoute); 
 app.use('/astronaut/manageApplications', manageApplicationsRoute); 
+
+app.use('/admin/createViews', createViewsRoute);
 
 app.listen(3001, () => {
     console.log('Server is running on port 3001');

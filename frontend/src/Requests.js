@@ -152,7 +152,7 @@ export const getAstronautData = async (astronautId) => {
 };
 
 export const getApplications = async (companyId, searchedName, profession, minAge, maxAge, sex, minWeight, maxWeight,
-    minHeight, maxHeight, nationality, missionName) => {
+    minHeight, maxHeight, nationality, missionName, appStatus) => {
     let res = await axios({
         method: 'get',
         url: `http://${API_HOST}/company/applications/getApplications`,
@@ -170,6 +170,7 @@ export const getApplications = async (companyId, searchedName, profession, minAg
             maxHeight: maxHeight,
             nationality: nationality,
             missionName: missionName,
+            appStatus: appStatus
         },
         withCredentials: true
     });
