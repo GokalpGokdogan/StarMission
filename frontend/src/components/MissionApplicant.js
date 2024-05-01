@@ -32,8 +32,8 @@ const MissionApplicant = ({application}) => {
     }, [application]);
 
     return (
-        <div className="flex justify-center items-center min-h-screen">
-            <div className="flex flex-col w-full max-w-4xl py-2 border rounded-xl bg-white shadow-lg">
+        <div className="flex justify-center items-center h-full">
+            <div className="flex flex-col w-full max-w-4xl p-8 border rounded-xl h-96 bg-white shadow-lg justify-between">
                 <div className="flex">
                     <div className="flex items-center">
                         <img width="120" height="120" src="https://seekvectorlogo.com/wp-content/uploads/2018/02/nasa-vector-logo.png" />
