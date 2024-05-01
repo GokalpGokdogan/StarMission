@@ -151,6 +151,55 @@ export const getAstronautData = async (astronautId) => {
     return res.data;
 };
 
+export const rejectApplication = async (astronautId, missionId) => {
+    const body = {
+        'astronautId': astronautId,
+        'missionId': missionId,
+    }
+    let res = await axios({
+        method: 'post',
+        url: `http://${API_HOST}/company/applications/rejectApplication`,
+        headers: { 'Content-Type': 'application/json', },
+        data: body,
+    })
+    console.log(res.data);
+    return res.data
+}
+
+export const acceptApplicationC = async (astronautId, missionId, salary, startDate) => {
+    const body = {
+        'astronautId': astronautId,
+        'missionId': missionId,
+        'salary': salary,
+        'startDate': startDate,
+    }
+    let res = await axios({
+        method: 'post',
+        url: `http://${API_HOST}/company/applications/acceptApplicationC`,
+        headers: { 'Content-Type': 'application/json', },
+        data: body,
+    })
+    console.log(res.data);
+    return res.data
+}
+
+export const acceptApplication = async (astronautId, missionId, salary, startDate) => {
+    const body = {
+        'astronautId': astronautId,
+        'missionId': missionId,
+        'salary': salary,
+        'startDate': startDate,
+    }
+    let res = await axios({
+        method: 'post',
+        url: `http://${API_HOST}/company/applications/acceptApplicationC`,
+        headers: { 'Content-Type': 'application/json', },
+        data: body,
+    })
+    console.log(res.data);
+    return res.data
+}
+
 export const getApplications = async (companyId, searchedName, profession, minAge, maxAge, sex, minWeight, maxWeight,
     minHeight, maxHeight, nationality, missionName, appStatus) => {
     let res = await axios({
@@ -264,9 +313,23 @@ export const getMyBids = async (companyId) => {
     return res.data;
 }
 
+export const getBiddingCompanies = async (missionId) => {
+    let res = await axios({
+        method: 'get',
+        url: `http://${API_HOST}/company/myBids/getBiddingCompanies`,
+        headers: { 'Content-Type': 'application/json' },
+        params: {
+            missionId: missionId,
+        },
+        withCredentials: true
+    });
+    if (res.status == 204) {
+        console.log("No bidding companies found with these filters")
+    }
 
-
-
+    console.log(res.data);
+    return res.data;
+}
 
 // Astronaut functions
 

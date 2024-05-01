@@ -31,7 +31,15 @@ const EmployeeDetailsCompany = () => {
     }, []);
 
     return (
-        <EmployeeCard employee={employeeData}></EmployeeCard>
+        <div className="bg-home-bg h-full min-h-screen flex flex-col">
+        <div className='h-16 bg-main-bg flex box-shadow shadow-sm'>
+            <p className='font-poppins font-bold text-white text-2xl p-4 ml-2 justify-start'>Application</p>
+        </div>
+        <div className="flex flex-grow justify-center items-center">
+            <EmployeeCard employee={employeeData}></EmployeeCard>        
+        </div>
+    </div>
+        
     )
 }
 

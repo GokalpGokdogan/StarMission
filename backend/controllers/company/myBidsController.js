@@ -21,4 +21,26 @@ const getMyBids = async (data) => {
     });
 };
 
-module.exports = {getMyBids};
+const getBiddingCompanies = async (data) => {
+    return new Promise((resolve, reject) => {
+        const { missionId } = data;
+        // Query to fetch bidding companies based on missionId
+        let query = `SELECT DISTINCT * FROM user u, mission_bid b
+                    WHERE u.user_id = b.bidding_company_id AND b.mission_id = ? ORDER BY b.bid_date DESC;`;
+        db.query(query, [missionId], (err, result) => {
+            if (err) {
+                reject(err);
+            } else if (result.length === 0) {
+                console.log(result)
+                reject("No bidding companies found for this mission");
+                
+            } else {
+                console.log(result)
+                resolve(result);
+                
+            }
+        });
+    });
+};
+
+module.exports = { getMyBids, getBiddingCompanies };

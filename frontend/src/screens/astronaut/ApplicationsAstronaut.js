@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link, Route } from 'react-router-dom';
 import ApplicationsTable from '../../components/ApplicationsTable';
+import SearchBar from '../../components/SearchBar';
 
 const ApplicationsAstronaut = () => {
 
@@ -64,10 +65,7 @@ const ApplicationsAstronaut = () => {
         <p className='font-poppins font-bold text-white text-2xl p-4 ml-2'>Applications</p>
       </div>
       <div className="flex-1 bg-home-bg flex flex-col items-center gap-4 p-8">
-        <div className='relative w-2/5'>
-          <input type="text" className="w-full border text-gray-900 focus:outline-none sm:text-sm rounded-3xl p-2 shadow-sm pl-4" placeholder="Search" required="" value={searchText} onChange={(e) => setSearchText(e.target.value)} />
-          {/*                 <SearchOutlined className='absolute right-3 top-1/2 transform -translate-y-1/2 hover:scale-110' style={{color: '#2b3674'}} />
- */}            </div>
+        <SearchBar input={searchText} onChange={(e) => setSearchText(e.target.value)}></SearchBar>
         <div className="shadow-lg w-2/3 h-full">
           <ApplicationsTable searchText={searchText} dataSource={dataSource} columns={columns} />
         </div>
