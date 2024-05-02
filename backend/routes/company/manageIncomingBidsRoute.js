@@ -19,6 +19,9 @@ router.get('/getIncomingBids', async(req, res) => {
     }
 });
 
+
+// Body: {companyId: int , bidId: int}
+// companyId is the leading company ID of the mission
 router.post('/acceptIncomingBid', async(req,res) => {
     try {
         const response = await manageIncomingBidsController.acceptIncomingBid(req.body);
@@ -33,6 +36,16 @@ router.post('/acceptIncomingBid', async(req,res) => {
         else {
             res.status(400).send("An error occurred in accept bid on a mission: " + error);
         }
+    }
+});
+
+// Body: {bidId: int}
+router.post('/rejectIncomingBid', async(req, res) => {
+    try {
+        const response = await manageIncomingBidsController.rejectIncomingBid(req.body);
+        res.status(200).send(response);
+    } catch (error) {
+            res.status(400).send("An error occurred in rejecting bid: " + error);
     }
 });
 

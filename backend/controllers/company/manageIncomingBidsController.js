@@ -1,6 +1,5 @@
 const db = require('../../database');
 
-// Get employees with filters
 const getIncomingBids = async (data) => {
     return new Promise((resolve, reject) => {
         const {missionId} = data;
@@ -81,4 +80,25 @@ const acceptIncomingBid = async (data) => {
     });
 }
 
-module.exports = {getIncomingBids, acceptIncomingBid};
+const rejectIncomingBid = async(data) => {
+    return new Promise((resolve, reject) => {
+        const {bidId} = data;
+        const query = ` UPDATE mission_bid b
+                        SET b.bid_status = 'Rejected'
+                        WHERE b.bid_id = ?;`
+        db.query(query,
+                [bidId],
+                (err, result) => {
+                    if (err) {
+                        reject(err);
+                    }
+                    else {
+                        console.log(result, "successful reject bid process");
+                        resolve(result);
+                    }
+                }
+        );
+    });
+};
+
+module.exports = {getIncomingBids, acceptIncomingBid, rejectIncomingBid};
