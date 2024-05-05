@@ -35,6 +35,15 @@ app.use((err, req, res, next) => {
 });
 
 
+app.use((err, req, res, next) => {
+    if (err.code === 'ECONNRESET') {
+        console.log('ECONNRESET occurred');
+        res.status(500).send('Connection was reset');
+    } else {
+        next(err);
+    }
+});
+
 // routes
 app.use('/logReg', logRegRoute);
 
