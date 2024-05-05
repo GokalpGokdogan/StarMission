@@ -7,8 +7,9 @@ const db = require('../../database');
 const getMissionPostings = async (data) => {
     return new Promise((resolve, reject) => {
         
-        const { companyId, searchedName, startDate, endDate, location, 
+        let { companyId, searchedName, startDate, endDate, location, 
             leadingCompanyName, minBudget, maxBudget } = data;
+            searchedName = "%"+searchedName+"%";
 
             let query = `SELECT s.*, u.name AS company_name FROM space_mission as s, company as c, user as u
                             WHERE (c.user_id = s.leading_firm_id AND c.user_id <> ? AND c.user_id = u.user_id)
@@ -43,8 +44,9 @@ const getMissionPostings = async (data) => {
 const getPartnerMissions = async (data) => {
     return new Promise((resolve, reject) => {
         
-        const { companyId, searchedName, startDate, endDate, location, 
+        let { companyId, searchedName, startDate, endDate, location, 
             leadingCompanyName, minBudget, maxBudget } = data;
+        searchedName = "%"+searchedName+"%";
 
             let query = `SELECT s.*, u.name AS company_name FROM space_mission as s, partner_firm p, company c, user u
                             WHERE (p.mission_id = s.mission_id AND p.company_id = ? AND c.user_id = u.user_id AND c.user_id = p.company_id AND s.leading_firm_id <> c.user_id)

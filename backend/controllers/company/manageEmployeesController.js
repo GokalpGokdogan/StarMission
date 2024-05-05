@@ -4,9 +4,9 @@ const db = require('../../database');
 // Get employees with filters
 const getEmployees = async (data) => {
     return new Promise((resolve, reject) => {
-        const {companyId, searchedName, profession, minAge, maxAge, 
+        let {companyId, searchedName, profession, minAge, maxAge, 
             sex, minWeight, maxWeight, minHeight, maxHeight, nationality} = data;
-
+        searchedName = "%"+searchedName+"%";
         db.query(`
                 SELECT DISTINCT a.profession, a.user_id AS astronaut_id, s.location, u.name AS astronaut_name, TIMESTAMPDIFF(YEAR,  a.birth_date, CURDATE()) AS age FROM user u, astronaut a, space_mission s, company c, mission_of m
                 WHERE a.user_id = m.astronaut_id AND s.mission_id = m.mission_id AND a.user_id = u.user_id

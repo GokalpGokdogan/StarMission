@@ -42,8 +42,9 @@ const getPastMissions = async (astronaut_id) => {
 const getRecentMissions = async (astronaut_id, data) => {
     return new Promise((resolve, reject) => {
 
-        const { searchedName, startDate, endDate, location,
+        let { searchedName, startDate, endDate, location,
             leadingCompanyName, minBudget, maxBudget } = data;
+            searchedName = "%"+searchedName+"%";
 
         let query = `SELECT DISTINCT * FROM space_mission s WHERE
                     NOT EXISTS (SELECT * FROM mission_of m WHERE s.mission_id = m.mission_id AND m.astronaut_id = ? AND m.leaving_date IS NULL)

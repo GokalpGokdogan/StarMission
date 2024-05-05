@@ -33,14 +33,14 @@ const getApplicantData = async (data) => {
 const getApplications = async (data) => {
     return new Promise((resolve, reject) => {
 
-        const { companyId, missionId, searchedName, profession,
+        let { companyId, missionId, searchedName, profession,
             minAge, maxAge, sex, minWeight, maxWeight,
             minHeight, maxHeight, nationality, missionName } = data;
 
-
+        searchedName = "%"+searchedName+"%";
         let query = `SELECT u.*, a.*, s.*, m.*,u.name AS astronaut_name, DATE(m.applied_date) AS applied_date FROM user u, astronaut a, space_mission s, company c, applied_mission m
                     WHERE u.user_id = a.user_id AND a.user_id = m.astronaut_id AND s.mission_id = m.mission_id 
-                    AND c.user_id = s.leading_firm_id AND c.user_id = ? 
+                    AND c.user_id = s.leading_firm_id AND c.user_id = ?
                     AND (CASE WHEN ? IS NOT NULL THEN u.name LIKE ? ELSE 1 END) 
                     AND (CASE WHEN ? IS NOT NULL THEN a.profession = ? ELSE 1 END) 
                     AND (CASE WHEN ? IS NOT NULL THEN TIMESTAMPDIFF(YEAR,  a.birth_date, CURDATE()) >= ? ELSE 1 END) 
@@ -58,7 +58,7 @@ const getApplications = async (data) => {
         //AND (CASE WHEN ? IS NOT NULL THEN s.mission_name LIKE ? ELSE 1 END) 
 
         db.query(query,
-            [companyId, missionId, searchedName, searchedName, profession, profession, minAge, minAge,
+            [companyId, searchedName, searchedName, profession, profession, minAge, minAge,
                 maxAge, maxAge, sex, sex, nationality, nationality, minHeight, minHeight,
                 maxHeight, maxHeight, minWeight, minWeight, maxWeight, maxWeight, missionName, missionName],
             (err, result) => {
@@ -142,8 +142,6 @@ const acceptApplicationA = async (data) => {
                                 resolve(result2);
                             }
                         });
-
-
                 }
             }
         );
