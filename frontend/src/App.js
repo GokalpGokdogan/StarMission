@@ -16,6 +16,7 @@ import PartneredMissions from './screens/company/PartneredMissions';
 import MissionDetailsCompany from './screens/company/MissionDetailsCompany';
 import EmployeeDetailsCompany from './screens/company/EmployeeDetailsCompany';
 import ManageEmployees from "./screens/company/ManageEmployees";
+import LeadingMissionDetails from './screens/company/LeadingMissionDetails';
 import DashboardAstronaut from './screens/astronaut/DashboardAstronaut';
 import { UserProvider, useUser } from './UserProvider';
 import UserContext from './UserProvider';
@@ -142,6 +143,7 @@ function AppContent() {
                                 <Route path="/manage-employees" element={<ManageEmployees />} />
                                 <Route path="/my-bids" element={<MyBidsCompany />} />
                                 <Route path="/create-mission" element={<CreateMission />} />
+                                <Route path="/leading-mission-details/:missionId" element={<LeadingMissionDetails />} />
                             </Route>
                             <Route element={<Auth allowedRoles={["astronaut"]} />}>
                                 <Route path="/dashboard" element={<DashboardAstronaut />} />

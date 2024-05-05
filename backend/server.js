@@ -13,6 +13,8 @@ const missionPostingsRoute = require('./routes/company/missionPostingsRoute');
 const myBidsRoute = require('./routes/company/myBidsRoute');
 const createMissionRoute = require('./routes/company/createMissionRoute');
 const ledMissionsRoute = require('./routes/company/ledMissionsRoute');
+const manageIncomingBidsRoute = require('./routes/company/manageIncomingBidsRoute');
+
 const getMissionInfoRoute = require("./routes/astronaut/getMissionInfoRoute");
 const manageApplicationsRoute = require("./routes/astronaut/manageApplicationsRoute");
 
@@ -31,6 +33,15 @@ app.use((err, req, res, next) => {
 });
 
 
+app.use((err, req, res, next) => {
+    if (err.code === 'ECONNRESET') {
+        console.log('ECONNRESET occurred');
+        res.status(500).send('Connection was reset');
+    } else {
+        next(err);
+    }
+});
+
 // routes
 app.use('/logReg', logRegRoute);
 
@@ -40,7 +51,8 @@ app.use('/company/missionPostings', missionPostingsRoute);
 app.use('/company/ledMissions', ledMissionsRoute);
 
 app.use('/company/myBids', myBidsRoute); 
-app.use('/company/createMission', createMissionRoute); 
+app.use('/company/createMission', createMissionRoute);
+app.use('/company/manageIncomingBids', manageIncomingBidsRoute);
 app.use('/astronaut/getMissionInfo', getMissionInfoRoute); 
 app.use('/astronaut/manageApplications', manageApplicationsRoute); 
 

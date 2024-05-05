@@ -1,6 +1,7 @@
 import React from "react";
+import { NavLink } from "react-router-dom";
 
-const MissionItem = ({title, company, location}) => {
+const MissionItem = ({title, company, location, type, id}) => {
     return (
         <li className="flex justify-center py-1 px-2">
             <div className="flex" style={{ width : "654px" }}>
@@ -14,9 +15,12 @@ const MissionItem = ({title, company, location}) => {
                     <p className="truncate text-xs leading-5 text-sub-text">{location}</p>
                 </div>
                 <div className="flex items-center justify-center mb-2 mt-2 mr-2">
-                    <button type="button" className={`w-20 bg-button-purple text-white text-sm py-2 rounded-xl`}>
-                    View
-                    </button>
+                     <NavLink
+                         to={type === "leading" ? `/leading-mission-details/${id}` : `/mission-details/${id}`}
+                        className={`w-28 bg-button-purple text-white text-sm py-2 rounded-xl hover:bg-indigo-700 flex justify-center`}
+                    >
+                        View
+                    </NavLink>
                 </div>
             </div>
             </div>

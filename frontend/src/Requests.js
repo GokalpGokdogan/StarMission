@@ -312,9 +312,23 @@ export const getMyBids = async (companyId) => {
     return res.data;
 }
 
+export const getBiddingCompanies = async (missionId) => {
+    let res = await axios({
+        method: 'get',
+        url: `http://${API_HOST}/company/myBids/getBiddingCompanies`,
+        headers: { 'Content-Type': 'application/json' },
+        params: {
+            missionId: missionId,
+        },
+        withCredentials: true
+    });
+    if (res.status == 204) {
+        console.log("No bidding companies found with these filters")
+    }
 
-
-
+    console.log(res.data);
+    return res.data;
+}
 
 // Astronaut functions
 
