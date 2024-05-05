@@ -3,13 +3,9 @@ import MissionItem from '../../components/MissionItem';
 import SearchBar from '../../components/SearchBar';
 import { getLeadingMissions } from '../../Requests';
 import { useUser } from '../../UserProvider';
-
-
 const LeadingMissions = () => {
-
   const {userId} = useUser();
   const [leadingMissions, setMissions] = useState([]);
-
   useEffect(() => {
     const fetchMissions = async () => {
         try{
@@ -28,17 +24,15 @@ const LeadingMissions = () => {
             console.error('Error fetching missions:', error);
         }
     };
-
     fetchMissions();
 }, []);
-
   return (
     <div className="bg-home-bg h-full">
         <div className='h-16 bg-main-bg flex box-shadow shadow-sm'>
             <p className='font-poppins font-bold text-white text-2xl p-4 ml-2 justify-start'>Leading Missions</p>
         </div>
         <div class="flex justify-center mt-6 mb-12">
-          <SearchBar input="INPUT"/>
+          <SearchBar/>
         </div>
             {leadingMissions && leadingMissions.length > 0 ? (leadingMissions.map(mission => (
               <div>
@@ -57,6 +51,4 @@ const LeadingMissions = () => {
         </div>
   );
 };
-
 export default LeadingMissions;
-

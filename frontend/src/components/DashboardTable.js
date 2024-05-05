@@ -4,7 +4,7 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import PendingIcon from '@mui/icons-material/Pending';
 import CancelIcon from '@mui/icons-material/Cancel';
 
-const DashboardTable = ({data}) => {
+const DashboardTable = ({data, showHeader}) => {
 
   const[dataSource, setDataSource] = useState([]);
   
@@ -63,14 +63,18 @@ const DashboardTable = ({data}) => {
   ];
 
   return (
-    <div className="w-full">
-      <ul className="flex-auto flex-col flex p-4 border rounded-xl border-transparent border-10 bg-grey-bg shadow-lg h-full min-h-64">
+    <div className="w-full h-full">
+     { showHeader ? 
+     ( <ul className="flex-auto flex-col flex p-4 border rounded-xl border-transparent border-10 bg-grey-bg shadow-lg h-full min-h-64">
         <div className="flex items-center justify-between">
           <h2 className="text-xl text-main-text font-semibold px-2 mb-4">My Bids</h2>
         </div>
         <ApplicationsTable dataSource={dataSource} columns={columns} />
 
-      </ul>
+      </ul>) :
+      (        <ApplicationsTable dataSource={dataSource} columns={columns} />
+    )
+      }
     </div>
   )
 };
