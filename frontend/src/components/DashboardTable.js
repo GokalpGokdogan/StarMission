@@ -13,12 +13,17 @@ const DashboardTable = ({data, showHeader}) => {
     let tempData = [];
     for (let i = 0; i < data.length; i++) {
     const item = data[i];
+    const formattedDate = new Date(item.bid_date).toLocaleDateString('en-GB', {
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric'
+    }).replace(/\//g, '.');
     tempData.push({
       key: `${i + 1}`,
       name: item.name,
       progress: item.bid_status === 'In Progress' ? 'In progress' : item.bid_status,
       amount: item.requested_amount + " TL",
-      date: item.bid_date,
+      date: formattedDate,
     });
     }
     setDataSource(tempData);
@@ -65,7 +70,7 @@ const DashboardTable = ({data, showHeader}) => {
   return (
     <div className="w-full h-full">
      { showHeader ? 
-     ( <ul className="flex-auto flex-col flex p-4 border rounded-xl border-transparent border-10 bg-grey-bg shadow-lg h-full min-h-64">
+     ( <ul className="flex-auto flex-col flex p-3 border rounded-xl border-transparent border-10 bg-grey-bg shadow-lg h-full min-h-64">
         <div className="flex items-center justify-between">
           <h2 className="text-xl text-main-text font-semibold px-2 mb-4">My Bids</h2>
         </div>

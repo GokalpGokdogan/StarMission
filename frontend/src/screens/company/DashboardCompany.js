@@ -102,20 +102,19 @@ const fetchRecentMissions = async () => {
                 <p className='font-poppins font-bold text-white text-2xl p-4 ml-2 justify-start'>Dashboard</p>
             </div>
             <div className='p-4'>
-            <div className=" grid grid-cols-2 grid-rows-2 gap-4">
-                <div className="flex items-center justify-center px-12">
+            <div className="grid grid-cols-2 grid-rows-2 mt-12">
+                <div className="flex items-center justify-center px-4 py-1 ml-24">
                     <SimpleList title={"Leading Missions"} data={leadingMissions} type={'mission'}/>
-                </div>
-                <div className=" flex items-center justify-center px-12">
-                    <SimpleList title={"Applications"} data={applications} type={'application'}/>
-                </div>                
-                <div className="flex items-center justify-center px-12">
+                </div>              
+                <div className="flex items-center justify-center px-4 py-1 mr-24">
                    <DashboardTable data={myBids} showHeader={true}/>
                 </div>
-                <div className="flex items-center justify-center px-12">
+                <div className="flex items-center justify-center px-4 py-1 ml-24">
                     <SimpleList title={"Recent Missions"}  data={recentMissions} type={'mission'}/>
-                </div>
-
+                </div> 
+                <div className=" flex items-center justify-center px-4 py-1 mr-24">
+                    <SimpleList title={"Applications"} data={applications} type={'application'}/>
+                </div> 
             </div>
             </div>
         </div>
