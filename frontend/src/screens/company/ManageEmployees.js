@@ -6,19 +6,16 @@ import { DateRange } from 'react-date-range';
 import 'react-date-range/dist/styles.css'; // main style file
 import 'react-date-range/dist/theme/default.css';
 import SingleEmployee from "../../components/SingleEmployee";
-import {getEmployees} from "../../Requests"; // theme css file
+import {getEmployees} from "../../Requests"; 
 import { useUser } from '../../UserProvider';
-
 const options = [
     { value: 'Washington DC, United States', label: 'Washington DC, United States' },
     { value: 'Texas, USA', label: 'Texas, USA' },
     { value: 'Ankara, Turkey', label: 'Ankara, Turkey' }
 ];
-
 const ManageEmployees = () => {
     const [employees, setEmployees] = useState([]);
     const {userId} = useUser();
-
     useEffect(() => {
         const fetchEmployees = async () => {
             try{
@@ -28,10 +25,8 @@ const ManageEmployees = () => {
                 console.error('Error fetching employees:', error);
             }
         };
-
         fetchEmployees();
     }, []);
-
     const [selectedDateRange, setSelectedDateRange] = useState([
         {
             startDate: new Date(),
@@ -39,28 +34,22 @@ const ManageEmployees = () => {
             key: 'selection'
         }
     ]);
-
     const [selectedLocation, setSelectedLocation] = useState('');
     const [selectedCompany, setSelectedCompany] = useState('');
     const [minBudget, setMinBudget] = useState('');
     const [maxBudget, setMaxBudget] = useState('');
-
     const handleLocationChange = (selectedOption) => {
         setSelectedLocation(selectedOption);
     };
-
     const handleCompanyChange = (selectedOption) => {
         setSelectedCompany(selectedOption);
     };
-
     const handleMinBudgetChange = (event) => {
         setMinBudget(event.target.value);
     };
-
     const handleMaxBudgetChange = (event) => {
         setMaxBudget(event.target.value);
     };
-
     return (
         <div className="bg-home-bg h-full flex flex-col">
             <div className='h-16 bg-main-bg flex box-shadow shadow-sm'>
@@ -139,31 +128,29 @@ const ManageEmployees = () => {
                 </div>
                 {/* Right container with mission postings */}
                 <div className="w-3/4 p-4">
-                    <div className="flex flex-wrap h-full">
-                        <div className="mt-6 mb-4 h-auto">
-                            <SearchBar input="INPUT" />
+                    <div className="flex flex-col flex-wrap">
+                        <div className="mt-6 mb-4">
+                            <SearchBar />
                         </div>
-                        
                         {employees && employees.length > 0 ? 
-                       (employees.map(emp => (
-                            <SingleEmployee
-                                name={emp.astronaut_name}
-                                missions={[emp.name]}
-                                profession={emp.profession ? emp.profession : "No jobs specified"}
-                                age={emp.age}
-                                location={emp.location ? emp.location: "No location specified"}
-                                astronaut_id={emp.astronaut_id}
-                            />
-                        ))) : (
-                            <div className="flex justify-center w-[60%] h-[80%]">
-                                <p className="text-3xl font-semibold leading-6 text-main-text mt-[30%]" >No data</p>
-                            </div>
-                        )}
+                        (employees.map(emp => (
+                                <SingleEmployee
+                                    name={emp.astronaut_name}
+                                    missions={[emp.name]}
+                                    profession={emp.profession ? emp.profession : "No jobs specified"}
+                                    age={emp.age}
+                                    location={emp.location ? emp.location: "No location specified"}
+                                    astronaut_id={emp.astronaut_id}
+                                />
+                            ))) : (
+                                <div className="flex justify-center w-[60%] h-[80%]">
+                                    <p className="text-3xl font-semibold leading-6 text-main-text mt-[30%]" >No data</p>
+                                </div>
+                            )}
                     </div>
                 </div>
             </div>
         </div>
     );
 };
-
 export default ManageEmployees;
