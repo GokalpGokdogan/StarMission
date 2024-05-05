@@ -39,13 +39,7 @@ const ApplicationsCompany = () => {
         <div>
         {applications && applications.map(application => (  
               <SingleApplication
-                key={application.key}
-                name={application.astronaut_name}
-                mission={application.name}
-                nationality={application.nationality}
-                applied_date={application.applied_date}
-                mission_id={application.mission_id}
-                astronaut_id={application.astronaut_id}
+                application={application}
               />
             ))}
         </div>

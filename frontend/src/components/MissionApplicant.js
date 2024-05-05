@@ -4,6 +4,11 @@ import {getAstronautData, rejectApplication, acceptApplication} from "../Request
 import Alert from '@mui/material/Alert';
 import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import PendingIcon from '@mui/icons-material/Pending';
+import CancelIcon from '@mui/icons-material/Cancel';
+
+
 const MissionApplicant = ({application}) => {
     const [showAlert, setShowAlert] = useState(false);
     const [alertText, setAlertText] = useState('');
@@ -11,6 +16,7 @@ const MissionApplicant = ({application}) => {
     const [startDate, setStartDate] = useState('');
     const [applicant, setApplicant] = useState({});
     const [isLoading, setLoading] = useState(true);
+    const [isProcessing, setProcessing] = useState(false);
 
 
     const handleSalaryChange = (e) => {
@@ -33,6 +39,15 @@ const MissionApplicant = ({application}) => {
             }
             else {
                 setApplicant(app);
+
+                if(app.application_status == "Processing"){
+                    console.log("set true!");
+                    setProcessing(true);
+                }
+                else{
+                    console.log("set false!");
+                }
+
                 console.log(app);
             }
 
@@ -50,10 +65,12 @@ const MissionApplicant = ({application}) => {
             }
 
             const app = await rejectApplication(application.astronaut_id, application.mission_id);
-            if(app === "No employee found with this id")
-            {
-                console.log("ahah")
-            }
+            
+            setAlertText('Reject application successful! Redirecting to applications...');
+            setShowAlert(true);
+            setTimeout(() => {
+                window.location.href = '/company-applications';
+            }, 2000);
 
         } catch (error){
             console.error('Error rejecting the application:', error);
@@ -118,6 +135,7 @@ const MissionApplicant = ({application}) => {
 
     useEffect(() => {
         fetchApplicantData();
+
     }, [application]);
 
     return (
@@ -136,7 +154,19 @@ const MissionApplicant = ({application}) => {
                         <img width="120" height="120" src="https://seekvectorlogo.com/wp-content/uploads/2018/02/nasa-vector-logo.png" />
                     </div>
                     <div className="flex flex-col flex-1">
-                        <h2 className="text-2xl text-main-text font-semibold mb-4">{applicant?.name}</h2>
+                        <div className="flex justify-between">
+                            <h2 className="text-2xl text-main-text font-semibold mb-4">{applicant?.name}</h2>
+                            <div className='flex flex-row gap-2'>
+                                {application.application_status === 'Rejected' ? (
+                                <CancelIcon style={{ color: '#FF3B30', fontSize: '20px' }} />
+                                ) : application.application_status === 'Accepted' ? (
+                                <CheckCircleIcon style={{ color: '#51C080', fontSize: '20px' }} />
+                                ) : (
+                                <PendingIcon style={{ color: '#FFCE20', fontSize: '20px' }} />
+                                )}
+                                <p className="text-md font-medium text-main-text">{application.application_status}</p>
+                            </div>
+                        </div>
                         <div className="flex justify-between">
                             <div className="">
                                 <p className="text-sm font-medium leading-6 text-main-text">Nationality: {applicant?.nationality}</p>
@@ -156,7 +186,8 @@ const MissionApplicant = ({application}) => {
                 <div className="flex-auto flex-col flex min-w-0 mt-2 p-2 border rounded-xl border-transparent border-10 bg-grey-bg">
                     <p className="truncate text-sm font-medium leading-6 text-main-text">{application.cover_letter}</p>
                 </div>
-                <div className= "flex justify-end">
+
+                {application.application_status == "Processing" && (<div className= "flex justify-end">
                     <div className="flex">
                         <div className="flex mt-4 mb-2 mr-4">
                             <span className="h-10 flex-shrink-0 z-10 inline-flex items-center py-2 px-3 text-sm font-medium text-center text-gray-900 bg-gray-100 border border-e-0 border-gray-300 rounded-s-lg focus:ring-4 focus:outline-none focus:ring-gray-300" type="button">Start Date:</span>
@@ -194,7 +225,7 @@ const MissionApplicant = ({application}) => {
                             Reject
                         </button>
                     </div>
-                </div>
+                </div>)}
             </div>)
             }
             {showAlert && (
