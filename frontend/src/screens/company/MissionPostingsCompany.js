@@ -37,7 +37,7 @@ const MissionPostingsCompany = () => {
             <p className='font-poppins font-bold text-white text-2xl p-4 ml-2 justify-start'>Mission Postings</p>
         </div>
         <div class="flex justify-center mt-6 mb-12">
-          <SearchBar input="INPUT"/>
+          <SearchBar/>
         </div>
         <div>
           {recentMissions.map(post => (

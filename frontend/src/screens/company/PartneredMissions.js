@@ -10,7 +10,7 @@ const PartneredMissions = () => {
             <p className='font-poppins font-bold text-white text-2xl p-4 ml-2 justify-start'>Partnered Missions</p>
         </div>
         <div class="flex justify-center mt-6 mb-12">
-          <SearchBar input="INPUT"/>
+          <SearchBar/>
         </div>
         <div>
             <MissionItem title="Space Discovery" company="NASA" location="Washington DC, United States"/>
