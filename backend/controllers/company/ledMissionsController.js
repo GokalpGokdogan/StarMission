@@ -4,7 +4,7 @@ const getLedMissions = async (data) => {
     return new Promise((resolve, reject) => {
         
     let { companyId , name, start_date, end_date, location, min_budget, max_budget} = data;
-    name = "%"+name+"%";
+    if(name){name = "%"+name+"%";}
     let query = `SELECT DISTINCT * FROM space_mission s
                 WHERE s.leading_firm_id = ? AND s.end_date > CURDATE()
                 AND (CASE WHEN ? IS NOT NULL THEN s.name LIKE ? ELSE 1 END)
