@@ -72,7 +72,7 @@ const DashboardTable = ({data, showHeader}) => {
         <ApplicationsTable dataSource={dataSource} columns={columns} />
 
       </ul>) :
-      (        <ApplicationsTable dataSource={dataSource} columns={columns} />
+      (       <ApplicationsTable dataSource={dataSource} columns={columns} />
     )
       }
     </div>

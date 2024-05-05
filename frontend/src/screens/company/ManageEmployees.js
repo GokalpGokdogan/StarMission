@@ -16,17 +16,37 @@ const options = [
 const ManageEmployees = () => {
     const [employees, setEmployees] = useState([]);
     const {userId} = useUser();
+
+    const formatDate = (date) => {
+        if (!date) return null; // Check if date is null or undefined
+        const d = new Date(date);
+        if (isNaN(d.getTime())) return null; // Check if the date object is valid using getTime()
+      
+        // Format the date using local date components to avoid timezone issues
+        const year = d.getFullYear();
+        const month = d.getMonth() + 1; // getMonth returns 0-11, need to add 1 for correct month
+        const day = d.getDate(); // getDate returns day of the month
+      
+        // Ensure the month and day are two digits
+        const formattedMonth = month < 10 ? `0${month}` : month;
+        const formattedDay = day < 10 ? `0${day}` : day;
+      
+        return `${year}-${formattedMonth}-${formattedDay}`;
+      };
+
+    const fetchEmployees = async () => {
+        try{
+            const employees = await getEmployees(userId);
+            setEmployees(employees);
+        } catch (error){
+            console.error('Error fetching employees:', error);
+        }
+    };
+
     useEffect(() => {
-        const fetchEmployees = async () => {
-            try{
-                const employees = await getEmployees(userId);
-                setEmployees(employees);
-            } catch (error){
-                console.error('Error fetching employees:', error);
-            }
-        };
         fetchEmployees();
     }, []);
+
     const [selectedDateRange, setSelectedDateRange] = useState([
         {
             startDate: new Date(),
@@ -34,10 +54,18 @@ const ManageEmployees = () => {
             key: 'selection'
         }
     ]);
+    
+    useEffect(() => {
+        console.log(selectedDateRange);
+        console.log(formatDate(selectedDateRange[0].startDate));
+        console.log(formatDate(selectedDateRange[0].endDate));
+    }, [selectedDateRange]);
+
     const [selectedLocation, setSelectedLocation] = useState('');
     const [selectedCompany, setSelectedCompany] = useState('');
     const [minBudget, setMinBudget] = useState('');
     const [maxBudget, setMaxBudget] = useState('');
+
     const handleLocationChange = (selectedOption) => {
         setSelectedLocation(selectedOption);
     };
@@ -50,6 +78,7 @@ const ManageEmployees = () => {
     const handleMaxBudgetChange = (event) => {
         setMaxBudget(event.target.value);
     };
+
     return (
         <div className="bg-home-bg h-full flex flex-col">
             <div className='h-16 bg-main-bg flex box-shadow shadow-sm'>

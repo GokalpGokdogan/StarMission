@@ -202,6 +202,9 @@ export const acceptApplication = async (astronautId, missionId, salary, startDat
 
 export const getApplications = async (companyId, searchedName, profession, minAge, maxAge, sex, minWeight, maxWeight,
     minHeight, maxHeight, nationality, missionName) => {
+        console.log(searchedName);
+        console.log(companyId);
+        
     let res = await axios({
         method: 'get',
         url: `http://${API_HOST}/company/applications/getApplications`,

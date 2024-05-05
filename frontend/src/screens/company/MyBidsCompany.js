@@ -10,9 +10,8 @@ import { getMyBids } from '../../Requests';
 const MyBidsCompany = () => {
 
   const {userId} = useUser();
-  const [searchText, setSearchText] = useState('');
+  const [searchText, setSearchText] = useState(null);
   const [myBids, setMyBids] = useState([]);
-
 
   const fetchMyBids = async () => {
     try{
@@ -45,7 +44,7 @@ useEffect(() => {
       <div className="flex-1 bg-home-bg flex flex-col items-center gap-4 p-8">
         <SearchBar input={searchText} onChange={(e) => setSearchText(e.target.value)}></SearchBar>
         <div className="shadow-lg w-2/3 h-full">
-            <DashboardTable data={myBids} showHeader={false}/>        
+            <DashboardTable data={myBids} showHeader={false} searchText={searchText}/>        
         </div>
       </div>
     </div>

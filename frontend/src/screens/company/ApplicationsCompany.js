@@ -8,33 +8,41 @@ const ApplicationsCompany = () => {
   const {userId} = useUser();
   const [applications, setApplications] = useState([]);
   const [formattedDate, setFormattedDate] = useState('');
-  useEffect(() => {
-    const fetchApplications = async () => {
-        try{
-            const apps = await getApplications(userId);
-            if(apps == "No applications found with these filters")
-            {
-              console.log("ahah")
-            }
-            else
-            {
-              setApplications(apps);
-              console.log(apps);
-            }
-            
-        } catch (error){
-            console.error('Error fetching apps:', error);
+  const [searchText, setSearchText] = useState(null);
+
+  const handleSearchChange = (event) => {
+    setSearchText(event.target.value); 
+  };
+
+  const fetchApplications = async () => {
+    try{
+        const apps = await getApplications(userId, searchText, null, null, null, null, null, null, null, null, null, null);
+        if(apps == "No applications found with these filters")
+        {
+          console.log("ahah")
         }
-    };
-    fetchApplications();
-}, []);
+        else
+        {
+          setApplications(apps);
+          console.log(apps);
+        }
+        
+    } catch (error){
+        console.error('Error fetching apps:', error);
+    }
+};
+
+    useEffect(() => {
+      fetchApplications();
+  }, [searchText]);
+
   return (
     <div className="bg-home-bg h-full">
         <div className='h-16 bg-main-bg flex box-shadow shadow-sm'>
             <p className='font-poppins font-bold text-white text-2xl p-4 ml-2 justify-start'>Applications</p>
         </div>
         <div class="flex justify-center mt-6 mb-12">
-          <SearchBar/>
+          <SearchBar input={searchText} onChange={handleSearchChange} />
         </div>
         <div>
         {applications && applications.map(application => (  
