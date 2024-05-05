@@ -23,7 +23,7 @@ const EditProfile = ({type}) => {
                         <img width="120" height="120" src="https://seekvectorlogo.com/wp-content/uploads/2018/02/nasa-vector-logo.png" />
                     </div>
                     <div className="flex flex-col flex-1">
-                        <h2 className="text-2xl text-main-text font-semibold mb-4">{applicant?.name}</h2>
+                        <h2 className="text-2xl text-main-text font-semibold mb-4"></h2>
                         <div className="flex justify-between">
                             <div className="">
                                 <p className="text-sm font-medium leading-6 text-main-text">Nationality: amk</p>
