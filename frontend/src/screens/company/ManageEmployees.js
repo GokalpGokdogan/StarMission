@@ -134,14 +134,14 @@ const ManageEmployees = () => {
                         </div>
                         {employees && employees.length > 0 ? 
                         (employees.map(emp => (
-                                <SingleEmployee
-                                    name={emp.astronaut_name}
-                                    missions={[emp.name]}
-                                    profession={emp.profession ? emp.profession : "No jobs specified"}
-                                    age={emp.age}
-                                    location={emp.location ? emp.location: "No location specified"}
-                                    astronaut_id={emp.astronaut_id}
-                                />
+                            <SingleEmployee
+                                name={emp.astronaut_name}
+                                missions={[emp.name]}
+                                profession={emp.profession ? emp.profession : "No jobs specified"}
+                                age={emp.age}
+                                location={emp.location ? emp.location: "No location specified"}
+                                astronaut_id={emp.astronaut_id}
+                            />
                             ))) : (
                                 <div className="flex justify-center w-[60%] h-[80%]">
                                     <p className="text-3xl font-semibold leading-6 text-main-text mt-[30%]" >No data</p>
