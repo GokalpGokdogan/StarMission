@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import {Link, Route} from 'react-router-dom';
+import CircularProgress from '@mui/material/CircularProgress';
 import Select from 'react-select';
 import { DateRange } from 'react-date-range';
 import SearchBar from '../../components/SearchBar';
@@ -18,7 +19,9 @@ const ApplicationsCompany = () => {
   const {userId} = useUser();
   const [applications, setApplications] = useState([]);
   const [formattedDate, setFormattedDate] = useState('');
-  const [searchText, setSearchText] = useState(null);
+  const [searchText, setSearchText] = useState('');
+  const [isLoading, setLoading] = useState(true);
+
 
   const formatDate = (date) => {
     if (!date) return null; // Check if date is null or undefined
@@ -49,6 +52,8 @@ const [selectedLocation, setSelectedLocation] = useState('');
 const [selectedCompany, setSelectedCompany] = useState('');
 const [minBudget, setMinBudget] = useState('0');
 const [maxBudget, setMaxBudget] = useState('0');
+const [initialLoading, setInitialLoading] = useState(true);
+const [isFetching, setIsFetching] = useState(false);
 
 const handleLocationChange = (selectedOption) => {
   setSelectedLocation(selectedOption);
@@ -73,25 +78,34 @@ useEffect(() => {
     setSearchText(event.target.value); 
   };
 
-  const fetchApplications = async () => {
-    try{
-        const apps = await getApplications(userId, searchText, null, null, null, null, null, null, null, null, null, null);
-        if(apps == "No applications found with these filters")
-        {
-          console.log("ahah")
-        }
-        else
-        {
-          setApplications(apps);
-          console.log(apps);
-        }
-        
-    } catch (error){
-        console.error('Error fetching apps:', error);
+  const fetchApplications = async (isInitialLoad = false) => {
+    if (isInitialLoad) {
+      setInitialLoading(true);
+    } else {
+      setIsFetching(true);
     }
-};
 
-    useEffect(() => {
+    try {
+      const apps = await getApplications(userId, searchText, null, null, null, null, null, null, null, null, null, null);
+      setApplications(apps);
+    } catch (error) {
+      console.error('Error fetching applications:', error);
+    } finally {
+      if (isInitialLoad) {
+        setInitialLoading(false);
+      } else {
+        setIsFetching(false);
+      }
+    }
+  };
+
+  // Initial fetch on component mount
+  useEffect(() => {
+    fetchApplications(true);
+  }, []);
+
+  // Fetch on searchText changes without showing the main loading spinner
+  useEffect(() => {
       fetchApplications();
   }, [searchText]);
 
@@ -100,7 +114,14 @@ useEffect(() => {
         <div className='h-16 bg-main-bg flex box-shadow shadow-sm'>
             <p className='font-poppins font-bold text-white text-2xl p-4 ml-2 justify-start'>Applications</p>
         </div>
-
+        {initialLoading  ? (
+        <div className="flex-grow flex items-center justify-center">
+            <div className="text-center">
+                <CircularProgress sx={{ color: "#635CFF" }} style={{ margin: '20px auto' }} size={50} color="primary" />
+                <p>Loading data...</p>
+            </div>
+        </div>
+    ) : (
            <div className="flex">
                 {/* Left container with filters */}
                 <div className="w-1/4 p-4 border-r flex flex-col">
@@ -188,16 +209,17 @@ useEffect(() => {
                 <div className="w-3/4 p-4">
                     <div className="flex flex-col flex-wrap">
                         <div className="mt-6 mb-4">
-                            <SearchBar />
+                         <SearchBar input={searchText} onChange={handleSearchChange} />
                         </div>
-                        {applications && applications.map(application => (  
+                         {applications && applications.map(application => (  
                         <SingleApplication
                           application={application}
                         />
-                      ))}
+                         ))} 
+                         
                     </div>
                 </div>
-            </div>
+            </div>)}
     </div>
   );
 };
