@@ -79,4 +79,78 @@ router.post('/fireEmployee', async(req, res) => {
     }
 });
 
+
+// Get mission names of company
+// Body: {companyId: int}
+
+router.get('/getMissionNames', async(req, res) => {
+    try {
+        //! Test ~ When connected to frontend, delete this if block
+        if(!req.query.companyId){
+            console.log("No companyId in query, using cookie");
+            let companyId = req.cookies.companyId;
+            req.query.companyId = companyId;
+        }
+
+        const response = await manageEmployeesController.getCompanyMissionNames(req.query);
+        res.status(200).send(response);
+    } catch (error) {
+        if (error === "ER_FIND_NONE") {
+            res.status(204).send("No missions found for this company");
+        }
+        else {
+            res.status(400).send("An error occurred in get mission names: " + error);
+        }
+    }
+});
+
+// Get company professions
+// Body: {companyId: int}
+
+router.get('/getCompanyProfessions', async(req, res) => {
+    try {
+        //! Test ~ When connected to frontend, delete this if block
+        if(!req.query.companyId){
+            console.log("No companyId in query, using cookie");
+            let companyId = req.cookies.companyId;
+            req.query.companyId = companyId;
+        }
+
+        const response = await manageEmployeesController.getCompanyProfessions(req.query);
+        res.status(200).send(response);
+    } catch (error) {
+        if(error=="ER_FIND_NONE"){
+            res.status(204).send("No professions found for this company");
+        }
+        else{
+            res.status(400).send("An error occurred in get company professions: " + error);
+        }
+    }
+});
+
+// Get company sex
+// Body: {companyId: int}
+
+router.get('/getCompanySex', async(req, res) => {
+    try {
+        
+        //! Test ~ When connected to frontend, delete this if block
+        if(!req.query.companyId){
+            console.log("No companyId in query, using cookie");
+            let companyId = req.cookies.companyId;
+            req.query.companyId = companyId;
+        }
+
+        const response = await manageEmployeesController.getCompanySex(req.query);
+        res.status(200).send(response);
+    } catch (error) {
+        if(error=="ER_FIND_NONE"){
+            res.status(204).send("No sex found for this company");
+        }
+        else{
+            res.status(400).send("An error occurred in get company sex: " + error);
+        }
+    }
+});
+
 module.exports = router;
