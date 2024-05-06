@@ -268,8 +268,33 @@ const getCompanyMissionNames = async (data) => {
 const getCompanyProfessions = async (data) => {
     return new Promise((resolve, reject) => {
         const { companyId } = data;
-        db.query(`SELECT DISTINCT a.profession FROM astronaut a, applied_mission m, company c 
-                    WHERE c.user_id = m.company_id AND m.astronaut_id = a.user_id AND c.user_id = ?`,
+        db.query(`SELECT DISTINCT (CASE WHEN a.profession IS NULL THEN 'Other' ELSE a.profession END) as profession
+                    FROM astronaut a, applied_mission m, company c, space_mission s
+                    WHERE c.user_id = s.leading_firm_id AND m.astronaut_id = a.user_id 
+                    AND m.mission_id = s.mission_id AND c.user_id = ?`,
+            [companyId],
+            (err, result) => {
+                if (err) {
+                    reject(err);
+                }
+                else if (result.length === 0) {
+                    reject("ER_FIND_NONE");     // No professions found with this company id
+                }
+                else {
+                    resolve(result);
+                }
+            }
+        );
+    });
+}
+
+const getCompanySex = async (data) => {
+    return new Promise((resolve, reject) => {
+        const { companyId } = data;
+        db.query(`SELECT DISTINCT (CASE WHEN a.sex IS NULL THEN 'Other' ELSE a.sex END) as sex
+                    FROM astronaut a, applied_mission m, company c, space_mission s
+                    WHERE c.user_id = s.leading_firm_id AND m.astronaut_id = a.user_id 
+                    AND m.mission_id = s.mission_id AND c.user_id = ?`,
             [companyId],
             (err, result) => {
                 if (err) {
@@ -287,4 +312,6 @@ const getCompanyProfessions = async (data) => {
 }
 
 
-module.exports = { getApplicantData, getApplications, acceptApplicationC, acceptApplicationA, getApplicationData, rejectApplication };
+module.exports = { getApplicantData, getApplications, acceptApplicationC,
+     acceptApplicationA, getApplicationData, rejectApplication,
+     getCompanyMissionNames, getCompanyProfessions, getCompanySex};
