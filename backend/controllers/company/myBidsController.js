@@ -3,10 +3,12 @@ const db = require('../../database');
 const getMyBids = async (data) => {
     return new Promise((resolve, reject) => {
         
-        const { companyId } = data;
+        const { companyId, missionId } = data;
         let query = `SELECT DISTINCT b.*, s.name FROM mission_bid b, space_mission s 
-                    WHERE s.mission_id = b.mission_id AND b.bidding_company_id = ? ORDER BY b.bid_date DESC;`;
-        db.query(query, [companyId], (err, result) => {
+                    WHERE s.mission_id = b.mission_id AND b.bidding_company_id = ? 
+                    AND (CASE WHEN ? IS NOT NULL THEN s.mission_id = ? ELSE 1 END)
+                    ORDER BY b.bid_date DESC;`;
+        db.query(query, [companyId, missionId], (err, result) => {
                 if (err) {
                     reject(err);
                 }
