@@ -14,7 +14,7 @@ const LeadingMissionDetails = () => {
   const fetchMissionData = async () => {
     try {
       const mission = await getMissionData(missionId);
-      if (mission === "No applications found with these filters") {
+      if (mission === "No mission data found with these filters") {
         console.log("No mission data found");
       } else {
         setMissionData(mission);

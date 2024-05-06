@@ -26,6 +26,7 @@ import { useNavigate } from 'react-router-dom';
 import MissionApplicantCompany from "./screens/company/MissionApplicantCompany";
 import MyBidsCompany from './screens/company/MyBidsCompany';
 import EditProfile from './screens/EditProfile';
+import BidDetailsCompany from './screens/company/BidDetailsCompany';
 
 function App() {
     return (
@@ -145,6 +146,7 @@ function AppContent() {
                                 <Route path="/my-bids" element={<MyBidsCompany />} />
                                 <Route path="/create-mission" element={<CreateMission />} />
                                 <Route path="/leading-mission-details/:missionId" element={<LeadingMissionDetails />} />
+                                <Route path="/bid-details" element={<BidDetailsCompany />} />
                                 <Route path="edit-company-profile" element={<EditProfile type={'company'} />} />
                             </Route>
                             <Route element={<Auth allowedRoles={["astronaut"]} />}>
