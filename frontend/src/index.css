@@ -63,3 +63,7 @@
       }
     }
   }
+
+  .rdrDayToday .rdrDayNumber span:after {
+    background: "#5569ff";
+    }

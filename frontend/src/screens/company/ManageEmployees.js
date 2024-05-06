@@ -3,16 +3,18 @@ import Select from 'react-select';
 import MissionPost from '../../components/MissionPost';
 import SearchBar from '../../components/SearchBar';
 import { DateRange } from 'react-date-range';
-import 'react-date-range/dist/styles.css'; // main style file
+import 'react-date-range/dist/styles.css';
 import 'react-date-range/dist/theme/default.css';
 import SingleEmployee from "../../components/SingleEmployee";
 import {getEmployees} from "../../Requests"; 
 import { useUser } from '../../UserProvider';
+
 const options = [
     { value: 'Washington DC, United States', label: 'Washington DC, United States' },
     { value: 'Texas, USA', label: 'Texas, USA' },
     { value: 'Ankara, Turkey', label: 'Ankara, Turkey' }
 ];
+
 const ManageEmployees = () => {
     const [employees, setEmployees] = useState([]);
     const {userId} = useUser();
@@ -96,7 +98,8 @@ const ManageEmployees = () => {
                             onChange={item => setSelectedDateRange([item.selection])}
                             moveRangeOnFirstSelection={false}
                             ranges={selectedDateRange}
-                            style={{ width: '100%' }} // Set width to 100%
+                            rangeColors={["#5569ff"]} 
+                            style={{ width: '100%' }}
                             className="w-full"
                         />
                     </div>

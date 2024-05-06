@@ -139,7 +139,7 @@ const MissionApplicant = ({application}) => {
     }, [application]);
 
     return (
-        <div className="flex justify-center items-center h-full">
+        <div className="flex justify-center items-center h-full w-full">
             {isLoading ?
                 (
                     <div className="text-center">
@@ -148,7 +148,7 @@ const MissionApplicant = ({application}) => {
                     </div>
                 )
                 :
-                (<div className="flex flex-col w-full max-w-4xl p-8 border rounded-xl h-96 bg-white shadow-lg justify-between">
+                (<div className="flex flex-col p-8 border rounded-xl h-96 bg-white shadow-lg justify-between" style={{ minWidth: '800px' }}>
                 <div className="flex">
                     <div className="flex items-center">
                         <img width="120" height="120" src="https://seekvectorlogo.com/wp-content/uploads/2018/02/nasa-vector-logo.png" />
