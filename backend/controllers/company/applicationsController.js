@@ -244,7 +244,47 @@ const rejectApplication = async (data) => {
     });
 }
 
+const getCompanyMissionNames = async (data) => {
+    return new Promise((resolve, reject) => {
+        const { companyId } = data;
+        db.query(`SELECT DISTINCT s.name FROM space_mission s, company c 
+                    WHERE c.user_id = s.leading_firm_id AND c.user_id = ?`,
+            [companyId],
+            (err, result) => {
+                if (err) {
+                    reject(err);
+                }
+                else if (result.length === 0) {
+                    reject("ER_FIND_NONE");     // No mission names found with this company id
+                }
+                else {
+                    resolve(result);
+                }
+            }
+        );
+    });
+}
 
+const getCompanyProfessions = async (data) => {
+    return new Promise((resolve, reject) => {
+        const { companyId } = data;
+        db.query(`SELECT DISTINCT a.profession FROM astronaut a, applied_mission m, company c 
+                    WHERE c.user_id = m.company_id AND m.astronaut_id = a.user_id AND c.user_id = ?`,
+            [companyId],
+            (err, result) => {
+                if (err) {
+                    reject(err);
+                }
+                else if (result.length === 0) {
+                    reject("ER_FIND_NONE");     // No professions found with this company id
+                }
+                else {
+                    resolve(result);
+                }
+            }
+        );
+    });
+}
 
 
 module.exports = { getApplicantData, getApplications, acceptApplicationC, acceptApplicationA, getApplicationData, rejectApplication };
