@@ -75,13 +75,24 @@ export const login = async (email, password, navigate, setUserType, setUserId) =
 };
 
 //company functions
-export const getEmployees = async (companyId) => {
+export const getEmployees = async (companyId, searchedName, profession, minAge, maxAge, 
+    sex, minWeight, maxWeight, minHeight, maxHeight, nationality) => {
     let res = await axios({
         method: 'get',
         url: `http://${API_HOST}/company/manageEmployees/getEmployees`,
         headers: { 'Content-Type': 'application/json' },
         params: {
             companyId: companyId,
+            searchedName: searchedName,
+            profession: profession,
+            minAge: minAge,
+            maxAge: maxAge,
+            sex: sex,
+            minWeight: minWeight,
+            maxWeight: maxWeight,
+            minHeight: minHeight,
+            maxHeight: maxHeight,
+            nationality: nationality,
         },
         withCredentials: true
     });

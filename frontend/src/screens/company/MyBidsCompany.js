@@ -10,7 +10,7 @@ import { getMyBids } from '../../Requests';
 const MyBidsCompany = () => {
 
   const {userId} = useUser();
-  const [searchText, setSearchText] = useState(null);
+  const [searchText, setSearchText] = useState('');
   const [myBids, setMyBids] = useState([]);
 
   const fetchMyBids = async () => {

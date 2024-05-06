@@ -107,7 +107,7 @@ const fetchRecentMissions = async () => {
                     <SimpleList title={"Leading Missions"} data={leadingMissions} type={'mission'}/>
                 </div>              
                 <div className="flex items-center justify-center px-4 py-1 mr-24">
-                   <DashboardTable data={myBids} showHeader={true}/>
+                   <DashboardTable data={myBids} showHeader={true} searchText={''}/>
                 </div>
                 <div className="flex items-center justify-center px-4 py-1 ml-24">
                     <SimpleList title={"Recent Missions"}  data={recentMissions} type={'mission'}/>

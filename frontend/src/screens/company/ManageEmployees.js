@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import Select from 'react-select';
+import CircularProgress from '@mui/material/CircularProgress';
 import MissionPost from '../../components/MissionPost';
 import SearchBar from '../../components/SearchBar';
 import { DateRange } from 'react-date-range';
@@ -18,6 +19,23 @@ const options = [
 const ManageEmployees = () => {
     const [employees, setEmployees] = useState([]);
     const {userId} = useUser();
+    const [initialLoading, setInitialLoading] = useState(true);
+    const [isFetching, setIsFetching] = useState(false);
+    const [searchText, setSearchText] = useState(null);
+    const [profession, setProfession] = useState(null);
+    const [minAge, setMinAge] = useState(null);
+    const [maxAge, setMaxAge] = useState(null);
+    const [sex, setSex] = useState(null);
+    const [minWeight, setMinWeight] = useState(null);
+    const [maxWeight, setMaxWeight] = useState(null);
+    const [minHeight, setMinHeight] = useState(null);
+    const [maxHeight, setMaxHeight] = useState(null);
+    const [missionName, setMissionName] = useState(null);
+    const [nationality, setNationality] = useState(null);
+
+    const handleSearchChange = (event) => {
+        setSearchText(event.target.value);
+      };
 
     const formatDate = (date) => {
         if (!date) return null; // Check if date is null or undefined
@@ -36,18 +54,36 @@ const ManageEmployees = () => {
         return `${year}-${formattedMonth}-${formattedDay}`;
       };
 
-    const fetchEmployees = async () => {
-        try{
-            const employees = await getEmployees(userId);
-            setEmployees(employees);
-        } catch (error){
-            console.error('Error fetching employees:', error);
-        }
+    const fetchEmployees = async (isInitialLoad = false) => {
+        if (isInitialLoad) {
+            setInitialLoading(true);
+          } else {
+            setIsFetching(true);
+          }
+      
+          try {
+            const apps = await getEmployees(userId, searchText, profession?.value, minAge, maxAge, sex?.value, minWeight, maxWeight, minHeight, maxHeight, null, missionName);
+            setEmployees(apps);
+          } catch (error) {
+            console.error('Error fetching applications:', error);
+          } finally {
+            if (isInitialLoad) {
+              setTimeout(() => setInitialLoading(false), 300);
+            } else {
+              setIsFetching(false);
+            }
+          }
     };
 
-    useEffect(() => {
-        fetchEmployees();
-    }, []);
+  // Initial fetch on component mount
+  useEffect(() => {
+    fetchEmployees(true);
+  }, []);
+
+  // Fetch on searchText changes without showing the main loading spinner
+  useEffect(() => {
+    fetchEmployees();
+  }, [searchText]);
 
     const [selectedDateRange, setSelectedDateRange] = useState([
         {
@@ -86,83 +122,150 @@ const ManageEmployees = () => {
             <div className='h-16 bg-main-bg flex box-shadow shadow-sm'>
                 <p className='font-poppins font-bold text-white text-2xl p-4 ml-2 justify-start'>Manage Employees</p>
             </div>
+            {initialLoading ? (
+        <div className="flex-grow flex items-center justify-center">
+          <div className="text-center mt-32">
+            <CircularProgress sx={{ color: "#635CFF" }} style={{ margin: '20px auto' }} size={50} color="primary" />
+            <p>Loading data...</p>
+          </div>
+        </div>
+      ) : (
+        <div className="flex">
+          <div className="w-1/4 p-6 border-r flex flex-col gap-2">
+            <div>
+              <label className="block mb-1 text-main-text font-medium">Start and End Dates</label>
+              <DateRange
+                editableDateInputs={true}
+                onChange={item => setSelectedDateRange([item.selection])}
+                moveRangeOnFirstSelection={false}
+                ranges={selectedDateRange}
+                rangeColors={["#5569ff"]}
+                style={{ width: '100%' }}
+                className="w-full"
+              />
+            </div>
+            <div className="mb-4">
+              <label className="block mb-1 text-main-text text-md font-medium">Mission</label>
+              <Select
+                value={missionName}
+                onChange={(e)=> {setMissionName(e); console.log(e);}}
+                options={options}
+                isSearchable={true}
+                placeholder="Select Mission"
+                className="w-full"
+              />
+            </div>
+            <div className="mb-4">
+              <label className="block mb-1 text-main-text text-md font-medium">Profession</label>
+              <Select
+                value={profession}
+                onChange={(e) => setProfession(e.target.value)}
+                options={options}
+                isSearchable={true}
+                placeholder="Select Profession"
+                className="w-full"
+              />
+            </div>
             <div className="flex">
-                {/* Left container with filters */}
-                <div className="w-1/4 p-4 border-r flex flex-col">
-                    <h2 className="text-lg font-semibold mb-1 text-main-text">Filters</h2>
-                    {/* Date Range Picker */}
-                    <div className="mb-2">
-                        <label className="block mb-1 text-main-text">Start and End Dates</label>
-                        <DateRange
-                            editableDateInputs={true}
-                            onChange={item => setSelectedDateRange([item.selection])}
-                            moveRangeOnFirstSelection={false}
-                            ranges={selectedDateRange}
-                            rangeColors={["#5569ff"]} 
-                            style={{ width: '100%' }}
-                            className="w-full"
-                        />
-                    </div>
-                    {/* Location Dropdown */}
-                    <div className="mb-4">
-                        <label className="block mb-1 text-main-text">Location</label>
-                        <Select
-                            value={selectedLocation}
-                            onChange={handleLocationChange}
-                            options={options}
-                            isSearchable={true}
-                            placeholder="Select Location"
-                            className="w-full"
-                        />
-                    </div>
-                    {/* Company Dropdown */}
-                    <div className="mb-4">
-                        <label className="block mb-1 text-main-text">Leading Company</label>
-                        <Select
-                            value={selectedCompany}
-                            onChange={handleCompanyChange}
-                            options={options}
-                            isSearchable={true}
-                            placeholder="Select Company"
-                            className="w-full"
-                        />
-                    </div>
-                    <div className="flex">
-                        {/* Min Budget Input */}
-                        <div className="mb-6">
-                            <label className="block mb-1 text-main-text">Min Budget</label>
-                            <input
-                                type="number"
-                                value={minBudget}
-                                onChange={handleMinBudgetChange}
-                                style={{ width: '90%' }} // Set width to 100%
-                                className="w-full py-1 px-1"
-                            />
-                        </div>
-                        {/* Max Budget Input */}
-                        <div className="mb-6 ml-4">
-                            <label className="block mb-1 text-main-text">Max Budget</label>
-                            <input
-                                type="number"
-                                value={maxBudget}
-                                onChange={handleMaxBudgetChange}
-                                style={{ width: '100%' }} // Set width to 100%
-                                className="w-full py-1 px-1 justify-end"
-                            />
-                        </div>
-                    </div>
-                    <div className="flex items-center justify-center mb-2 mt-2 mr-2">
-                        <button type="button" className={`w-32 bg-button-purple text-white text-sm py-3 rounded-xl`}>
-                            Apply Filters
-                        </button>
-                    </div>
-                    {/* Add other filters as needed */}
-                </div>
+              <div className="mb-4">
+                <label className="block mb-1 text-main-text font-medium">Min Age</label>
+                <input
+                  type="number"
+                  min={0}
+                  value={minAge}
+                  onChange={(e) => {
+                    const newMin = Math.max(0, parseFloat(e.target.value)); // Ensure non-negative values
+                    if (newMin <= maxBudget) {
+                      setMinBudget(newMin);
+                    }
+                  }}
+                  className="w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                />
+              </div>
+              {/* Max Budget Input */}
+              <div className="mb-4 ml-4">
+                <label className="block mb-1 text-main-text font-medium">Max Age</label>
+                <input
+                  type="number"
+                  min="0"
+                  value={maxAge}
+                  onChange={(e) => {
+                    const newMax = Math.max(0, parseFloat(e.target.value)); // Ensure the value is not less than 0
+                    if (newMax >= minBudget) {
+                      setMaxAge(newMax);
+                    }
+                  }}
+                  className="w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                />
+              </div>
+            </div>
+            <div className="mb-4">
+              <label className="block mb-1 text-main-text text-md font-medium">Gender</label>
+              <Select
+                value={sex}
+                onChange={(e)=> {setSex(e); console.log(e);}}
+                options={options}
+                isSearchable={true}
+                placeholder="Select Gender"
+                className="w-full"
+              />
+            </div>
+            <div className="flex">
+              <div className="mb-4">
+                <label className="block mb-1 text-main-text font-medium">Min Weight (kg)</label>
+                <input
+                  type="number"
+                  min={0}
+                  value={minWeight}
+                  onChange={(e) => setMinWeight(e)}
+                  className="w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                />
+              </div>
+              <div className="mb-4 ml-4">
+                <label className="block mb-1 text-main-text font-medium">Max Weight (kg)</label>
+                <input
+                  type="number"
+                  min="0"
+                  value={maxWeight}
+                  onChange={(e) => setMaxWeight(e)}
+                  className="w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                />
+              </div>
+            </div>
+            <div className="flex">
+              <div className="mb-4">
+                <label className="block mb-1 text-main-text font-medium">Min Height (cm)</label>
+                <input
+                  type="number"
+                  min={0}
+                  value={minHeight}
+                  onChange={(e) => setMinHeight(e)}
+                  className="w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                />
+              </div>
+              <div className="mb-4 ml-4">
+                <label className="block mb-1 text-main-text font-medium">Max Height (cm)</label>
+                <input
+                  type="number"
+                  min="0"
+                  value={maxHeight}
+                  onChange={(e) => setMaxHeight(e)}
+                  className="w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                />
+              </div>
+            </div>
+            <div className="flex items-center justify-center mb-2 mt-2 mr-2">
+              <button type="button" className={`w-32 bg-button-purple text-white text-sm py-3 rounded-xl`}>
+                Apply Filters
+              </button>
+            </div>
+            {/* Add other filters as needed */}
+          </div>
                 {/* Right container with mission postings */}
                 <div className="w-3/4 p-4">
                     <div className="flex flex-col flex-wrap">
                         <div className="mt-6 mb-4">
-                            <SearchBar />
+                            <SearchBar input={searchText} onChange={handleSearchChange} />
                         </div>
                         {employees && employees.length > 0 ? 
                         (employees.map(emp => (
@@ -181,7 +284,7 @@ const ManageEmployees = () => {
                             )}
                     </div>
                 </div>
-            </div>
+            </div>)}
         </div>
     );
 };

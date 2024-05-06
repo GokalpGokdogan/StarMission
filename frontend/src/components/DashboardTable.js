@@ -4,7 +4,7 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import PendingIcon from '@mui/icons-material/Pending';
 import CancelIcon from '@mui/icons-material/Cancel';
 
-const DashboardTable = ({data, showHeader}) => {
+const DashboardTable = ({data, showHeader, searchText}) => {
 
   const[dataSource, setDataSource] = useState([]);
   
@@ -35,7 +35,11 @@ const DashboardTable = ({data, showHeader}) => {
       title: 'Name',
       dataIndex: 'name',
       key: 'name',
-    },
+      filteredValue: [searchText],
+      onFilter: (value, record) => {
+          return record.name.toLowerCase().includes(value.toLowerCase());
+        },
+      },
     {
       title: 'Progress',
       dataIndex: 'progress',
@@ -74,10 +78,10 @@ const DashboardTable = ({data, showHeader}) => {
         <div className="flex items-center justify-between">
           <h2 className="text-xl text-main-text font-semibold px-2 mb-4">My Bids</h2>
         </div>
-        <ApplicationsTable dataSource={dataSource} columns={columns} />
+          <ApplicationsTable dataSource={dataSource} columns={columns} />
 
       </ul>) :
-      (       <ApplicationsTable dataSource={dataSource} columns={columns} />
+      (   <ApplicationsTable dataSource={dataSource} columns={columns} />
     )
       }
     </div>

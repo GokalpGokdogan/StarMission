@@ -14,12 +14,15 @@ const SingleApplication = ({application}) => {
                     <img width="60" height="60" src="https://seekvectorlogo.com/wp-content/uploads/2018/02/nasa-vector-logo.png" />
                 </div>
                 <div className="min-w-0 flex-auto">
-                    <p className="text-sm font-semibold leading-6 text-main-text">{application.astronaut_name}</p>               
-                    <p className="truncate text-xs font-semibold leading-5 text-sub-text">{application.name}</p>
-                    <p className="truncate text-xs leading-5 text-sub-text">{application.nationality}</p>
+                    <p className="text-sm font-semibold leading-6 text-main-text">{application.astronaut_name}</p> 
+                    <div className="flex flex-row align-center gap-1">             
+                        <p className="truncate text-xs font-semibold leading-5 text-sub-text">Applied to:</p>
+                        <div className="inline-block bg-button-purple text-white text-xs rounded-2xl px-1 py-0.5 text-center">{application.name}</div>
+                    </div>
+                    <p className="truncate text-xs leading-5 text-sub-text">{application.profession}</p>
                 </div>
-                <div className="flex flex-col justify-start">
-                    <div className='flex flex-row gap-1'>
+                <div className="flex flex-col justify-start h-full">
+                    <div className='flex flex-row gap-1 flex-grow'>
                             {application.application_status === 'Rejected' ? (
                             <CancelIcon style={{ color: '#FF3B30', fontSize: '16px' }} />
                             ) : application.application_status === 'Accepted' ? (
@@ -31,12 +34,12 @@ const SingleApplication = ({application}) => {
                                 {application.application_status}
                             </p>                        
                     </div>
-                    <div className="flex items-center justify-end mb-2 mt-2 mr-2">
+                    <div className="flex items-center justify-end mr-2">
                         <NavLink
                             to={`/application-details/${application.astronaut_id}/${application.mission_id}/${application.applied_date}`}
-                            className={`w-20 bg-button-purple text-white text-sm py-2 rounded-xl hover:bg-indigo-700 flex justify-center`}
+                            className={`text-button-purple text-sm font-medium rounded-xl hover:text-indigo-700 flex justify-center`}
                         >
-                            View
+                            View profile
                         </NavLink>
                     </div>
                 </div>
