@@ -8,7 +8,7 @@ const getMyBids = async (data) => {
                     WHERE s.mission_id = b.mission_id AND b.bidding_company_id = ? 
                     AND (CASE WHEN ? IS NOT NULL THEN s.mission_id = ? ELSE 1 END)
                     ORDER BY b.bid_date DESC;`;
-        db.query(query, [companyId, missionId], (err, result) => {
+        db.query(query, [companyId, missionId, missionId], (err, result) => {
                 if (err) {
                     reject(err);
                 }
