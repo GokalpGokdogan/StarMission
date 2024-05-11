@@ -1,6 +1,12 @@
 import React, { useEffect, useState } from "react";
 import AddDynamicInputFields from "../../components/AddDynamicInputFields";
-import { createMission } from "../../Requests";
+import IconButton from "@mui/material/IconButton";
+import CloseIcon from "@mui/icons-material/Close";
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import PendingIcon from '@mui/icons-material/Pending';
+import CancelIcon from '@mui/icons-material/Cancel';
+import Alert from '@mui/material/Alert';
+
 
 const CreateReport = () => {
     const [name, setName] = useState('');
@@ -10,6 +16,7 @@ const CreateReport = () => {
     const [thirdIsChecked, setThirdIsChecked] = useState(false);
     const [fourthIsChecked, setFourthIsChecked] = useState(false);
     const [fifthIsChecked, setFifthIsChecked] = useState(false);
+    const [showAlert, setShowAlert] = useState(false);
 
     const handleNameChange = (e) => {
         setName(e.target.value);
@@ -24,6 +31,7 @@ const CreateReport = () => {
         if (!firstIsChecked && !secondIsChecked && !thirdIsChecked && !fourthIsChecked && !fifthIsChecked) 
         {
             console.log("please at least check one of them!!!!");
+            setShowAlert(true);
         }
         else
         {
@@ -38,7 +46,9 @@ const CreateReport = () => {
             if(fifthIsChecked)
             {indices.push(4);}
         }
-        console.log(indices);
+       
+
+
         return indices;
     };
 
@@ -88,6 +98,18 @@ const CreateReport = () => {
                         </button>
                     </div>
             </div>
+            {showAlert && (
+                <div className={`fixed bottom-4 right-4 max-w-96 flex ${ 'flex-row items-center'}`}>
+                    <Alert severity={'error'} className="w-full">
+                        <div className="flex items-center justify-between w-full">
+                            <div>Please check at least one of the options.</div>
+                            <IconButton onClick={() => setShowAlert(false)}>
+                                <CloseIcon />
+                            </IconButton>
+                        </div>
+                    </Alert>
+                </div>
+            )}
         </div>
     )
 }
