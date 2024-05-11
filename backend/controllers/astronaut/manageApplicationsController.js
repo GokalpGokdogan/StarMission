@@ -14,7 +14,7 @@ const applyToMission = async (astronaut_id, data) => {
             }
             else{
                 query = "INSERT INTO applied_mission VALUES (?, ?, ?, CURDATE(), ?)";
-                db.query(query, [missionId, astronaut_id, cover_letter, "In progress"], (err2, result2) => {
+                db.query(query, [missionId, astronaut_id, cover_letter, "Processing"], (err2, result2) => {
                     if(err2){
                         reject(err2);
                     }
