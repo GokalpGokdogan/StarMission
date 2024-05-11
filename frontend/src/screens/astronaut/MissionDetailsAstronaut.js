@@ -78,7 +78,7 @@ useEffect(() => {
                 Apply to Mission
               </button>
               <BidModal isVisible={showModal} onClose={() => setShowModal(false)}>  
-                    <h2 className="text-3xl font-bold text-main-text mt-8 ml-12">Apply to {missionData.company}</h2>
+                    <h2 className="text-3xl font-bold text-main-text mt-8 ml-12">Apply to {missionData.name}</h2>
                     <div className="flex items-center ml-8 mt-8">
                     <img width="90" height="90" src="https://seekvectorlogo.com/wp-content/uploads/2018/02/nasa-vector-logo.png" alt="NASA Logo" />
                     <div>
