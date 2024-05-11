@@ -344,6 +344,22 @@ export const getBiddingCompanies = async (missionId) => {
     return res.data;
 }
 
+export const getMissionNames = async (companyId) => {
+    let res = await axios({
+        method: 'get',
+        // IT IS NOT AN EMPLOYEE????? getAstronautData or something?
+        url: `http://${API_HOST}/company/applications/getMissionNames`,
+        headers: { 'Content-Type': 'application/json' },
+        params: {
+            companyId: companyId,
+        },
+        withCredentials: true
+    });
+
+    console.log(res.data);
+    return res.data;
+};
+
 // Astronaut functions
 
 

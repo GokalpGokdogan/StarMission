@@ -409,8 +409,8 @@ const SignUp = () => {
                                     onChange={handleGenderChange}
                                 >
                                     <option className="text-black" defaultValue>Select Gender</option>
-                                    <option className="text-black" >Woman</option>
-                                    <option className="text-black" >Man</option>
+                                    <option className="text-black" >Male</option>
+                                    <option className="text-black" >Female</option>
                                     <option className="text-black" >Other</option>
                                     <option className="text-black" >Prefer Not to Say</option>
                                 </select>

@@ -5,26 +5,40 @@ import Select from 'react-select';
 import { DateRange } from 'react-date-range';
 import SearchBar from '../../components/SearchBar';
 import SingleApplication from '../../components/SingleApplication'
-import { getApplications } from '../../Requests';
+import { getApplications, getMissionNames } from '../../Requests';
 import { useUser } from '../../UserProvider';
 
 //dont delete budget until you put it to missions
 
-const options = [
-  { value: 'Washington DC, United States', label: 'Washington DC, United States' },
-  { value: 'Texas, USA', label: 'Texas, USA' },
-  { value: 'Ankara, Turkey', label: 'Ankara, Turkey' }
+const professionOptions = [
+  {value: null, label: 'Not specified' },
+  { value: 'Software Engineer', label: 'Software Engineer' },
+  { value: 'Electrical Engineer', label: 'Electrical Engineer' },
+  { value: 'Physicist', label: 'Physicist' },
+  { value: 'Chemist', label: 'Chemist' },
+  { value: 'Technician', label: 'Technician' },
+  { value: 'Other', label: 'Other' }
+];
+
+const genderOptions = [
+  {value: null, label: 'Not specified' },
+  { value: 'Female', label: 'Female' },
+  { value: 'Male', label: 'Male' },
+  { value: 'Other', label: 'Other' }
 ];
 
 const ApplicationsCompany = () => {
   const { userId } = useUser();
   const [applications, setApplications] = useState([]);
+  const [missionNames, setMissionNames] = useState([]);
+  const [missionNameOptions, setMissionNameOptions] = useState([]);
   const [formattedDate, setFormattedDate] = useState('');
   const [selectedLocation, setSelectedLocation] = useState('');
   const [selectedCompany, setSelectedCompany] = useState('');
   const [minBudget, setMinBudget] = useState('0');
   const [maxBudget, setMaxBudget] = useState('0');
   const [initialLoading, setInitialLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [isFetching, setIsFetching] = useState(false);
   const [searchText, setSearchText] = useState('');
   const [profession, setProfession] = useState(null);
@@ -93,7 +107,7 @@ const ApplicationsCompany = () => {
     }
 
     try {
-      const apps = await getApplications(userId, searchText, profession?.value, minAge, maxAge, sex?.value, minWeight, maxWeight, minHeight, maxHeight, null, missionName);
+      const apps = await getApplications(userId, searchText, profession?.value, minAge, maxAge, sex?.value, minWeight, maxWeight, minHeight, maxHeight, null, missionName?.value);
       setApplications(apps);
     } catch (error) {
       console.error('Error fetching applications:', error);
@@ -106,6 +120,47 @@ const ApplicationsCompany = () => {
     }
   };
 
+  const applyFilter = async () => {
+    setLoading(true);
+    console.log(userId, searchText, profession?.value, minAge, maxAge, sex?.value, minWeight, maxWeight, minHeight, maxHeight, missionName?.value);
+  
+    try {
+      const apps = await getApplications(userId, searchText, profession?.value, minAge, maxAge, sex?.value, minWeight, maxWeight, minHeight, maxHeight, null, missionName?.value);
+      setApplications(apps);
+    } catch (error) {
+      console.error('Error fetching applications:', error);
+    } finally {
+      setTimeout(() => setLoading(false), 300);
+    }
+  };
+  
+
+  const fetchMissionNames = async () => {
+    try {
+      const missions = await getMissionNames(userId);
+      setMissionNames(missions);
+    } catch (error) {
+      console.error('Error fetching applications:', error);
+    } 
+  };
+
+   // Initial fetch on component mount
+   useEffect(() => {
+    fetchMissionNames();
+  }, []);
+
+  useEffect(() => {
+    const options = [
+      { value: null, label: "Not specified" },
+      ...missionNames.map(item => ({
+        value: item.name,
+        label: item.name
+      }))
+    ];
+    setMissionNameOptions(options);
+  }, [missionNames]);
+
+
   // Initial fetch on component mount
   useEffect(() => {
     fetchApplications(true);
@@ -114,6 +169,7 @@ const ApplicationsCompany = () => {
   // Fetch on searchText changes without showing the main loading spinner
   useEffect(() => {
     fetchApplications();
+    console.log("amk");
   }, [searchText]);
 
   return (
@@ -121,7 +177,7 @@ const ApplicationsCompany = () => {
       <div className='h-16 bg-main-bg flex box-shadow shadow-sm'>
         <p className='font-poppins font-bold text-white text-2xl p-4 ml-2 justify-start'>Applications</p>
       </div>
-      {initialLoading ? (
+      {initialLoading || loading? (
         <div className="flex-grow flex items-center justify-center">
           <div className="text-center mt-32">
             <CircularProgress sx={{ color: "#635CFF" }} style={{ margin: '20px auto' }} size={50} color="primary" />
@@ -148,7 +204,7 @@ const ApplicationsCompany = () => {
               <Select
                 value={missionName}
                 onChange={(e)=> {setMissionName(e); console.log(e);}}
-                options={options}
+                options={missionNameOptions}
                 isSearchable={true}
                 placeholder="Select Mission"
                 className="w-full"
@@ -158,8 +214,8 @@ const ApplicationsCompany = () => {
               <label className="block mb-1 text-main-text text-md font-medium">Profession</label>
               <Select
                 value={profession}
-                onChange={(e) => setProfession(e.target.value)}
-                options={options}
+                onChange={(e) => setProfession(e)}
+                options={professionOptions}
                 isSearchable={true}
                 placeholder="Select Profession"
                 className="w-full"
@@ -203,7 +259,7 @@ const ApplicationsCompany = () => {
               <Select
                 value={sex}
                 onChange={(e)=> {setSex(e); console.log(e);}}
-                options={options}
+                options={genderOptions}
                 isSearchable={true}
                 placeholder="Select Gender"
                 className="w-full"
@@ -254,7 +310,7 @@ const ApplicationsCompany = () => {
               </div>
             </div>
             <div className="flex items-center justify-center mb-2 mt-2 mr-2">
-              <button type="button" className={`w-32 bg-button-purple text-white text-sm py-3 rounded-xl`}>
+              <button type="button" className={`w-32 bg-button-purple text-white text-sm py-3 rounded-xl`} onClick={()=>applyFilter()}>
                 Apply Filters
               </button>
             </div>
