@@ -133,15 +133,15 @@ const ApplicationsCompany = () => {
   };
 
   const applyFilter = async () => {
-    if(minAge > maxAge){
+    if((minAge != null &&  maxAge != null) && minAge > maxAge){
       setAlertText('Min Age cannot be bigger than Max Age!');
       setShowAlert(true);
     }
-    else if(minWeight > maxWeight){
+    else if((minWeight != null &&  maxWeight != null) && minWeight > maxWeight){
       setAlertText('Min Weight cannot be bigger than Max Weight!');      
       setShowAlert(true);
     }
-    else if(minHeight > maxHeight){
+    else if((minHeight != null &&  maxHeight != null) && minHeight > maxHeight){
       setAlertText('Min Height cannot be bigger than Max Height!');
       setShowAlert(true);
     }

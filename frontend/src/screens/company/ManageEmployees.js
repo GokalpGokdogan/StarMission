@@ -41,6 +41,7 @@ const ManageEmployees = () => {
     const [employees, setEmployees] = useState([]);
     const {userId} = useUser();
     const [initialLoading, setInitialLoading] = useState(true);
+    const [loading, setLoading] = useState(false);
     const [missionNames, setMissionNames] = useState([]);
     const [missionNameOptions, setMissionNameOptions] = useState([]);
     const [isFetching, setIsFetching] = useState(false);
@@ -87,10 +88,10 @@ const ManageEmployees = () => {
       }
   
       try {
-        const apps = await getEmployees(userId, searchText, profession?.value, minAge, maxAge, sex?.value, minWeight, maxWeight, minHeight, maxHeight, null, missionName);
+        const apps = await getEmployees(userId, searchText, profession?.value, minAge, maxAge, sex?.value, minWeight, maxWeight, minHeight, maxHeight, null);
         setEmployees(apps);
       } catch (error) {
-        console.error('Error fetching applications:', error);
+        console.error('Error fetching employees:', error);
       } finally {
         if (isInitialLoad) {
           setTimeout(() => setInitialLoading(false), 300);
@@ -98,6 +99,34 @@ const ManageEmployees = () => {
           setIsFetching(false);
         }
       }
+    };
+
+    const applyFilter = async () => {
+      if((minAge != null &&  maxAge != null) && minAge > maxAge){
+        setAlertText('Min Age cannot be bigger than Max Age!');
+        setShowAlert(true);
+      }
+      else if((minWeight != null &&  maxWeight != null) && minWeight > maxWeight){
+        setAlertText('Min Weight cannot be bigger than Max Weight!');      
+        setShowAlert(true);
+      }
+      else if((minHeight != null &&  maxHeight != null) && minHeight > maxHeight){
+        setAlertText('Min Height cannot be bigger than Max Height!');
+        setShowAlert(true);
+      }
+      else{
+        setLoading(true);
+        console.log(userId, searchText, profession?.value, minAge, maxAge, sex?.value, minWeight, maxWeight, minHeight, maxHeight, null);
+  
+        try {
+          const apps = await getEmployees(userId, searchText, profession?.value, minAge, maxAge, sex?.value, minWeight, maxWeight, minHeight, maxHeight, null);
+          setEmployees(apps);
+        } catch (error) {
+          console.error('Error fetching employees:', error);
+        } finally {
+          setTimeout(() => setLoading(false), 300);        
+      }
+      }  
     };
 
   // Initial fetch on component mount
@@ -169,17 +198,17 @@ const ManageEmployees = () => {
     };
 
     return (
-        <div className="bg-home-bg h-full">
+        <div className="bg-home-bg h-full flex flex-col">
             <div className='h-16 bg-main-bg flex box-shadow shadow-sm'>
                 <p className='font-poppins font-bold text-white text-2xl p-4 ml-2 justify-start'>Manage Employees</p>
             </div>
-            {initialLoading ? (
+            {initialLoading || loading? (
         <div className="flex-grow flex items-center justify-center">
-        <div className="text-center mt-32">
-          <CircularProgress sx={{ color: "#635CFF" }} style={{ margin: '20px auto' }} size={50} color="primary" />
-          <p>Loading data...</p>
+          <div className="text-center mt-32">
+            <CircularProgress sx={{ color: "#635CFF" }} style={{ margin: '20px auto' }} size={50} color="primary" />
+            <p>Loading data...</p>
+          </div>
         </div>
-      </div>
       ) : (
         <div className="flex">
           <div className="w-1/4 p-6 border-r flex flex-col gap-2">
@@ -225,8 +254,12 @@ const ManageEmployees = () => {
                   min={0}
                   value={minAge?.toString()}
                   onChange={(e) => {
-                    const newMin = Math.max(0, parseFloat(e.target.value));
-                    setMinAge(newMin);
+                    if(e.target.value == ""){
+                      setMinAge(null);
+                    }else{
+                      const newMin = Math.max(0, parseFloat(e.target.value));
+                      setMinAge(newMin);
+                    }
                   }}
                   className="w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
                 />
@@ -239,8 +272,12 @@ const ManageEmployees = () => {
                   min={0}
                   value={maxAge?.toString()}
                   onChange={(e) => {
-                    const newMax = Math.max(0, parseFloat(e.target.value));
-                    setMaxAge(newMax);
+                    if(e.target.value == ""){
+                      setMaxAge(null);
+                    }else{
+                      const newMax = Math.max(0, parseFloat(e.target.value));
+                      setMaxAge(newMax);
+                    }       
                   }}
                   className="w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
                 />
@@ -265,8 +302,12 @@ const ManageEmployees = () => {
                   min={0}
                   value={minWeight?.toString()}
                   onChange={(e) => {
-                    const newMin = Math.max(0, parseFloat(e.target.value));
-                    setMinWeight(newMin);
+                    if(e.target.value == ""){
+                      setMinWeight(null);
+                    }else{
+                      const newMin = Math.max(0, parseFloat(e.target.value));
+                      setMinWeight(newMin);
+                    }
                   }}
                   className="w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
                 />
@@ -278,8 +319,12 @@ const ManageEmployees = () => {
                   min={0}
                   value={maxWeight?.toString()}
                   onChange={(e) => {
-                    const newMax = Math.max(0, parseFloat(e.target.value));
-                    setMaxWeight(newMax);
+                    if(e.target.value == ""){
+                      setMaxWeight(null);
+                    }else{
+                      const newMax = Math.max(0, parseFloat(e.target.value));
+                      setMaxWeight(newMax);
+                    }
                   }}
                   className="w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
                 />
@@ -293,8 +338,12 @@ const ManageEmployees = () => {
                   min={0}
                   value={minHeight?.toString()}
                   onChange={(e) => {
-                    const newMin = Math.max(0, parseFloat(e.target.value));
-                    setMinHeight(newMin);
+                    if(e.target.value == ""){
+                      setMinHeight(null);
+                    }else{
+                      const newMin = Math.max(0, parseFloat(e.target.value));
+                      setMinHeight(newMin);
+                    }
                   }}
                   className="w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
                 />
@@ -306,15 +355,19 @@ const ManageEmployees = () => {
                   min={0}
                   value={maxHeight?.toString()}
                   onChange={(e) => {
-                    const newMax = Math.max(0, parseFloat(e.target.value));
+                    if(e.target.value == ""){
+                      setMaxHeight(null);
+                    }else{
+                      const newMax = Math.max(0, parseFloat(e.target.value));
                     setMaxHeight(newMax);
+                    }
                   }}
                   className="w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
                 />
               </div>
             </div>
             <div className="flex items-center justify-center mb-2 mt-2 mr-2">
-              <button type="button" className={`w-32 bg-button-purple text-white text-sm py-3 rounded-xl`}>
+              <button type="button" className={`w-32 bg-button-purple text-white text-sm py-3 rounded-xl`} onClick={()=>applyFilter()}>
                 Apply Filters
               </button>
             </div>
