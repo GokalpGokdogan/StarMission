@@ -159,7 +159,6 @@ const ApplicationsCompany = () => {
       }
     }  
   };
-  
 
   const fetchMissionNames = async () => {
     try {
@@ -259,9 +258,9 @@ const ApplicationsCompany = () => {
                 <input
                   type="number"
                   min={0}
-                  value={minAge}
+                  value={minAge?.toString()}
                   onChange={(e) => {
-                    const newMin = Math.max(0, parseFloat(e.target.value)); // Ensure non-negative values
+                    const newMin = Math.max(0, parseFloat(e.target.value));
                     setMinAge(newMin);
                   }}
                   className="w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
@@ -272,9 +271,12 @@ const ApplicationsCompany = () => {
                 <label className="block mb-1 text-main-text font-medium">Max Age</label>
                 <input
                   type="number"
-                  min="0"
-                  value={maxAge}
-                  onChange={(e) => {setMaxAge(e.target.value);}
+                  min={0}
+                  value={maxAge?.toString()}
+                  onChange={(e) => {
+                    const newMax = Math.max(0, parseFloat(e.target.value));
+                    setMaxAge(newMax);
+                  }
                   }
                   className="w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
                 />
@@ -297,8 +299,11 @@ const ApplicationsCompany = () => {
                 <input
                   type="number"
                   min={0}
-                  value={minWeight}
-                  onChange={(e) => setMinWeight(e.target.value)}
+                  value={minWeight?.toString()}
+                  onChange={(e) => {
+                    const newMin = Math.max(0, parseFloat(e.target.value));
+                    setMinWeight(newMin);
+                  }}
                   className="w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
                 />
               </div>
@@ -306,9 +311,12 @@ const ApplicationsCompany = () => {
                 <label className="block mb-1 text-main-text font-medium">Max Weight (kg)</label>
                 <input
                   type="number"
-                  min="0"
-                  value={maxWeight}
-                  onChange={(e) => setMaxWeight(e.target.value)}
+                  min={0}
+                  value={maxWeight?.toString()}
+                  onChange={(e) => {
+                    const newMax = Math.max(0, parseFloat(e.target.value));
+                    setMaxWeight(newMax);
+                  }}
                   className="w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
                 />
               </div>
@@ -319,8 +327,11 @@ const ApplicationsCompany = () => {
                 <input
                   type="number"
                   min={0}
-                  value={minHeight}
-                  onChange={(e) => setMinHeight(e.target.value)}
+                  value={minHeight?.toString()}
+                  onChange={(e) => {
+                    const newMin = Math.max(0, parseFloat(e.target.value));
+                    setMinHeight(newMin);
+                  }}
                   className="w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
                 />
               </div>
@@ -328,9 +339,12 @@ const ApplicationsCompany = () => {
                 <label className="block mb-1 text-main-text font-medium">Max Height (cm)</label>
                 <input
                   type="number"
-                  min="0"
-                  value={maxHeight}
-                  onChange={(e) => setMaxHeight(e.target.value)}
+                  min={0}
+                  value={maxHeight?.toString()}
+                  onChange={(e) => {
+                    const newMax = Math.max(0, parseFloat(e.target.value));
+                    setMaxHeight(newMax);
+                  }}
                   className="w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
                 />
               </div>
@@ -357,17 +371,17 @@ const ApplicationsCompany = () => {
           </div>
         </div>)}
         {showAlert && (
-                <div className={`fixed bottom-4 right-4 max-w-96 flex ${alertText.length > 40 ? 'flex-col items-end justify-center' : 'flex-row items-center'}`}>
-                    <Alert severity={alertText.includes('successful') ? 'success' : 'error'} className="w-full">
-                        <div className="flex items-center justify-between w-full">
-                            <div>{alertText}</div>
-                            <IconButton onClick={() => setShowAlert(false)}>
-                                <CloseIcon />
-                            </IconButton>
-                        </div>
-                    </Alert>
-                </div>
-            )}
+          <div className={`fixed bottom-4 right-4 max-w-96 flex ${alertText.length > 40 ? 'flex-col items-end justify-center' : 'flex-row items-center'}`}>
+              <Alert severity={alertText.includes('successful') ? 'success' : 'error'} className="w-full">
+                  <div className="flex items-center justify-between w-full">
+                      <div>{alertText}</div>
+                      <IconButton onClick={() => setShowAlert(false)}>
+                          <CloseIcon />
+                      </IconButton>
+                  </div>
+              </Alert>
+          </div>
+        )}
     </div>
   );
 };

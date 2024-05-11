@@ -9,6 +9,9 @@ import 'react-date-range/dist/theme/default.css';
 import SingleEmployee from "../../components/SingleEmployee";
 import {getEmployees} from "../../Requests"; 
 import { useUser } from '../../UserProvider';
+import Alert from '@mui/material/Alert';
+import IconButton from "@mui/material/IconButton";
+import CloseIcon from "@mui/icons-material/Close";
 
 const options = [
     { value: 'Washington DC, United States', label: 'Washington DC, United States' },
@@ -32,12 +35,14 @@ const ManageEmployees = () => {
     const [maxHeight, setMaxHeight] = useState(null);
     const [missionName, setMissionName] = useState(null);
     const [nationality, setNationality] = useState(null);
+    const [showAlert, setShowAlert] = useState(false);
+    const [alertText, setAlertText] = useState('');
 
     const handleSearchChange = (event) => {
         setSearchText(event.target.value);
       };
 
-    const formatDate = (date) => {
+    /*const formatDate = (date) => {
         if (!date) return null; // Check if date is null or undefined
         const d = new Date(date);
         if (isNaN(d.getTime())) return null; // Check if the date object is valid using getTime()
@@ -52,27 +57,27 @@ const ManageEmployees = () => {
         const formattedDay = day < 10 ? `0${day}` : day;
       
         return `${year}-${formattedMonth}-${formattedDay}`;
-      };
+      };*/
 
     const fetchEmployees = async (isInitialLoad = false) => {
+      if (isInitialLoad) {
+        setInitialLoading(true);
+      } else {
+        setIsFetching(true);
+      }
+  
+      try {
+        const apps = await getEmployees(userId, searchText, profession?.value, minAge, maxAge, sex?.value, minWeight, maxWeight, minHeight, maxHeight, null, missionName);
+        setEmployees(apps);
+      } catch (error) {
+        console.error('Error fetching applications:', error);
+      } finally {
         if (isInitialLoad) {
-            setInitialLoading(true);
-          } else {
-            setIsFetching(true);
-          }
-      
-          try {
-            const apps = await getEmployees(userId, searchText, profession?.value, minAge, maxAge, sex?.value, minWeight, maxWeight, minHeight, maxHeight, null, missionName);
-            setEmployees(apps);
-          } catch (error) {
-            console.error('Error fetching applications:', error);
-          } finally {
-            if (isInitialLoad) {
-              setTimeout(() => setInitialLoading(false), 300);
-            } else {
-              setIsFetching(false);
-            }
-          }
+          setTimeout(() => setInitialLoading(false), 300);
+        } else {
+          setIsFetching(false);
+        }
+      }
     };
 
   // Initial fetch on component mount
@@ -85,7 +90,7 @@ const ManageEmployees = () => {
     fetchEmployees();
   }, [searchText]);
 
-    const [selectedDateRange, setSelectedDateRange] = useState([
+     /*const [selectedDateRange, setSelectedDateRange] = useState([
         {
             startDate: new Date(),
             endDate: null,
@@ -93,11 +98,11 @@ const ManageEmployees = () => {
         }
     ]);
     
-    useEffect(() => {
+   useEffect(() => {
         console.log(selectedDateRange);
         console.log(formatDate(selectedDateRange[0].startDate));
         console.log(formatDate(selectedDateRange[0].endDate));
-    }, [selectedDateRange]);
+    }, [selectedDateRange]);*/
 
     const [selectedLocation, setSelectedLocation] = useState('');
     const [selectedCompany, setSelectedCompany] = useState('');
@@ -132,7 +137,7 @@ const ManageEmployees = () => {
       ) : (
         <div className="flex">
           <div className="w-1/4 p-6 border-r flex flex-col gap-2">
-            <div>
+            {/*<div>
               <label className="block mb-1 text-main-text font-medium">Start and End Dates</label>
               <DateRange
                 editableDateInputs={true}
@@ -143,7 +148,7 @@ const ManageEmployees = () => {
                 style={{ width: '100%' }}
                 className="w-full"
               />
-            </div>
+            </div>*/}
             <div className="mb-4">
               <label className="block mb-1 text-main-text text-md font-medium">Mission</label>
               <Select
@@ -172,12 +177,10 @@ const ManageEmployees = () => {
                 <input
                   type="number"
                   min={0}
-                  value={minAge}
+                  value={minAge?.toString()}
                   onChange={(e) => {
-                    const newMin = Math.max(0, parseFloat(e.target.value)); // Ensure non-negative values
-                    if (newMin <= maxBudget) {
-                      setMinBudget(newMin);
-                    }
+                    const newMin = Math.max(0, parseFloat(e.target.value));
+                    setMinAge(newMin);
                   }}
                   className="w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
                 />
@@ -187,13 +190,11 @@ const ManageEmployees = () => {
                 <label className="block mb-1 text-main-text font-medium">Max Age</label>
                 <input
                   type="number"
-                  min="0"
-                  value={maxAge}
+                  min={0}
+                  value={maxAge?.toString()}
                   onChange={(e) => {
-                    const newMax = Math.max(0, parseFloat(e.target.value)); // Ensure the value is not less than 0
-                    if (newMax >= minBudget) {
-                      setMaxAge(newMax);
-                    }
+                    const newMax = Math.max(0, parseFloat(e.target.value));
+                    setMaxAge(newMax);
                   }}
                   className="w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
                 />
@@ -216,8 +217,11 @@ const ManageEmployees = () => {
                 <input
                   type="number"
                   min={0}
-                  value={minWeight}
-                  onChange={(e) => setMinWeight(e)}
+                  value={minWeight?.toString()}
+                  onChange={(e) => {
+                    const newMin = Math.max(0, parseFloat(e.target.value));
+                    setMinWeight(newMin);
+                  }}
                   className="w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
                 />
               </div>
@@ -225,9 +229,12 @@ const ManageEmployees = () => {
                 <label className="block mb-1 text-main-text font-medium">Max Weight (kg)</label>
                 <input
                   type="number"
-                  min="0"
-                  value={maxWeight}
-                  onChange={(e) => setMaxWeight(e)}
+                  min={0}
+                  value={maxWeight?.toString()}
+                  onChange={(e) => {
+                    const newMax = Math.max(0, parseFloat(e.target.value));
+                    setMaxWeight(newMax);
+                  }}
                   className="w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
                 />
               </div>
@@ -238,8 +245,11 @@ const ManageEmployees = () => {
                 <input
                   type="number"
                   min={0}
-                  value={minHeight}
-                  onChange={(e) => setMinHeight(e)}
+                  value={minHeight?.toString()}
+                  onChange={(e) => {
+                    const newMin = Math.max(0, parseFloat(e.target.value));
+                    setMinHeight(newMin);
+                  }}
                   className="w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
                 />
               </div>
@@ -247,9 +257,12 @@ const ManageEmployees = () => {
                 <label className="block mb-1 text-main-text font-medium">Max Height (cm)</label>
                 <input
                   type="number"
-                  min="0"
-                  value={maxHeight}
-                  onChange={(e) => setMaxHeight(e)}
+                  min={0}
+                  value={maxHeight?.toString()}
+                  onChange={(e) => {
+                    const newMax = Math.max(0, parseFloat(e.target.value));
+                    setMaxHeight(newMax);
+                  }}
                   className="w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
                 />
               </div>
@@ -285,6 +298,18 @@ const ManageEmployees = () => {
                     </div>
                 </div>
             </div>)}
+            {showAlert && (
+              <div className={`fixed bottom-4 right-4 max-w-96 flex ${alertText.length > 40 ? 'flex-col items-end justify-center' : 'flex-row items-center'}`}>
+                  <Alert severity={alertText.includes('successful') ? 'success' : 'error'} className="w-full">
+                      <div className="flex items-center justify-between w-full">
+                          <div>{alertText}</div>
+                          <IconButton onClick={() => setShowAlert(false)}>
+                              <CloseIcon />
+                          </IconButton>
+                      </div>
+                  </Alert>
+              </div>
+            )}            
         </div>
     );
 };
