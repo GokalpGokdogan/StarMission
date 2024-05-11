@@ -1,36 +1,108 @@
 import React from "react";
+import { getMissionOfAstronaut, fireEmployee } from '../Requests';
+import { useState, useEffect } from 'react';
+import CircularProgress from '@mui/material/CircularProgress';
+import Alert from '@mui/material/Alert';
+import IconButton from "@mui/material/IconButton";
+import CloseIcon from "@mui/icons-material/Close";
 
 const EmployeeCard = ({ employee }) => {
+    const [loading, setLoading] = useState(true);
+    const [mission, setMission] = useState({}); 
+    const [showAlert, setShowAlert] = useState(false);
+    const [alertText, setAlertText] = useState('');
+
+    const fetchMission = async () => {
+        try{
+            const mis = await getMissionOfAstronaut(employee.user_id);
+
+            setMission(mis);
+            console.log(mis);      
+        } catch (error){
+            console.error('Error fetching missions:', error);
+        } finally{
+            setTimeout(() => setLoading(false), 300);
+        }
+    }
+
+    const fireEmp = async () => {
+        try{
+            const mis = await fireEmployee(employee.user_id, mission.mission_id);
+
+            setAlertText('Employee is fired successfully! Redirecting to Employees page...');
+            setShowAlert(true);
+            setTimeout(() => {
+                window.location.href = '/manage-employees';
+            }, 2000);
+
+            console.log(mis);    
+        } catch (error){
+            console.error('Error firing the employee:', error);
+        }
+    }
+
+    useEffect(() => {
+        fetchMission();
+    }, [employee]);
+
     return (
-        <div className="flex justify-center items-center w-full"> {/* Ensured full width */}
-            <div className="flex flex-col max-w-4xl w-full h-96 p-8 border rounded-xl bg-white shadow-lg justify-between"> {/* Adjusted to fill width */}
+        <div className="flex justify-center items-center w-full">
+            {loading ? (
+            <div className="flex-grow flex items-center justify-center">
+              <div className="text-center mt-32">
+                <CircularProgress sx={{ color: "#635CFF" }} style={{ margin: '20px auto' }} size={50} color="primary" />
+                <p>Loading data...</p>
+              </div>
+            </div>
+          ) : (
+            <div className="flex flex-col max-w-4xl w-full h-96 p-8 border rounded-xl bg-white shadow-lg justify-between">
                 <div className="flex">
-                    <div className="flex items-center">
+                    <div className="flex items-start">
                         <img width="120" height="120" src="https://seekvectorlogo.com/wp-content/uploads/2018/02/nasa-vector-logo.png" alt="NASA Logo" />
                     </div>
                     <div className="flex flex-col flex-1">
-                        <h2 className="text-2xl text-main-text font-semibold mb-4">{employee.name}</h2>
+                        <h2 className="text-2xl text-main-text font-semibold ml-2 mb-4">{employee.name}</h2>
                         <div className="flex justify-between">
-                            <div>
+                            <div className="ml-2">
                                 <p className="text-sm font-medium leading-6 text-main-text">Nationality: {employee.nationality}</p>
                                 <p className="text-sm font-medium leading-6 text-main-text">Profession: {employee.profession}</p>
                                 <p className="text-sm font-medium leading-6 text-main-text">Gender: {employee.sex}</p>
                                 <p className="truncate text-sm font-medium leading-6 text-main-text">Address: {employee.address}</p>
                             </div>
-                            <div>
+                            <div className="ml-2">
                                 <p className="text-sm font-medium leading-6 text-main-text">Age: {employee.age}</p>
                                 <p className="text-sm font-medium leading-6 text-main-text">Height: {employee.height} cm</p>
                                 <p className="text-sm font-medium leading-6 text-main-text">Weight: {employee.weight} kg</p>
                                 <p className="text-sm font-medium leading-6 text-main-text">Birthday: {employee.birth_date}</p>
                             </div>
                         </div>
+                        <div className="bg-blue-bg p-2 rounded-xl mt-5 ml-16 mr-44">
+                            <h2 className="text-md text-purple-text font-semibold">Mission Information</h2>
+                            <p className="text-sm font-medium leading-6 text-purple-text">Name: {mission.name}</p>
+                            <p className="text-sm font-medium leading-6 text-purple-text">Starting Date: {mission.starting_date}</p>
+                            <p className="text-sm font-medium leading-6 text-purple-text">Salary: {mission.salary} €</p>
+                        </div>
                     </div>
                 </div>
                 <div className="flex justify-end">
-                    <button className="h-10 mt-4 mr-4 bg-button-red" style={{ padding: '10px 20px', color: 'white', border: 'none', borderRadius: '5px', cursor: 'pointer', textAlign: 'center', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>Fire Astronaut</button>
+                    <button className="h-10 mt-4 mr-4 bg-button-red" style={{ padding: '10px 20px', color: 'white', border: 'none', borderRadius: '5px', cursor: 'pointer', textAlign: 'center', display: 'flex', alignItems: 'center', justifyContent: 'center'}} onClick={() => fireEmp()}>Fire Astronaut</button>
                 </div>
             </div>
+        )}
+        {showAlert && (
+          <div className={`fixed bottom-4 right-4 max-w-96 flex ${alertText.length > 40 ? 'flex-col items-end justify-center' : 'flex-row items-center'}`}>
+              <Alert severity={'success'} className="w-full">
+                  <div className="flex items-center justify-between w-full">
+                      <div>{alertText}</div>
+                      <IconButton onClick={() => setShowAlert(false)}>
+                          <CloseIcon />
+                      </IconButton>
+                  </div>
+              </Alert>
+          </div>
+        )}
         </div>
+        
     )
 }
 

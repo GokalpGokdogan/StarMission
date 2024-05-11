@@ -177,6 +177,21 @@ export const getAstronautData = async (astronautId) => {
     return res.data;
 };
 
+export const getMissionOfAstronaut = async (astronautId) => {
+    let res = await axios({
+        method: 'get',
+        url: `http://${API_HOST}/astronaut/getMissionInfo/getCurrentMissionExtract`,
+        headers: { 'Content-Type': 'application/json' },
+        params: {
+            astronautId: astronautId,
+        },
+        withCredentials: true
+    });
+
+    console.log(res.data);
+    return res.data;
+};
+
 export const rejectApplication = async (astronautId, missionId) => {
     const body = {
         'astronautId': astronautId,
@@ -219,6 +234,21 @@ export const acceptApplication = async (astronautId, missionId, salary, startDat
     let res = await axios({
         method: 'post',
         url: `http://${API_HOST}/company/applications/acceptApplicationC`,
+        headers: { 'Content-Type': 'application/json', },
+        data: body,
+    })
+    console.log(res.data);
+    return res.data
+}
+
+export const fireEmployee = async (astronautId, missionId) => {
+    const body = {
+        'astronautId': astronautId,
+        'missionId': missionId,
+    }
+    let res = await axios({
+        method: 'post',
+        url: `http://${API_HOST}/company/manageEmployees/fireEmployee`,
         headers: { 'Content-Type': 'application/json', },
         data: body,
     })
