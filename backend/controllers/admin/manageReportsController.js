@@ -5,10 +5,10 @@ let optionList = ["MostBudgetMissions", "ClosestEndTimeMissions", "MostActiveMis
 
 const getAllReports = async (data) => {
     return new Promise((resolve, reject) => {
-        const { astronautId } = data;
+        const { adminId } = data;
 
         let query = `SELECT * FROM report r WHERE r.admin_id = ? ORDER BY creation_date DESC;`;
-        db.query(query, [astronautId], async (err, result) => {
+        db.query(query, [adminId], async (err, result) => {
             if (err) {
                 reject(err);
             }
@@ -25,7 +25,7 @@ const getReportData = async (data) => {
         let resultObj = {};
 
         let query = `SELECT * FROM report r WHERE r.report_id = ?;`;
-        db.query(query, [astronautId], async (err, result) => {
+        db.query(query, [reportId], async (err, result) => {
             if (err) {
                 reject(err);
             }
@@ -45,8 +45,20 @@ const getReportData = async (data) => {
                     else {
                         resultObj.containers = [];
                         await result.forEach(container => {
-                            
+                            let containerObj = {};
+
+                            containerObj.container_name = container.container_name;
+                            containerObj.column1 = container.c_name1;
+                            containerObj.column2 = container.c_name2;
+                            containerObj.column3 = container.c_name3;
+
+                            containerObj.column1Data = container.c_data1.split("$$$$");
+                            containerObj.column2Data = container.c_data2.split("$$$$");
+                            containerObj.column3Data = container.c_data3.split("$$$$");
+
+                            resultObj.containers.push(containerObj);
                         });
+                        resolve(resultObj);
                     }
                 });
             }
@@ -137,7 +149,7 @@ const createReport = async (data) => {
                             query = `   INSERT INTO container(report_id, name)
                                         VALUES (?, ?)`;
                             let today = new Date();
-                            await db.query(query, [reportId, optionList[option] + " - " + today.getDate() + "/" + today.getMonth() + 1 , "/", today.getFullYear()], async (err, result) => {
+                            await db.query(query, [reportId, optionList[option] + " - " + today.getDate() + "/" + today.getMonth() + 1 + "/" + today.getFullYear()], async (err, result) => {
                                 if (err) {
                                     reject(err);
                                 }
@@ -164,4 +176,4 @@ const createReport = async (data) => {
     });
 };
 
-module.exports = { createReport, getAllReports };
+module.exports = { createReport, getAllReports , getReportData};
