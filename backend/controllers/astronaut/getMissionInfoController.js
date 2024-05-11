@@ -46,13 +46,15 @@ const getRecentMissions = async (astronaut_id, data) => {
             leadingCompanyName, minBudget, maxBudget } = data;
             if(searchedName != null){searchedName = "%"+searchedName+"%";}
 
-        let query = `SELECT DISTINCT * FROM space_mission s WHERE
-                    NOT EXISTS (SELECT * FROM mission_of m WHERE s.mission_id = m.mission_id AND m.astronaut_id = ? AND m.leaving_date IS NULL)
+        let query = `SELECT DISTINCT * FROM space_mission s, user u WHERE
+                    NOT EXISTS (SELECT * FROM mission_of m WHERE s.mission_id = m.mission_id 
+                    AND m.astronaut_id = ? AND m.leaving_date IS NULL)
+                    AND s.leading_firm_id = u.user_id
                     AND (CASE WHEN ? IS NOT NULL THEN s.name LIKE ? ELSE 1 END) 
                     AND (CASE WHEN ? IS NOT NULL THEN s.start_date >= ? ELSE 1 END) 
                     AND (CASE WHEN ? IS NOT NULL THEN s.end_date <= ? ELSE 1 END)
                     AND (CASE WHEN ? IS NOT NULL THEN s.location = ? ELSE 1 END)
-                    AND (CASE WHEN ? IS NOT NULL THEN c.name LIKE ? ELSE 1 END)
+                    AND (CASE WHEN ? IS NOT NULL THEN u.name LIKE ? ELSE 1 END)
                     AND (CASE WHEN ? IS NOT NULL THEN s.budget >= ? ELSE 1 END)
                     AND (CASE WHEN ? IS NOT NULL THEN s.budget <= ? ELSE 1 END)`;
         db.query(query, [astronaut_id, searchedName, searchedName, startDate, startDate, endDate, endDate, 

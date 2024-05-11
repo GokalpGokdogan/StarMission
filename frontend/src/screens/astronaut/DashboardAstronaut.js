@@ -24,6 +24,7 @@ const DashboardAstronaut = () => {
               else
               {
                 setRecentMissions(mission);
+                console.log("Recent Applications");
                 console.log(mission);
               }
               
@@ -41,8 +42,9 @@ const DashboardAstronaut = () => {
             }
             else
             {
-              setPastMissions(mission);
-              console.log(mission);
+                setPastMissions(mission);
+                console.log("Past Missions");
+                console.log(mission);
             }
             
         } catch (error){
@@ -61,6 +63,7 @@ const DashboardAstronaut = () => {
               else
               {
                 setMission(mission);
+                console.log("Current Mission");
                 console.log(mission);
               }
               
@@ -79,6 +82,7 @@ const DashboardAstronaut = () => {
                 else
                 {
                   setApplications(apps);
+                  console.log("Applications");
                   console.log(apps);
                 }
                 
@@ -105,10 +109,10 @@ const DashboardAstronaut = () => {
                           <SimpleList title={"Current Mission"} data={mission} type={'mission'}/>
                       </div>              
                       <div className="flex items-center justify-center px-4 py-1 mr-24">
-                         <DashboardTable title={"Applications"} data={applications} showHeader={true}/>
+                         <DashboardTable data={applications} showHeader={true}/>
                       </div>
                       <div className="flex items-center justify-center px-4 py-1 ml-24">
-                          <SimpleList title={"Past Missions"}  data={recentMissions} type={'mission'}/>
+                          <SimpleList title={"Past Missions"}  data={pastMissions} type={'mission'}/>
                       </div> 
                       <div className=" flex items-center justify-center px-4 py-1 mr-24">
                           <SimpleList title={"Recent Missions"} data={recentMissions} type={'application'}/>
