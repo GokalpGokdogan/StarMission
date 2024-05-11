@@ -136,7 +136,8 @@ const createReport = async (data) => {
                             }
                             query = `   INSERT INTO container(report_id, name)
                                         VALUES (?, ?)`;
-                            await db.query(query, [reportId, optionList[option] + "in " + new Date()], async (err, result) => {
+                            let today = new Date();
+                            await db.query(query, [reportId, optionList[option] + " - " + today.getDate() + "/" + today.getMonth() + 1 , "/", today.getFullYear()], async (err, result) => {
                                 if (err) {
                                     reject(err);
                                 }
