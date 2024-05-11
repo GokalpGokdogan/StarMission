@@ -470,4 +470,31 @@ export const applyToMission = async (mission_id, cover_letter) => {
     return res.data;
 }
 
+// start_date, end_date, mission_id, application_status
+export const getApplicationsAstro = async (startDate, endDate, missionId, applicationStatus) => {
+    let res = await axios({
+        method: 'get',
+        url: `http://${API_HOST}/astronaut/manageApplications/getApplications`,
+        headers: { 'Content-Type': 'application/json' },
+        params: {
+            start_date: startDate,
+            end_date: endDate,
+            mission_id: missionId,
+            application_status: applicationStatus
+        },
+        withCredentials: true
+    });
+
+    if (res.status == 204) {
+        console.log("No applications found with these filters")
+    }
+    else if (res.status == 400) {
+        console.log("An error occurred in get applications for astronaut" + res.data);
+    }
+    else {
+        console.log(res.data);
+    }
+    return res.data;
+} 
+
 

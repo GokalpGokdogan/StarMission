@@ -31,12 +31,14 @@ const getApplications = async (astronaut_id, data) => {
     return new Promise((resolve, reject) => {
         const { start_date, end_date, mission_id, application_status } = data;
 
-        const query = `SELECT DISTINCT * FROM applied_mission a WHERE a.astronaut_id = ? ORDER BY a.applied_date DESC AND (CASE WHEN ? IS NOT NULL THEN s.name LIKE ? ELSE 1 END)
+        const query = `SELECT DISTINCT * FROM applied_mission a, space_mission s WHERE a.astronaut_id = ? 
+        AND a.mission_id = s.mission_id
         AND (CASE WHEN ? IS NOT NULL THEN a.applied_date >= ? ELSE 1 END) 
         AND (CASE WHEN ? IS NOT NULL THEN a.applied_date <= ? ELSE 1 END)
         AND (CASE WHEN ? IS NOT NULL THEN a.mission_id = ? ELSE 1 END)
-        AND (CASE WHEN ? IS NOT NULL THEN a.application_status = ? ELSE 1 END);`;
-        db.query(query, [astronaut_id, start_date, end_date, mission_id, application_status], (err, result) => {
+        AND (CASE WHEN ? IS NOT NULL THEN a.application_status = ? ELSE 1 END)
+        ORDER BY a.applied_date DESC;`;
+        db.query(query, [astronaut_id, start_date, start_date, end_date, end_date, mission_id, mission_id, application_status, application_status], (err, result) => {
             if(err){
                 reject(err);
             }

@@ -32,7 +32,7 @@ const DashboardCompany = () => {
     } catch (error){
         console.error('Error fetching apps:', error);
     }
-};
+  };
 
 const fetchRecentMissions = async () => {
   try{
