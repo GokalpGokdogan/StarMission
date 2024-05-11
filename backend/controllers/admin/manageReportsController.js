@@ -80,7 +80,8 @@ const createReport = async (data) => {
                 const reportId = result.insertId;   // report id
                 await optionIndexList.forEach(async option => {
 
-                    query = `SELECT * FROM ?`;     // view usage
+                    console.log(optionList[option]);
+                    query = `SELECT * FROM ?;`;     // view usage
                     await db.query(query, [optionList[option]], async (err, result) => {
                         if (err) {
                             reject(err);
@@ -106,6 +107,9 @@ const createReport = async (data) => {
                                             if (err) {
                                                 reject(err);
                                             }
+                                            else{
+                                                resolve(result);
+                                            }
                                         });
                                     }
                                 }
@@ -113,7 +117,6 @@ const createReport = async (data) => {
                         }
                     });
                 });
-                resolve(result);
             }
         });
     });

@@ -1,5 +1,33 @@
 const db = require('../../database');
 
+const getCurrentMissionExtract = async (astronaut_id) => {
+    return new Promise((resolve, reject) => {
+
+        const query = ` SELECT DISTINCT s.* ,u.name as company_name , o.starting_date, o.salary 
+                        FROM mission_of o, space_mission s, user u
+                        WHERE o.astronaut_id = ? AND o.mission_id = s.mission_id
+                        AND o.leaving_date IS NULL AND s.leading_firm_id = u.user_id;`;
+        db.query(query, [astronaut_id], (err, result) => {
+            if(err){
+                reject(err);
+            }
+            else if(result.length === 0){
+                reject("ER_FIND_NONE");
+            }
+            else{
+                console.log(result, "successful current mission data");
+                if(result[0].important_notes){
+                    result[0].important_notes = result[0].important_notes.split("$$$$");
+                }
+                else{
+                    result[0].important_notes = [];
+                }
+                resolve(result[0]);
+            }
+        });
+    });
+};
+
 const getCurrentMission = async (astronaut_id) => {
     return new Promise((resolve, reject) => {
 
@@ -85,4 +113,4 @@ const getRecentMissions = async (astronaut_id, data) => {
     });
 };
 
-module.exports = {getCurrentMission, getPastMissions, getRecentMissions};
+module.exports = {getCurrentMission, getPastMissions, getRecentMissions, getCurrentMissionExtract};
