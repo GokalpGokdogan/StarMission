@@ -3,18 +3,18 @@ const db = require('../../database');
 const applyToMission = async (astronaut_id, data) => {
     return new Promise((resolve, reject) => {
 
-        const {mission_id, cover_letter} = data;
-        const query = "SELECT * FROM applied_mission a WHERE a.astronaut_id = ? AND a.mission_id = ? AND a.application_status = 'Processing';";
+        const {missionId, cover_letter} = data;
+        const query = "SELECT * FROM mission_of m WHERE m.astronaut_id = ? AND m.mission_id = ? AND m.leaving_date IS NULL;";
         db.query(query, [astronaut_id], (err, result) => {
             if(err){
                 reject(err);
             }
             else if(result.length > 0){
-                reject("ALREADY_AVAILABLE_APPLICATION");
+                reject("ALREADY_IN_A_MISSION");
             }
             else{
-                query = "INSERT INTO applied_mission VALUES (?, ?, ?, ?, ?)";
-                db.query(query, [mission_id, astronaut_id, cover_letter, new Date.now(), "In progress"], (err2, result2) => {
+                query = "INSERT INTO applied_mission VALUES (?, ?, ?, CURDATE(), ?)";
+                db.query(query, [missionId, astronaut_id, cover_letter, "In progress"], (err2, result2) => {
                     if(err2){
                         reject(err2);
                     }
