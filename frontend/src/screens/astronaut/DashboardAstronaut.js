@@ -3,7 +3,7 @@ import SimpleList from '../../components/SimpleList';
 import DashboardTableAstronaut from '../../components/DashboardTableAstronaut';
 import { useUser } from '../../UserProvider';
 import { getCurrentMission, getPastMissions, getApplicationsAstro, getRecentMissions } from '../../Requests';
-
+import MissionCard from '../../components/MissionCard';
 
 const DashboardAstronaut = () => {
         const {userId} = useUser();
@@ -104,10 +104,12 @@ const DashboardAstronaut = () => {
                   <div className='p-4'>
                   <div className="grid grid-cols-2 grid-rows-2 mt-12">
                       <div className="flex items-center justify-center px-4 py-1 ml-24">
-                          <SimpleList title={"Current Mission"} data={mission} type={'mission'}/>
+                          {/* <SimpleList title={"Current Mission"} data={mission} type={'mission'}/> */}
+                          <MissionCard missionData={mission}></MissionCard>
                       </div>              
                       <div className="flex items-center justify-center px-4 py-1 mr-24">
-                          <DashboardTableAstronaut data={applications} showHeader={true} searchText={''}/>                      </div>
+                          <DashboardTableAstronaut data={applications} showHeader={true} searchText={''}/>
+                      </div>
                       <div className="flex items-center justify-center px-4 py-1 ml-24">
                           <SimpleList title={"Past Missions"}  data={pastMissions} type={'mission'}/>
                       </div> 
