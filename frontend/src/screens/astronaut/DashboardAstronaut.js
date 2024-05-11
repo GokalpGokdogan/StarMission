@@ -12,7 +12,7 @@ const DashboardAstronaut = () => {
         const [recentMissions, setRecentMissions] = useState([]);
         const [pastMissions, setPastMissions] = useState([]);
       
-        const fetchRecentApplications = async () => {
+        const fetchRecentMissions = async () => {
           try{
               const mission = await getRecentMissions();
               if(mission == "No applications found with these filters")
@@ -93,7 +93,7 @@ const DashboardAstronaut = () => {
             fetchCurrentMission();
             fetchApplications();
             fetchPastMissions();
-            fetchRecentApplications();
+            fetchRecentMissions();
         }, []);
       
         return (
@@ -112,7 +112,7 @@ const DashboardAstronaut = () => {
                           <SimpleList title={"Past Missions"}  data={pastMissions} type={'mission'}/>
                       </div> 
                       <div className=" flex items-center justify-center px-4 py-1 mr-24">
-                          <SimpleList title={"Recent Missions"} data={recentMissions} type={'application'}/>
+                          <SimpleList title={"Recent Missions"} data={recentMissions} type={'mission'}/>
                       </div> 
                   </div>
                   </div>
