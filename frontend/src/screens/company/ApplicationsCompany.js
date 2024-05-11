@@ -32,7 +32,9 @@ const ApplicationsCompany = () => {
   const [applications, setApplications] = useState([]);
   const [missionNames, setMissionNames] = useState([]);
   const [missionNameOptions, setMissionNameOptions] = useState([]);
-  const [formattedDate, setFormattedDate] = useState('');
+  /* const [formattedDate, setFormattedDate] = useState('');
+  const [startDate, setStartDate] = useState('');
+  const [endDate, setEndDate] = useState(''); */
   const [selectedLocation, setSelectedLocation] = useState('');
   const [selectedCompany, setSelectedCompany] = useState('');
   const [minBudget, setMinBudget] = useState('0');
@@ -50,7 +52,7 @@ const ApplicationsCompany = () => {
   const [minHeight, setMinHeight] = useState(null);
   const [maxHeight, setMaxHeight] = useState(null);
   const [missionName, setMissionName] = useState(null);
-
+/* 
   const formatDate = (date) => {
     if (!date) return null; // Check if date is null or undefined
     const d = new Date(date);
@@ -75,7 +77,7 @@ const ApplicationsCompany = () => {
       key: 'selection'
     }
   ]);
-
+ */
   const handleLocationChange = (selectedOption) => {
     setSelectedLocation(selectedOption);
   };
@@ -89,11 +91,13 @@ const ApplicationsCompany = () => {
     setMaxBudget(event.target.value);
   };
 
-  useEffect(() => {
+/*   useEffect(() => {
     console.log(selectedDateRange);
     console.log(formatDate(selectedDateRange[0].startDate));
     console.log(formatDate(selectedDateRange[0].endDate));
-  }, [selectedDateRange]);
+    setStartDate(formatDate(selectedDateRange[0].startDate));
+    setEndDate(formatDate(selectedDateRange[0].endDate));
+  }, [selectedDateRange]); */
 
   const handleSearchChange = (event) => {
     setSearchText(event.target.value);
@@ -187,7 +191,8 @@ const ApplicationsCompany = () => {
       ) : (
         <div className="flex">
           <div className="w-1/4 p-6 border-r flex flex-col gap-2">
-            <div>
+          <h2 className="text-lg font-semibold mb-1 self-center underline text-main-text">Filters</h2>
+          {/*   <div>
               <label className="block mb-1 text-main-text font-medium">Start and End Dates</label>
               <DateRange
                 editableDateInputs={true}
@@ -198,7 +203,7 @@ const ApplicationsCompany = () => {
                 style={{ width: '100%' }}
                 className="w-full"
               />
-            </div>
+            </div> */}
             <div className="mb-4">
               <label className="block mb-1 text-main-text text-md font-medium">Mission</label>
               <Select
@@ -230,8 +235,8 @@ const ApplicationsCompany = () => {
                   value={minAge}
                   onChange={(e) => {
                     const newMin = Math.max(0, parseFloat(e.target.value)); // Ensure non-negative values
-                    if (newMin <= maxBudget) {
-                      setMinBudget(newMin);
+                    if (newMin <= maxAge) {
+                      setMinAge(newMin);
                     }
                   }}
                   className="w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
@@ -326,8 +331,7 @@ const ApplicationsCompany = () => {
                 <SingleApplication
                   application={application}
                 />
-              ))}
-
+              ))} 
             </div>
           </div>
         </div>)}

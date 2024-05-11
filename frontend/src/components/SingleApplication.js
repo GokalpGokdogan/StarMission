@@ -19,7 +19,7 @@ const SingleApplication = ({application}) => {
                         <p className="truncate text-xs font-semibold leading-5 text-sub-text">Applied to:</p>
                         <div className="inline-block bg-button-purple text-white text-xs rounded-2xl px-1 py-0.5 text-center">{application.name}</div>
                     </div>
-                    <p className="truncate text-xs leading-5 text-sub-text">{application.profession}</p>
+                    <p className="truncate text-xs leading-5 text-sub-text">{application.profession ? application.profession : "Not specified"}</p>
                 </div>
                 <div className="flex flex-col justify-start h-full">
                     <div className='flex flex-row gap-1 flex-grow'>
