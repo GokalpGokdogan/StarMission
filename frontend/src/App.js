@@ -28,6 +28,8 @@ import MyBidsCompany from './screens/company/MyBidsCompany';
 import EditProfile from './screens/EditProfile';
 import BidDetailsCompany from './screens/company/BidDetailsCompany';
 import ProfileCompany from './screens/company/ProfileCompany';
+import MissionDetailsAstronaut from './screens/astronaut/MissionDetailsAstronaut';
+import DashboardAdmin from './screens/admin/DashboardAdmin';
 
 function App() {
     return (
@@ -128,6 +130,7 @@ function AppContent() {
                 <div className={`flex flex-col w-full h-full transition-all duration-300 ${open ? 'pl-56' : "pl-0"} `}>
                     <div className='flex-1'>
                         <Routes>
+                            <Route path='/admin' element={<DashboardAdmin/>}/>
                             <Route path="/" element={<Login />} />
                             <Route path="/sign-up" element={<SignUp />} />
                             <Route path="/past-missions" element={<SimpleList />} />
@@ -153,6 +156,7 @@ function AppContent() {
                                 <Route path="/dashboard" element={<DashboardAstronaut />} />
                                 <Route path="/my-applications" element={<ApplicationsAstronaut />} />
                                 <Route path="/mission-postings" element={<MissionPostingsAstronaut />} />
+                                <Route path="/apply/:missionId" element={<MissionDetailsAstronaut />} />
                             </Route>
                         </Routes>
                     </div>

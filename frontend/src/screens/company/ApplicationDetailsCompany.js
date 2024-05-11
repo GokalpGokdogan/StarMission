@@ -26,21 +26,6 @@ const ApplicationDetailsCompany = () => {
 };
 
   const [showModal, setShowModal] = useState(false);
- /*  const dataSource = {
-    title: 'Asteroid Ceres',
-    company: 'NASA',
-    location: 'United States, Washington DC',
-    startDate: '07.02.2024',
-    endDate: '24.03.2024',
-    description: 'Asteroid Ceres is an extensive and ambitious mission aimed at unraveling the enigmatic mysteries surrounding the orbital dynamics of celestial bodies within our solar system. As a vital member of a carefully selected crew of 20 individuals, you will embark on a journey spanning vast expanses, conducting intricate scientific experiments across a myriad of locations, traversing an awe-inspiring distance of 1.545 billion kilometers. With each passing month, the culmination of your efforts will be meticulously documented, requiring thorough analysis and interpretation of intricate statistical data to unveil the secrets hidden within the cosmic tapestry. Successfully completing this monumental undertaking will not only mark a significant milestone in your career but also grant you unparalleled opportunities to delve into further exploration, delving into the depths of space to study celestial phenomena, including the enigmatic dark holes scattered throughout the vast expanse of the Milky Way galaxy.',
-    importantNotes: [
-      'Wear appropriate space suit at all times.',
-      'Follow safety protocols during experiments.',
-      'Report any anomalies immediately.',
-      'Wear appropriate space suit at all times.',
-      'Follow safety protocols during experiments.'
-    ]
-  }; */
 
   useEffect(() => {
     fetchMissionData();
