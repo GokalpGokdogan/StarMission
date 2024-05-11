@@ -74,6 +74,21 @@ export const login = async (email, password, navigate, setUserType, setUserId) =
     }
 };
 
+export const logout = async (navigate, setUserType, setUserId) => {
+
+        // Clear user data from cookies or local storage
+        Cookies.remove('user_type');
+        Cookies.remove('user_id');
+        
+        // Reset user state in the app
+        setUserType(null);
+        setUserId(null);
+
+        // Redirect to login page or home page
+        navigate("/");
+
+};
+
 //company functions
 export const getEmployees = async (companyId, searchedName, profession, minAge, maxAge, 
     sex, minWeight, maxWeight, minHeight, maxHeight, nationality) => {

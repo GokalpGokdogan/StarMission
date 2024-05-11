@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import {Link, Route} from 'react-router-dom';
+import {Link, Route, useNavigate} from 'react-router-dom';
 import SimpleList from '../../components/SimpleList';
 import ApplicationsTable from '../../components/ApplicationsTable';
 import DashboardTable from '../../components/DashboardTable';
-import { getLeadingMissions, getApplications, getMyBids, getMissionPostings } from '../../Requests';
+import { getLeadingMissions, getApplications, getMyBids, getMissionPostings, logout } from '../../Requests';
 import { useUser } from '../../UserProvider';
 
 //PASTMISSIONS COMPONENT SHRINKS IN EMPTY DATA ARRAY!!!!!!!!!!!!!
@@ -15,6 +15,9 @@ const DashboardCompany = () => {
   const [applications, setApplications] = useState([]);
   const [myBids, setMyBids] = useState([]);
   const [recentMissions, setRecentMissions] = useState([]);
+  const navigate = useNavigate();
+  const {setUserType} = useUser();
+  const {setUserId} = useUser();
 
   const fetchMyBids = async () => {
     try{
@@ -98,8 +101,14 @@ const fetchRecentMissions = async () => {
 
   return (
         <div className="bg-home-bg h-full">
-            <div className='h-16 bg-main-bg flex box-shadow shadow-sm'>
+            <div className='h-16 bg-main-bg flex box-shadow shadow-sm flex-row items-center justify-between'>
                 <p className='font-poppins font-bold text-white text-2xl p-4 ml-2 justify-start'>Dashboard</p>
+                <button
+                  onClick={()=> logout(navigate, setUserType, setUserId)}
+                  className={`w-28 text-white text-sm py-2 rounded-xl hover:font-semibold flex justify-center h-10 mr-3`}
+                >
+                  Logout
+                </button>
             </div>
             <div className='p-4'>
             <div className="grid grid-cols-2 grid-rows-2 mt-12">

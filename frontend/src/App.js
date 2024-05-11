@@ -4,7 +4,7 @@ import SimpleList from "./components/SimpleList";
 import MissionApplicant from "./components/MissionApplicant";
 import { BrowserRouter as Router, Routes, Route, Navigate, Outlet } from "react-router-dom";
 import Sidebar from './components/SideBar';
-import { useState } from 'react';
+import { useState, memo } from 'react';
 import DashboardCompany from './screens/company/DashboardCompany';
 import ApplicationsAstronaut from './screens/astronaut/ApplicationsAstronaut';
 import MissionPostingsAstronaut from './screens/astronaut/MissionPostingsAstronaut';
@@ -120,11 +120,10 @@ function AppContent() {
 
     const menu = getMenuForRole(userType);
 
-
     return (
         <div className="transition-all duration-300 h-screen bg-home-bg">
             <Router>
-                <div className={`fixed inset-y-0 left-0 ${open ? 'w-56' : 'w-0'} transition-all duration-300 z-8 bg-darker-bg`}>
+                <div className={`fixed inset-y-0 left-0 transform ${open ? 'translate-x-0' : '-translate-x-full'} transition-transform duration-300 z-10 bg-darker-bg`} style={{width: '14rem'}}>
                     <Sidebar open={open} setOpen={setOpen} setHref={setHref} active={active} setActive={setActive} menu={menu} />
                 </div>
                 <div className={`flex flex-col w-full h-full transition-all duration-300 ${open ? 'pl-56' : "pl-0"} `}>

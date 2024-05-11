@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { Link, Route } from 'react-router-dom';
+import { Link, Route, useNavigate } from 'react-router-dom';
 import CircularProgress from '@mui/material/CircularProgress';
 import Select from 'react-select';
 import { DateRange } from 'react-date-range';
 import SearchBar from '../../components/SearchBar';
 import SingleApplication from '../../components/SingleApplication'
-import { getApplications, getMissionNames } from '../../Requests';
+import { getApplications, getMissionNames, logout } from '../../Requests';
 import { useUser } from '../../UserProvider';
 import Alert from '@mui/material/Alert';
 import IconButton from "@mui/material/IconButton";
@@ -57,6 +57,9 @@ const ApplicationsCompany = () => {
   const [missionName, setMissionName] = useState(null);
   const [showAlert, setShowAlert] = useState(false);
   const [alertText, setAlertText] = useState('');
+  const navigate = useNavigate();
+  const {setUserType} = useUser();
+  const {setUserId} = useUser();
 /* 
   const formatDate = (date) => {
     if (!date) return null; // Check if date is null or undefined
@@ -196,8 +199,14 @@ const ApplicationsCompany = () => {
 
   return (
     <div className="bg-home-bg h-full">
-      <div className='h-16 bg-main-bg flex box-shadow shadow-sm'>
-        <p className='font-poppins font-bold text-white text-2xl p-4 ml-2 justify-start'>Applications</p>
+     <div className='h-16 bg-main-bg flex box-shadow shadow-sm flex-row items-center justify-between'>
+          <p className='font-poppins font-bold text-white text-2xl p-4 ml-2 justify-start'>Application</p>
+          <button
+            onClick={()=> logout(navigate, setUserType, setUserId)}
+            className={`w-28 text-white text-sm py-2 rounded-xl hover:font-semibold flex justify-center h-10 mr-3`}
+          >
+            Logout
+          </button>
       </div>
       {initialLoading || loading? (
         <div className="flex-grow flex items-center justify-center">

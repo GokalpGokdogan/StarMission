@@ -118,17 +118,17 @@ const ManageEmployees = () => {
     };
 
     return (
-        <div className="bg-home-bg h-full flex flex-col">
+        <div className="bg-home-bg h-full">
             <div className='h-16 bg-main-bg flex box-shadow shadow-sm'>
                 <p className='font-poppins font-bold text-white text-2xl p-4 ml-2 justify-start'>Manage Employees</p>
             </div>
             {initialLoading ? (
         <div className="flex-grow flex items-center justify-center">
-          <div className="text-center mt-32">
-            <CircularProgress sx={{ color: "#635CFF" }} style={{ margin: '20px auto' }} size={50} color="primary" />
-            <p>Loading data...</p>
-          </div>
+        <div className="text-center mt-32">
+          <CircularProgress sx={{ color: "#635CFF" }} style={{ margin: '20px auto' }} size={50} color="primary" />
+          <p>Loading data...</p>
         </div>
+      </div>
       ) : (
         <div className="flex">
           <div className="w-1/4 p-6 border-r flex flex-col gap-2">
