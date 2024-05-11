@@ -7,7 +7,7 @@ import { DateRange } from 'react-date-range';
 import 'react-date-range/dist/styles.css';
 import 'react-date-range/dist/theme/default.css';
 import SingleEmployee from "../../components/SingleEmployee";
-import {getEmployees} from "../../Requests"; 
+import {getEmployees, getMissionNames} from "../../Requests"; 
 import { useUser } from '../../UserProvider';
 import Alert from '@mui/material/Alert';
 import IconButton from "@mui/material/IconButton";
@@ -19,10 +19,30 @@ const options = [
     { value: 'Ankara, Turkey', label: 'Ankara, Turkey' }
 ];
 
+const professionOptions = [
+  {value: null, label: 'Not specified' },
+  { value: 'Software Engineer', label: 'Software Engineer' },
+  { value: 'Electrical Engineer', label: 'Electrical Engineer' },
+  { value: 'Physicist', label: 'Physicist' },
+  { value: 'Chemist', label: 'Chemist' },
+  { value: 'Technician', label: 'Technician' },
+  { value: 'Other', label: 'Other' }
+];
+
+const genderOptions = [
+  {value: null, label: 'Not specified' },
+  { value: 'Female', label: 'Female' },
+  { value: 'Male', label: 'Male' },
+  { value: 'Other', label: 'Other' }
+];
+
+
 const ManageEmployees = () => {
     const [employees, setEmployees] = useState([]);
     const {userId} = useUser();
     const [initialLoading, setInitialLoading] = useState(true);
+    const [missionNames, setMissionNames] = useState([]);
+    const [missionNameOptions, setMissionNameOptions] = useState([]);
     const [isFetching, setIsFetching] = useState(false);
     const [searchText, setSearchText] = useState(null);
     const [profession, setProfession] = useState(null);
@@ -90,6 +110,32 @@ const ManageEmployees = () => {
     fetchEmployees();
   }, [searchText]);
 
+  const fetchMissionNames = async () => {
+    try {
+      const missions = await getMissionNames(userId);
+      setMissionNames(missions);
+    } catch (error) {
+      console.error('Error fetching applications:', error);
+    } 
+  };
+
+   // Initial fetch on component mount
+   useEffect(() => {
+    fetchMissionNames();
+  }, []);
+
+  useEffect(() => {
+    const options = [
+      { value: null, label: "Not specified" },
+      ...missionNames.map(item => ({
+        value: item.name,
+        label: item.name
+      }))
+    ];
+    setMissionNameOptions(options);
+  }, [missionNames]);
+
+
      /*const [selectedDateRange, setSelectedDateRange] = useState([
         {
             startDate: new Date(),
@@ -154,7 +200,7 @@ const ManageEmployees = () => {
               <Select
                 value={missionName}
                 onChange={(e)=> {setMissionName(e); console.log(e);}}
-                options={options}
+                options={missionNameOptions}
                 isSearchable={true}
                 placeholder="Select Mission"
                 className="w-full"
@@ -164,8 +210,8 @@ const ManageEmployees = () => {
               <label className="block mb-1 text-main-text text-md font-medium">Profession</label>
               <Select
                 value={profession}
-                onChange={(e) => setProfession(e.target.value)}
-                options={options}
+                onChange={(e) => setProfession(e)}
+                options={professionOptions}
                 isSearchable={true}
                 placeholder="Select Profession"
                 className="w-full"
@@ -205,7 +251,7 @@ const ManageEmployees = () => {
               <Select
                 value={sex}
                 onChange={(e)=> {setSex(e); console.log(e);}}
-                options={options}
+                options={genderOptions}
                 isSearchable={true}
                 placeholder="Select Gender"
                 className="w-full"
