@@ -36,8 +36,8 @@ router.post('/applyToMission', async(req, res) => {
             res.status(401).send("NOT_AUTHORIZED_USER");
         }
     } catch (error) {
-        if(error === "ALREADY_AVAILABLE_APPLICATION"){
-            res.status(409).send("Application is already made and in progress.");
+        if(error === "ALREADY_IN_A_MISSION"){
+            res.status(409).send("ALREADY_IN_A_MISSION");
         }
         else{
             res.status(400).send("An error occurred in get recent mission postings for astronaut" + error);
