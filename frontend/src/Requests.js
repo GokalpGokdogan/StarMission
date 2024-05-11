@@ -146,6 +146,29 @@ export const getMissionPostings = async (companyId) => {
     return res.data;
 };
 
+export const getPartnerMissions = async (companyId, searchedName, startDate, endDate, location, 
+    leadingCompanyName, minBudget, maxBudget) => {
+    let res = await axios({
+        method: 'get',
+        url: `http://${API_HOST}/company/missionPostings/getPartnerMissions`,
+        headers: { 'Content-Type': 'application/json' },
+        params: {
+            companyId: companyId,
+            searchedName: searchedName,
+            startDate: startDate,
+            endDate: endDate,
+            location: location,
+            leadingCompanyName: leadingCompanyName,
+            minBudget: minBudget,
+            maxBudget: maxBudget,
+        },
+        withCredentials: true
+    });
+
+    console.log(res.data);
+    return res.data;
+};
+
 export const getMissionData = async (missionId) => {
     let res = await axios({
         method: 'get',
