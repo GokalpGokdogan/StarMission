@@ -3,7 +3,7 @@ import { NavLink } from "react-router-dom";
 
 const MissionItem = ({title, company, location, type, id}) => {
     return (
-        <li className="flex justify-center py-1 px-2">
+        <li className="flex py-1 px-2">
             <div className="flex" style={{ width : "654px" }}>
             <div className="flex w-full min-w-0 py-2 border rounded-xl border-transparent p-2 border-10 bg-white">
                 <div className="flex items-center">
