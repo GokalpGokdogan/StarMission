@@ -87,6 +87,7 @@ const getRecentMissions = async (astronaut_id, data) => {
                     NOT EXISTS (SELECT * FROM mission_of m WHERE s.mission_id = m.mission_id 
                     AND m.astronaut_id = ? AND m.leaving_date IS NULL)
                     AND s.leading_firm_id = u.user_id
+                    AND s.end_date > CURDATE()
                     AND (CASE WHEN ? IS NOT NULL THEN s.name LIKE ? ELSE 1 END) 
                     AND (CASE WHEN ? IS NOT NULL THEN s.start_date >= ? ELSE 1 END) 
                     AND (CASE WHEN ? IS NOT NULL THEN s.end_date <= ? ELSE 1 END)
