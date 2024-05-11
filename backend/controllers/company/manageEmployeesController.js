@@ -6,9 +6,9 @@ const getEmployees = async (data) => {
     return new Promise((resolve, reject) => {
         let {companyId, searchedName, profession, minAge, maxAge, 
             sex, minWeight, maxWeight, minHeight, maxHeight, nationality} = data;
-        if(searchedName){searchedName = "%"+searchedName+"%";}
+        if(searchedName != null){searchedName = "%"+searchedName+"%";}
         db.query(`
-                SELECT DISTINCT a.profession, a.user_id AS astronaut_id, s.location, s.name, u.name AS astronaut_name, TIMESTAMPDIFF(YEAR,  a.birth_date, CURDATE()) AS age FROM user u, astronaut a, space_mission s, company c, mission_of m
+                SELECT DISTINCT a.profession, a.user_id AS astronaut_id, s.location, u.name AS astronaut_name, TIMESTAMPDIFF(YEAR,  a.birth_date, CURDATE()) AS age FROM user u, astronaut a, space_mission s, company c, mission_of m
                 WHERE a.user_id = m.astronaut_id AND s.mission_id = m.mission_id AND a.user_id = u.user_id
                 AND c.user_id = s.leading_firm_id AND c.user_id = ? AND m.leaving_date IS NULL
                 AND (CASE WHEN ? IS NOT NULL THEN u.name LIKE ? ELSE 1 END) 
@@ -92,83 +92,6 @@ const fireEmployee = async (data) => {
     });
 }
 
-//! Test
-// Get mission names of company
-
-const getCompanyMissionNames = async (data) => {
-    return new Promise((resolve, reject) => {
-        const { companyId } = data;
-        db.query(`SELECT DISTINCT s.name FROM space_mission s, company c 
-                    WHERE c.user_id = s.leading_firm_id AND c.user_id = ?`,
-            [companyId],
-            (err, result) => {
-                if (err) {
-                    reject(err);
-                }
-                else if (result.length === 0) {
-                    reject("ER_FIND_NONE");     // No mission names found with this company id
-                }
-                else {
-                    resolve(result);
-                }
-            }
-        );
-    });
-}
-
-//! Test
-// Get professions of company
-
-const getCompanyProfessions = async (data) => {
-    return new Promise((resolve, reject) => {
-        const { companyId } = data;
-        db.query(`SELECT DISTINCT (CASE WHEN a.profession IS NULL THEN 'Other' ELSE a.profession END) as profession
-                    FROM astronaut a, mission_of m, company c, space_mission s
-                    WHERE c.user_id = s.leading_firm_id AND m.astronaut_id = a.user_id 
-                    AND m.mission_id = s.mission_id AND c.user_id = ?`,
-            [companyId],
-            (err, result) => {
-                if (err) {
-                    reject(err);
-                }
-                else if (result.length === 0) {
-                    reject("ER_FIND_NONE");     // No professions found with this company id
-                }
-                else {
-                    resolve(result);
-                }
-            }
-        );
-    });
-}
-
-//! Test
-// get sex of company employees
-
-const getCompanySex = async (data) => {
-    return new Promise((resolve, reject) => {
-        const { companyId } = data;
-        db.query(`SELECT DISTINCT (CASE WHEN a.sex IS NULL THEN 'Other' ELSE a.sex END) as sex
-                    FROM astronaut a, mission_of m, company c, space_mission s
-                    WHERE c.user_id = s.leading_firm_id AND m.astronaut_id = a.user_id 
-                    AND m.mission_id = s.mission_id AND c.user_id = ?`,
-            [companyId],
-            (err, result) => {
-                if (err) {
-                    reject(err);
-                }
-                else if (result.length === 0) {
-                    reject("ER_FIND_NONE");     // No professions found with this company id
-                }
-                else {
-                    resolve(result);
-                }
-            }
-        );
-    });
-}
 
 
-
-module.exports = { getEmployees, getEmployeeData, fireEmployee,
-    getCompanyMissionNames, getCompanyProfessions, getCompanySex }
+module.exports = { getEmployees, getEmployeeData, fireEmployee}

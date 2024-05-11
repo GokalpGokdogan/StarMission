@@ -4,7 +4,7 @@ const applyToMission = async (astronaut_id, data) => {
     return new Promise((resolve, reject) => {
 
         const {mission_id, cover_letter} = data;
-        const query = "SELECT * FROM applied_mission a WHERE a.astronaut_id = ? AND a.mission_id = ? AND a.application_status = 'In progress';";
+        const query = "SELECT * FROM applied_mission a WHERE a.astronaut_id = ? AND a.mission_id = ? AND a.application_status = 'Processing';";
         db.query(query, [astronaut_id], (err, result) => {
             if(err){
                 reject(err);

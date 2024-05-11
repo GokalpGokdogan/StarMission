@@ -50,7 +50,7 @@ const mostActiveMissionCompanies = async () => {
     return new Promise((resolve, reject) => {
 
         const query = ` DROP VIEW IF EXISTS MostActiveMissionCompanies;
-        
+
                         CREATE VIEW MostActiveMissionCompanies AS
                         SELECT DISTINCT u.name, c.foundation_date, COUNT(s.mission_id) AS active_mission_count
                         FROM company c, user u, space_mission s
@@ -104,7 +104,7 @@ const mostPartneredMissions = async () => {
         const query = ` DROP VIEW IF EXISTS MostPartneredMissions;
         
                         CREATE VIEW MostPartneredMissions AS
-                        SELECT DISTINCT s.*, COUNT(p.company_id) AS partner_count
+                        SELECT DISTINCT s.name, s.location, COUNT(p.company_id) AS partner_count
                         FROM space_mission s, partner_firm p
                         WHERE s.mission_id = p.mission_id
                         AND s.end_date >= CURDATE()
