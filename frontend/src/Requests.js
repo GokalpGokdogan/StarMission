@@ -66,10 +66,14 @@ export const login = async (email, password, navigate, setUserType, setUserId) =
             setUserType('company');
             setUserId(Cookies.get('user_id'));
             navigate("/company-dashboard"); // Redirect to company dashboard
-        } else {
+        } else if (Cookies.get('user_type') === "astronaut"){
             setUserType('astronaut');
             setUserId(Cookies.get('user_id'));
             navigate("/dashboard"); // Redirect to user dashboard
+        } else if (Cookies.get('user_type') === "admin"){
+            setUserType('admin');
+            setUserId(Cookies.get('user_id'));
+            navigate("/admin"); // Redirect to user dashboard
         }
     }
 };
@@ -665,3 +669,38 @@ export const createReport = async (adminId, description, name, optionIndexList) 
 
     return res.data;
 }
+
+export const createViews = async () => {
+
+    let res = await axios({
+        method: 'post',
+        url: `http://${API_HOST}/admin/createViews/`,
+        headers: { 'Content-Type': 'application/json' },
+        withCredentials: true
+    });
+
+    if(res.status == 400)
+    {console.log("An error occurred" + res.data);}
+
+    return res.data;
+}
+
+export const getAllReports = async (adminId) => {
+    const body = { 'adminId': adminId}
+
+    let res = await axios({
+        method: 'get',
+        url: `http://${API_HOST}/admin/manageReports/getAllReports`,
+        headers: { 'Content-Type': 'application/json' },
+        params: body,
+        withCredentials: true
+    });
+
+    if(res.status == 400)
+    {console.log("An error occurred" + res.data);}
+
+    return res.data;
+}
+
+
+

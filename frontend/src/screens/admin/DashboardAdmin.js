@@ -1,12 +1,31 @@
 import React, { useEffect, useState } from "react";
 import AddDynamicInputFields from "../../components/AddDynamicInputFields";
-import { createMission } from "../../Requests";
+import { createViews } from "../../Requests";
 import CreateReport from "./CreateReport";
 import { NavLink } from "react-router-dom";
 
 const DashboardAdmin = () => {
 
+    const createView = async () => {
+        try{
+            const apps = await createViews();
+            if(apps == "No applications found with these filters")
+            {
+              console.log("ahah")
+            }
+            else
+            {
+              console.log(apps);
+            }
+            
+        } catch (error){
+            console.error('Error fetching apps:', error);
+        }
+    };
     
+    useEffect(() => {
+      createView();
+    }, []);
 
     return (
         <div className="bg-home-bg h-full">
@@ -19,6 +38,12 @@ const DashboardAdmin = () => {
                 className={`w-28 bg-button-purple text-white text-sm py-2 rounded-xl hover:bg-indigo-700 flex justify-center`}
             >
                 Create Report
+            </NavLink>
+            <NavLink
+                to={'/reports'}
+                className={`w-28 mt-4 bg-button-purple text-white text-sm py-2 rounded-xl hover:bg-indigo-700 flex justify-center`}
+            >
+                View Reports
             </NavLink>
         </div>
       </div>

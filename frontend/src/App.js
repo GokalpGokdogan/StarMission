@@ -117,6 +117,21 @@ function AppContent() {
                         link: 'mission-postings'
                     }
                 ];
+                case 'admin':
+                    return [
+                        {
+                            title: 'Admin Panel',
+                            link: 'admin'
+                        },
+                        {
+                            title: 'Create Report',
+                            link: 'create-report'
+                        },
+                        {
+                            title: 'Reports',
+                            link: 'reports'
+                        }
+                    ];
             default:
                 return [];
         }
@@ -133,10 +148,6 @@ function AppContent() {
                 <div className={`flex flex-col w-full h-full transition-all duration-300 ${open ? 'pl-56' : "pl-0"} `}>
                     <div className='flex-1'>
                         <Routes>
-                            <Route path='/admin' element={<DashboardAdmin/>}/>
-                            <Route path='/create-report' element={<CreateReport/>}/>
-                            <Route path='/reports' element={<Reports/>}/>
-                            <Route path='/report-details/:reportId' element={<ReportDetails/>}/>
                             <Route path="/" element={<Login />} />
                             <Route path="/sign-up" element={<SignUp />} />
                             <Route path="/past-missions" element={<SimpleList />} />
@@ -163,6 +174,12 @@ function AppContent() {
                                 <Route path="/my-applications" element={<ApplicationsAstronaut />} />
                                 <Route path="/mission-postings" element={<MissionPostingsAstronaut />} />
                                 <Route path="/apply/:missionId" element={<MissionDetailsAstronaut />} />
+                            </Route>
+                            <Route element={<Auth allowedRoles={["admin"]} />}>
+                                <Route path='/admin' element={<DashboardAdmin/>}/>
+                                <Route path='/create-report' element={<CreateReport/>}/>
+                                <Route path='/reports' element={<Reports/>}/>
+                                <Route path='/report-details/:reportId' element={<ReportDetails/>}/>
                             </Route>
                         </Routes>
                     </div>

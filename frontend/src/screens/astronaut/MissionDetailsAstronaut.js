@@ -2,6 +2,7 @@ import React, { Fragment, useState, useEffect } from 'react';
 import { Link, Route, useParams } from 'react-router-dom';
 import BidModal from '../../components/BidModal';
 import { getMissionData } from '../../Requests';
+import { applyToMission } from '../../Requests';
 
 //Kodun indentationı bozuk, daha sonra düzeltilsin!!!!
 const MissionDetailsAstronaut = () => {
@@ -101,7 +102,7 @@ useEffect(() => {
                  <button type="button" className="w-32 bg-button-purple text-white text-sm px-2 py-3 rounded-xl" onClick={() => setShowModal(false)}>
                     Close
                   </button>
-                  <button type="button" className="w-32 bg-button-purple text-white text-sm px-2 py-3 rounded-xl ml-4" onClick={() => setShowModal(false)}>
+                  <button type="button" className="w-32 bg-button-purple text-white text-sm px-2 py-3 rounded-xl ml-4" onClick={() => applyToMission(missionData.mission_id, coverletter)}>
                     Apply
                   </button>
                 </div>
