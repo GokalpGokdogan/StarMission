@@ -54,7 +54,6 @@ function AppContent() {
     
         
         if (!userId || !allowedRoles.includes(userType)) {
-            // If userId is not present or the userType is not allowed, redirect to login
             return <Navigate to="/" replace />;
         }
     
@@ -123,7 +122,7 @@ function AppContent() {
     return (
         <div className="transition-all duration-300 h-screen bg-home-bg">
             <Router>
-                <div className={`fixed inset-y-0 left-0 transform ${open ? 'translate-x-0' : '-translate-x-full'} transition-transform duration-300 z-10 bg-darker-bg`} style={{width: '14rem'}}>
+                <div className={`fixed inset-y-0 left-0 transform ${open ? 'translate-x-0' : '-translate-x-full'} transition-transform duration-300 z-10 bg-darker-bg `} style={{width: '14rem'}}>
                     <Sidebar open={open} setOpen={setOpen} setHref={setHref} active={active} setActive={setActive} menu={menu} />
                 </div>
                 <div className={`flex flex-col w-full h-full transition-all duration-300 ${open ? 'pl-56' : "pl-0"} `}>
