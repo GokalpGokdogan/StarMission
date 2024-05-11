@@ -1,13 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import SimpleList from '../../components/SimpleList';
-import DashboardTable from '../../components/DashboardTable';
+import DashboardTableAstronaut from '../../components/DashboardTableAstronaut';
 import { useUser } from '../../UserProvider';
 import { getCurrentMission, getPastMissions, getApplicationsAstro, getRecentMissions } from '../../Requests';
 
 
 const DashboardAstronaut = () => {
-
-
         const {userId} = useUser();
         const [mission, setMission] = useState([]);
         const [applications, setApplications] = useState([]);
@@ -109,8 +107,7 @@ const DashboardAstronaut = () => {
                           <SimpleList title={"Current Mission"} data={mission} type={'mission'}/>
                       </div>              
                       <div className="flex items-center justify-center px-4 py-1 mr-24">
-                         <DashboardTable data={applications} showHeader={true}/>
-                      </div>
+                          <DashboardTableAstronaut data={applications} showHeader={true} searchText={''}/>                      </div>
                       <div className="flex items-center justify-center px-4 py-1 ml-24">
                           <SimpleList title={"Past Missions"}  data={pastMissions} type={'mission'}/>
                       </div> 

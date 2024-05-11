@@ -7,8 +7,6 @@ const ApplicationDetailsCompany = () => {
   const { missionId } = useParams();
   const [missionData, setMissionData] = useState({});
 
-  
-
   const fetchMissionData = async () => {
     try{
         const mission = await getMissionData(missionId);
