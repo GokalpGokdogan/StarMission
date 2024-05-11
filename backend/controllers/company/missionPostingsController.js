@@ -9,7 +9,7 @@ const getMissionPostings = async (data) => {
         
         let { companyId, searchedName, startDate, endDate, location, 
             leadingCompanyName, minBudget, maxBudget } = data;
-            if(searchedName){searchedName = "%"+searchedName+"%";}
+            if(searchedName != null){searchedName = "%"+searchedName+"%";}
 
             let query = `SELECT s.*, u.name AS company_name FROM space_mission as s, company as c, user as u
                             WHERE (c.user_id = s.leading_firm_id AND c.user_id <> ? AND c.user_id = u.user_id)
@@ -46,7 +46,7 @@ const getPartnerMissions = async (data) => {
         
         let { companyId, searchedName, startDate, endDate, location, 
             leadingCompanyName, minBudget, maxBudget } = data;
-            if(searchedName){searchedName = "%"+searchedName+"%";}
+            if(searchedName != null){searchedName = "%"+searchedName+"%";}
 
             let query = `SELECT s.*, u.name AS company_name FROM space_mission as s, partner_firm p, company c, user u
                             WHERE (p.mission_id = s.mission_id AND p.company_id = ? AND c.user_id = u.user_id AND c.user_id = p.company_id AND s.leading_firm_id <> c.user_id)

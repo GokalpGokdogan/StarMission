@@ -6,7 +6,7 @@ const mostBudgetMissions = async () => {
         const query = ` DROP VIEW IF EXISTS MostBudgetMissions;
         
                         CREATE VIEW MostBudgetMissions AS
-                        SELECT *
+                        SELECT s.name, s.location, s.budget
                         FROM space_mission s
                         WHERE s.end_date >= CURDATE()
                         ORDER BY s.budget DESC;`;
@@ -29,7 +29,7 @@ const closestEndTimeMissions = async () => {
         const query = ` DROP VIEW IF EXISTS ClosestEndTimeMissions;
         
                         CREATE VIEW ClosestEndTimeMissions AS
-                        SELECT *
+                        SELECT s.name, s.location, s.end_date
                         FROM space_mission s
                         WHERE s.end_date >= CURDATE()
                         ORDER BY s.end_date;`;
@@ -52,7 +52,7 @@ const mostActiveMissionCompanies = async () => {
         const query = ` DROP VIEW IF EXISTS MostActiveMissionCompanies;
         
                         CREATE VIEW MostActiveMissionCompanies AS
-                        SELECT DISTINCT c.*, u.name, u.email, u.phone, COUNT(s.mission_id) AS active_mission_count
+                        SELECT DISTINCT u.name, c.foundation_date, COUNT(s.mission_id) AS active_mission_count
                         FROM company c, user u, space_mission s
                         WHERE s.end_date >= CURDATE()
                         AND s.leading_firm_id = c.user_id
@@ -78,7 +78,7 @@ const mostPastMissionAstronauts = async () => {
         const query = ` DROP VIEW IF EXISTS MostPastMissionAstronauts;
         
                         CREATE VIEW MostPastMissionAstronauts AS
-                        SELECT DISTINCT a.*, u.name, u.email, u.phone, COUNT(m.mission_id) AS past_mission_count
+                        SELECT u.name, c.foundation_date, COUNT(m.mission_id) AS past_mission_count
                         FROM astronaut a, user u, mission_of m
                         WHERE a.user_id = u.user_id
                         AND m.astronaut_id = a.user_id
