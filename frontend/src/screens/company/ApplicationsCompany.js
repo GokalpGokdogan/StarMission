@@ -7,6 +7,9 @@ import SearchBar from '../../components/SearchBar';
 import SingleApplication from '../../components/SingleApplication'
 import { getApplications, getMissionNames } from '../../Requests';
 import { useUser } from '../../UserProvider';
+import Alert from '@mui/material/Alert';
+import IconButton from "@mui/material/IconButton";
+import CloseIcon from "@mui/icons-material/Close";
 
 //dont delete budget until you put it to missions
 
@@ -52,6 +55,8 @@ const ApplicationsCompany = () => {
   const [minHeight, setMinHeight] = useState(null);
   const [maxHeight, setMaxHeight] = useState(null);
   const [missionName, setMissionName] = useState(null);
+  const [showAlert, setShowAlert] = useState(false);
+  const [alertText, setAlertText] = useState('');
 /* 
   const formatDate = (date) => {
     if (!date) return null; // Check if date is null or undefined
@@ -125,17 +130,31 @@ const ApplicationsCompany = () => {
   };
 
   const applyFilter = async () => {
-    setLoading(true);
-    console.log(userId, searchText, profession?.value, minAge, maxAge, sex?.value, minWeight, maxWeight, minHeight, maxHeight, missionName?.value);
-  
-    try {
-      const apps = await getApplications(userId, searchText, profession?.value, minAge, maxAge, sex?.value, minWeight, maxWeight, minHeight, maxHeight, null, missionName?.value);
-      setApplications(apps);
-    } catch (error) {
-      console.error('Error fetching applications:', error);
-    } finally {
-      setTimeout(() => setLoading(false), 300);
+    if(minAge > maxAge){
+      setAlertText('Min Age cannot be bigger than Max Age!');
+      setShowAlert(true);
     }
+    else if(minWeight > maxWeight){
+      setAlertText('Min Weight cannot be bigger than Max Weight!');      
+      setShowAlert(true);
+    }
+    else if(minHeight > maxHeight){
+      setAlertText('Min Height cannot be bigger than Max Height!');
+      setShowAlert(true);
+    }
+    else{
+      setLoading(true);
+      console.log(userId, searchText, profession?.value, minAge, maxAge, sex?.value, minWeight, maxWeight, minHeight, maxHeight, missionName?.value);
+
+      try {
+        const apps = await getApplications(userId, searchText, profession?.value, minAge, maxAge, sex?.value, minWeight, maxWeight, minHeight, maxHeight, null, missionName?.value);
+        setApplications(apps);
+      } catch (error) {
+        console.error('Error fetching applications:', error);
+      } finally {
+        setTimeout(() => setLoading(false), 300);
+      }
+    }  
   };
   
 
@@ -173,7 +192,6 @@ const ApplicationsCompany = () => {
   // Fetch on searchText changes without showing the main loading spinner
   useEffect(() => {
     fetchApplications();
-    console.log("amk");
   }, [searchText]);
 
   return (
@@ -235,9 +253,7 @@ const ApplicationsCompany = () => {
                   value={minAge}
                   onChange={(e) => {
                     const newMin = Math.max(0, parseFloat(e.target.value)); // Ensure non-negative values
-                    if (newMin <= maxAge) {
-                      setMinAge(newMin);
-                    }
+                    setMinAge(newMin);
                   }}
                   className="w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
                 />
@@ -249,12 +265,8 @@ const ApplicationsCompany = () => {
                   type="number"
                   min="0"
                   value={maxAge}
-                  onChange={(e) => {
-                    const newMax = Math.max(0, parseFloat(e.target.value)); // Ensure the value is not less than 0
-                    if (newMax >= minBudget) {
-                      setMaxAge(newMax);
-                    }
-                  }}
+                  onChange={(e) => {setMaxAge(e.target.value);}
+                  }
                   className="w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
                 />
               </div>
@@ -277,7 +289,7 @@ const ApplicationsCompany = () => {
                   type="number"
                   min={0}
                   value={minWeight}
-                  onChange={(e) => setMinWeight(e)}
+                  onChange={(e) => setMinWeight(e.target.value)}
                   className="w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
                 />
               </div>
@@ -287,7 +299,7 @@ const ApplicationsCompany = () => {
                   type="number"
                   min="0"
                   value={maxWeight}
-                  onChange={(e) => setMaxWeight(e)}
+                  onChange={(e) => setMaxWeight(e.target.value)}
                   className="w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
                 />
               </div>
@@ -299,7 +311,7 @@ const ApplicationsCompany = () => {
                   type="number"
                   min={0}
                   value={minHeight}
-                  onChange={(e) => setMinHeight(e)}
+                  onChange={(e) => setMinHeight(e.target.value)}
                   className="w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
                 />
               </div>
@@ -309,7 +321,7 @@ const ApplicationsCompany = () => {
                   type="number"
                   min="0"
                   value={maxHeight}
-                  onChange={(e) => setMaxHeight(e)}
+                  onChange={(e) => setMaxHeight(e.target.value)}
                   className="w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
                 />
               </div>
@@ -335,6 +347,18 @@ const ApplicationsCompany = () => {
             </div>
           </div>
         </div>)}
+        {showAlert && (
+                <div className={`fixed bottom-4 right-4 max-w-96 flex ${alertText.length > 40 ? 'flex-col items-end justify-center' : 'flex-row items-center'}`}>
+                    <Alert severity={alertText.includes('successful') ? 'success' : 'error'} className="w-full">
+                        <div className="flex items-center justify-between w-full">
+                            <div>{alertText}</div>
+                            <IconButton onClick={() => setShowAlert(false)}>
+                                <CloseIcon />
+                            </IconButton>
+                        </div>
+                    </Alert>
+                </div>
+            )}
     </div>
   );
 };
