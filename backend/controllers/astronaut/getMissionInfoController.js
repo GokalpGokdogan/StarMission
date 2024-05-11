@@ -3,7 +3,10 @@ const db = require('../../database');
 const getCurrentMission = async (astronaut_id) => {
     return new Promise((resolve, reject) => {
 
-        const query = "SELECT DISTINCT s.*, o.starting_date, o.leaving_date , o.salary FROM mission_of o, space_mission s WHERE o.astronaut_id = ? AND o.mission_id = s.mission_id AND o.leaving_date IS NULL;";
+        const query = ` SELECT DISTINCT s.* ,u.name as company_name , o.starting_date, o.salary 
+                        FROM mission_of o, space_mission s, user u
+                        WHERE o.astronaut_id = ? AND o.mission_id = s.mission_id
+                        AND o.leaving_date IS NULL AND s.leading_firm_id = u.user_id;`;
         db.query(query, [astronaut_id], (err, result) => {
             if(err){
                 reject(err);
@@ -13,7 +16,13 @@ const getCurrentMission = async (astronaut_id) => {
             }
             else{
                 console.log(result, "successful current mission data");
-                resolve(result);
+                if(result[0].important_notes){
+                    result[0].important_notes = result[0].important_notes.split("$$$$");
+                }
+                else{
+                    result[0].important_notes = [];
+                }
+                resolve(result[0]);
             }
         });
     });
@@ -22,7 +31,7 @@ const getCurrentMission = async (astronaut_id) => {
 const getPastMissions = async (astronaut_id) => {
     return new Promise((resolve, reject) => {
 
-        const query = "SELECT DISTINCT s.*, o.starting_date, o.leaving_date, o.salary FROM mission_of o, space_mission s WHERE o.astronaut_id = ? AND o.mission_id = s.mission_id AND o.leaving_date IS NOT NULL;";
+        const query = `SELECT DISTINCT s.*, o.starting_date, o.leaving_date, o.salary FROM mission_of o, space_mission s WHERE o.astronaut_id = ? AND o.mission_id = s.mission_id AND o.leaving_date IS NOT NULL;`;
         db.query(query, [astronaut_id], (err, result) => {
             if(err){
                 console.log(err);
