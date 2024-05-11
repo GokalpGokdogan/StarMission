@@ -4,7 +4,7 @@ const { getCurrentMission, getPastMissions, getRecentMissions, getCurrentMission
 
 router.get('/getCurrentMissionExtract', async (req, res) => {
     try {
-        const astronaut_id = req.query.astronaut_id;
+        const astronaut_id = req.query.astronautId;
         const response = await getCurrentMissionExtract(astronaut_id);
         res.status(200).json(response);
     } catch (error) {

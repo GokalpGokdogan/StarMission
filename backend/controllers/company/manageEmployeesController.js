@@ -73,7 +73,7 @@ const fireEmployee = async (data) => {
         
         const { astronautId, missionId } = data;
         
-        let query = `UPDATE mission_of SET leaving_date = CURDATE() WHERE astronaut_id = ? AND mission_id = ?`;
+        let query = `UPDATE mission_of SET leaving_date = CURDATE() WHERE astronaut_id = ? AND mission_id = ? AND leaving_date IS NULL`;
         db.query(query,
             [astronautId, missionId], 
             (err, result) => {

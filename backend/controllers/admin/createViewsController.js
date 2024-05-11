@@ -78,7 +78,7 @@ const mostPastMissionAstronauts = async () => {
         const query = ` DROP VIEW IF EXISTS MostPastMissionAstronauts;
         
                         CREATE VIEW MostPastMissionAstronauts AS
-                        SELECT u.name, c.foundation_date, COUNT(m.mission_id) AS past_mission_count
+                        SELECT u.name, a.profession, COUNT(m.mission_id) AS past_mission_count
                         FROM astronaut a, user u, mission_of m
                         WHERE a.user_id = u.user_id
                         AND m.astronaut_id = a.user_id
