@@ -596,10 +596,10 @@ export const getRecentMissions = async (searchedName, startDate, endDate, locati
 
 
 export const applyToMission = async (mission_id, cover_letter) => {
-    const body = { 'mission_id': mission_id, 'cover_letter': cover_letter }
+    const body = { 'missionId': mission_id, 'cover_letter': cover_letter }
 
     let res = await axios({
-        method: 'get',
+        method: 'post',
         url: `http://${API_HOST}/astronaut/manageApplications/applyToMission`,
         headers: { 'Content-Type': 'application/json' },
         data: body,
@@ -616,7 +616,7 @@ export const applyToMission = async (mission_id, cover_letter) => {
         console.log("NOT_AUTHORIZED_USER")
     }
     else if(res.status == 409){
-        console.log("Application is already made and in progress.")
+        console.log("Astronaut is already in a mission")
     }
     else {
         console.log(res.data);
