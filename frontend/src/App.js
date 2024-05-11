@@ -30,6 +30,9 @@ import BidDetailsCompany from './screens/company/BidDetailsCompany';
 import ProfileCompany from './screens/company/ProfileCompany';
 import MissionDetailsAstronaut from './screens/astronaut/MissionDetailsAstronaut';
 import DashboardAdmin from './screens/admin/DashboardAdmin';
+import CreateReport from './screens/admin/CreateReport';
+import Reports from './screens/admin/Reports';
+import { ReportDetails } from './screens/admin/ReportDetails';
 
 function App() {
     return (
@@ -131,6 +134,9 @@ function AppContent() {
                     <div className='flex-1'>
                         <Routes>
                             <Route path='/admin' element={<DashboardAdmin/>}/>
+                            <Route path='/create-report' element={<CreateReport/>}/>
+                            <Route path='/reports' element={<Reports/>}/>
+                            <Route path='/report-details/:reportId' element={<ReportDetails/>}/>
                             <Route path="/" element={<Login />} />
                             <Route path="/sign-up" element={<SignUp />} />
                             <Route path="/past-missions" element={<SimpleList />} />

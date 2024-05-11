@@ -6,6 +6,7 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import PendingIcon from '@mui/icons-material/Pending';
 import CancelIcon from '@mui/icons-material/Cancel';
 import Alert from '@mui/material/Alert';
+import { createReport } from "../../Requests";
 
 
 const CreateReport = () => {
@@ -45,10 +46,9 @@ const CreateReport = () => {
             {indices.push(3);}
             if(fifthIsChecked)
             {indices.push(4);}
+            console.log(indices);
+            createReport(2, description, name, indices);
         }
-       
-
-
         return indices;
     };
 

@@ -647,4 +647,21 @@ export const getApplicationsAstro = async (startDate, endDate, missionId, applic
     return res.data;
 } 
 
+//admin requests
 
+export const createReport = async (adminId, description, name, optionIndexList) => {
+    const body = { 'admin': adminId, 'description': description, 'name': name, 'optionIndexList': optionIndexList }
+
+    let res = await axios({
+        method: 'post',
+        url: `http://${API_HOST}/admin/manageReports/createReport`,
+        headers: { 'Content-Type': 'application/json' },
+        data: body,
+        withCredentials: true
+    });
+
+    if(res.status == 400)
+    {console.log("An error occurred" + res.data);}
+
+    return res.data;
+}

@@ -4,25 +4,22 @@ import { createMission } from "../../Requests";
 import CreateReport from "./CreateReport";
 import { NavLink } from "react-router-dom";
 
-const DashboardAdmin = () => {
-
-    
+const Reports = () => {
 
     return (
         <div className="bg-home-bg h-full">
         <div className='h-16 bg-main-bg flex box-shadow shadow-sm'>
-          <p className='font-poppins font-bold text-white text-2xl p-4 ml-2 justify-start'>Admin Panel</p>
+          <p className='font-poppins font-bold text-white text-2xl p-4 ml-2 justify-start'>Reports</p>
         </div>
         <div className='p-4'>
-            <NavLink
-                to={'/create-report'}
-                className={`w-28 bg-button-purple text-white text-sm py-2 rounded-xl hover:bg-indigo-700 flex justify-center`}
-            >
-                Create Report
-            </NavLink>
+            <div className="flex flex-col flex-wrap">
+                {/* {reports && reports.map(report => (
+                    <p>{report.name}</p>
+                ))}  */}
+                </div>
+          </div>
         </div>
-      </div>
     )
 }
 
-export default DashboardAdmin
+export default Reports
