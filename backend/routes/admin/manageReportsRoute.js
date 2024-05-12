@@ -1,15 +1,23 @@
 const express = require('express');
 const router = express.Router();
-const {createReport, getAllReports, getReportData} = require('../../controllers/admin/manageReportsController');
+const {createReport, getAllReports, getReportData, deleteReport} = require('../../controllers/admin/manageReportsController');
 
 router.post('/createReport', async(req, res) => {
     try {
         
         const response = await createReport(req.body);
-        console.log(response, "Test: get applications with filters");
         res.status(200).send(response);
     } catch (error) {
-        res.status(400).send("An error occurred in get applications with filters: " + error);
+        res.status(400).send("An error occurred in create report: " + error);
+    }
+});
+
+router.delete('/deleteReport', async(req, res) => {
+    try {
+        const response = await deleteReport(req.body);
+        res.status(200).send(response);
+    } catch (error) {
+        res.status(400).send("An error occurred in delete report: " + error);
     }
 });
 

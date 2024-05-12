@@ -66,6 +66,25 @@ const getReportData = async (data) => {
     });
 };
 
+const deleteReport = async(data) => {
+    return new Promise((resolve, reject) => {
+        const { reportId } = data;
+
+        let query = `DELETE FROM tableForm WHERE report_id = ?;
+                     DELETE FROM container WHERE report_id = ?;
+                     DELETE FROM report WHERE report_id = ?;`;
+
+        db.query(query, [reportId,reportId,reportId], async (err, result) => {
+            if (err) {
+                reject(err);
+            }
+            else {
+                resolve(result);
+            }
+        });
+    });
+};
+
 const createReport = async (data) => {
     return new Promise((resolve, reject) => {
 
@@ -130,7 +149,7 @@ const createReport = async (data) => {
 
                                 await result.forEach(row => {
                                     col1Data += row.name + "$$$$";
-                                    col2Data += row.foundation_date + "$$$$";
+                                    col2Data += row.profession + "$$$$";
                                     col3Data += row.past_mission_count + "$$$$";
                                 });
                             }
@@ -157,9 +176,9 @@ const createReport = async (data) => {
                                     const containerId = result.insertId;
 
                                     if (option != 5) {
-                                        query = `   INSERT INTO tableForm(container_id, c_name1, c_name2, c_name3, c_data1, c_data2, c_data3)
-                                                    VALUES (?, ?, ?, ?, ?, ?, ?);`;
-                                        await db.query(query, [containerId, col1, col2, col3, col1Data, col2Data, col3Data], (err, result) => {
+                                        query = `   INSERT INTO tableForm(container_id, report_id, c_name1, c_name2, c_name3, c_data1, c_data2, c_data3)
+                                                    VALUES (?, ?, ?, ?, ?, ?, ?, ?);`;
+                                        await db.query(query, [containerId, reportId, col1, col2, col3, col1Data, col2Data, col3Data], (err, result) => {
                                             if (err) {
                                                 reject(err);
                                             }
@@ -176,4 +195,4 @@ const createReport = async (data) => {
     });
 };
 
-module.exports = { createReport, getAllReports , getReportData};
+module.exports = { createReport, getAllReports , getReportData, deleteReport};
