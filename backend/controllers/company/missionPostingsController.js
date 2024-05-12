@@ -4,7 +4,7 @@ const db = require('../../database');
 // Get mission postings with filters
 // assumed companyId will be provided
 
-const getMissionPostings = async (data) => {
+const getMissionPostings = async (data, isReq4Past) => {
     return new Promise((resolve, reject) => {
         
         let { companyId, searchedName, startDate, endDate, location, 
@@ -14,7 +14,7 @@ const getMissionPostings = async (data) => {
             let query = `SELECT s.*, u.name AS company_name FROM space_mission as s, company as c, user as u
                             WHERE (c.user_id = s.leading_firm_id AND c.user_id <> ? AND c.user_id = u.user_id)
                             AND NOT EXISTS (SELECT * FROM partner_firm p WHERE p.mission_id = s.mission_id AND p.company_id = ?)
-                            AND s.end_date >= CURDATE()
+                            AND (CASE WHEN ? = 0 THEN s.end_date >= CURDATE() ELSE s.end_date < CURDATE() END)
                             AND (CASE WHEN ? IS NOT NULL THEN s.name LIKE ? ELSE 1 END) 
                             AND (CASE WHEN ? IS NOT NULL THEN s.start_date >= ? ELSE 1 END) 
                             AND (CASE WHEN ? IS NOT NULL THEN s.end_date <= ? ELSE 1 END)
@@ -23,7 +23,7 @@ const getMissionPostings = async (data) => {
                             AND (CASE WHEN ? IS NOT NULL THEN s.budget >= ? ELSE 1 END)
                             AND (CASE WHEN ? IS NOT NULL THEN s.budget <= ? ELSE 1 END)
                             ORDER BY s.creation_date DESC;`;
-            db.query(query, [companyId, companyId, searchedName, searchedName, startDate, startDate, endDate, endDate, 
+            db.query(query, [companyId, companyId,isReq4Past, searchedName, searchedName, startDate, startDate, endDate, endDate, 
             location, location, leadingCompanyName, leadingCompanyName, minBudget, minBudget, maxBudget, maxBudget], 
             (err, result) => {
                 if (err) {

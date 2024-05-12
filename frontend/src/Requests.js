@@ -146,6 +146,21 @@ export const getMissionPostings = async (companyId) => {
     return res.data;
 };
 
+export const getPastMissionPostings = async (companyId) => {
+    let res = await axios({
+        method: 'get',
+        url: `http://${API_HOST}/company/missionPostings/getPastMissionPostings`,
+        headers: { 'Content-Type': 'application/json' },
+        params: {
+            companyId: companyId,
+        },
+        withCredentials: true
+    });
+
+    console.log(res.data);
+    return res.data;
+};
+
 export const getPartnerMissions = async (companyId, searchedName, startDate, endDate, location, 
     leadingCompanyName, minBudget, maxBudget) => {
     let res = await axios({

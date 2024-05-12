@@ -18,13 +18,42 @@ router.get('/getMissionPostings', async (req, res) => {
         }
 
         const data = req.query;
-        const result = await missionPostingsController.getMissionPostings(data);
+        const result = await missionPostingsController.getMissionPostings(data, 0);
         res.status(200).json(result);
     }
     catch (err) {
         res.status(400).json(err);
     }
 });
+
+// Get past mission postings with filters
+
+// Body: { companyId: int, searchedName: str(255), startDate: date, endDate: date, location: str(255),
+// leadingCompanyName: str(255), minBudget: int, maxBudget: int }
+
+// Body: { companyId: int, searchedName: str(255), startDate: date, endDate: date, location: str(255), 
+// leadingCompanyName: str(255), minBudget: int, maxBudget: int }
+
+router.get('/getPastMissionPostings', async (req, res) => {
+    try {
+        
+        //! Test ~ When connected to frontend, delete this if block
+        if(!req.query.companyId){
+            console.log("No companyId in query, using cookie");
+            let companyId = req.cookies.companyId;
+            req.query.companyId = companyId;
+        }
+
+        const data = req.query;
+        const result = await missionPostingsController.getMissionPostings(data, 1);
+        res.status(200).json(result);
+    }
+    catch (err) {
+        res.status(400).json(err);
+    }
+});
+
+
 
 
 // Get leading firm names
