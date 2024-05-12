@@ -1,10 +1,12 @@
 import React, { Fragment, useState, useEffect } from 'react';
 import { Link, Route, useParams } from 'react-router-dom';
 import BidModal from '../../components/BidModal';
-import { getMissionData } from '../../Requests';
+import { getMissionData, bidToMission } from '../../Requests';
+import { useUser } from '../../UserProvider';
 
 //Kodun indentationı bozuk, daha sonra düzeltilsin!!!!
 const MissionDetailsCompany = () => {
+  const {userId} = useUser();
   const { missionId } = useParams();
   const [missionData, setMissionData] = useState({});
 
@@ -137,8 +139,13 @@ const MissionDetailsCompany = () => {
                     <button type="button" className="w-32 bg-button-purple text-white text-sm px-2 py-3 rounded-xl" onClick={() => setShowModal(false)}>
                       Close
                     </button>
-                    <button type="button" className="w-32 bg-button-purple text-white text-sm px-2 py-3 rounded-xl ml-4" onClick={() => setShowModal(false)}>
-                      Bid to Mission
+                    <button type="button" className="w-32 bg-button-purple text-white text-sm px-2 py-3 rounded-xl ml-4" 
+                    onClick={() => {
+                      bidToMission(userId, missionId, amount, description);
+                      setShowModal(false);
+                    }}
+                  >
+                    Bid to Mission
                     </button>
                   </div>
                 </BidModal> 

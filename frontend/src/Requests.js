@@ -476,6 +476,25 @@ export const getBidData = async (bidId) => {
     return res.data;
 };
 
+export const bidToMission = async (companyId, missionId, amount, description) => {
+    const body = {
+        'companyId': companyId, 
+        'missionId': missionId,
+        'amount': amount,
+        'description': description
+    }
+    let res = await axios({
+        method: 'post',
+        url: `http://${API_HOST}/company/missionPostings/bidToMission`,
+        headers: { 'Content-Type': 'application/json' },
+        data: body
+    });
+
+    console.log(res.data);
+    return res.data;
+};
+
+
 export const getLeadingCompanyNames = async (companyId) => {
     let res = await axios({
         method: 'get',
