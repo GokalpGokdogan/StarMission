@@ -32,7 +32,7 @@ const PartneredMissions = () => {
 
   const [selectedDateRange, setSelectedDateRange] = useState([
     {
-      startDate: new Date(),
+      startDate: null,
       endDate: null,
       key: 'selection'
     }
@@ -78,6 +78,7 @@ const PartneredMissions = () => {
 
   const fetchPartnerMissions = async () => {
   try {
+    // FIX THIS LATER
       const res = await getPartnerMissions(userId, searchText, null, null, null, null, null, null);
       setMissions(res);
     } catch (error) {
@@ -144,10 +145,10 @@ const PartneredMissions = () => {
             <p>Loading data...</p>
           </div>
         </div>
-      ) : (
+        ) : (
         <div className="flex">
           <div className="w-1/4 p-6 border-r flex flex-col gap-2">
-          <h2 className="text-lg font-semibold mb-1 self-center underline text-main-text">Filters</h2>
+            <h2 className="text-lg font-semibold mb-1 self-center underline text-main-text">Filters</h2>
           <div>
               <label className="block mb-1 text-main-text font-medium">Start and End Dates</label>
               <DateRange
@@ -179,7 +180,7 @@ const PartneredMissions = () => {
                   min={0}
                   value={minBudget?.toString()}
                   onChange={(e) => {
-                    const newMin = Math.max(0, parseFloat(e.target.value));
+                    const newMin = e.target.value === '' ? null : Math.max(0, parseFloat(e.target.value));
                     setMinBudget(newMin);
                   }}
                   className="w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
@@ -192,7 +193,7 @@ const PartneredMissions = () => {
                   min={0}
                   value={maxBudget?.toString()}
                   onChange={(e) => {
-                    const newMax = Math.max(0, parseFloat(e.target.value));
+                    const newMax = e.target.value === '' ? null : Math.max(0, parseFloat(e.target.value));
                     setMaxBudget(newMax);
                   }}
                   className="w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"

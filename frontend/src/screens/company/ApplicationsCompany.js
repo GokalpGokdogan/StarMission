@@ -260,7 +260,7 @@ const ApplicationsCompany = () => {
                   min={0}
                   value={minAge?.toString()}
                   onChange={(e) => {
-                    const newMin = Math.max(0, parseFloat(e.target.value));
+                    const newMin = e.target.value === '' ? null : Math.max(0, parseFloat(e.target.value));
                     setMinAge(newMin);
                   }}
                   className="w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
@@ -274,7 +274,7 @@ const ApplicationsCompany = () => {
                   min={0}
                   value={maxAge?.toString()}
                   onChange={(e) => {
-                    const newMax = Math.max(0, parseFloat(e.target.value));
+                    const newMax = e.target.value === '' ? null : Math.max(0, parseFloat(e.target.value));
                     setMaxAge(newMax);
                   }
                   }
@@ -301,7 +301,7 @@ const ApplicationsCompany = () => {
                   min={0}
                   value={minWeight?.toString()}
                   onChange={(e) => {
-                    const newMin = Math.max(0, parseFloat(e.target.value));
+                    const newMin = e.target.value === '' ? null : Math.max(0, parseFloat(e.target.value));
                     setMinWeight(newMin);
                   }}
                   className="w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
@@ -314,7 +314,7 @@ const ApplicationsCompany = () => {
                   min={0}
                   value={maxWeight?.toString()}
                   onChange={(e) => {
-                    const newMax = Math.max(0, parseFloat(e.target.value));
+                    const newMax = e.target.value === '' ? null : Math.max(0, parseFloat(e.target.value));
                     setMaxWeight(newMax);
                   }}
                   className="w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
@@ -329,7 +329,7 @@ const ApplicationsCompany = () => {
                   min={0}
                   value={minHeight?.toString()}
                   onChange={(e) => {
-                    const newMin = Math.max(0, parseFloat(e.target.value));
+                    const newMin = e.target.value === '' ? null : Math.max(0, parseFloat(e.target.value));
                     setMinHeight(newMin);
                   }}
                   className="w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
@@ -342,7 +342,7 @@ const ApplicationsCompany = () => {
                   min={0}
                   value={maxHeight?.toString()}
                   onChange={(e) => {
-                    const newMax = Math.max(0, parseFloat(e.target.value));
+                    const newMax = e.target.value === '' ? null : Math.max(0, parseFloat(e.target.value));
                     setMaxHeight(newMax);
                   }}
                   className="w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"

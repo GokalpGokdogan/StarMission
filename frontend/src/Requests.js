@@ -135,13 +135,20 @@ export const getEmployeeData = async (astronautId) => {
     return res.data;
 };
 
-export const getMissionPostings = async (companyId) => {
+export const getMissionPostings = async (companyId, searchedName, startDate, endDate, location, leadingCompanyName, minBudget, maxBudget) => {
     let res = await axios({
         method: 'get',
         url: `http://${API_HOST}/company/missionPostings/getMissionPostings`,
         headers: { 'Content-Type': 'application/json' },
         params: {
             companyId: companyId,
+            searchedName: searchedName,
+            startDate: startDate,
+            endDate: endDate,
+            location: location,
+            leadingCompanyName: leadingCompanyName,
+            minBudget: minBudget,
+            maxBudget: maxBudget,
         },
         withCredentials: true
     });
