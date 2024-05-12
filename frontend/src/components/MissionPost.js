@@ -1,7 +1,7 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 
-const MissionPost = ({title, company, location, type, handleOnClick, id}) => {
+const MissionPost = ({title, company, location, type, id}) => {
     return (
         <li className="flex py-1 px-2">
             <div className="flex" style={{ width : "654px" }}>

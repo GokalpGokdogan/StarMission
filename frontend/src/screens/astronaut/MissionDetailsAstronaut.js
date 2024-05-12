@@ -1,7 +1,7 @@
 import React, { Fragment, useState, useEffect } from 'react';
 import { Link, Route, useParams } from 'react-router-dom';
 import BidModal from '../../components/BidModal';
-import { getMissionData } from '../../Requests';
+import { getMissionData, getApplicationsAstro } from '../../Requests';
 import { applyToMission } from '../../Requests';
 import Header from '../../components/Header';
 
@@ -9,7 +9,9 @@ import Header from '../../components/Header';
 const MissionDetailsAstronaut = () => {
   const { missionId } = useParams();
   const [showModal, setShowModal] = useState(false);
+  const [isAppliedBefore, setIsAppliedBefore] = useState(false);
   const [missionData, setMissionData] = useState({});
+  const [applications, setApplications] = useState([]);
 
   const fetchMissionData = async () => {
     try{
@@ -29,9 +31,40 @@ const MissionDetailsAstronaut = () => {
     }
 };
 
+const fetchApplications = async () => {
+  try{
+      const apps = await getApplicationsAstro();
+      if(apps == "No applications found with these filters")
+      {
+        console.log("ahah")
+      }
+      else
+      {
+        setApplications(apps);
+
+        for(var i = 0; i < apps.length; i++){
+          if(apps[i].mission_id == missionId){
+            setIsAppliedBefore(true);
+          }
+        }
+
+        console.log("Applications");
+        console.log(apps);
+      }
+      
+  } catch (error){
+      console.error('Error fetching apps:', error);
+  }
+};
+
+useEffect(() => {
+  fetchApplications();
+}, []);
+
 useEffect(() => {
   fetchMissionData();
 }, []);
+
 
   const [searchText, setSearchText] = useState('');
   const [coverletter, setCoverletter] = useState('');
@@ -73,10 +106,17 @@ useEffect(() => {
                 </ul>
               </p>
             </div>
-            <div className="flex justify-end mr-8 mt-16 mb-4 z-50">
-              <button type="button" className="w-auto bg-button-purple text-white text-sm px-2 py-3 rounded-xl" onClick={() => setShowModal(true)}>
+            { isAppliedBefore ?
+                (
+                <div className="flex mt-16 justify-center">
+                  <p>You have already applied for this mission!</p>
+                </div>
+                )               
+            : (<div className="flex justify-end mr-8 mt-16 mb-4 z-50">
+                <button type="button" className="w-auto bg-button-purple text-white text-sm px-2 py-3 rounded-xl" onClick={() => setShowModal(true)}>
                 Apply to Mission
-              </button>
+                </button>
+              
               <BidModal isVisible={showModal} onClose={() => setShowModal(false)}>  
                     <h2 className="text-3xl font-bold text-main-text mt-8 ml-12">Apply to {missionData.name}</h2>
                     <div className="flex items-center ml-8 mt-8">
@@ -107,7 +147,7 @@ useEffect(() => {
                   </button>
                 </div>
               </BidModal>
-            </div>
+            </div>)}
           </div>
         </div>
       </div>
