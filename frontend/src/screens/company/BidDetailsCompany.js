@@ -1,11 +1,17 @@
 import React, { Fragment, useState, useEffect } from 'react';
 import { Link, Route, useParams } from 'react-router-dom';
-import { getBidData } from '../../Requests';
+import { getBidData, rejectIncomingBid, acceptIncomingBid } from '../../Requests';
+import Alert from '@mui/material/Alert';
+import IconButton from "@mui/material/IconButton";
+import CloseIcon from "@mui/icons-material/Close";
+import { useUser } from '../../UserProvider';
 import Header from '../../components/Header';
 
 const BidDetailsCompany = () => {
-
+  const [showAlert, setShowAlert] = useState(false);
+  const [alertText, setAlertText] = useState('');
   const { bidId } = useParams();
+  const { userId } = useUser();
   const [bidData, setBidData] = useState({});
 
   const fetchBidData = async () => {
@@ -21,17 +27,42 @@ const BidDetailsCompany = () => {
     }
   };
 
+  const handleRejectIncomingBid = async () => {
+    try{
+        const app = await rejectIncomingBid(bidId);
+        
+        setAlertText('Reject incoming bid successful! Redirecting to the mission...');
+        setShowAlert(true);
+        const redirectUrl = `/leading-mission-details/${bidData.mission_id}`;
+        setTimeout(() => {
+            window.location.href = redirectUrl;
+        }, 2000);
+
+    } catch (error){
+        console.error('Error rejecting the incoming bid:', error);
+    }
+};
+
+const handleAcceptIncomingBid = async () => {
+  console.log(userId);
+  try{
+      await acceptIncomingBid(userId, bidId);
+      
+
+      setAlertText('Accept incoming bid successful! Redirecting to the mission...');
+      setShowAlert(true);
+      const redirectUrl = `/leading-mission-details/${bidData.mission_id}`;
+      setTimeout(() => {
+        window.location.href = redirectUrl;
+      }, 2000);
+  } catch (error){
+      console.error('Error accepting the incoming bid:', error);
+  }
+};
+
   useEffect(() => {
     fetchBidData();
   }, [bidId]);
-
- const BidData = {
-    name: 'Missionların missioni',
-    company_name: 'Dogacompany',
-    amount: "10.000",
-    description: 'ted States, Washington DCUnington DCUninited States, Washington DCUninited States, Washington DCUnies, Washington DCUnited States, Washington DCUnited States, Washington DCUnited States, Washington DCUnited States, Washington DCUnited States, Washington DCUnited States, Washington DCUnited States, Washington DCUnited States, Washington DCUnited States, Washington DCUnited States, Washington DCUnited States, Washington DCUnited States, Washington DCUnited States, Washington DCUnited States, Washington DCUnited States, Washington DC',
-    bidDate: '07.02.2024',
- }
 
   return (
       <div className="bg-home-bg min-h-screen">
@@ -57,16 +88,30 @@ const BidDetailsCompany = () => {
               </div>
 
               <div className="flex justify-end mr-8 mt-16 mb-4">
-                <button type="button" className="w-32 mr-2 bg-button-red text-white text-sm px-1 py-3 rounded-xl" >
+                <button type="button" className="w-32 mr-2 bg-button-red text-white text-sm px-1 py-3 rounded-xl"
+                  onClick={handleRejectIncomingBid}>
                   Reject
                 </button>
-                <button type="button" className="w-32 ml-2  bg-button-green text-white text-sm px-1 py-3 rounded-xl" >
+                <button type="button" className="w-32 ml-2  bg-button-green text-white text-sm px-1 py-3 rounded-xl"
+                  onClick={handleAcceptIncomingBid}>
                   Accept
                 </button>
               </div>
             </div>
           </div>
         </div>
+        {showAlert && (
+                <div className={`fixed bottom-4 right-4 max-w-96 flex ${alertText.length > 40 ? 'flex-col items-end justify-center' : 'flex-row items-center'}`}>
+                    <Alert severity={alertText.includes('successful') ? 'success' : 'error'} className="w-full">
+                        <div className="flex items-center justify-between w-full">
+                            <div>{alertText}</div>
+                            <IconButton onClick={() => setShowAlert(false)}>
+                                <CloseIcon />
+                            </IconButton>
+                        </div>
+                    </Alert>
+                </div>
+            )}
       </div>
   );
 };

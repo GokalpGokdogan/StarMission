@@ -487,6 +487,35 @@ export const getBidData = async (bidId) => {
     return res.data;
 };
 
+export const acceptIncomingBid = async (companyId, bidId) => {
+    const body = {
+        'companyId': companyId,
+        'bidId': bidId,
+    }
+    let res = await axios({
+        method: 'post',
+        url: `http://${API_HOST}/company/manageIncomingBids/acceptIncomingBid`,
+        headers: { 'Content-Type': 'application/json', },
+        data: body,
+    })
+    console.log(res.data);
+    return res.data
+}
+
+export const rejectIncomingBid = async (bidId) => {
+    const body = {
+        'bidId': bidId,
+    }
+    let res = await axios({
+        method: 'post',
+        url: `http://${API_HOST}/company/manageIncomingBids/rejectIncomingBid`,
+        headers: { 'Content-Type': 'application/json', },
+        data: body,
+    })
+    console.log(res.data);
+    return res.data
+}
+
 export const bidToMission = async (companyId, missionId, amount, description) => {
     const body = {
         'companyId': companyId, 

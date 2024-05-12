@@ -91,12 +91,16 @@ const LeadingMissionDetails = () => {
       {showModal && (
         <CompanyListModal isVisible={showModal} onClose={() => setShowModal(false)}>
           <h2 className='mb-4'>Companies offering to bid to {missionData.name}</h2>
+          {incomingBids.length > 0 ? (
           <ul>
             {/* Render bidding companies using CompanyItem component */}
             {incomingBids.map(bid => (
-              <CompanyItem company_name={bid.company_name} requested_amount={bid.requested_amount} bidId={bid.bid_id} />
+              <CompanyItem key={bid.bid_id} company_name={bid.company_name} requested_amount={bid.requested_amount} bidId={bid.bid_id} />
             ))}
           </ul>
+        ) : (
+          <p>No incoming bids found.</p>
+        )}
         </CompanyListModal>
       )}
     </Fragment>
