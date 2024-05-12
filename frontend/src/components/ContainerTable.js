@@ -41,7 +41,7 @@ for (let rowIndex = 0; rowIndex < numberOfRows; rowIndex++) {
 console.log(dataSource);
 
   return (
-     <Table dataSource={dataSource}  columns={cols} ></Table> 
+     <Table dataSource={dataSource}  columns={cols} pagination={false}></Table> 
   )
 }
 

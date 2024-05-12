@@ -5,7 +5,7 @@ const ApplicationsTable = ({ dataSource, columns }) => {
 
   return(
   
-    <Table dataSource={dataSource}  columns={columns} pagination={{ pageSize: 3}} />); 
+    <Table dataSource={dataSource}  columns={columns} pagination={false}/>); 
 };
 
 export default ApplicationsTable;

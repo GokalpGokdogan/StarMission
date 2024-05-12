@@ -4,6 +4,7 @@ import { getAllReports } from "../../Requests";
 import CreateReport from "./CreateReport";
 import { NavLink } from "react-router-dom";
 import SinglePastMission from "../../components/SinglePastMission";
+import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 
 const Reports = () => {
 
@@ -51,6 +52,7 @@ const [reports, setReports] = useState([]);
                             >{value.name}</NavLink>
                               <p className="truncate text-xs leading-5 text-sub-text">{new Date(value.creation_date).toLocaleDateString('en-GB', {day: '2-digit',month: '2-digit',year: 'numeric'}).replace(/\//g, '.')}</p>
                           </div>
+                          <div><DeleteOutlineIcon style={{ color: '#FF3B30'}}></DeleteOutlineIcon></div>
                       </div>
                   </li>
                     )) 
