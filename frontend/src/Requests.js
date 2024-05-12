@@ -753,5 +753,20 @@ export const getReportData = async (reportId) => {
     return res.data;
 };
 
+export const deleteReport = async (reportId) => {
+    let res = await axios({
+        method: 'delete',
+        url: `http://${API_HOST}/admin/manageReports/deleteReport`,
+        headers: { 'Content-Type': 'application/json' },
+        data: {
+            reportId: reportId,
+        },
+        withCredentials: true
+    });
+
+    console.log(res.data);
+    return res.data;
+};
+
 
 
