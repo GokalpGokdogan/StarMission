@@ -211,7 +211,7 @@ const MissionPostingsCompany = () => {
             <div class="mt-6 mb-4">
               <SearchBar input={searchText} onChange={handleSearchChange} />
             </div>
-              { recentMissions && recentMissions.lenght > 0 ?
+              { recentMissions && recentMissions.length > 0 ?
               (recentMissions.map(post => (
                   <MissionPost
                     key={post.key}
