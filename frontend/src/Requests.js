@@ -446,6 +446,21 @@ export const getMissionNames = async (companyId) => {
     return res.data;
 };
 
+export const getBidData = async (bidId) => {
+    let res = await axios({
+        method: 'get',
+        url: `http://${API_HOST}/company/manageIncomingBids/getBidData`,
+        headers: { 'Content-Type': 'application/json' },
+        params: {
+            bidId: bidId,
+        },
+        withCredentials: true
+    });
+
+    console.log(res.data);
+    return res.data;
+};
+
 export const getLeadingCompanyNames = async (companyId) => {
     let res = await axios({
         method: 'get',

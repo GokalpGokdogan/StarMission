@@ -96,7 +96,7 @@ const LeadingMissionDetails = () => {
           <ul>
             {/* Render bidding companies using CompanyItem component */}
             {incomingBids.map(bid => (
-              <CompanyItem company_name={bid.company_name} requested_amount={bid.requested_amount} />
+              <CompanyItem company_name={bid.company_name} requested_amount={bid.requested_amount} bidId={bid.bid_id} />
             ))}
           </ul>
         </CompanyListModal>
