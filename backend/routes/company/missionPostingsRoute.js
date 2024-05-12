@@ -49,7 +49,12 @@ router.get('/getPastMissionPostings', async (req, res) => {
         res.status(200).json(result);
     }
     catch (err) {
-        res.status(400).json(err);
+        if(err === "ER_FIND_NONE"){
+            res.status(204).send("ER_FIND_NONE");
+        }
+        else{
+            res.status(400).json(err);
+        }
     }
 });
 
