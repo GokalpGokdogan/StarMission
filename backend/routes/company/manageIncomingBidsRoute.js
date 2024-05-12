@@ -19,6 +19,20 @@ router.get('/getIncomingBids', async(req, res) => {
     }
 });
 
+router.get('/getBidData', async(req, res) => {
+    try {
+
+        const response = await manageIncomingBidsController.getBidData(req.query);
+        res.status(200).send(response);
+    } catch (error) {
+        if (error === "ER_FIND_NONE") {
+            res.status(204).send("No bids found for the mission");
+        }
+        else {
+            res.status(400).send("An error occurred in get bids on a mission: " + error);
+        }
+    }
+});
 
 // Body: {companyId: int , bidId: int}
 // companyId is the leading company ID of the mission

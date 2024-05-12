@@ -3,12 +3,37 @@ const db = require('../../database');
 const getIncomingBids = async (data) => {
     return new Promise((resolve, reject) => {
         const {missionId} = data;
-        const query = ` SELECT DISTINCT b.*, c.*, u.name AS company_name
+        const query = ` SELECT DISTINCT b.*, u.name AS company_name
                         FROM mission_bid b, company c, user u
                         WHERE b.mission_id = ? AND b.bidding_company_id = c.user_id AND c.user_id = u.user_id
                         AND b.bid_status = 'In progress';`
         db.query(query,
                 [missionId],
+                (err, result) => {
+                    if (err) {
+                        reject(err);
+                    }
+                    else if (result.length === 0) {
+                        reject("ER_FIND_NONE");     // No bids found for this mission
+                    }
+                    else {
+                        console.log(result, "successful get bids on a mission");
+                        resolve(result);
+                    }
+                }
+        );
+    });
+}
+
+const getBidData = async (data) => {
+    return new Promise((resolve, reject) => {
+        const {bidId} = data;
+        const query = ` SELECT DISTINCT b.*, u.name AS company_name, s.name as mission_name
+                        FROM mission_bid b, user u, space_mission s
+                        WHERE b.bid_id = ? AND b.bidding_company_id = u.user_id
+                        AND b.mission_id = s.mission_id;`
+        db.query(query,
+                [bidId],
                 (err, result) => {
                     if (err) {
                         reject(err);
@@ -101,4 +126,4 @@ const rejectIncomingBid = async(data) => {
     });
 };
 
-module.exports = {getIncomingBids, acceptIncomingBid, rejectIncomingBid};
+module.exports = {getIncomingBids, acceptIncomingBid, rejectIncomingBid, getBidData};
