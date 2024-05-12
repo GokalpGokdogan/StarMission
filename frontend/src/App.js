@@ -148,7 +148,7 @@ function AppContent() {
                                 <Route path="/my-bids" element={<MyBidsCompany />} />
                                 <Route path="/create-mission" element={<CreateMission />} />
                                 <Route path="/leading-mission-details/:missionId" element={<LeadingMissionDetails />} />
-                                <Route path="/bid-details" element={<BidDetailsCompany />} />
+                                <Route path="/bid-details/:bidId" element={<BidDetailsCompany />} />
                                 <Route path="edit-company-profile" element={<EditProfile type={'company'} />} />
                                 <Route path="profile-company" element={<ProfileCompany/>} />
                             </Route>
