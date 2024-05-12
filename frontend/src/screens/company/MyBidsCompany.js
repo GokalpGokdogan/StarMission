@@ -6,6 +6,7 @@ import SearchBar from '../../components/SearchBar';
 import DashboardTable from '../../components/DashboardTable';
 import { useUser } from '../../UserProvider';
 import { getMyBids } from '../../Requests';
+import Header from '../../components/Header';
 
 const MyBidsCompany = () => {
 
@@ -38,9 +39,7 @@ useEffect(() => {
 
   return (
     <div className="flex flex-col h-screen">
-      <div className='h-16 bg-main-bg flex box-shadow shadow-sm'>
-        <p className='font-poppins font-bold text-white text-2xl p-4 ml-2'>My Bids</p>
-      </div>
+      <Header title={"My Bids"}/>
       <div className="flex-1 bg-home-bg flex flex-col items-center gap-4 p-8">
         <SearchBar input={searchText} onChange={(e) => setSearchText(e.target.value)}></SearchBar>
         <div className="shadow-lg w-2/3 h-full">

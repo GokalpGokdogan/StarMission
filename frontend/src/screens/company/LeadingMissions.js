@@ -3,6 +3,8 @@ import MissionItem from '../../components/MissionItem';
 import SearchBar from '../../components/SearchBar';
 import { getLeadingMissions } from '../../Requests';
 import { useUser } from '../../UserProvider';
+import Header from '../../components/Header';
+
 const LeadingMissions = () => {
   const {userId} = useUser();
   const [leadingMissions, setMissions] = useState([]);
@@ -28,9 +30,7 @@ const LeadingMissions = () => {
 }, []);
   return (
     <div className="bg-home-bg h-full">
-        <div className='h-16 bg-main-bg flex box-shadow shadow-sm'>
-            <p className='font-poppins font-bold text-white text-2xl p-4 ml-2 justify-start'>Leading Missions</p>
-        </div>
+        <Header title={"Leading Missions"}/>
         <div class="flex justify-center mt-6 mb-12">
           <SearchBar/>
         </div>

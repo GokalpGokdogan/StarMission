@@ -10,6 +10,7 @@ import { useUser } from '../../UserProvider';
 import Alert from '@mui/material/Alert';
 import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
+import Header from '../../components/Header';
 
 //dont delete budget until you put it to missions
 
@@ -198,15 +199,7 @@ const ApplicationsCompany = () => {
 
   return (
     <div className="bg-home-bg h-full">
-     <div className='h-16 bg-main-bg flex box-shadow shadow-sm flex-row items-center justify-between'>
-          <p className='font-poppins font-bold text-white text-2xl p-4 ml-2 justify-start'>Application</p>
-          <button
-            onClick={()=> logout(navigate, setUserType, setUserId)}
-            className={`w-28 text-white text-sm py-2 rounded-xl hover:font-semibold flex justify-center h-10 mr-3`}
-          >
-            Logout
-          </button>
-      </div>
+     <Header title={"Application"}/>
       {initialLoading || loading? (
         <div className="flex-grow flex items-center justify-center">
           <div className="text-center mt-32">

@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import MissionApplicant from "../components/MissionApplicant";
 import {useParams} from "react-router-dom";
 import {getApplicationData} from "../Requests";
-
+import Header from '../components/Header';
 
 const EditProfile = ({type}) => {
     const { astronautId, missionId, appliedDate } = useParams();
@@ -10,10 +10,7 @@ const EditProfile = ({type}) => {
 
     return (
     <div className="bg-home-bg h-full min-h-screen flex flex-col">
-
-        <div className='h-16 bg-main-bg flex box-shadow shadow-sm'>
-            <p className='font-poppins font-bold text-white text-2xl p-4 ml-2 justify-start'>Application</p>
-        </div>
+        <Header title={"Application"}/>
         <div className="flex flex-grow justify-center items-center">
         <div className="flex justify-center items-center h-full">
            

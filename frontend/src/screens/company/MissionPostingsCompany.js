@@ -11,6 +11,7 @@ import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
 import 'react-date-range/dist/styles.css';
 import 'react-date-range/dist/theme/default.css';
+import Header from '../../components/Header';
 
 const MissionPostingsCompany = () => {
   const {userId} = useUser();
@@ -136,9 +137,7 @@ const MissionPostingsCompany = () => {
 
   return (
     <div className="bg-home-bg h-full">
-        <div className='h-16 bg-main-bg flex box-shadow shadow-sm'>
-            <p className='font-poppins font-bold text-white text-2xl p-4 ml-2 justify-start'>Mission Postings</p>
-        </div>
+        <Header title={"Mission Postings"}/>
         {initialLoading || loading? (
         <div className="flex-grow flex items-center justify-center">
           <div className="text-center mt-32">

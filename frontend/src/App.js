@@ -13,6 +13,7 @@ import CreateMission from './screens/company/CreateMission';
 import ApplicationsCompany from './screens/company/ApplicationsCompany';
 import LeadingMissions from './screens/company/LeadingMissions';
 import PartneredMissions from './screens/company/PartneredMissions';
+import PastMissions from './screens/company/PastMissions';
 import MissionDetailsCompany from './screens/company/MissionDetailsCompany';
 import EmployeeDetailsCompany from './screens/company/EmployeeDetailsCompany';
 import ManageEmployees from "./screens/company/ManageEmployees";
@@ -150,7 +151,7 @@ function AppContent() {
                         <Routes>
                             <Route path="/" element={<Login />} />
                             <Route path="/sign-up" element={<SignUp />} />
-                            <Route path="/past-missions" element={<SimpleList />} />
+                            <Route path="/past-missions" element={<PastMissions />} />
                             <Route path="/mission-applicant" element={<MissionApplicant />} />
                             <Route element={<Auth allowedRoles={["company"]} />}>
                                 <Route path="/company-dashboard" element={<DashboardCompany />} />

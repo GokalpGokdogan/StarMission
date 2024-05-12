@@ -1,7 +1,7 @@
 import React, { Fragment, useState, useEffect } from 'react';
 import { Link, Route, useParams } from 'react-router-dom';
 import { getBidData } from '../../Requests';
-
+import Header from '../../components/Header';
 
 const BidDetailsCompany = () => {
 
@@ -35,9 +35,7 @@ const BidDetailsCompany = () => {
 
   return (
       <div className="bg-home-bg min-h-screen">
-        <div className='h-16 bg-main-bg flex box-shadow shadow-sm'>
-          <p className='font-poppins font-bold text-white text-2xl p-4 ml-2 justify-start'>View Bid</p>
-        </div>
+        <Header title={"View Bid"}/>
         <div className="flex justify-center">
           <div className="flex flex-col justify-center" style={{ width: '1600px', minHeight: '250px' }}>
             <div className='flex-auto flex-col flex p-4 mb-10 ml-60 mr-60 mt-10 border rounded-xl border-transparent border-10 bg-white shadow-lg'>

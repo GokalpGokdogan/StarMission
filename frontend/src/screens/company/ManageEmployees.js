@@ -12,6 +12,7 @@ import { useUser } from '../../UserProvider';
 import Alert from '@mui/material/Alert';
 import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
+import Header from '../../components/Header';
 
 const options = [
     { value: 'Washington DC, United States', label: 'Washington DC, United States' },
@@ -198,11 +199,9 @@ const ManageEmployees = () => {
     };
 
     return (
-        <div className="bg-home-bg h-full flex flex-col">
-            <div className='h-16 bg-main-bg flex box-shadow shadow-sm'>
-                <p className='font-poppins font-bold text-white text-2xl p-4 ml-2 justify-start'>Manage Employees</p>
-            </div>
-            {initialLoading || loading? (
+      <div className="bg-home-bg h-full flex flex-col">
+        <Header title={"Manage Employees"}/>
+        {initialLoading || loading? (
         <div className="flex-grow flex items-center justify-center">
           <div className="text-center mt-32">
             <CircularProgress sx={{ color: "#635CFF" }} style={{ margin: '20px auto' }} size={50} color="primary" />
@@ -210,206 +209,206 @@ const ManageEmployees = () => {
           </div>
         </div>
       ) : (
-        <div className="flex">
-          <div className="w-1/4 p-6 border-r flex flex-col gap-2">
-            {/*<div>
-              <label className="block mb-1 text-main-text font-medium">Start and End Dates</label>
-              <DateRange
-                editableDateInputs={true}
-                onChange={item => setSelectedDateRange([item.selection])}
-                moveRangeOnFirstSelection={false}
-                ranges={selectedDateRange}
-                rangeColors={["#5569ff"]}
-                style={{ width: '100%' }}
-                className="w-full"
-              />
-            </div>*/}
-            <div className="mb-4">
-              <label className="block mb-1 text-main-text text-md font-medium">Mission</label>
-              <Select
-                value={missionName}
-                onChange={(e)=> {setMissionName(e); console.log(e);}}
-                options={missionNameOptions}
-                isSearchable={true}
-                placeholder="Select Mission"
-                className="w-full"
-              />
-            </div>
-            <div className="mb-4">
-              <label className="block mb-1 text-main-text text-md font-medium">Profession</label>
-              <Select
-                value={profession}
-                onChange={(e) => setProfession(e)}
-                options={professionOptions}
-                isSearchable={true}
-                placeholder="Select Profession"
-                className="w-full"
-              />
-            </div>
-            <div className="flex">
-              <div className="mb-4">
-                <label className="block mb-1 text-main-text font-medium">Min Age</label>
-                <input
-                  type="number"
-                  min={0}
-                  value={minAge?.toString()}
-                  onChange={(e) => {
-                    if(e.target.value == ""){
-                      setMinAge(null);
-                    }else{
-                      const newMin = Math.max(0, parseFloat(e.target.value));
-                      setMinAge(newMin);
-                    }
-                  }}
-                  className="w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
-                />
-              </div>
-              {/* Max Budget Input */}
-              <div className="mb-4 ml-4">
-                <label className="block mb-1 text-main-text font-medium">Max Age</label>
-                <input
-                  type="number"
-                  min={0}
-                  value={maxAge?.toString()}
-                  onChange={(e) => {
-                    if(e.target.value == ""){
-                      setMaxAge(null);
-                    }else{
-                      const newMax = Math.max(0, parseFloat(e.target.value));
-                      setMaxAge(newMax);
-                    }       
-                  }}
-                  className="w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
-                />
-              </div>
-            </div>
-            <div className="mb-4">
-              <label className="block mb-1 text-main-text text-md font-medium">Gender</label>
-              <Select
-                value={sex}
-                onChange={(e)=> {setSex(e); console.log(e);}}
-                options={genderOptions}
-                isSearchable={true}
-                placeholder="Select Gender"
-                className="w-full"
-              />
-            </div>
-            <div className="flex">
-              <div className="mb-4">
-                <label className="block mb-1 text-main-text font-medium">Min Weight (kg)</label>
-                <input
-                  type="number"
-                  min={0}
-                  value={minWeight?.toString()}
-                  onChange={(e) => {
-                    if(e.target.value == ""){
-                      setMinWeight(null);
-                    }else{
-                      const newMin = Math.max(0, parseFloat(e.target.value));
-                      setMinWeight(newMin);
-                    }
-                  }}
-                  className="w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
-                />
-              </div>
-              <div className="mb-4 ml-4">
-                <label className="block mb-1 text-main-text font-medium">Max Weight (kg)</label>
-                <input
-                  type="number"
-                  min={0}
-                  value={maxWeight?.toString()}
-                  onChange={(e) => {
-                    if(e.target.value == ""){
-                      setMaxWeight(null);
-                    }else{
-                      const newMax = Math.max(0, parseFloat(e.target.value));
-                      setMaxWeight(newMax);
-                    }
-                  }}
-                  className="w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
-                />
-              </div>
-            </div>
-            <div className="flex">
-              <div className="mb-4">
-                <label className="block mb-1 text-main-text font-medium">Min Height (cm)</label>
-                <input
-                  type="number"
-                  min={0}
-                  value={minHeight?.toString()}
-                  onChange={(e) => {
-                    if(e.target.value == ""){
-                      setMinHeight(null);
-                    }else{
-                      const newMin = Math.max(0, parseFloat(e.target.value));
-                      setMinHeight(newMin);
-                    }
-                  }}
-                  className="w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
-                />
-              </div>
-              <div className="mb-4 ml-4">
-                <label className="block mb-1 text-main-text font-medium">Max Height (cm)</label>
-                <input
-                  type="number"
-                  min={0}
-                  value={maxHeight?.toString()}
-                  onChange={(e) => {
-                    if(e.target.value == ""){
-                      setMaxHeight(null);
-                    }else{
-                      const newMax = Math.max(0, parseFloat(e.target.value));
-                    setMaxHeight(newMax);
-                    }
-                  }}
-                  className="w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
-                />
-              </div>
-            </div>
-            <div className="flex items-center justify-center mb-2 mt-2 mr-2">
-              <button type="button" className={`w-32 bg-button-purple text-white text-sm py-3 rounded-xl`} onClick={()=>applyFilter()}>
-                Apply Filters
-              </button>
-            </div>
-            {/* Add other filters as needed */}
+      <div className="flex">
+        <div className="w-1/4 p-6 border-r flex flex-col gap-2">
+          {/*<div>
+            <label className="block mb-1 text-main-text font-medium">Start and End Dates</label>
+            <DateRange
+              editableDateInputs={true}
+              onChange={item => setSelectedDateRange([item.selection])}
+              moveRangeOnFirstSelection={false}
+              ranges={selectedDateRange}
+              rangeColors={["#5569ff"]}
+              style={{ width: '100%' }}
+              className="w-full"
+            />
+          </div>*/}
+          <div className="mb-4">
+            <label className="block mb-1 text-main-text text-md font-medium">Mission</label>
+            <Select
+              value={missionName}
+              onChange={(e)=> {setMissionName(e); console.log(e);}}
+              options={missionNameOptions}
+              isSearchable={true}
+              placeholder="Select Mission"
+              className="w-full"
+            />
           </div>
-                {/* Right container with mission postings */}
-                <div className="w-3/4 p-4">
-                    <div className="flex flex-col flex-wrap">
-                        <div className="mt-6 mb-4">
-                            <SearchBar input={searchText} onChange={handleSearchChange} />
-                        </div>
-                        {employees && employees.length > 0 ? 
-                        (employees.map(emp => (
-                            <SingleEmployee
-                                name={emp.astronaut_name}
-                                missions={[emp.name]}
-                                profession={emp.profession ? emp.profession : "No jobs specified"}
-                                age={emp.age}
-                                location={emp.location ? emp.location: "No location specified"}
-                                astronaut_id={emp.astronaut_id}
-                            />
-                            ))) : (
-                                <div className="flex justify-center w-[60%] h-[80%]">
-                                    <p className="text-3xl font-semibold leading-6 text-main-text mt-[30%]" >No data</p>
-                                </div>
-                            )}
-                    </div>
-                </div>
-            </div>)}
-            {showAlert && (
-              <div className={`fixed bottom-4 right-4 max-w-96 flex ${alertText.length > 40 ? 'flex-col items-end justify-center' : 'flex-row items-center'}`}>
-                  <Alert severity={alertText.includes('successful') ? 'success' : 'error'} className="w-full">
-                      <div className="flex items-center justify-between w-full">
-                          <div>{alertText}</div>
-                          <IconButton onClick={() => setShowAlert(false)}>
-                              <CloseIcon />
-                          </IconButton>
-                      </div>
-                  </Alert>
-              </div>
-            )}            
+          <div className="mb-4">
+            <label className="block mb-1 text-main-text text-md font-medium">Profession</label>
+            <Select
+              value={profession}
+              onChange={(e) => setProfession(e)}
+              options={professionOptions}
+              isSearchable={true}
+              placeholder="Select Profession"
+              className="w-full"
+            />
+          </div>
+          <div className="flex">
+            <div className="mb-4">
+              <label className="block mb-1 text-main-text font-medium">Min Age</label>
+              <input
+                type="number"
+                min={0}
+                value={minAge?.toString()}
+                onChange={(e) => {
+                  if(e.target.value == ""){
+                    setMinAge(null);
+                  }else{
+                    const newMin = Math.max(0, parseFloat(e.target.value));
+                    setMinAge(newMin);
+                  }
+                }}
+                className="w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+              />
+            </div>
+            {/* Max Budget Input */}
+            <div className="mb-4 ml-4">
+              <label className="block mb-1 text-main-text font-medium">Max Age</label>
+              <input
+                type="number"
+                min={0}
+                value={maxAge?.toString()}
+                onChange={(e) => {
+                  if(e.target.value == ""){
+                    setMaxAge(null);
+                  }else{
+                    const newMax = Math.max(0, parseFloat(e.target.value));
+                    setMaxAge(newMax);
+                  }       
+                }}
+                className="w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+              />
+            </div>
+          </div>
+          <div className="mb-4">
+            <label className="block mb-1 text-main-text text-md font-medium">Gender</label>
+            <Select
+              value={sex}
+              onChange={(e)=> {setSex(e); console.log(e);}}
+              options={genderOptions}
+              isSearchable={true}
+              placeholder="Select Gender"
+              className="w-full"
+            />
+          </div>
+          <div className="flex">
+            <div className="mb-4">
+              <label className="block mb-1 text-main-text font-medium">Min Weight (kg)</label>
+              <input
+                type="number"
+                min={0}
+                value={minWeight?.toString()}
+                onChange={(e) => {
+                  if(e.target.value == ""){
+                    setMinWeight(null);
+                  }else{
+                    const newMin = Math.max(0, parseFloat(e.target.value));
+                    setMinWeight(newMin);
+                  }
+                }}
+                className="w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+              />
+            </div>
+            <div className="mb-4 ml-4">
+              <label className="block mb-1 text-main-text font-medium">Max Weight (kg)</label>
+              <input
+                type="number"
+                min={0}
+                value={maxWeight?.toString()}
+                onChange={(e) => {
+                  if(e.target.value == ""){
+                    setMaxWeight(null);
+                  }else{
+                    const newMax = Math.max(0, parseFloat(e.target.value));
+                    setMaxWeight(newMax);
+                  }
+                }}
+                className="w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+              />
+            </div>
+          </div>
+          <div className="flex">
+            <div className="mb-4">
+              <label className="block mb-1 text-main-text font-medium">Min Height (cm)</label>
+              <input
+                type="number"
+                min={0}
+                value={minHeight?.toString()}
+                onChange={(e) => {
+                  if(e.target.value == ""){
+                    setMinHeight(null);
+                  }else{
+                    const newMin = Math.max(0, parseFloat(e.target.value));
+                    setMinHeight(newMin);
+                  }
+                }}
+                className="w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+              />
+            </div>
+            <div className="mb-4 ml-4">
+              <label className="block mb-1 text-main-text font-medium">Max Height (cm)</label>
+              <input
+                type="number"
+                min={0}
+                value={maxHeight?.toString()}
+                onChange={(e) => {
+                  if(e.target.value == ""){
+                    setMaxHeight(null);
+                  }else{
+                    const newMax = Math.max(0, parseFloat(e.target.value));
+                  setMaxHeight(newMax);
+                  }
+                }}
+                className="w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+              />
+            </div>
+          </div>
+          <div className="flex items-center justify-center mb-2 mt-2 mr-2">
+            <button type="button" className={`w-32 bg-button-purple text-white text-sm py-3 rounded-xl`} onClick={()=>applyFilter()}>
+              Apply Filters
+            </button>
+          </div>
+          {/* Add other filters as needed */}
         </div>
+              {/* Right container with mission postings */}
+              <div className="w-3/4 p-4">
+                  <div className="flex flex-col flex-wrap">
+                      <div className="mt-6 mb-4">
+                          <SearchBar input={searchText} onChange={handleSearchChange} />
+                      </div>
+                      {employees && employees.length > 0 ? 
+                      (employees.map(emp => (
+                          <SingleEmployee
+                              name={emp.astronaut_name}
+                              missions={[emp.name]}
+                              profession={emp.profession ? emp.profession : "No jobs specified"}
+                              age={emp.age}
+                              location={emp.location ? emp.location: "No location specified"}
+                              astronaut_id={emp.astronaut_id}
+                          />
+                          ))) : (
+                              <div className="flex justify-center w-[60%] h-[80%]">
+                                  <p className="text-3xl font-semibold leading-6 text-main-text mt-[30%]" >No data</p>
+                              </div>
+                          )}
+                  </div>
+              </div>
+          </div>)}
+          {showAlert && (
+            <div className={`fixed bottom-4 right-4 max-w-96 flex ${alertText.length > 40 ? 'flex-col items-end justify-center' : 'flex-row items-center'}`}>
+                <Alert severity={alertText.includes('successful') ? 'success' : 'error'} className="w-full">
+                    <div className="flex items-center justify-between w-full">
+                        <div>{alertText}</div>
+                        <IconButton onClick={() => setShowAlert(false)}>
+                            <CloseIcon />
+                        </IconButton>
+                    </div>
+                </Alert>
+            </div>
+          )}            
+      </div>
     );
 };
 export default ManageEmployees;

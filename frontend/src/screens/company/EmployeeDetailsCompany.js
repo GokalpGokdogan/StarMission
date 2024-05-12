@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom'
 import { getEmployeeData } from '../../Requests';
 import { useState, useEffect } from 'react';
 import EmployeeCard from '../../components/EmployeeCard';
+import Header from '../../components/Header';
 
 const EmployeeDetailsCompany = () => {
     const { employeeId } = useParams();
@@ -32,9 +33,7 @@ const EmployeeDetailsCompany = () => {
 
     return (
         <div className="bg-home-bg h-full min-h-screen flex flex-col">
-        <div className='h-16 bg-main-bg flex box-shadow shadow-sm'>
-            <p className='font-poppins font-bold text-white text-2xl p-4 ml-2 justify-start'>Application</p>
-        </div>
+        <Header title={"Application"}/>
         <div className="flex flex-grow justify-center items-center">
             <EmployeeCard employee={employeeData}></EmployeeCard>        
         </div>

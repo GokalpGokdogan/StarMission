@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import AddDynamicInputFields from "../../components/AddDynamicInputFields";
 import { createMission } from "../../Requests";
+import Header from '../../components/Header';
 
 const CreateMission = () => {
     const [name, setName] = useState('');
@@ -48,6 +49,7 @@ const CreateMission = () => {
 
     return (
         <div className="bg-home-bg">
+            <Header title={"Create Mission"}/>
             <div className="bg-white mt-5 py-2 border rounded-xl border-transparent p-2 border-10 py-8 px-4 mx-auto max-w-2xl lg:py-16">
                 <h2 className="mb-4 text-xl font-bold text-main-text">Create New Mission</h2>
                 <form onSubmit={(e) => {

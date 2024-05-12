@@ -3,6 +3,7 @@ import { Link, Route, useParams } from 'react-router-dom';
 import BidModal from '../../components/BidModal';
 import { getMissionData, bidToMission } from '../../Requests';
 import { useUser } from '../../UserProvider';
+import Header from '../../components/Header';
 
 //Kodun indentationı bozuk, daha sonra düzeltilsin!!!!
 const MissionDetailsCompany = () => {
@@ -58,9 +59,7 @@ const MissionDetailsCompany = () => {
   return (
     <Fragment>
      <div className="bg-home-bg min-h-screen">
-        <div className='h-16 bg-main-bg flex box-shadow shadow-sm'>
-          <p className='font-poppins font-bold text-white text-2xl p-4 ml-2 justify-start'>View Mission</p>
-        </div>
+        <Header title={"View Mission"}/>
         <div className="flex justify-center">
           <div className="flex flex-col justify-center" style={{ width: '1600px', minHeight: '250px' }}>
             <div className='flex-auto flex-col flex p-4 mb-10 ml-60 mr-60 mt-10 border rounded-xl border-transparent border-10 bg-white shadow-lg'>
