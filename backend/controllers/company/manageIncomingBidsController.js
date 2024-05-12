@@ -43,7 +43,7 @@ const getBidData = async (data) => {
                     }
                     else {
                         console.log(result, "successful get bids on a mission");
-                        resolve(result);
+                        resolve(result[0]);
                     }
                 }
         );
