@@ -18,11 +18,16 @@ router.get('/getMissionPostings', async (req, res) => {
         }
 
         const data = req.query;
-        const result = await missionPostingsController.getMissionPostings(data, 0);
+        const result = await missionPostingsController.getMissionPostings(data);
         res.status(200).json(result);
     }
     catch (err) {
-        res.status(400).json(err);
+        if(err === "ER_FIND_NONE"){
+            res.status(204).send("No past missions found.");
+        }
+        else{
+            res.status(400).json(err);
+        }
     }
 });
 
@@ -34,7 +39,7 @@ router.get('/getMissionPostings', async (req, res) => {
 // Body: { companyId: int, searchedName: str(255), startDate: date, endDate: date, location: str(255), 
 // leadingCompanyName: str(255), minBudget: int, maxBudget: int }
 
-router.get('/getPastMissionPostings', async (req, res) => {
+router.get('/getPastMissionPostingsLead', async (req, res) => {
     try {
         
         //! Test ~ When connected to frontend, delete this if block
@@ -43,9 +48,35 @@ router.get('/getPastMissionPostings', async (req, res) => {
             let companyId = req.cookies.companyId;
             req.query.companyId = companyId;
         }
-
+        console.log(req.query);
         const data = req.query;
-        const result = await missionPostingsController.getMissionPostings(data, 1);
+        const result = await missionPostingsController.getPastMissionPostingsLead(data);
+        
+        res.status(200).json(result);
+    }
+    catch (err) {
+        if(err === "ER_FIND_NONE"){
+            res.status(204).send("No past missions found.");
+        }
+        else{
+            res.status(400).json(err);
+        }
+    }
+});
+
+router.get('/getPastMissionPostingsPartner', async (req, res) => {
+    try {
+        
+        //! Test ~ When connected to frontend, delete this if block
+        if(!req.query.companyId){
+            console.log("No companyId in query, using cookie");
+            let companyId = req.cookies.companyId;
+            req.query.companyId = companyId;
+        }
+        console.log(req.query);
+        const data = req.query;
+        const result = await missionPostingsController.getPastMissionPostingsPartner(data);
+
         res.status(200).json(result);
     }
     catch (err) {
@@ -57,7 +88,6 @@ router.get('/getPastMissionPostings', async (req, res) => {
         }
     }
 });
-
 
 
 

@@ -4,7 +4,7 @@ const db = require('../../database');
 // Get mission postings with filters
 // assumed companyId will be provided
 
-const getMissionPostings = async (data, isReq4Past) => {
+const getMissionPostings = async (data) => {
     return new Promise((resolve, reject) => {
         
         let { companyId, searchedName, startDate, endDate, location, 
@@ -14,8 +14,8 @@ const getMissionPostings = async (data, isReq4Past) => {
             let query = `SELECT s.*, u.name AS company_name FROM space_mission as s, company as c, user as u
                             WHERE (c.user_id = s.leading_firm_id AND c.user_id <> ? AND c.user_id = u.user_id)
                             AND NOT EXISTS (SELECT * FROM partner_firm p WHERE p.mission_id = s.mission_id AND p.company_id = ?)
-                            AND (CASE WHEN ? = 0 THEN s.end_date >= CURDATE() ELSE s.end_date < CURDATE() END)
                             AND (CASE WHEN ? IS NOT NULL THEN s.name LIKE ? ELSE 1 END) 
+                            AND s.end_date >= CURDATE()
                             AND (CASE WHEN ? IS NOT NULL THEN s.start_date >= ? ELSE 1 END) 
                             AND (CASE WHEN ? IS NOT NULL THEN s.end_date <= ? ELSE 1 END)
                             AND (CASE WHEN ? IS NOT NULL THEN s.location = ? ELSE 1 END)
@@ -23,7 +23,7 @@ const getMissionPostings = async (data, isReq4Past) => {
                             AND (CASE WHEN ? IS NOT NULL THEN s.budget >= ? ELSE 1 END)
                             AND (CASE WHEN ? IS NOT NULL THEN s.budget <= ? ELSE 1 END)
                             ORDER BY s.creation_date DESC;`;
-            db.query(query, [companyId, companyId,isReq4Past, searchedName, searchedName, startDate, startDate, endDate, endDate, 
+            db.query(query, [companyId, companyId, searchedName, searchedName, startDate, startDate, endDate, endDate, 
             location, location, leadingCompanyName, leadingCompanyName, minBudget, minBudget, maxBudget, maxBudget], 
             (err, result) => {
                 if (err) {
@@ -40,6 +40,85 @@ const getMissionPostings = async (data, isReq4Past) => {
             );
     });
 }
+
+// Get past mission postings with filters
+// assumed companyId will be provided
+
+const getPastMissionPostingsLead = async (data) => {
+    return new Promise((resolve, reject) => {
+        
+        let { companyId, searchedName, startDate, endDate, location, 
+            leadingCompanyName, minBudget, maxBudget } = data;
+            if(searchedName != null){searchedName = "%"+searchedName+"%";}
+
+            let query = `SELECT s.*, u.name AS company_name FROM space_mission as s, company as c, user as u
+                            WHERE (c.user_id = s.leading_firm_id AND c.user_id = ? AND c.user_id = u.user_id)
+                            AND s.end_date < CURDATE()
+                            AND (CASE WHEN ? IS NOT NULL THEN s.name LIKE ? ELSE 1 END) 
+                            AND (CASE WHEN ? IS NOT NULL THEN s.start_date >= ? ELSE 1 END) 
+                            AND (CASE WHEN ? IS NOT NULL THEN s.end_date <= ? ELSE 1 END)
+                            AND (CASE WHEN ? IS NOT NULL THEN s.location = ? ELSE 1 END)
+                            AND (CASE WHEN ? IS NOT NULL THEN u.name LIKE ? ELSE 1 END)
+                            AND (CASE WHEN ? IS NOT NULL THEN s.budget >= ? ELSE 1 END)
+                            AND (CASE WHEN ? IS NOT NULL THEN s.budget <= ? ELSE 1 END)
+                            ORDER BY s.creation_date DESC;`;
+            db.query(query, [companyId, searchedName, searchedName, startDate, startDate, endDate, endDate, 
+            location, location, leadingCompanyName, leadingCompanyName, minBudget, minBudget, maxBudget, maxBudget], 
+            (err, result) => {
+                if (err) {
+                    reject(err);
+                }
+                else if (result.length === 0) {
+                    reject("ER_FIND_NONE");     // No mission postings found with these filters
+                }
+                else {
+                    console.log(result, "successful get mission postings with filters");
+                    resolve(result);
+                }
+            }
+            );
+    });
+}
+
+const getPastMissionPostingsPartner = async (data) => {
+    return new Promise((resolve, reject) => {
+        
+        let { companyId, searchedName, startDate, endDate, location, 
+            leadingCompanyName, minBudget, maxBudget } = data;
+            if(searchedName != null){searchedName = "%"+searchedName+"%";}
+
+            let query = `
+                        SELECT s.*, u.name AS company_name FROM space_mission as s,
+                        partner_firm p, company c, user u
+                        WHERE p.company_id = ? AND p.company_id = c.user_id AND p.mission_id = s.mission_id
+                        AND u.user_id = c.user_id
+                        AND s.end_date < CURDATE()
+                        AND (CASE WHEN ? IS NOT NULL THEN s.name LIKE ? ELSE 1 END) 
+                        AND (CASE WHEN ? IS NOT NULL THEN s.start_date >= ? ELSE 1 END) 
+                        AND (CASE WHEN ? IS NOT NULL THEN s.end_date <= ? ELSE 1 END)
+                        AND (CASE WHEN ? IS NOT NULL THEN s.location = ? ELSE 1 END)
+                        AND (CASE WHEN ? IS NOT NULL THEN u.name LIKE ? ELSE 1 END)
+                        AND (CASE WHEN ? IS NOT NULL THEN s.budget >= ? ELSE 1 END)
+                        AND (CASE WHEN ? IS NOT NULL THEN s.budget <= ? ELSE 1 END)
+                        ORDER BY s.creation_date DESC;`;
+            db.query(query, [companyId, searchedName, searchedName, startDate, startDate, endDate, endDate, 
+                location, location, leadingCompanyName, leadingCompanyName, minBudget, minBudget, maxBudget, maxBudget], 
+            (err, result) => {
+                if (err) {
+                    reject(err);
+                }
+                else if (result.length === 0) {
+                    reject("ER_FIND_NONE");     
+                }
+                else {
+                    console.log(result, "successful get mission postings with filters");
+                    resolve(result);
+                }
+            }
+            );
+    });
+}
+
 
 const getPartnerMissions = async (data) => {
     return new Promise((resolve, reject) => {
@@ -152,4 +231,4 @@ const bidToMission = async (data) => {
     });
 }
 
-module.exports = { getMissionPostings, getLeadingFirmNames, getMissionData, bidToMission , getPartnerMissions};
+module.exports = { getMissionPostings, getLeadingFirmNames, getMissionData, bidToMission , getPartnerMissions, getPastMissionPostingsLead, getPastMissionPostingsPartner};

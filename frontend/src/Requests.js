@@ -157,20 +157,65 @@ export const getMissionPostings = async (companyId, searchedName, startDate, end
     return res.data;
 };
 
-export const getPastMissionPostings = async (companyId) => {
+export const getPastMissionPostingsLead = async (companyId, searchedName, startDate, endDate, location, leadingCompanyName, minBudget, maxBudget) => {
     let res = await axios({
         method: 'get',
-        url: `http://${API_HOST}/company/missionPostings/getPastMissionPostings`,
+        url: `http://${API_HOST}/company/missionPostings/getPastMissionPostingsLead`,
         headers: { 'Content-Type': 'application/json' },
         params: {
             companyId: companyId,
+            searchedName: searchedName,
+            startDate: startDate,
+            endDate: endDate,
+            location: location,
+            leadingCompanyName: leadingCompanyName,
+            minBudget: minBudget,
+            maxBudget: maxBudget,
         },
         withCredentials: true
     });
 
+    if (res.status == 204) {
+        console.log("No past missions found with these filters")
+    }
+    else if (res.status == 400) {
+        console.log("An error occurred in get past missions with filters" + res.data);
+    }
     console.log(res.data);
     return res.data;
 };
+
+
+export const getPastMissionPostingsPartner = async (companyId, searchedName, startDate, endDate, location, leadingCompanyName, minBudget, maxBudget) => {
+    let res = await axios({
+        method: 'get',
+        url: `http://${API_HOST}/company/missionPostings/getPastMissionPostingsPartner`,
+        headers: { 'Content-Type': 'application/json' },
+        params: {
+            companyId: companyId,
+            searchedName: searchedName,
+            startDate: startDate,
+            endDate: endDate,
+            location: location,
+            leadingCompanyName: leadingCompanyName,
+            minBudget: minBudget,
+            maxBudget: maxBudget,
+        },
+        withCredentials: true
+    });
+    if (res.status == 204) {
+        console.log("No past missions found with these filters")
+    }
+    else if (res.status == 400) {
+        console.log("An error occurred in get past missions with filters" + res.data);
+    }
+    
+
+    console.log(res.data);
+    return res.data;
+};
+
+
 
 export const getPartnerMissions = async (companyId, searchedName, startDate, endDate, location, 
     leadingCompanyName, minBudget, maxBudget) => {
