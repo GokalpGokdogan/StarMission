@@ -55,7 +55,7 @@ const LeadingMissionDetails = () => {
                 <div>
                   <p className="text-xl font-semibold leading-5 mt-3 text-main-text">{missionData.company_name}</p>
                   <p className="truncate text-base leading-5 text-sub-text">{missionData.location}</p>
-                  <p className="truncate text-sm leading-5 text-sub-text">Mission Start-End: {missionData.start_date} - {missionData.end_date}</p>
+                  <p className="truncate text-sm leading-5 text-sub-text">Mission Start-End: {new Date(missionData.start_date).toLocaleDateString('en-GB').replace(/\//g, '.')} - {new Date(missionData.end_date).toLocaleDateString('en-GB').replace(/\//g, '.')}</p>
                 </div>
               </div>
               <div className="flex flex-col px-1 py-5 ml-8 mr-8 mt-8 mb-4 w-128 bg-grey-bg rounded-xl">
