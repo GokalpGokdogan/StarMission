@@ -4,6 +4,7 @@ import DashboardTableAstronaut from '../../components/DashboardTableAstronaut';
 import { useUser } from '../../UserProvider';
 import { getCurrentMission, getPastMissions, getApplicationsAstro, getRecentMissions } from '../../Requests';
 import MissionCard from '../../components/MissionCard';
+import Header from '../../components/Header';
 
 const DashboardAstronaut = () => {
   const { userId } = useUser();
@@ -90,9 +91,7 @@ const DashboardAstronaut = () => {
 
   return (
     <div className="bg-home-bg h-full">
-      <div className='h-16 bg-main-bg flex box-shadow shadow-sm'>
-        <p className='font-poppins font-bold text-white text-2xl p-4 ml-2 justify-start'>Dashboard</p>
-      </div>
+      <Header title={"Dashboard"}/>
       <div className='p-4'>
         <div className="grid grid-cols-2 grid-rows-2 mt-12">
           <div className="flex items-center justify-center px-4 py-1 ml-24">

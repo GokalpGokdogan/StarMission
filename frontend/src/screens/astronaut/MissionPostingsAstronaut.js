@@ -9,7 +9,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import { getRecentMissions } from '../../Requests';
 import { useUser } from '../../UserProvider';
-
+import Header from '../../components/Header';
 
 const MissionPostingsAstronaut = () => {
 
@@ -41,9 +41,7 @@ const MissionPostingsAstronaut = () => {
 
   return (
     <div className="bg-home-bg h-full">
-        <div className='h-16 bg-main-bg flex box-shadow shadow-sm'>
-            <p className='font-poppins font-bold text-white text-2xl p-4 ml-2 justify-start'>Mission Postings</p>
-        </div>
+        <Header title={"Mission Postings"}/>
         <div class="flex justify-center mt-6 mb-12">
           <SearchBar/>
         </div>

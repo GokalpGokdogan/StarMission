@@ -5,6 +5,7 @@ import SearchBar from '../../components/SearchBar';
 import { getApplicationsAstro } from '../../Requests';
 import { useUser } from '../../UserProvider';
 import DashboardTableAstronaut from '../../components/DashboardTableAstronaut';
+import Header from '../../components/Header';
 
 const ApplicationsAstronaut = () => {
 
@@ -38,9 +39,8 @@ useEffect(() => {
 
   return (
     <div className="flex flex-col h-screen">
-      <div className='h-16 bg-main-bg flex box-shadow shadow-sm'>
-        <p className='font-poppins font-bold text-white text-2xl p-4 ml-2'>My Applications</p>
-      </div>
+      <Header title={"My Applications"}/>
+
       <div className="flex-1 bg-home-bg flex flex-col items-center gap-4 p-8">
         <SearchBar input={searchText} onChange={(e) => setSearchText(e.target.value)}></SearchBar>
         <div className="shadow-lg w-2/3 h-full">
