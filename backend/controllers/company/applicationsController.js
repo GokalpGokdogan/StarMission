@@ -81,39 +81,111 @@ const getApplications = async (data) => {
 // Accept application (company decides)
 
 const acceptApplicationC = async (data) => {
-    return new Promise((resolve, reject) => {
+    return new Promise( async (resolve, reject) => {
         const { astronautId, missionId, salary, startDate } = data;
-        // application_status: 0~Processing, 1~Accepted, 2~Rejected
-        db.query(`UPDATE applied_mission SET application_status = 'Accepted' WHERE astronaut_id = ? AND mission_id = ?`,
-            [astronautId, missionId],
-            (err, result) => {
-                if (err) {
-                    reject(err);
-                }
-                else {
-                    console.log(result, "successful accept application");
-                    db.query(`INSERT INTO mission_of (astronaut_id, mission_id, salary, starting_date) VALUES (?, ?, ?, ?)`,
-                        [astronautId, missionId, salary, startDate],
-                        (err2, result2) => {
-                            if (err2) {
-                                reject(err2);
-                            }
-                            else {
-                                console.log(result2, "successful insert into astronaut_mission");
-                                resolve("successful accept application");
-                            }
-                        }
-                    );
-                }
-            }
-        );
+        let missionData = await getMissionData(data);
 
+        console.log("-----",missionData, "mission data");
+
+        console.log("-----",missionData[0].budget, "mission budget");
+        if(missionData[0].budget < salary){
+            reject("ER_BUDGET"); // Salary is bigger than mission budget
+        }
+        else if(missionData[0].end_date < startDate){
+            reject("ER_DATE"); // Start date is after mission end date
+        }
+        else{
+            // application_status: 0~Processing, 1~Accepted, 2~Rejected 3~Cancelled
+            db.query(`UPDATE applied_mission SET application_status = 'Accepted' WHERE astronaut_id = ? AND mission_id = ?`,
+                [astronautId, missionId],
+                (err, result) => {
+                    if (err) {
+                        reject(err);
+                    }
+                    else {
+                        console.log(result, "successful accept application");
+                        db.query(`INSERT INTO mission_of (astronaut_id, mission_id, salary, starting_date) VALUES (?, ?, ?, ?)`,
+                            [astronautId, missionId, salary, startDate],
+                            (err2, result2) => {
+                                if (err2) {
+                                    reject(err2);
+                                }
+                                else {
+                                    // bid amount is bigger than mission budget & end date is before end date
+
+                                    
+
+                                    // when accepted, state of the mission is updated to cancelled
+                                    db.query(`UPDATE applied_mission SET application_status = 'Cancelled' WHERE astronaut_id = ? 
+                                            AND mission_id <> ?
+                                            AND application_status = 'Processing'`,
+                                        [astronautId,missionId],
+                                        (err3, result3) => {
+                                            if (err3) {
+                                                reject(err3);
+                                            }
+                                            else {
+                                                console.log(result3, "successful update mission state");
+                                                resolve(result2);  
+                                            }
+                                        }
+                                    );
+
+
+                                    console.log(result2, "successful insert into astronaut_mission");
+                                    resolve("successful accept application");
+                                }
+                            }
+                        );
+                    }
+                }
+            );
+        }
 
 
 
 
     });
 }
+
+
+// get mission budget and end date
+
+const getMissionData = async (data) => {
+        return new Promise((resolve, reject) => {
+        const { missionId } = data;
+        db.query(`SELECT budget, end_date FROM space_mission WHERE mission_id = ?`,
+            [missionId],
+            (err, result) => {
+                if (err) {
+                    reject(err);
+                }
+                
+                else {
+                    console.log(result, "successful get mission data");
+                    resolve(result);
+                }
+            }
+        );
+    });
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 //! Test ~ Delete this when tested
 // Accept application (astronaut decides)
