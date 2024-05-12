@@ -165,7 +165,7 @@ const ApplicationsCompany = () => {
       const missions = await getMissionNames(userId);
       setMissionNames(missions);
     } catch (error) {
-      console.error('Error fetching applications:', error);
+      console.error('Error fetching mission names:', error);
     } 
   };
 

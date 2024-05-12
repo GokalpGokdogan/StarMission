@@ -4,7 +4,7 @@ import SearchBar from '../../components/SearchBar';
 import Alert from '@mui/material/Alert';
 import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
-import {getPartnerMissions} from "../../Requests";
+import {getPartnerMissions, getLeadingCompanyNames} from "../../Requests";
 import { useUser } from '../../UserProvider';
 import CircularProgress from '@mui/material/CircularProgress';
 import Select from 'react-select';
@@ -20,15 +20,10 @@ const PartneredMissions = () => {
   const [alertText, setAlertText] = useState('');
   const {userId} = useUser();
   const [searchText, setSearchText] = useState('');
-  const [profession, setProfession] = useState(null);
   const [minBudget, setMinBudget] = useState(null);
   const [maxBudget, setMaxBudget] = useState(null);
-  const [sex, setSex] = useState(null);
-  const [minWeight, setMinWeight] = useState(null);
-  const [maxWeight, setMaxWeight] = useState(null);
-  const [missionNames, setMissionNames] = useState([]);
-  const [missionNameOptions, setMissionNameOptions] = useState([]);
-  const [missionName, setMissionName] = useState(null);
+  const [leadingCompanyOptions, setLeadingCompanyOptions] = useState([]);
+  const [leadingCompanies, setLeadingCompanies] = useState([]);
   const [formattedDate, setFormattedDate] = useState(null);
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
@@ -72,9 +67,18 @@ const PartneredMissions = () => {
     setSearchText(event.target.value);
   };
 
+  const fetchLeadingCompanies = async () => {
+    try {
+      const firms = await getLeadingCompanyNames(userId);
+      setLeadingCompanies(firms);
+    } catch (error) {
+      console.error('Error fetching leading companies:', error);
+    } 
+  };
+
   const fetchPartnerMissions = async () => {
   try {
-      const res = await getPartnerMissions(userId, null, null, null, null, null, null, null);
+      const res = await getPartnerMissions(userId, searchText, null, null, null, null, null, null);
       setMissions(res);
     } catch (error) {
       console.error('Error fetching partner missions:', error);
@@ -92,7 +96,10 @@ const PartneredMissions = () => {
       setLoading(true);
 
       try {
-        const res = await getPartnerMissions(userId, searchText, startDate, endDate, location, leadingCompanyName, minBudget, maxBudget);
+        //const res = await getPartnerMissions(userId, searchText, startDate, endDate, location, leadingCompanyName, minBudget, maxBudget);
+        console.log(leadingCompanyName?.value);
+        const res = await getPartnerMissions(userId, searchText, null, null, location, leadingCompanyName?.value, minBudget, maxBudget);
+
         setMissions(res);
       } catch (error) {
         console.error('Error fetching applications:', error);
@@ -103,8 +110,27 @@ const PartneredMissions = () => {
   };
 
   useEffect(() => {
+    const options = [
+      { value: null, label: "Not specified" },
+      ...leadingCompanies.map(item => ({
+        value: item.name,
+        label: item.name
+      }))
+    ];
+    setLeadingCompanyOptions(options);
+  }, [leadingCompanies]);
+
+  useEffect(() => {
     fetchPartnerMissions();
   }, []);
+
+  useEffect(() => {
+    fetchLeadingCompanies();
+  }, []);
+
+  useEffect(() => {
+    fetchPartnerMissions();
+  }, [searchText]);
 
   return (
     <div className="bg-home-bg h-full">
@@ -135,13 +161,13 @@ const PartneredMissions = () => {
               />
             </div>
             <div className="mb-4">
-              <label className="block mb-1 text-main-text text-md font-medium">Mission</label>
+              <label className="block mb-1 text-main-text text-md font-medium">Leading Company</label>
               <Select
-                value={missionName}
-                onChange={(e)=> {setMissionName(e); console.log(e);}}
-                options={missionNameOptions}
+                value={leadingCompanyName}
+                onChange={(e)=> {setLeadingCompanyName(e); console.log(e);}}
+                options={leadingCompanyOptions}
                 isSearchable={true}
-                placeholder="Select Mission"
+                placeholder="Select Leading Company"
                 className="w-full"
               />
             </div>

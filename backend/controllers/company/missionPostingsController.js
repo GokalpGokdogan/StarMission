@@ -47,15 +47,17 @@ const getPartnerMissions = async (data) => {
         let { companyId, searchedName, startDate, endDate, location, 
             leadingCompanyName, minBudget, maxBudget } = data;
             if(searchedName != null){searchedName = "%"+searchedName+"%";}
+            console.log(leadingCompanyName + " - test");
 
             let query = `SELECT s.*, u.name AS company_name FROM space_mission as s, partner_firm p, company c, user u
-                            WHERE (p.mission_id = s.mission_id AND p.company_id = ? AND c.user_id = u.user_id AND c.user_id = p.company_id AND s.leading_firm_id <> c.user_id)
+                            WHERE (p.mission_id = s.mission_id AND p.company_id = ? AND c.user_id = u.user_id 
+                            AND c.user_id = p.company_id AND s.leading_firm_id <> c.user_id)
                             AND s.end_date >= CURDATE()
                             AND (CASE WHEN ? IS NOT NULL THEN s.name LIKE ? ELSE 1 END) 
                             AND (CASE WHEN ? IS NOT NULL THEN s.start_date >= ? ELSE 1 END) 
                             AND (CASE WHEN ? IS NOT NULL THEN s.end_date <= ? ELSE 1 END)
                             AND (CASE WHEN ? IS NOT NULL THEN s.location = ? ELSE 1 END)
-                            AND (CASE WHEN ? IS NOT NULL THEN u.name LIKE ? ELSE 1 END)
+                            AND (CASE WHEN ? IS NOT NULL THEN u.name = ? ELSE 1 END)
                             AND (CASE WHEN ? IS NOT NULL THEN s.budget >= ? ELSE 1 END)
                             AND (CASE WHEN ? IS NOT NULL THEN s.budget <= ? ELSE 1 END)
                             ORDER BY s.creation_date DESC;`;
@@ -63,6 +65,7 @@ const getPartnerMissions = async (data) => {
             location, location, leadingCompanyName, leadingCompanyName, minBudget, minBudget, maxBudget, maxBudget], 
             (err, result) => {
                 if (err) {
+                    console.log(err);
                     reject(err);
                 }
                 else if (result.length === 0) {
