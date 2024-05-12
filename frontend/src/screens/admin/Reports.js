@@ -41,7 +41,18 @@ const [reports, setReports] = useState([]);
             <div className="w-full">
                 {reports && reports.length > 0 ? (
                     reports.map(value => (
-                        <SinglePastMission key={value.report_id} title={value.name} location={value.creation_date} />
+                      <li className="flex justify-between py-1 px-2">
+                      <div className="flex w-full min-w-0 py-2 border rounded-xl border-transparent p-2 border-10 bg-white">
+                          <div className="min-w-0 flex-auto">
+                            {/*   <p className="text-sm font-semibold leading-6 text-main-text">{value.name}</p> */}
+                            <NavLink
+                                to={`/report-details/${value.report_id}`}
+                                className="text-sm font-semibold leading-6 text-main-text"
+                            >{value.name}</NavLink>
+                              <p className="truncate text-xs leading-5 text-sub-text">{new Date(value.creation_date).toLocaleDateString('en-GB', {day: '2-digit',month: '2-digit',year: 'numeric'}).replace(/\//g, '.')}</p>
+                          </div>
+                      </div>
+                  </li>
                     )) 
                 ) : (
                     <div className="flex justify-center w-full h-full my-auto">

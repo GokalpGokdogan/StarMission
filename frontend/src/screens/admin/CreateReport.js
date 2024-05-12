@@ -18,6 +18,7 @@ const CreateReport = () => {
     const [fourthIsChecked, setFourthIsChecked] = useState(false);
     const [fifthIsChecked, setFifthIsChecked] = useState(false);
     const [showAlert, setShowAlert] = useState(false);
+    const [alertText, setAlertText] = useState('');
 
     const handleNameChange = (e) => {
         setName(e.target.value);
@@ -27,11 +28,11 @@ const CreateReport = () => {
         setDescription(e.target.value);
     };
 
-    const handleCreateReport = () => {
+    const handleCreateReport = async () => {
         const indices = [];
         if (!firstIsChecked && !secondIsChecked && !thirdIsChecked && !fourthIsChecked && !fifthIsChecked) 
         {
-            console.log("please at least check one of them!!!!");
+            setAlertText("Please at least check one of them!!!!");
             setShowAlert(true);
         }
         else
@@ -47,7 +48,19 @@ const CreateReport = () => {
             if(fifthIsChecked)
             {indices.push(4);}
             console.log(indices);
-            createReport(2, description, name, indices);
+           try{
+            const mis = await  createReport(2, description, name, indices);
+
+            setAlertText('Report is created successfully! Redirecting to Dashboard page...');
+            setShowAlert(true);
+            setTimeout(() => {
+                window.location.href = '/admin';
+            }, 2000);
+
+            console.log(mis);    
+        } catch (error){
+            console.error('Error firing the employee:', error);
+        }
         }
         return indices;
     };
@@ -99,10 +112,10 @@ const CreateReport = () => {
                     </div>
             </div>
             {showAlert && (
-                <div className={`fixed bottom-4 right-4 max-w-96 flex ${ 'flex-row items-center'}`}>
-                    <Alert severity={'error'} className="w-full">
+                <div className={`fixed bottom-4 right-4 max-w-96 flex ${alertText.length > 40 ? 'flex-col items-end justify-center' : 'flex-row items-center'}`}>
+                    <Alert severity={alertText.includes('successful') ? 'success' : 'error'} className="w-full">
                         <div className="flex items-center justify-between w-full">
-                            <div>Please check at least one of the options.</div>
+                            <div>{alertText}</div>
                             <IconButton onClick={() => setShowAlert(false)}>
                                 <CloseIcon />
                             </IconButton>

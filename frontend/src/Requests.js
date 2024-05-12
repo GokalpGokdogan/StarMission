@@ -709,5 +709,20 @@ export const getAllReports = async (adminId) => {
     return res.data;
 }
 
+export const getReportData = async (reportId) => {
+    let res = await axios({
+        method: 'get',
+        url: `http://${API_HOST}/admin/manageReports/getReportData`,
+        headers: { 'Content-Type': 'application/json' },
+        params: {
+            reportId: reportId,
+        },
+        withCredentials: true
+    });
+
+    console.log(res.data);
+    return res.data;
+};
+
 
 
