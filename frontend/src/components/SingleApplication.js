@@ -3,6 +3,7 @@ import {NavLink} from "react-router-dom";
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import PendingIcon from '@mui/icons-material/Pending';
 import CancelIcon from '@mui/icons-material/Cancel';
+import BlockIcon from '@mui/icons-material/Block';
 
 const SingleApplication = ({application}) => {
   
@@ -27,6 +28,8 @@ const SingleApplication = ({application}) => {
                             <CancelIcon style={{ color: '#FF3B30', fontSize: '16px' }} />
                             ) : application.application_status === 'Accepted' ? (
                             <CheckCircleIcon style={{ color: '#51C080', fontSize: '16px' }} />
+                            ) : application.application_status === 'Cancelled' ? (
+                            <BlockIcon style={{ color: '#5b5e5b', fontSize: '16px' }} /> 
                             ) : (
                             <PendingIcon style={{ color: '#FFCE20', fontSize: '16px' }} />
                             )}

@@ -7,6 +7,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import PendingIcon from '@mui/icons-material/Pending';
 import CancelIcon from '@mui/icons-material/Cancel';
+import BlockIcon from '@mui/icons-material/Block';
 
 
 const MissionApplicant = ({application}) => {
@@ -161,6 +162,8 @@ const MissionApplicant = ({application}) => {
                                 <CancelIcon style={{ color: '#FF3B30', fontSize: '20px' }} />
                                 ) : application.application_status === 'Accepted' ? (
                                 <CheckCircleIcon style={{ color: '#51C080', fontSize: '20px' }} />
+                                ) : application.application_status === 'Cancelled' ? (
+                                <BlockIcon style={{ color: '#5b5e5b', fontSize: '20px' }} />
                                 ) : (
                                 <PendingIcon style={{ color: '#FFCE20', fontSize: '20px' }} />
                                 )}
