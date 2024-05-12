@@ -3,10 +3,10 @@ const db = require('../../database');
 const getIncomingBids = async (data) => {
     return new Promise((resolve, reject) => {
         const {missionId} = data;
-        const query = ` SELECT DISTINCT b.*, c*, u.name AS company_name
+        const query = ` SELECT DISTINCT b.*, c.*, u.name AS company_name
                         FROM mission_bid b, company c, user u
                         WHERE b.mission_id = ? AND b.bidding_company_id = c.user_id AND c.user_id = u.user_id
-                        AND b.bid_status = 'In Progress';`
+                        AND b.bid_status = 'In progress';`
         db.query(query,
                 [missionId],
                 (err, result) => {

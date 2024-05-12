@@ -412,6 +412,24 @@ export const getBiddingCompanies = async (missionId) => {
     return res.data;
 }
 
+export const getIncomingBids = async (missionId) => {
+    let res = await axios({
+        method: 'get',
+        url: `http://${API_HOST}/company/manageIncomingBids/getIncomingBids`,
+        headers: { 'Content-Type': 'application/json' },
+        params: {
+            missionId: missionId,
+        },
+        withCredentials: true
+    });
+    if (res.status == 204) {
+        console.log("No incoming bids found with these filters")
+    }
+
+    console.log(res.data);
+    return res.data;
+}
+
 export const getMissionNames = async (companyId) => {
     let res = await axios({
         method: 'get',

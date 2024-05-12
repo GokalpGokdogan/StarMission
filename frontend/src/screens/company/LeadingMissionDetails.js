@@ -2,13 +2,13 @@ import React, { Fragment, useState, useEffect } from 'react';
 import { Link, Route, useParams } from 'react-router-dom';
 import CompanyListModal from '../../components/CompanyListModal';
 import CompanyItem from '../../components/CompanyItem';
-import { getMissionData, getBiddingCompanies } from '../../Requests';
+import { getMissionData, getIncomingBids } from '../../Requests';
 
 
 const LeadingMissionDetails = () => {
   const { missionId } = useParams();
   const [missionData, setMissionData] = useState({});
-  const [biddingCompanies, setBiddingCompanies] = useState([]);
+  const [incomingBids, setIncomingBids] = useState([]);
   const [showModal, setShowModal] = useState(false); // Define showModal state
 
   const fetchMissionData = async () => {
@@ -24,22 +24,22 @@ const LeadingMissionDetails = () => {
     }
   };
 
-  const fetchBiddingCompanies = async () => {
+  const fetchIncomingBids = async () => {
     try {
-      const companies = await getBiddingCompanies(missionId);
-      if (companies === "No companies found with these filters") {
-        console.log("No bidding companies found");
+      const bids = await getIncomingBids(missionId);
+      if (bids === "No incoming bids found with these filters") {
+        console.log("No incoming bids found");
       } else {
-        setBiddingCompanies(companies);
+        setIncomingBids(bids);
       }
     } catch (error) {
-      console.error('Error fetching bidding companies:', error);
+      console.error('Error fetching incoming bids:', error);
     }
   };
 
   useEffect(() => {
     fetchMissionData();
-    fetchBiddingCompanies();
+    fetchIncomingBids();
   }, [missionId]);
 
   return (
@@ -95,32 +95,8 @@ const LeadingMissionDetails = () => {
           <h2 className='mb-4'>Companies offering to bid to {missionData.name}</h2>
           <ul>
             {/* Render bidding companies using CompanyItem component */}
-            {biddingCompanies.map(company => (
-              <CompanyItem company={company.name} />
-            ))}
-            {/* Render bidding companies using CompanyItem component */}
-            {biddingCompanies.map(company => (
-              <CompanyItem company={company.name} />
-            ))}
-            {/* Render bidding companies using CompanyItem component */}
-            {biddingCompanies.map(company => (
-              <CompanyItem company={company.name} />
-            ))}
-            {/* Render bidding companies using CompanyItem component */}
-            {biddingCompanies.map(company => (
-              <CompanyItem company={company.name} />
-            ))}
-            {/* Render bidding companies using CompanyItem component */}
-            {biddingCompanies.map(company => (
-              <CompanyItem company={company.name} />
-            ))}
-            {/* Render bidding companies using CompanyItem component */}
-            {biddingCompanies.map(company => (
-              <CompanyItem company={company.name} />
-            ))}
-            {/* Render bidding companies using CompanyItem component */}
-            {biddingCompanies.map(company => (
-              <CompanyItem company={company.name} />
+            {incomingBids.map(bid => (
+              <CompanyItem company_name={bid.company_name} requested_amount={bid.requested_amount} />
             ))}
           </ul>
         </CompanyListModal>
