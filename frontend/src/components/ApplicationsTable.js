@@ -6,7 +6,7 @@ const ApplicationsTable = ({ dataSource, handleEdit, columns }) => {
 
   return(
   
-  <Table dataSource={dataSource}  columns={columns} pagination={false} />); 
+  <Table dataSource={dataSource}  columns={columns} pagination={{ pageSize: 3}} />); 
 };
 
 export default ApplicationsTable;
