@@ -29,21 +29,6 @@ const MissionDetailsCompany = () => {
 };
 
  const [showModal, setShowModal] = useState(false);
- /*const dataSource = {
-    title: 'Asteroid Ceres',
-    company: 'NASA',
-    location: 'United States, Washington DC',
-    startDate: '07.02.2024',
-    endDate: '24.03.2024',
-    description: 'Astethn aimed at unra',
-    important_notes: [
-      'Wear appropriate space suit at all times.',
-      'Follow safety protocols during experiments.',
-      'Report any anomalies immediately.',
-      'Wear appropriate space suit at all times.',
-      'Follow safety protocols during experiments.',
-    ]
-  };*/
 
   useEffect(() => {
     fetchMissionData();
@@ -65,6 +50,10 @@ const MissionDetailsCompany = () => {
     setShowDescriptionPlaceholder(e.target.value === '');
   };
 
+  const resetInputFields = () => {
+    setAmount('');
+    setDescription('');
+  };
 
   return (
     <Fragment>
@@ -106,7 +95,11 @@ const MissionDetailsCompany = () => {
                 <button type="button" className="w-32 bg-button-purple text-white text-sm px-2 py-3 rounded-xl" onClick={() => setShowModal(true)}>
                   Bid to Mission
                 </button>
-                 <BidModal isVisible={showModal} onClose={() => setShowModal(false)}>
+                 <BidModal isVisible={showModal} 
+                  onClose={() => { 
+                    setShowModal(false);
+                    resetInputFields();
+                  }}>
                   <h2 className="text-3xl font-bold text-main-text mt-8 ml-12">Bid to {missionData.name}</h2>
                   <div className="flex items-center ml-8 mt-8">
                     <img width="90" height="90" src="https://seekvectorlogo.com/wp-content/uploads/2018/02/nasa-vector-logo.png" alt="NASA Logo" />
@@ -136,13 +129,19 @@ const MissionDetailsCompany = () => {
                   />
 
                   <div className="flex justify-end mr-8 mb-4">
-                    <button type="button" className="w-32 bg-button-purple text-white text-sm px-2 py-3 rounded-xl" onClick={() => setShowModal(false)}>
+                    <button type="button" className="w-32 bg-button-purple text-white text-sm px-2 py-3 rounded-xl" 
+                    onClick={() => {
+                      setShowModal(false);
+                      resetInputFields();
+                    }}
+                    >
                       Close
                     </button>
                     <button type="button" className="w-32 bg-button-purple text-white text-sm px-2 py-3 rounded-xl ml-4" 
                     onClick={() => {
                       bidToMission(userId, missionId, amount, description);
                       setShowModal(false);
+                      resetInputFields();
                     }}
                   >
                     Bid to Mission
@@ -155,7 +154,6 @@ const MissionDetailsCompany = () => {
         </div>
       </div>
     </Fragment>
-
   );
 };
 
