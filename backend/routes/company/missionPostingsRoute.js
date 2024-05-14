@@ -31,6 +31,18 @@ router.get('/getMissionPostings', async (req, res) => {
     }
 });
 
+router.post('/terminateMission', async (req, res) => {
+    try {
+
+        const data = req.body;
+        const result = await missionPostingsController.terminateMission(data);
+        res.status(200).json(result);
+    }
+    catch (err) {
+        res.status(400).json(err);
+    }
+});
+
 // Get past mission postings with filters
 
 // Body: { companyId: int, searchedName: str(255), startDate: date, endDate: date, location: str(255),

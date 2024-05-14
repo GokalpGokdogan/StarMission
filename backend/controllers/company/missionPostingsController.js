@@ -231,4 +231,25 @@ const bidToMission = async (data) => {
     });
 }
 
-module.exports = { getMissionPostings, getLeadingFirmNames, getMissionData, bidToMission , getPartnerMissions, getPastMissionPostingsLead, getPastMissionPostingsPartner};
+/* Terminate Mission
+    (end_date is set to current date)
+    (astronauts working in that mission are set free)
+*/
+const terminateMission = async (data) => {
+    return new Promise((resolve, reject) => {
+        const { missionId} = data;
+
+        let query = `UPDATE space_mission SET end_date = CURDATE() WHERE mission_id = ?; 
+                     UPDATE mission_of SET leaving_date = CURDATE() WHERE mission_id = ? AND leaving_date IS NULL;`;
+        db.query(query, [missionId, missionId], (err, result) => {
+            if (err) {
+                reject(err);
+            }
+            else {
+                resolve(result);
+            }
+        });
+    });
+}
+
+module.exports = { getMissionPostings, getLeadingFirmNames, getMissionData, bidToMission , getPartnerMissions, terminateMission};
