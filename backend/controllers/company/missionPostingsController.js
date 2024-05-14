@@ -187,22 +187,31 @@ const getLeadingFirmNames = async (data) => {
 const getMissionData = async (data) => {
     return new Promise((resolve, reject) => {
         const { missionId } = data;4
-        let query = `SELECT DISTINCT s.*, u.name AS company_name FROM space_mission s, company c, user u WHERE s.mission_id = ? AND c.user_id = s.leading_firm_id AND c.user_id = u.user_id`;
-        db.query(query, [missionId], (err, result) => {
+        let query = `SELECT DISTINCT s.*, u.name AS company_name FROM space_mission s, company c, user u WHERE s.mission_id = ? AND c.user_id = s.leading_firm_id AND c.user_id = u.user_id;
+
+                     SELECT DISTINCT u.name as company_name
+                     FROM user u, partner_firm p
+                     WHERE p.mission_id = ? AND u.user_id = p.company_id;`;
+        db.query(query, [missionId,missionId], (err, result) => {
             if (err) {
                 reject(err);
             }
-            else if (result.length === 0) {
+            else if (result[0].length === 0) {
                 reject("ER_FIND_NONE");     // No mission found
             }
             else {
-                if(result[0].important_notes){
-                    result[0].important_notes = result[0].important_notes.split("$$$$");
+                result[0][0].partner_firms = result[1];
+                let partnerNames = result[0][0].partner_firms.map(partner => partner.company_name);
+
+                result[0][0].partner_firms = partnerNames;
+
+                if(result[0][0].important_notes){
+                    result[0][0].important_notes = result[0][0].important_notes.split("$$$$");
                 }
                 else{
-                    result[0].important_notes = [];
+                    result[0][0].important_notes = [];
                 }
-                resolve(result[0]);
+                resolve(result[0][0]);
             }
         });
     });
