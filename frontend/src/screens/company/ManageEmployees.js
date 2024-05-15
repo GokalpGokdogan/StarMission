@@ -210,19 +210,8 @@ const ManageEmployees = () => {
         </div>
       ) : (
       <div className="flex">
-        <div className="w-1/4 p-6 border-r flex flex-col gap-2">
-          {/*<div>
-            <label className="block mb-1 text-main-text font-medium">Start and End Dates</label>
-            <DateRange
-              editableDateInputs={true}
-              onChange={item => setSelectedDateRange([item.selection])}
-              moveRangeOnFirstSelection={false}
-              ranges={selectedDateRange}
-              rangeColors={["#5569ff"]}
-              style={{ width: '100%' }}
-              className="w-full"
-            />
-          </div>*/}
+        <div className="w-1/4 p-6 border-r flex flex-col bg-filter-bg ml-6 mr-6 my-8 gap-2 rounded-lg h-full">
+          <h2 className="text-lg font-semibold mb-1 self-center underline text-main-text">Filters</h2>
           <div className="mb-4">
             <label className="block mb-1 text-main-text text-md font-medium">Mission</label>
             <Select
