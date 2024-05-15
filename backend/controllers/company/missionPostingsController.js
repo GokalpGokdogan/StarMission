@@ -119,7 +119,6 @@ const getPastMissionPostingsPartner = async (data) => {
     });
 }
 
-
 const getPartnerMissions = async (data) => {
     return new Promise((resolve, reject) => {
         
@@ -261,4 +260,4 @@ const terminateMission = async (data) => {
     });
 }
 
-module.exports = { getMissionPostings, getLeadingFirmNames, getMissionData, bidToMission , getPartnerMissions, terminateMission};
+module.exports = { getMissionPostings, getLeadingFirmNames, getPastMissionPostingsPartner, getPastMissionPostingsLead, getMissionData, bidToMission , getPartnerMissions, terminateMission};
