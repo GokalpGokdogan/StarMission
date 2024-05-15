@@ -4,7 +4,7 @@ import SearchBar from '../../components/SearchBar';
 import Alert from '@mui/material/Alert';
 import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
-import {getPastMissionPostings, getLeadingCompanyNames} from "../../Requests";
+import {getPastMissionPostingsLead, getPastMissionPostingsPartner, getLeadingCompanyNames} from "../../Requests";
 import { useUser } from '../../UserProvider';
 import CircularProgress from '@mui/material/CircularProgress';
 import Select from 'react-select';
@@ -14,6 +14,8 @@ import 'react-date-range/dist/theme/default.css';
 import Header from '../../components/Header';
 
 const PartneredMissions = () => {
+  const [missionsPartner, setMissionsPartner] = useState([]);
+  const [missionsLead, setMissionsLead] = useState([]);
   const [missions, setMissions] = useState([]);
   const [initialLoading, setInitialLoading] = useState(true);
   const [loading, setLoading] = useState(false);
@@ -30,6 +32,7 @@ const PartneredMissions = () => {
   const [endDate, setEndDate] = useState(null);
   const [leadingCompanyName, setLeadingCompanyName] = useState(null);
   const [location, setLocation] = useState(null);
+  const [isLeadingSelected, setIsLeadingSelected] = useState(true);
 
   const [selectedDateRange, setSelectedDateRange] = useState([
     {
@@ -74,20 +77,40 @@ const PartneredMissions = () => {
       setLeadingCompanies(firms);
     } catch (error) {
       console.error('Error fetching leading companies:', error);
-    } 
-  };
-
-  const fetchPastMissions = async () => {
-  try {
-    // FIX THIS LATER
-      const res = await getPastMissionPostings(userId);
-      setMissions(res);
-    } catch (error) {
-      console.error('Error fetching partner missions:', error);
-    } finally {
-      setTimeout(() => setInitialLoading(false), 300);
     }
   };
+
+  const fetchPastMissionsLead = async () => {
+    try {
+      const res = await getPastMissionPostingsLead(userId, searchText, startDate, endDate, location, leadingCompanyName, minBudget, maxBudget);
+      setMissionsLead(res);
+    } catch (error) {
+      console.error('Error fetching past leading missions:', error);
+    } finally {
+      if(initialLoading){
+        setTimeout(() => setInitialLoading(false), 300);
+      }
+      else{
+        setTimeout(() => setLoading(false), 300);
+      }
+    }
+  };
+
+  const fetchPastMissionsPartner = async () => {
+    try {
+        const res = await getPastMissionPostingsPartner(userId, searchText, startDate, endDate, location, leadingCompanyName, minBudget, maxBudget);
+        setMissionsPartner(res);
+      } catch (error) {
+        console.error('Error fetching past partner missions:', error);
+      } finally {
+        if(initialLoading){
+          setTimeout(() => setInitialLoading(false), 300);
+        }
+        else{
+          setTimeout(() => setLoading(false), 300);
+        }
+      }
+    };
 
   const applyFilter = async () => {
     if((minBudget != null &&  maxBudget != null) && minBudget > maxBudget){
@@ -95,19 +118,12 @@ const PartneredMissions = () => {
       setShowAlert(true);
     }
     else{
-      setLoading(true);
-
-      try {
-        //const res = await getPartnerMissions(userId, searchText, startDate, endDate, location, leadingCompanyName, minBudget, maxBudget);
-        console.log(leadingCompanyName?.value);
-        const res = await getPastMissionPostings(userId);
-
-        setMissions(res);
-      } catch (error) {
-        console.error('Error fetching applications:', error);
-      } finally {
-        setTimeout(() => setLoading(false), 300);
-      }          
+      if(isLeadingSelected){
+        fetchPastMissionsLead();
+      }
+      else{
+        fetchPastMissionsPartner();
+      } 
     }
   };
 
@@ -123,15 +139,23 @@ const PartneredMissions = () => {
   }, [leadingCompanies]);
 
   useEffect(() => {
-    fetchPastMissions();
+    fetchPastMissionsLead();
   }, []);
+
+  useEffect(() => {
+    isLeadingSelected ? setMissions(missionsLead) : setMissions(missionsPartner);
+  }, [missionsLead, missionsPartner, isLeadingSelected]);
 
   useEffect(() => {
     fetchLeadingCompanies();
   }, []);
 
   useEffect(() => {
-    fetchPastMissions();
+    fetchPastMissionsPartner();
+  }, []);
+
+  useEffect(() => {
+    isLeadingSelected ? fetchPastMissionsLead() : fetchPastMissionsPartner();
   }, [searchText]);
 
   return (
@@ -160,7 +184,7 @@ const PartneredMissions = () => {
                 className="w-full"
               />
             </div>
-            <div className="mb-4">
+            {!isLeadingSelected && <div className="mb-4">
               <label className="block mb-1 text-main-text text-md font-medium">Leading Company</label>
               <Select
                 value={leadingCompanyName}
@@ -170,7 +194,7 @@ const PartneredMissions = () => {
                 placeholder="Select Leading Company"
                 className="w-full"
               />
-            </div>
+            </div>}
             <div className="flex">
               <div className="mb-4">
                 <label className="block mb-1 text-main-text font-medium">Min Budget</label>
@@ -211,6 +235,24 @@ const PartneredMissions = () => {
               <div className="mt-6 mb-4">
                 <SearchBar input={searchText} onChange={handleSearchChange} />
               </div>
+              <div className="mt-4 grid grid-cols-1 gap-x-6 text-center sm:grid-cols-6">
+                    <div className="sm:col-span-3">
+                        <p
+                            className={`mt-2 hover:cursor-pointer text-purple-text border-b  border-b-sub-text ${isLeadingSelected ? 'font-semibold' : ''}`}
+                            onClick={() => setIsLeadingSelected(true)}
+                        >
+                            Leading
+                        </p>
+                    </div>
+                    <div className="sm:col-span-3">
+                        <p
+                            className={`mt-2 hover:cursor-pointer text-purple-text border-b border-b-sub-text ${!isLeadingSelected ? 'font-semibold' : ''}`}
+                            onClick={() => setIsLeadingSelected(false)}
+                        >
+                            Partner
+                        </p>
+                    </div>
+                </div>
               {missions && missions.length > 0 ? 
               (missions.map(mission => (
                 <MissionItem

@@ -144,7 +144,7 @@ function AppContent() {
         <div className="transition-all duration-300 h-screen bg-home-bg">
         <Router>
             <div className="fixed inset-y-0 left-0 z-8 bg-darker-bg" style={{width: '14rem'}}>
-                <Sidebar open={true} setOpen={setOpen} setHref={setHref} active={active} setActive={setActive} menu={menu} />
+               {userId ? <Sidebar open={true} setOpen={setOpen} setHref={setHref} active={active} setActive={setActive} menu={menu}/> : <></> }
             </div>
                 <div className={`flex flex-col w-full h-full transition-all duration-300 pl-56 `}>
                     <div className='flex-1'>

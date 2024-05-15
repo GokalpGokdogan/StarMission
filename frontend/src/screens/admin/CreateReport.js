@@ -7,6 +7,8 @@ import PendingIcon from '@mui/icons-material/Pending';
 import CancelIcon from '@mui/icons-material/Cancel';
 import Alert from '@mui/material/Alert';
 import { createReport } from "../../Requests";
+import Header from '../../components/Header';
+
 
 
 const CreateReport = () => {
@@ -67,6 +69,8 @@ const CreateReport = () => {
 
     return (
         <div className="bg-home-bg">
+            <Header title={"Create Report"}/>
+
             <div className="bg-white mt-5 py-2 border rounded-xl border-transparent p-2 border-10 px-4 mx-auto max-w-2xl py-8">
                 <h2 className="mb-4 text-xl font-bold text-main-text">Create Report</h2>
             

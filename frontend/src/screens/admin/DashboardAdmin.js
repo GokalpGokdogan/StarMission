@@ -3,6 +3,7 @@ import AddDynamicInputFields from "../../components/AddDynamicInputFields";
 import { createViews } from "../../Requests";
 import CreateReport from "./CreateReport";
 import { NavLink } from "react-router-dom";
+import Header from '../../components/Header';
 
 const DashboardAdmin = () => {
 
@@ -29,9 +30,8 @@ const DashboardAdmin = () => {
 
     return (
         <div className="bg-home-bg h-full">
-        <div className='h-16 bg-main-bg flex box-shadow shadow-sm'>
-          <p className='font-poppins font-bold text-white text-2xl p-4 ml-2 justify-start'>Admin Panel</p>
-        </div>
+        <Header title={"Admin Panel"}/>
+
         <div className='p-4'>
             <NavLink
                 to={'/create-report'}

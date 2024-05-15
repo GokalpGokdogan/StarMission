@@ -5,7 +5,7 @@ import CreateReport from "./CreateReport";
 import { NavLink } from "react-router-dom";
 import SinglePastMission from "../../components/SinglePastMission";
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
-
+import Header from '../../components/Header';
 
 const Reports = () => {
 
@@ -36,9 +36,7 @@ const [reports, setReports] = useState([]);
 
     return (
         <div className="bg-home-bg h-full">
-        <div className='h-16 bg-main-bg flex box-shadow shadow-sm'>
-          <p className='font-poppins font-bold text-white text-2xl p-4 ml-2 justify-start'>Reports</p>
-        </div>
+        <Header title={"Reports"}/>
         <div className='p-4'>
             <div className="flex flex-col flex-wrap">
             <div className="w-full">

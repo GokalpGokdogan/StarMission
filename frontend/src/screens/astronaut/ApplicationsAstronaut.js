@@ -39,7 +39,7 @@ useEffect(() => {
 
   return (
     <div className="flex flex-col h-screen">
-      <Header title={"My Applications"}/>
+    <Header title={"My Applications"}/>
 
       <div className="flex-1 bg-home-bg flex flex-col items-center gap-4 p-8">
         <SearchBar input={searchText} onChange={(e) => setSearchText(e.target.value)}></SearchBar>

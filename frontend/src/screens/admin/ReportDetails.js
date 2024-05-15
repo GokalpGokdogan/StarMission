@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react'
 import { useParams } from 'react-router-dom'
 import { getReportData } from '../../Requests';
 import ContainerTable from '../../components/ContainerTable';
+import Header from '../../components/Header';
 
 export const ReportDetails = () => {
 
@@ -33,9 +34,8 @@ export const ReportDetails = () => {
 
     return (
         <div className="bg-home-bg min-h-screen">
-            <div className='h-16 bg-main-bg flex box-shadow shadow-sm'>
-                <p className='font-poppins font-bold text-white text-2xl p-4 ml-2 justify-start'>Report Details</p>
-            </div>
+            <Header title={"Report Details"}/>
+
             <div className="bg-white mt-5 border rounded-xl border-transparent p-2 border-10 px-4 mx-auto max-w-2xl py-8">
                 <h2 className="mb-2 text-xl font-bold text-main-text">{reportData.report_name}</h2>
                 <div className='flex flex-row gap-2'>
