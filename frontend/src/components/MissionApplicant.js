@@ -8,7 +8,7 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import PendingIcon from '@mui/icons-material/Pending';
 import CancelIcon from '@mui/icons-material/Cancel';
 import BlockIcon from '@mui/icons-material/Block';
-
+import { useUser } from "../UserProvider";
 
 const MissionApplicant = ({application}) => {
     const [showAlert, setShowAlert] = useState(false);
@@ -18,7 +18,6 @@ const MissionApplicant = ({application}) => {
     const [applicant, setApplicant] = useState({});
     const [isLoading, setLoading] = useState(true);
     const [isProcessing, setProcessing] = useState(false);
-
 
     const handleSalaryChange = (e) => {
         setSalary(e.target.value);
@@ -78,12 +77,14 @@ const MissionApplicant = ({application}) => {
         }
     };
 
-    const isStartDateValid = () => {
+    const formatStartDate = () => {
         let dateArray = startDate.split(".");
         let newDate = `${dateArray[2]}-${dateArray[1]}-${dateArray[0]}`;
         const day = parseInt(dateArray[0], 10);
         const month = parseInt(dateArray[1], 10) - 1;
         const year = parseInt(dateArray[2], 10);
+
+        console.log("day: " + day + " month: " + month + " year: " + year);
 
         // Check if the day component is valid for the given month and year
         if (day > 0 && day <= new Date(year, month + 1, 0).getDate()) {
@@ -95,12 +96,11 @@ const MissionApplicant = ({application}) => {
                 date.getUTCMonth() === month &&
                 date.getUTCDate() === day
             ) {
-                setStartDate(newDate); // Set birthdate in yyyy-mm-dd format
-                return true; // Valid date
+                return newDate; // Valid date
             }
         }
 
-        return false; // Invalid date
+        return null;
     }
 
     const isSalaryValid = () => {
@@ -108,6 +108,7 @@ const MissionApplicant = ({application}) => {
     };
 
     const handleAccept = async () => {
+        const date = formatStartDate();
         if (!application){
             return;
         }
@@ -116,13 +117,14 @@ const MissionApplicant = ({application}) => {
             setShowAlert(true);
             return;
         }
-        if(!isStartDateValid()){
+        if(!date){
             setAlertText('Invalid start date');
             setShowAlert(true);
             return;
         }
         try{
-            await acceptApplication(application.astronaut_id, application.mission_id, salary, startDate);
+            console.log(date);
+            await acceptApplication(application.astronaut_id, application.mission_id, salary, date);
 
             setAlertText('Accept application successful! Redirecting to applications...');
             setShowAlert(true);
