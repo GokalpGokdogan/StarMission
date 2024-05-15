@@ -98,9 +98,7 @@ const PartneredMissions = () => {
       setLoading(true);
 
       try {
-        //const res = await getPartnerMissions(userId, searchText, startDate, endDate, location, leadingCompanyName, minBudget, maxBudget);
-        console.log(leadingCompanyName?.value);
-        const res = await getPartnerMissions(userId, searchText, null, null, location, leadingCompanyName?.value, minBudget, maxBudget);
+        const res = await getPartnerMissions(userId, searchText, startDate, endDate, location, leadingCompanyName, minBudget, maxBudget);
 
         setMissions(res);
       } catch (error) {
