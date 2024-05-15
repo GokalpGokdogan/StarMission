@@ -212,7 +212,7 @@ const PartneredMissions = () => {
               {missions && missions.length > 0 ? 
               (missions.map(mission => (
                 <MissionItem
-                  title={mission.title}
+                  title={mission.name}
                   company={[mission.name]}
                   location={mission.location ? mission.location: "No location specified"}
                   id={mission.mission_id}

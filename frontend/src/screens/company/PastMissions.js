@@ -235,7 +235,7 @@ const PastMissions = () => {
               <div className="mt-6 mb-4">
                 <SearchBar input={searchText} onChange={handleSearchChange} />
               </div>
-              <div className="mt-4 flex flex-row gap-x-6 text-center">
+              <div className="flex flex-row gap-x-6 text-center mb-4">
                 <div>
                   <p
                     className={`mt-2 hover:cursor-pointer text-purple-text border-b  border-b-purple-text ${isLeadingSelected ? 'font-semibold' : ''}`}
@@ -256,8 +256,8 @@ const PastMissions = () => {
               {missions && missions.length > 0 ?
                 (missions.map(mission => (
                   <MissionItem
-                    title={mission.title}
-                    company={[mission.name]}
+                    title={mission.name}
+                    company={!isLeadingSelected ? [mission.name] : ""}
                     location={mission.location ? mission.location : "No location specified"}
                     id={mission.mission_id}
                   />

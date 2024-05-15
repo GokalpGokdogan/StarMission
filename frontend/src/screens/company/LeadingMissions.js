@@ -126,7 +126,7 @@ const LeadingMissions = () => {
 
   return (
     <div className="bg-home-bg h-full">
-        <Header title={"Partnered Missions"}/>
+        <Header title={"Leading Missions"}/>
         {initialLoading || loading? (
         <div className="flex-grow flex items-center justify-center">
           <div className="text-center mt-32">
@@ -204,8 +204,7 @@ const LeadingMissions = () => {
               {missions && missions.length > 0 ? 
               (missions.map(mission => (
                 <MissionItem
-                  title={mission.title}
-                  company={[mission.name]}
+                  title={mission.name}
                   location={mission.location ? mission.location: "No location specified"}
                   id={mission.mission_id}
                 />

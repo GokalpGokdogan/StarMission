@@ -3,11 +3,11 @@ import React from "react";
 const SinglePastMission = ({title, location}) => {
     return (
         <li className="flex justify-between py-1 px-2">
-            <div className="flex w-full min-w-0 py-2 border rounded-xl border-transparent p-2 border-10 bg-white">
+            <div className="flex w-full min-w-0 py-2 border rounded-xl border-transparent p-2 border-10 bg-white shadow-sm">
                 <div className="flex items-center">
                     <img width="60" height="60" src="https://seekvectorlogo.com/wp-content/uploads/2018/02/nasa-vector-logo.png" />
                 </div>
-                <div className="min-w-0 flex-auto">
+                <div className="min-w-0 flex flex-col w-full">
                     <p className="text-sm font-semibold leading-6 text-main-text">{title}</p>
                     <p className="truncate text-xs leading-5 text-sub-text">{location}</p>
                 </div>

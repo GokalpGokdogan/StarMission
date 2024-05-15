@@ -104,7 +104,7 @@ const fetchRecentMissions = async () => {
         <div className="bg-home-bg h-full">
             <Header title={"Dashboard"}/>
             <div className='p-4'>
-            <div className="grid grid-cols-2 grid-rows-2 mt-12">
+            <div className="grid grid-cols-2 grid-rows-2 mt-4">
                 <div className="flex items-center justify-center px-4 py-1 ml-24">
                   <SimpleList title={"Leading Missions"} data={leadingMissions} type={'mission'}/>
                 </div>              
