@@ -62,8 +62,8 @@ const acceptIncomingBid = async (data) => {
                         reject(err);
                     }
                     else if (result.length === 0) {
-                        query = `SELECT DISTINCT * FROM mission_bid b, company c
-                                 WHERE c.user_id = ? AND b.bid_id = ? AND
+                        query = `SELECT DISTINCT *, s.name as mission_name, u.name as bidding_company_name FROM mission_bid b, user u, company c, space_mission s
+                                 WHERE u.user_id = ? AND b.bid_id = ? AND u.user_id = c.user_id AND s.mission_id = b.mission_id AND
                                  b.requested_amount <= c.balance`;
                         db.query(query,[companyId, bidId], (err, result) => {
                             if(err){
@@ -73,6 +73,13 @@ const acceptIncomingBid = async (data) => {
                                 reject("LEADING_COMPANY_BALANCE_NOT_ENOUGH");
                             }
                             else{
+
+                                let requested_amount = result[0].requested_amount;
+                                let bidding_company_id = result[0].bidding_company_id;
+                                let bidding_company_name = result[0].bidding_company_name;
+                                let mission_name = result[0].mission_name;
+                                let reverse_requested_amount = (-1 * requested_amount);
+
                                 query = `UPDATE mission_bid b, company c1, company c2
                                          SET b.bid_status = 'Accepted',
                                          c1.balance = c1.balance + b.requested_amount,
@@ -84,8 +91,18 @@ const acceptIncomingBid = async (data) => {
                                          INSERT INTO partner_firm
                                          SELECT b.mission_id, b.bidding_company_id, CURDATE()
                                          FROM mission_bid b
-                                         WHERE b.bid_id = ?;`
-                                db.query(query, [bidId, companyId, bidId], (err,result) => {
+                                         WHERE b.bid_id = ?;
+                                         
+                                         INSERT INTO transaction(company_id, transaction_date, transaction_amount, transaction_description)
+                                         VALUES (?, CURDATE(), ?, ?);
+                                         
+                                         INSERT INTO transaction(company_id, transaction_date, transaction_amount, transaction_description)
+                                         VALUES (?, CURDATE(), ?, ?);`
+
+                                db.query(query, [bidId,
+                                                 companyId, bidId,
+                                                 companyId, reverse_requested_amount , `Accepted Bid For Company ${bidding_company_name}`,
+                                                 bidding_company_id, requested_amount, `Accepted Bid For Mission ${mission_name}`], (err,result) => {
                                     if(err){
                                         reject(err);
                                     }
