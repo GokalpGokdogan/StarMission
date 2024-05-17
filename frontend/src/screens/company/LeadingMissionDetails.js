@@ -4,12 +4,14 @@ import CompanyListModal from '../../components/CompanyListModal';
 import CompanyItem from '../../components/CompanyItem';
 import { getMissionData, getIncomingBids } from '../../Requests';
 import Header from '../../components/Header';
+import CircularProgress from '@mui/material/CircularProgress';
 
 const LeadingMissionDetails = () => {
   const { missionId } = useParams();
   const [missionData, setMissionData] = useState({});
   const [incomingBids, setIncomingBids] = useState([]);
   const [showModal, setShowModal] = useState(false); // Define showModal state
+  const [loading, setLoading] = useState(true);
 
   const fetchMissionData = async () => {
     try {
@@ -21,6 +23,8 @@ const LeadingMissionDetails = () => {
       }
     } catch (error) {
       console.error('Error fetching mission data:', error);
+    } finally {
+      setTimeout(() => setLoading(false), 300);
     }
   };
 
@@ -34,6 +38,8 @@ const LeadingMissionDetails = () => {
       }
     } catch (error) {
       console.error('Error fetching incoming bids:', error);
+    } finally {
+      setTimeout(() => setLoading(false), 300);
     }
   };
 
@@ -46,6 +52,14 @@ const LeadingMissionDetails = () => {
     <Fragment>
       <div className="bg-home-bg min-h-screen">
         <Header title={"View Mission"}/>
+        {loading ? (
+          <div className="flex-grow flex items-center justify-center">
+          <div className="text-center mt-32">
+            <CircularProgress sx={{ color: "#635CFF" }} style={{ margin: '20px auto' }} size={50} color="primary" />
+            <p>Loading data...</p>
+          </div>
+        </div>
+        ) : (
         <div className="flex justify-center">
           <div className="flex flex-col justify-center" style={{ width: '1600px', minHeight: '250px' }}>
             <div className='flex-auto flex-col flex p-4 mb-10 ml-60 mr-60 mt-10 border rounded-xl border-transparent border-10 bg-white shadow-lg'>
@@ -84,7 +98,7 @@ const LeadingMissionDetails = () => {
               </div>
             </div>
           </div>
-        </div>
+        </div>)}
       </div>
 
       {/* Render modal only if showModal state is true */}

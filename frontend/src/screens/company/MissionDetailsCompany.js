@@ -5,6 +5,7 @@ import { getMissionData, bidToMission } from '../../Requests';
 import { useUser } from '../../UserProvider';
 import Header from '../../components/Header';
 import { DateRange } from 'react-date-range';
+import CircularProgress from '@mui/material/CircularProgress';
 
 //Kodun indentationı bozuk, daha sonra düzeltilsin!!!!
 const MissionDetailsCompany = () => {
@@ -12,6 +13,7 @@ const MissionDetailsCompany = () => {
   const { missionId } = useParams();
   const {type} = useParams();
   const [missionData, setMissionData] = useState({});
+  const [loading, setLoading] = useState(true);
 
   const fetchMissionData = async () => {
     try{
@@ -28,6 +30,8 @@ const MissionDetailsCompany = () => {
         
     } catch (error){
         console.error('Error fetching apps:', error);
+    } finally {
+      setTimeout(() => setLoading(false), 300);
     }
 };
 
@@ -78,6 +82,14 @@ const formatDate = (date) => {
     <Fragment>
      <div className="bg-home-bg min-h-screen">
         <Header title={"View Mission"}/>
+        {loading ? (
+          <div className="flex-grow flex items-center justify-center">
+            <div className="text-center mt-32">
+              <CircularProgress sx={{ color: "#635CFF" }} style={{ margin: '20px auto' }} size={50} color="primary" />
+              <p>Loading data...</p>
+            </div>
+          </div>
+        ) : (        
         <div className="flex justify-center">
           <div className="flex flex-col justify-center" style={{ width: '1600px', minHeight: '250px' }}>
             <div className='flex-auto flex-col flex p-4 mb-10 ml-60 mr-60 mt-10 border rounded-xl border-transparent border-10 bg-white shadow-lg'>
@@ -168,7 +180,7 @@ const formatDate = (date) => {
               </div>
             </div>
           </div>
-        </div>
+        </div>)}
       </div>
     </Fragment>
   );
