@@ -77,6 +77,7 @@ useEffect(() => {
 
 
   const currentPath = window.location.pathname;
+  console.log(currentPath);
   const [searchText, setSearchText] = useState('');
   const [coverletter, setCoverletter] = useState('');
   const [showCoverletterPlaceholder, setShowCoverletterPlaceholder] = useState(true);
@@ -139,7 +140,7 @@ useEffect(() => {
                   <p>You have already applied for this mission!</p>
                 </div>
                 )               
-            : ({ currentPath == "/astronaut-past-mission-details" &&
+            : ( currentPath !== `/astronaut-past-mission-details/${missionData.mission_id}/` &&
             <div className="flex justify-end mr-8 mt-16 mb-4 z-50">
             <button type="button" className="w-auto bg-button-purple text-white text-sm px-2 py-3 rounded-xl" onClick={() => setShowModal(true)}>
             Apply to Mission
@@ -176,7 +177,7 @@ useEffect(() => {
             </div>
           </BidModal>
         </div>
-            }
+            
             )}
             
           </div>
