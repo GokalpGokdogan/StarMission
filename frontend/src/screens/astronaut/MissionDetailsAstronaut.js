@@ -4,6 +4,9 @@ import BidModal from '../../components/BidModal';
 import { getMissionData, getApplicationsAstro } from '../../Requests';
 import { applyToMission } from '../../Requests';
 import Header from '../../components/Header';
+import Alert from '@mui/material/Alert';
+import IconButton from "@mui/material/IconButton";
+import CloseIcon from "@mui/icons-material/Close";
 
 //Kodun indentationı bozuk, daha sonra düzeltilsin!!!!
 const MissionDetailsAstronaut = () => {
@@ -12,20 +15,15 @@ const MissionDetailsAstronaut = () => {
   const [isAppliedBefore, setIsAppliedBefore] = useState(false);
   const [missionData, setMissionData] = useState({});
   const [applications, setApplications] = useState([]);
+  const [showAlert, setShowAlert] = useState(false);
+  const [alertText, setAlertText] = useState('');
 
   const fetchMissionData = async () => {
     try{
         const mission = await getMissionData(missionId);
-        if(mission == "No applications found with these filters")
-        {
-          console.log("ahah")
-        }
-        else
-        {
-          setMissionData(mission);
-          console.log(mission);
-        }
-        
+
+        setMissionData(mission);
+        console.log(mission);           
     } catch (error){
         console.error('Error fetching apps:', error);
     }
@@ -33,29 +31,41 @@ const MissionDetailsAstronaut = () => {
 
 const fetchApplications = async () => {
   try{
-      const apps = await getApplicationsAstro();
-      if(apps == "No applications found with these filters")
-      {
-        console.log("ahah")
-      }
-      else
-      {
-        setApplications(apps);
+    const apps = await getApplicationsAstro();
 
-        for(var i = 0; i < apps.length; i++){
-          if(apps[i].mission_id == missionId){
-            setIsAppliedBefore(true);
-          }
-        }
+    setApplications(apps);
 
-        console.log("Applications");
-        console.log(apps);
+    for(var i = 0; i < apps.length; i++){
+      if(apps[i].mission_id == missionId && apps[i].application_status == "Processing"){
+        setIsAppliedBefore(true);
       }
-      
+    }     
   } catch (error){
       console.error('Error fetching apps:', error);
   }
 };
+
+const handleApplyToMission = async () => {
+  try{
+    await applyToMission(missionData.mission_id, coverletter);
+  } catch (error) {
+    if (error.response && error.response.status) {
+      const status = error.response.status;
+
+      if (status === 409) {
+        setShowModal(false);
+        setAlertText('You can not apply since you are already in another mission!');
+        setShowAlert(true);
+      }
+      else{
+        console.error(`Error applying to mission:`, error);  
+      }    
+    }
+    else{
+      console.error(`Error applying to mission:`, error); 
+    }
+  }
+}
 
 useEffect(() => {
   fetchApplications();
@@ -158,7 +168,7 @@ useEffect(() => {
                  <button type="button" className="w-32 bg-button-purple text-white text-sm px-2 py-3 rounded-xl" onClick={() => setShowModal(false)}>
                     Close
                   </button>
-                  <button type="button" className="w-32 bg-button-purple text-white text-sm px-2 py-3 rounded-xl ml-4" onClick={() => applyToMission(missionData.mission_id, coverletter)}>
+                  <button type="button" className="w-32 bg-button-purple text-white text-sm px-2 py-3 rounded-xl ml-4" onClick={() => handleApplyToMission()}>
                     Apply
                   </button>
                 </div>
@@ -168,6 +178,18 @@ useEffect(() => {
         </div>
       </div>
     </div>
+    {showAlert && (
+          <div className={`fixed bottom-4 right-4 max-w-96 flex ${alertText.length > 40 ? 'flex-col items-end justify-center' : 'flex-row items-center'}`}>
+              <Alert severity={alertText.includes('successful') ? 'success' : 'error'} className="w-full">
+                  <div className="flex items-center justify-between w-full">
+                      <div>{alertText}</div>
+                      <IconButton onClick={() => setShowAlert(false)}>
+                          <CloseIcon />
+                      </IconButton>
+                  </div>
+              </Alert>
+          </div>
+        )}
     </Fragment>
     
   );
