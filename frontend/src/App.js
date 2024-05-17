@@ -19,6 +19,7 @@ import EmployeeDetailsCompany from './screens/company/EmployeeDetailsCompany';
 import ManageEmployees from "./screens/company/ManageEmployees";
 import LeadingMissionDetails from './screens/company/LeadingMissionDetails';
 import DashboardAstronaut from './screens/astronaut/DashboardAstronaut';
+import PastMissionsAstronaut from './screens/astronaut/PastMissionsAstronaut';
 import { UserProvider, useUser } from './UserProvider';
 import UserContext from './UserProvider';
 import { parseUserString } from './UserProvider';
@@ -193,6 +194,7 @@ function AppContent() {
                             <Route path="/my-applications" element={<ApplicationsAstronaut />} />
                             <Route path="/mission-postings" element={<MissionPostingsAstronaut />} />
                             <Route path="/apply/:missionId" element={<MissionDetailsAstronaut />} />
+                            <Route path="/astronaut-past-missions" element={<PastMissionsAstronaut />} />
                         </Route>
                         <Route element={<Auth allowedRoles={["admin"]} />}>
                             <Route path='/admin' element={<DashboardAdmin />} />
