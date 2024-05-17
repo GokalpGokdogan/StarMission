@@ -37,7 +37,7 @@ app.use((err, req, res, next) => {
 
 
 app.use((err, req, res, next) => {
-    if (err.code === 'ECONNRESET') {
+    if (err.code === 'ECONNRESET' || err.code === 'ECONNABORTED' || err.code === 'ETIMEDOUT') {
         console.log('ECONNRESET occurred');
         res.status(500).send('Connection was reset');
     } else {
