@@ -56,10 +56,26 @@ const getCurrentMission = async (astronaut_id) => {
     });
 };
 
-const getPastMissions = async (astronaut_id) => {
+const getPastMissions = async (astronaut_id, data) => {
     return new Promise((resolve, reject) => {
 
-        const query = `SELECT DISTINCT s.*, o.starting_date, o.leaving_date, o.salary FROM mission_of o, space_mission s WHERE o.astronaut_id = ? AND o.mission_id = s.mission_id AND o.leaving_date IS NOT NULL;`;
+        let { searchedName, startDate, endDate, location,
+            leadingCompanyName, minBudget, maxBudget } = data;
+            if(searchedName != null){searchedName = "%"+searchedName+"%";}
+
+        const query = `SELECT DISTINCT s.*, o.starting_date, o.leaving_date, o.salary 
+                        FROM mission_of o, space_mission s 
+                        WHERE o.astronaut_id = ? AND o.mission_id = s.mission_id 
+                        AND o.leaving_date IS NOT NULL 
+                        AND s.end_date < CURDATE()
+                        AND (CASE WHEN ? IS NOT NULL THEN s.name LIKE ? ELSE 1 END) 
+                        AND (CASE WHEN ? IS NOT NULL THEN s.start_date >= ? ELSE 1 END) 
+                        AND (CASE WHEN ? IS NOT NULL THEN s.end_date <= ? ELSE 1 END)
+                        AND (CASE WHEN ? IS NOT NULL THEN s.location = ? ELSE 1 END)
+                        AND (CASE WHEN ? IS NOT NULL THEN u.name LIKE ? ELSE 1 END)
+                        AND (CASE WHEN ? IS NOT NULL THEN s.budget >= ? ELSE 1 END)
+                        AND (CASE WHEN ? IS NOT NULL THEN s.budget <= ? ELSE 1 END)
+                        ORDER BY s.creation_date DESC;`;
         db.query(query, [astronaut_id], (err, result) => {
             if(err){
                 console.log(err);

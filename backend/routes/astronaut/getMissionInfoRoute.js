@@ -44,8 +44,10 @@ router.get('/getPastMissions', async (req, res) => {
         const astronaut_id = req.cookies.user_id;
         const user_type = req.cookies.user_type;
 
+        const data = req.query;
+
         if (astronaut_id && user_type == "astronaut") {
-            const response = await getPastMissions(astronaut_id);
+            const response = await getPastMissions(astronaut_id, data);
             res.status(200).json(response);
         }
         else {
