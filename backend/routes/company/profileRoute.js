@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { getCompanyData } = require('../../controllers/company/profileController');
+const { getCompanyData, editProfile} = require('../../controllers/company/profileController');
 
 // Get company data
 // Body: {companyId: int}
@@ -29,7 +29,7 @@ router.get('/getCompanyData', async (req, res) => {
 router.post('/editProfile', async (req, res) => {
     try {
         const data = req.body;
-        await editProfile(data.companyId, data);
+        await editProfile(data);
         res.status(200).send("Company profile updated.");
     }
     catch (err) {

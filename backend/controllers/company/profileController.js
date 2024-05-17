@@ -20,100 +20,49 @@ const getCompanyData = async (data) => {
     });
 };
 
-const editProfile = async (companyId, data) => {
-    return new Promise( async (resolve, reject) => {
-        let error = ""
-        let result = ""
-        const { name, email, phone, password, foundation_date, description, balance } = data;
+const editProfile = async (data) => {
+    return new Promise((resolve, reject) => {
+
+        const { companyId, name, email, phone, password, foundation_date, description, balance } = data;
         
+        let query = ``;
         if(name){
-            let query = `UPDATE user SET name = ? WHERE user_id = ?;`;
-            await db.query(query, [name, companyId], (err, result) => {
-                if(err) {
-                    error += err;
-                }
-                else {
-                    result += result;
-                }
-            });
+            query += `UPDATE user SET name = '${name}' WHERE user_id = ${companyId};`;
         }
 
         if(email){
-            query = `UPDATE user SET email = ? WHERE user_id = ?;`;
-            await db.query(query, [email, companyId], (err, result) => {
-                if(err) {
-                    error += err;
-                }
-                else {
-                    result += result;
-                }
-            });
+            query += `UPDATE user SET email = '${email}' WHERE user_id = ${companyId};`;
         }
 
         if(phone){
-            query = `UPDATE user SET phone = ? WHERE user_id = ?;`;
-            await db.query(query, [phone, companyId], (err, result) => {
-                if(err) {
-                    error += err;
-                }
-                else {
-                    result += result;
-                }
-            });
+            query += `UPDATE user SET phone = '${phone}' WHERE user_id = ${companyId};`;
         }
 
         if(password){
-            query = `UPDATE user SET password = ? WHERE user_id = ?;`;
-            await db.query(query, [password, companyId], (err, result) => {
-                if(err) {
-                    error += err;
-                }
-                else {
-                    result += result;
-                }
-            });
+            query += `UPDATE user SET password = '${password}' WHERE user_id = ${companyId};`;
         }
 
         if(foundation_date){    
-            query = `UPDATE company SET foundation_date = ? WHERE user_id = ?;`;
-            await db.query(query, [foundation_date, companyId], (err, result) => {
-                if(err) {
-                    error += err;
-                }
-                else {
-                    result += result;
-                }
-            });
+            query += `UPDATE company SET foundation_date = '${foundation_date}' WHERE user_id = ${companyId};`;
         }
 
         if(description){
-            query = `UPDATE company SET description = ? WHERE user_id = ?;`;
-            await db.query(query, [description, companyId], (err, result) => {
-                if(err) {
-                    error += err;
-                }
-                else {
-                    result += result;
-                }
-            });
+            query += `UPDATE company SET description = '${description}' WHERE user_id = ${companyId};`;
         }
 
         if(balance){
-            query = `UPDATE company SET balance = ? WHERE user_id = ?;`;
-            await db.query(query, [balance, companyId], (err, result) => {
-                if(err) {
-                    error += err;
-                }
-                else {
-                    result += result;
-                }
-            });
-        }
-        if(error){
-            reject(error);
+            query += `UPDATE company SET balance = ${balance} WHERE user_id = ${companyId};`;
         }
 
-        resolve(result);
+        db.query(query, [], (err, result) => {
+            console.log(data);
+            if(err){
+                reject(err);
+            }
+            else{
+                resolve(result);
+            }
+        });
     });
 }
 
