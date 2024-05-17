@@ -110,9 +110,9 @@ const acceptApplicationC = async (data) => {
                                   VALUES ((SELECT m.leading_firm_id FROM space_mission m WHERE m.mission_id = ?), CURDATE(), ?, ?); 
                                   
                                   EKLENECEK*/
-                                  
+
                         db.query(`INSERT INTO mission_of (astronaut_id, mission_id, salary, starting_date) VALUES (?, ?, ?, ?);`,
-                            [astronautId, missionId, salary, startDate, missionId, -1 * salary, `Accepted Application `],
+                            [astronautId, missionId, salary, startDate],
                             (err2, result2) => {
                                 if (err2) {
                                     reject(err2);
