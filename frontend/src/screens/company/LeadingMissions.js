@@ -77,8 +77,7 @@ const LeadingMissions = () => {
       setLoading(true);
 
       try {
-        console.log(leadingCompanyName?.value);
-        const res = await getPartnerMissions(userId, searchText, startDate, endDate, location, leadingCompanyName?.value, minBudget, maxBudget);
+        const res = await getLeadingMissions(userId, searchText, startDate, endDate, location, minBudget, maxBudget);
 
         setMissions(res);
       } catch (error) {
