@@ -54,14 +54,14 @@ const acceptIncomingBid = async (data) => {
     return new Promise((resolve, reject) => {
         const {companyId , bidId} = data;
         let query = ` SELECT DISTINCT * FROM mission_bid b
-                        WHERE b.bid_id = ? AND b.bid_status <> 'In progress';`  // checks if the bid is still valid
+                        WHERE b.bid_id = ? AND b.bid_status = 'In progress';`  // checks if the bid is still valid
         db.query(query,
                 [bidId],
                 (err, result) => {
                     if (err) {
                         reject(err);
                     }
-                    else if (result.length === 0) {
+                    else if (result.length != 0) {
                         query = `SELECT DISTINCT *, s.name as mission_name, u.name as bidding_company_name FROM mission_bid b, user u, company c, space_mission s
                                  WHERE u.user_id = ? AND b.bid_id = ? AND u.user_id = c.user_id AND s.mission_id = b.mission_id AND
                                  b.requested_amount <= c.balance`;

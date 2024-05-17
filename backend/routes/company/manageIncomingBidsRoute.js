@@ -42,10 +42,10 @@ router.post('/acceptIncomingBid', async(req,res) => {
         res.status(200).send(response);
     } catch (error) {
         if (error === "LEADING_COMPANY_BALANCE_NOT_ENOUGH") {
-            res.status(400).send("Leading firm does not have enough balance for this bid.");
+            res.status(409).send("Leading firm does not have enough balance for this bid.");
         }
         else if(error === "INVALID_BID"){
-            res.status(400).send("This bid is invalid at the moment.");
+            res.status(401).send("This bid is invalid at the moment.");
         }
         else {
             res.status(400).send("An error occurred in accept bid on a mission: " + error);
