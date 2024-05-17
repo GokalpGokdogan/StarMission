@@ -5,7 +5,11 @@ import { getMissionData, getCompanyData, bidToMission } from '../../Requests';
 import { useUser } from '../../UserProvider';
 import Header from '../../components/Header';
 import { DateRange } from 'react-date-range';
+import Alert from '@mui/material/Alert';
 import CircularProgress from '@mui/material/CircularProgress';
+import IconButton from "@mui/material/IconButton";
+import CloseIcon from "@mui/icons-material/Close";
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 
 //Kodun indentationı bozuk, daha sonra düzeltilsin!!!!
 const MissionDetailsCompany = () => {
@@ -15,6 +19,8 @@ const MissionDetailsCompany = () => {
   const [missionData, setMissionData] = useState({});
   const [loading, setLoading] = useState(true);
   const [companyData, setCompanyData] = useState({});
+  const [showAlert, setShowAlert] = useState(false);
+  const [alertText, setAlertText] = useState('');
 
   const fetchMissionData = async () => {
     try{
@@ -97,6 +103,26 @@ const formatDate = (date) => {
     setAmount('');
     setDescription('');
   };
+
+  const handleBidToMission = async () => {
+    try{
+      await bidToMission(userId, missionId, amount, description);
+      
+      resetInputFields();
+      setShowModal(false);
+
+      setAlertText('Bid successful! Redirecting to mission details...');
+      setShowAlert(true);
+      setTimeout(() => {
+          window.location.href = '/company-mission-postings';
+      }, 2000);
+    } catch{
+
+    } finally{
+      resetInputFields();
+      setShowModal(false);
+    }   
+  }
 
   return (
     <Fragment>
@@ -189,9 +215,8 @@ const formatDate = (date) => {
                     </button>
                     <button type="button" className="w-32 bg-button-purple text-white text-sm px-2 py-3 rounded-xl ml-4" 
                     onClick={() => {
-                      bidToMission(userId, missionId, amount, description);
-                      setShowModal(false);
-                      resetInputFields();
+                      console.log("jjjj");
+                      handleBidToMission();
                     }}
                   >
                     Bid to Mission
@@ -202,6 +227,18 @@ const formatDate = (date) => {
             </div>
           </div>
         </div>)}
+        {showAlert && (
+                <div className={`fixed bottom-4 right-4 max-w-96 flex ${alertText.length > 40 ? 'flex-col items-end justify-center' : 'flex-row items-center'}`}>
+                    <Alert severity={alertText.includes('successful') ? 'success' : 'error'} className="w-full">
+                        <div className="flex items-center justify-between w-full">
+                            <div>{alertText}</div>
+                            <IconButton onClick={() => setShowAlert(false)}>
+                                <CloseIcon />
+                            </IconButton>
+                        </div>
+                    </Alert>
+                </div>
+            )}
       </div>
     </Fragment>
   );
