@@ -37,7 +37,7 @@ const getApplications = async (data) => {
             minAge, maxAge, sex, minWeight, maxWeight,
             minHeight, maxHeight, nationality, missionName } = data;
 
-        if(searchedName != null){searchedName = "%"+searchedName+"%";}
+        if (searchedName != null) { searchedName = "%" + searchedName + "%"; }
         let query = `SELECT u.*, a.*, s.*, m.*,u.name AS astronaut_name, DATE(m.applied_date) AS applied_date FROM user u, astronaut a, space_mission s, company c, applied_mission m
                     WHERE u.user_id = a.user_id AND a.user_id = m.astronaut_id AND s.mission_id = m.mission_id 
                     AND c.user_id = s.leading_firm_id AND c.user_id = ?
@@ -81,76 +81,25 @@ const getApplications = async (data) => {
 // Accept application (company decides)
 
 const acceptApplicationC = async (data) => {
-    return new Promise( async (resolve, reject) => {
+    return new Promise(async (resolve, reject) => {
         const { astronautId, missionId, salary, startDate } = data;
-        let missionData = await getMissionData(data);
+        /**       INSERT INTO transaction(company_id, transaction_date, transaction_amount, transaction_description)
+                  VALUES ((SELECT m.leading_firm_id FROM space_mission m WHERE m.mission_id = ?), CURDATE(), ?, ?); 
+                  
+                  EKLENECEK*/
 
-        console.log("-----",missionData, "mission data");
-
-        console.log("-----",missionData[0].budget, "mission budget");
-        if(missionData[0].budget < salary){
-            reject("ER_BUDGET"); // Salary is bigger than mission budget
-        }
-        else if(missionData[0].end_date < startDate){
-            reject("ER_DATE"); // Start date is after mission end date
-        }
-        else{
-            // application_status: 0~Processing, 1~Accepted, 2~Rejected 3~Cancelled
-            db.query(`UPDATE applied_mission SET application_status = 'Accepted' WHERE astronaut_id = ? AND mission_id = ?;
-                      UPDATE space_mission SET budget = budget - ? WHERE mission_id = ?;`,
-                [astronautId, missionId, salary, missionId],
-                (err, result) => {
-                    if (err) {
-                        reject(err);
-                    }
-                    else {
-                        console.log(result, "successful accept application");
-
-                        /**       INSERT INTO transaction(company_id, transaction_date, transaction_amount, transaction_description)
-                                  VALUES ((SELECT m.leading_firm_id FROM space_mission m WHERE m.mission_id = ?), CURDATE(), ?, ?); 
-                                  
-                                  EKLENECEK*/
-
-                        db.query(`INSERT INTO mission_of (astronaut_id, mission_id, salary, starting_date) VALUES (?, ?, ?, ?);`,
-                            [astronautId, missionId, salary, startDate],
-                            (err2, result2) => {
-                                if (err2) {
-                                    reject(err2);
-                                }
-                                else {
-                                    // bid amount is bigger than mission budget & end date is before end date
-
-                                    
-
-                                    // when accepted, state of the mission is updated to cancelled
-                                    db.query(`UPDATE applied_mission SET application_status = 'Cancelled' WHERE astronaut_id = ? 
-                                            AND mission_id <> ?
-                                            AND application_status = 'Processing'`,
-                                        [astronautId,missionId],
-                                        (err3, result3) => {
-                                            if (err3) {
-                                                reject(err3);
-                                            }
-                                            else {
-                                                console.log(result3, "successful update mission state");
-                                                resolve(result2);  
-                                            }
-                                        }
-                                    );
-
-
-                                    console.log(result2, "successful insert into astronaut_mission");
-                                    resolve("successful accept application");
-                                }
-                            }
-                        );
-                    }
+        db.query(`INSERT INTO mission_of (astronaut_id, mission_id, salary, starting_date) VALUES (?, ?, ?, ?);`,
+            [astronautId, missionId, salary, startDate],
+            (err2, result2) => {
+                if (err2) {
+                    reject(err2.sqlMessage);
                 }
-            );
-        }
-
-
-
+                else {
+                    console.log(result2, "successful insert into astronaut_mission");
+                    resolve("successful accept application");
+                }
+            }
+        );
 
     });
 }
@@ -159,7 +108,7 @@ const acceptApplicationC = async (data) => {
 // get mission budget and end date
 
 const getMissionData = async (data) => {
-        return new Promise((resolve, reject) => {
+    return new Promise((resolve, reject) => {
         const { missionId } = data;
         db.query(`SELECT budget, end_date FROM space_mission WHERE mission_id = ?`,
             [missionId],
@@ -167,7 +116,7 @@ const getMissionData = async (data) => {
                 if (err) {
                     reject(err);
                 }
-                
+
                 else {
                     console.log(result, "successful get mission data");
                     resolve(result);
@@ -391,6 +340,8 @@ const getCompanySex = async (data) => {
 }
 
 
-module.exports = { getApplicantData, getApplications, acceptApplicationC,
-     acceptApplicationA, getApplicationData, rejectApplication,
-     getCompanyMissionNames, getCompanyProfessions, getCompanySex};
+module.exports = {
+    getApplicantData, getApplications, acceptApplicationC,
+    acceptApplicationA, getApplicationData, rejectApplication,
+    getCompanyMissionNames, getCompanyProfessions, getCompanySex
+};
