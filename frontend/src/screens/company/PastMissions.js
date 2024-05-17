@@ -257,7 +257,7 @@ const PastMissions = () => {
                 (missions.map(mission => (
                   <MissionItem
                     title={mission.name}
-                    company={!isLeadingSelected ? [mission.name] : ""}
+                    company={!isLeadingSelected ? [mission.company_name] : ""}
                     location={mission.location ? mission.location : "No location specified"}
                     id={mission.mission_id}
                     type="past"
