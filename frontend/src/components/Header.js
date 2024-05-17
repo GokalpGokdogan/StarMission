@@ -28,6 +28,9 @@ const Header = ({title}) => {
             >
               Logout
             </button>
+            <NavLink to={userType === "company" ? "/profile-company" : "/"} className="w-24 h-24 rounded-full overflow-hidden flex justify-center items-center">
+               <img width="60" height="60" src="https://seekvectorlogo.com/wp-content/uploads/2018/02/nasa-vector-logo.png" alt="Company Logo" />
+            </NavLink>
           </div>  
         </div>
     );
