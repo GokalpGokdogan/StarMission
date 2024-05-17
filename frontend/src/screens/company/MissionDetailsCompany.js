@@ -33,7 +33,6 @@ const MissionDetailsCompany = () => {
         console.error('Error fetching missions:', error);
     } finally {
       setTimeout(() => setLoading(false), 300);
-        console.error('Error fetching missions:', error);
     }
 };
 
