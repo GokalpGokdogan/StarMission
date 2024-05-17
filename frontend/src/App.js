@@ -102,7 +102,7 @@ function LayoutWithSidebar() {
                     },
                     {
                         title: 'Past Missions',
-                        link: 'my-applications'
+                        link: 'astronaut-past-missions'
                     },
                     {
                         title: 'Mission Postings',
