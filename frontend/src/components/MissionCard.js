@@ -20,7 +20,7 @@ const MissionCard = ({ missionData }) => {
         <div className="flex items-center justify-between">
           <h2 className="text-xl text-main-text font-semibold px-2 mb-4">Current Mission</h2>
         </div>
-       {missionData && missionData.length > 0 ? ( <div className="flex flex-col rounded-xl bg-white p-4">
+       {missionData ? ( <div className="flex flex-col rounded-xl bg-white p-4">
           <h2 className="text-2xl font-bold text-main-text ml-4">{missionData.name}</h2>
           <div className="flex items-center mt-4">
             <img width="90" height="90" src="https://seekvectorlogo.com/wp-content/uploads/2018/02/nasa-vector-logo.png" alt="NASA Logo" />
