@@ -205,6 +205,7 @@ const LeadingMissions = () => {
                 <MissionItem
                   title={mission.name}
                   location={mission.location ? mission.location: "No location specified"}
+                  type="leading"
                   id={mission.mission_id}
                 />
                 ))) : (
