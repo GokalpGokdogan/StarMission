@@ -86,9 +86,13 @@ const EmployeeCard = ({ employee }) => {
                                 <p className="truncate text-sm font-medium leading-6 text-main-text">Address: {employee.address}</p>
                             </div>
                             <div className="ml-2">
-                                <p className="text-sm font-medium leading-6 text-main-text">Age: {employee.age}</p>
-                                <p className="text-sm font-medium leading-6 text-main-text">Height: {employee.height} cm</p>
-                                <p className="text-sm font-medium leading-6 text-main-text">Weight: {employee.weight} kg</p>
+                            <p className="text-sm font-medium leading-6 text-main-text">Age: {employee.age !== null ? employee.age : "not specified"}</p>
+                                <p className="text-sm font-medium leading-6 text-main-text">
+                                    Height: {employee.height !== null ? `${employee.height} cm` : "not specified"}
+                                </p>
+                                <p className="text-sm font-medium leading-6 text-main-text">
+                                    Weight: {employee.weight !== null ? `${employee.weight} kg` : "not specified"}
+                                </p>
                                 <p className="text-sm font-medium leading-6 text-main-text">Birthday: {formatDate(employee.birth_date)}</p>
                             </div>
                         </div>

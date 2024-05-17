@@ -196,10 +196,14 @@ const MissionApplicant = ({application}) => {
                                 <p className="truncate text-sm font-medium leading-6 text-main-text">Address: {applicant?.address}</p>
                             </div>
                             <div className="">
-                                <p className="text-sm font-medium leading-6 text-main-text">Age: {applicant?.age}</p>
-                                <p className="text-sm font-medium leading-6 text-main-text">Height: {applicant?.height} cm</p>
-                                <p className="text-sm font-medium leading-6 text-main-text">Weight: {applicant?.weight} kg</p>
-                                <p className="text-sm font-medium leading-6 text-main-text">Birthday: {formatDate(applicant?.birth_date)}</p>
+                                <p className="text-sm font-medium leading-6 text-main-text">Age: {applicant.age !== null ? applicant.age : "not specified"}</p>
+                                <p className="text-sm font-medium leading-6 text-main-text">
+                                    Height: {applicant.height !== null ? `${applicant.height} cm` : "not specified"}
+                                </p>
+                                <p className="text-sm font-medium leading-6 text-main-text">
+                                    Weight: {applicant.weight !== null ? `${applicant.weight} kg` : "not specified"}
+                                </p>
+                                <p className="text-sm font-medium leading-6 text-main-text">Birthday: {formatDate(applicant.birth_date)}</p>
                             </div>
                         </div>
                     </div>

@@ -13,7 +13,7 @@ import 'react-date-range/dist/styles.css';
 import 'react-date-range/dist/theme/default.css';
 import Header from '../../components/Header';
 
-const PastMissions = () => {
+const PastMissionsAstronaut = () => {
   const [missionsPartner, setMissionsPartner] = useState([]);
   const [missions, setMissions] = useState([]);
   const [initialLoading, setInitialLoading] = useState(true);
@@ -24,14 +24,14 @@ const PastMissions = () => {
   const [searchText, setSearchText] = useState('');
   const [minBudget, setMinBudget] = useState(null);
   const [maxBudget, setMaxBudget] = useState(null);
-  const [leadingCompanyOptions, setLeadingCompanyOptions] = useState([]);
-  const [leadingCompanies, setLeadingCompanies] = useState([]);
+  //const [leadingCompanyOptions, setLeadingCompanyOptions] = useState([]);
+  //const [leadingCompanies, setLeadingCompanies] = useState([]);
   const [formattedDate, setFormattedDate] = useState(null);
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
   const [companyName, setcompanyName] = useState(null);
   const [location, setLocation] = useState(null);
-  const [isLeadingSelected, setIsLeadingSelected] = useState(true);
+
 
   const [selectedDateRange, setSelectedDateRange] = useState([
     {
@@ -97,7 +97,7 @@ const PastMissions = () => {
     }
   };
 
-  useEffect(() => {
+  /*useEffect(() => {
     const options = [
       { value: null, label: "Not specified" },
       ...leadingCompanies.map(item => ({
@@ -106,7 +106,7 @@ const PastMissions = () => {
       }))
     ];
     setLeadingCompanyOptions(options);
-  }, [leadingCompanies]);
+  }, [leadingCompanies]);*/
 
   useEffect(() => {
     fetchPastMissions();
@@ -190,7 +190,7 @@ const PastMissions = () => {
                 (missions.map(mission => (
                   <MissionItem
                     title={mission.name}
-                    company={!isLeadingSelected ? [mission.name] : ""}
+                    company={mission.name}
                     location={mission.location ? mission.location : "No location specified"}
                     id={mission.mission_id}
                   />
@@ -218,4 +218,4 @@ const PastMissions = () => {
   );
 };
 
-export default PastMissions;
+export default PastMissionsAstronaut;
