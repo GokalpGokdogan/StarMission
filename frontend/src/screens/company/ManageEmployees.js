@@ -89,7 +89,7 @@ const ManageEmployees = () => {
       }
   
       try {
-        const apps = await getEmployees(userId, searchText, profession?.value, minAge, maxAge, sex?.value, minWeight, maxWeight, minHeight, maxHeight, null);
+        const apps = await getEmployees(userId, searchText, profession?.value, minAge, maxAge, sex?.value, minWeight, maxWeight, minHeight, maxHeight, null, null );
         setEmployees(apps);
       } catch (error) {
         console.error('Error fetching employees:', error);
@@ -120,7 +120,7 @@ const ManageEmployees = () => {
         console.log(userId, searchText, profession?.value, minAge, maxAge, sex?.value, minWeight, maxWeight, minHeight, maxHeight, null);
   
         try {
-          const apps = await getEmployees(userId, searchText, profession?.value, minAge, maxAge, sex?.value, minWeight, maxWeight, minHeight, maxHeight, null);
+          const apps = await getEmployees(userId, searchText, profession?.value, minAge, maxAge, sex?.value, minWeight, maxWeight, minHeight, maxHeight, null, missionName?.value);
           setEmployees(apps);
         } catch (error) {
           console.error('Error fetching employees:', error);

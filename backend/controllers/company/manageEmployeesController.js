@@ -5,7 +5,9 @@ const db = require('../../database');
 const getEmployees = async (data) => {
     return new Promise((resolve, reject) => {
         let {companyId, searchedName, profession, minAge, maxAge, 
-            sex, minWeight, maxWeight, minHeight, maxHeight, nationality} = data;
+            sex, minWeight, maxWeight, minHeight, maxHeight, nationality, missionName} = data;
+
+        console.log(missionName, "missionName")
         if(searchedName != null){searchedName = "%"+searchedName+"%";}
         db.query(`
                 SELECT DISTINCT a.profession, a.user_id AS astronaut_id, s.location, s.name, u.name AS astronaut_name, s.mission_id,  TIMESTAMPDIFF(YEAR,  a.birth_date, CURDATE()) AS age FROM user u, astronaut a, space_mission s, company c, mission_of m
@@ -20,15 +22,19 @@ const getEmployees = async (data) => {
                 AND (CASE WHEN ? IS NOT NULL THEN a.height >= ? ELSE 1 END)
                 AND (CASE WHEN ? IS NOT NULL THEN a.height <= ? ELSE 1 END)
                 AND (CASE WHEN ? IS NOT NULL THEN a.weight >= ? ELSE 1 END)
-                AND (CASE WHEN ? IS NOT NULL THEN a.weight <= ? ELSE 1 END);`,
+                AND (CASE WHEN ? IS NOT NULL THEN a.weight <= ? ELSE 1 END)
+                AND (CASE WHEN ? IS NOT NULL THEN s.name = ? ELSE 1 END)
+                ORDER BY u.name DESC;`,
                 [companyId, searchedName, searchedName, profession, profession, minAge, minAge,
                     maxAge, maxAge, sex, sex,nationality, nationality, minHeight, minHeight, 
-                    maxHeight, maxHeight, minWeight, minWeight, maxWeight, maxWeight],
+                    maxHeight, maxHeight, minWeight, minWeight, maxWeight, maxWeight, missionName, missionName],
                 (err, result) => {
                     if (err) {
+                        console.log(err);
                         reject(err);
                     }
                     else if (result.length === 0) {
+                        console.log(result, "No employees found with these filters");
                         reject("ER_FIND_NONE");     // No employees found with these filters
                     }
                     else {

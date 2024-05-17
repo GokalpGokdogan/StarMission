@@ -95,7 +95,7 @@ export const logout = async (navigate, setUserType, setUserId) => {
 
 //company functions
 export const getEmployees = async (companyId, searchedName, profession, minAge, maxAge, 
-    sex, minWeight, maxWeight, minHeight, maxHeight, nationality) => {
+    sex, minWeight, maxWeight, minHeight, maxHeight, nationality, missionName) => {
     let res = await axios({
         method: 'get',
         url: `http://${API_HOST}/company/manageEmployees/getEmployees`,
@@ -112,6 +112,7 @@ export const getEmployees = async (companyId, searchedName, profession, minAge, 
             minHeight: minHeight,
             maxHeight: maxHeight,
             nationality: nationality,
+            missionName: missionName,
         },
         withCredentials: true
     });
