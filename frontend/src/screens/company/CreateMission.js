@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import AddDynamicInputFields from "../../components/AddDynamicInputFields";
 import { createMission } from "../../Requests";
 import Header from '../../components/Header';
+import { useUser } from "../../UserProvider";
 
 const CreateMission = () => {
     const [name, setName] = useState('');
@@ -12,6 +13,7 @@ const CreateMission = () => {
     const [budget, setBudget] = useState(0);
     const [important_notes, setImportantNotes] = useState('');
     const [inputs, setInputs] = useState([{ note: "" }]);
+    const {userId} = useUser();
 
     const getJoinedString = () => {
         // Extract values efficiently using map
@@ -54,7 +56,7 @@ const CreateMission = () => {
                 <h2 className="mb-4 text-xl font-bold text-main-text">Create New Mission</h2>
                 <form onSubmit={(e) => {
                     e.preventDefault(); // Prevent default form submission behavior
-                    createMission(64, name, location, start_date, end_date, description, 0, important_notes);
+                    createMission(userId, name, location, start_date, end_date, description, 0, important_notes);
                 }}>
                     <div className="grid gap-4 sm:grid-cols-2 sm:gap-6">
                         <div className="sm:col-span-2">

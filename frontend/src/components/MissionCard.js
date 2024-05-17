@@ -24,10 +24,11 @@ const MissionCard = ({ missionData }) => {
           <h2 className="text-2xl font-bold text-main-text ml-4">{missionData.name}</h2>
           <div className="flex items-center mt-4">
             <img width="90" height="90" src="https://seekvectorlogo.com/wp-content/uploads/2018/02/nasa-vector-logo.png" alt="NASA Logo" />
-            <div className='flex-1 ml-4'>
-              <p className="text-lg font-semibold mt-3 text-main-text">{missionData.company_name}</p>
-              <p className="truncate text-base text-sub-text">{missionData.location}</p>
-              <p className="truncate text-sm text-sub-text">Mission Start-End: {formattedStart} - {formattedEnd}</p>
+            <div className='flex-1 ml-4 py-2'>
+              <p className="text-lg font-semibold text-main-text">{missionData.company_name}</p>
+              <p className="truncate text-base font-medium text-sub-text">{missionData.location}</p>
+              <p className="break-all text-sm font-medium text-sub-text">{formattedStart} - {formattedEnd}</p>
+              <div className='bg-green-300 p-2'><p className="break-all text-sm font-medium text-sub-text text-main-bg">Salary: {missionData.salary}</p></div>
             </div>
           </div>
           <div className="flex flex-col px-4 py-5 mt-4 mb-4 bg-grey-bg rounded-xl">

@@ -8,6 +8,7 @@ import CancelIcon from '@mui/icons-material/Cancel';
 import Alert from '@mui/material/Alert';
 import { createReport } from "../../Requests";
 import Header from '../../components/Header';
+import { useUser } from "../../UserProvider";
 
 
 
@@ -21,6 +22,7 @@ const CreateReport = () => {
     const [fifthIsChecked, setFifthIsChecked] = useState(false);
     const [showAlert, setShowAlert] = useState(false);
     const [alertText, setAlertText] = useState('');
+    const {userId} = useUser();
 
     const handleNameChange = (e) => {
         setName(e.target.value);
@@ -51,7 +53,7 @@ const CreateReport = () => {
             {indices.push(4);}
             console.log(indices);
            try{
-            const mis = await  createReport(2, description, name, indices);
+            const mis = await  createReport(userId, description, name, indices);
 
             setAlertText('Report is created successfully! Redirecting to Dashboard page...');
             setShowAlert(true);

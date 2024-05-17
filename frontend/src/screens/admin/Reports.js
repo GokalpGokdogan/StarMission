@@ -6,14 +6,16 @@ import { NavLink } from "react-router-dom";
 import SinglePastMission from "../../components/SinglePastMission";
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import Header from '../../components/Header';
+import { useUser } from "../../UserProvider";
 
 const Reports = () => {
 
 const [reports, setReports] = useState([]);
+const {userId} = useUser();
 
   const fetchAllReports = async () => {
     try{
-        const rep = await getAllReports(2);
+        const rep = await getAllReports(userId);
         if(rep === "No applications found with these filters")
         {
           console.log("ahah")

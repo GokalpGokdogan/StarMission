@@ -4,8 +4,11 @@ import { createViews } from "../../Requests";
 import CreateReport from "./CreateReport";
 import { NavLink } from "react-router-dom";
 import Header from '../../components/Header';
+import { useUser } from "../../UserProvider";
 
 const DashboardAdmin = () => {
+
+    const {userId} = useUser();
 
     const createView = async () => {
         try{
