@@ -59,7 +59,7 @@ router.post('/rejectIncomingBid', async(req, res) => {
         const response = await manageIncomingBidsController.rejectIncomingBid(req.body);
         res.status(200).send(response);
     } catch (error) {
-            res.status(400).send("An error occurred in rejecting bid: " + error);
+        res.status(400).send("An error occurred in rejecting bid: " + error);
     }
 });
 

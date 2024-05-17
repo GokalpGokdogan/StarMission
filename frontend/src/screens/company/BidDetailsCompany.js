@@ -48,7 +48,6 @@ const handleAcceptIncomingBid = async () => {
   try{
       await acceptIncomingBid(userId, bidId);
       
-
       setAlertText('Accept incoming bid successful! Redirecting to the mission...');
       setShowAlert(true);
       const redirectUrl = `/leading-mission-details/${bidData.mission_id}`;
@@ -56,7 +55,24 @@ const handleAcceptIncomingBid = async () => {
         window.location.href = redirectUrl;
       }, 2000);
   } catch (error){
-      console.error('Error accepting the incoming bid:', error);
+    console.error(`Error applying to mission:`, error);
+    if (error.response && error.response.status) {
+      const status = error.response.status;
+
+      if (status === 409) {
+        setAlertText('Balance is not enough to accept the bid!');
+      }
+      else if(status === 401){
+        setAlertText('This bid is invalid at the moment!');
+      }
+      else {
+        setAlertText('An unexpected error occurred. Please try again.');
+      }
+    } else {
+      setAlertText('An unknown error occurred. Please try again.');
+    }
+    
+    setShowAlert(true);
   }
 };
 
