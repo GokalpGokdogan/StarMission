@@ -7,6 +7,7 @@ import Header from '../../components/Header';
 import Alert from '@mui/material/Alert';
 import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
+import CircularProgress from '@mui/material/CircularProgress';
 
 //Kodun indentationı bozuk, daha sonra düzeltilsin!!!!
 const MissionDetailsAstronaut = () => {
@@ -17,6 +18,7 @@ const MissionDetailsAstronaut = () => {
   const [applications, setApplications] = useState([]);
   const [showAlert, setShowAlert] = useState(false);
   const [alertText, setAlertText] = useState('');
+  const [loading, setLoading] = useState(true);
 
   const fetchMissionData = async () => {
     try{
@@ -26,6 +28,8 @@ const MissionDetailsAstronaut = () => {
         console.log(mission);           
     } catch (error){
         console.error('Error fetching apps:', error);
+    } finally {
+      setTimeout(() => setLoading(false), 300);
     }
 };
 
@@ -108,7 +112,14 @@ useEffect(() => {
     <Fragment>
     <div className="bg-home-bg min-h-screen">
       <Header title={"View Mission"}/>
-
+      {loading ? (
+        <div className="flex-grow flex items-center justify-center">
+        <div className="text-center mt-32">
+          <CircularProgress sx={{ color: "#635CFF" }} style={{ margin: '20px auto' }} size={50} color="primary" />
+          <p>Loading data...</p>
+        </div>
+      </div>
+      ) : (
       <div className="flex justify-center">
         <div className="flex flex-col justify-center" style={{ width: '1600px', minHeight: '700px' }}>
           <div className='flex-auto flex-col flex p-4 mb-10 ml-60 mr-60 mt-10 border rounded-xl border-transparent border-10 bg-white shadow-lg'>
@@ -182,7 +193,7 @@ useEffect(() => {
             
           </div>
         </div>
-      </div>
+      </div>)}
     </div>
     {showAlert && (
           <div className={`fixed bottom-4 right-4 max-w-96 flex ${alertText.length > 40 ? 'flex-col items-end justify-center' : 'flex-row items-center'}`}>

@@ -5,6 +5,7 @@ import { useUser } from '../../UserProvider';
 import { getCurrentMission, getPastMissions, getApplicationsAstro, getRecentMissions } from '../../Requests';
 import MissionCard from '../../components/MissionCard';
 import Header from '../../components/Header';
+import CircularProgress from '@mui/material/CircularProgress';
 
 const DashboardAstronaut = () => {
   const { userId } = useUser();
@@ -12,6 +13,7 @@ const DashboardAstronaut = () => {
   const [applications, setApplications] = useState([]);
   const [recentMissions, setRecentMissions] = useState([]);
   const [pastMissions, setPastMissions] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   const fetchRecentMissions = async () => {
     try {
@@ -27,6 +29,8 @@ const DashboardAstronaut = () => {
 
     } catch (error) {
       console.error('Error fetching apps:', error);
+    } finally {
+      setTimeout(() => setLoading(false), 300);
     }
   };
 
@@ -44,9 +48,10 @@ const DashboardAstronaut = () => {
 
     } catch (error) {
       console.error('Error fetching missions:', error);
+    } finally {
+      setTimeout(() => setLoading(false), 300);
     }
   };
-
 
   const fetchCurrentMission = async () => {
     try {
@@ -62,6 +67,8 @@ const DashboardAstronaut = () => {
 
     } catch (error) {
       console.error('Error fetching apps:', error);
+    } finally {
+      setTimeout(() => setLoading(false), 300);
     }
   };
 
@@ -79,6 +86,8 @@ const DashboardAstronaut = () => {
 
     } catch (error) {
       console.error('Error fetching apps:', error);
+    } finally {
+      setTimeout(() => setLoading(false), 300);
     }
   };
 
@@ -92,6 +101,14 @@ const DashboardAstronaut = () => {
   return (
     <div className="bg-home-bg h-full">
       <Header title={"Dashboard"}/>
+      {loading ? (
+        <div className="flex-grow flex items-center justify-center">
+        <div className="text-center mt-32">
+          <CircularProgress sx={{ color: "#635CFF" }} style={{ margin: '20px auto' }} size={50} color="primary" />
+          <p>Loading data...</p>
+        </div>
+      </div>
+      ) : (
       <div className='p-4'>
         <div className="grid grid-cols-2 grid-rows-2 mt-12">
           <div className="flex items-center justify-center px-4 py-1 ml-24">
@@ -108,7 +125,7 @@ const DashboardAstronaut = () => {
             <SimpleList title={"Recent Missions"} data={recentMissions} type={'mission'} />
           </div>
         </div>
-      </div>
+      </div>)}
     </div>
   );
 };
