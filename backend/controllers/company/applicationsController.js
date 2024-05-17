@@ -88,7 +88,7 @@ const acceptApplicationC = async (data) => {
                   
                   EKLENECEK*/
 
-        db.query(`INSERT INTO mission_of (astronaut_id, mission_id, salary, starting_date) VALUES (?, ?, ?, ?);`,
+            db.query(`INSERT INTO mission_of (astronaut_id, mission_id, salary, starting_date) VALUES (?, ?, ?, ?);`,
             [astronautId, missionId, salary, startDate],
             (err2, result2) => {
                 if (err2) {
