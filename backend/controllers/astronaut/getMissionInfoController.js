@@ -76,7 +76,8 @@ const getPastMissions = async (astronaut_id, data) => {
                         AND (CASE WHEN ? IS NOT NULL THEN s.budget >= ? ELSE 1 END)
                         AND (CASE WHEN ? IS NOT NULL THEN s.budget <= ? ELSE 1 END)
                         ORDER BY s.creation_date DESC;`;
-        db.query(query, [astronaut_id], (err, result) => {
+        db.query(query, [astronaut_id, searchedName, searchedName, startDate, startDate, endDate, endDate, 
+            location, location, leadingCompanyName, leadingCompanyName, minBudget, minBudget, maxBudget, maxBudget], (err, result) => {
             if(err){
                 console.log(err);
                 reject(err);
