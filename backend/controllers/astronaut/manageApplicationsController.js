@@ -27,6 +27,39 @@ const applyToMission = async (astronaut_id, data) => {
     });
 };
 
+const leaveMission = async (astronaut_id, data) => {
+    return new Promise((resolve, reject) => {
+
+        const {missionId} = data;
+        let query = `UPDATE mission_bid b, company c1, company c2
+                        SET b.bid_status = 'Accepted',
+                        c1.balance = c1.balance + b.requested_amount,
+                        c2.balance = c2.balance - b.requested_amount
+                        WHERE b.bid_id = ?
+                        AND c1.user_id = b.bidding_company_id
+                        AND c2.user_id = ?;`;
+        db.query(query, [astronaut_id, missionId], (err, result) => {
+            if(err){
+                reject(err);
+            }
+            else if(result.length > 0){
+                reject("ALREADY_IN_A_MISSION");
+            }
+            else{
+                query = "INSERT INTO applied_mission VALUES (?, ?, ?, CURDATE(), ?)";
+                db.query(query, [missionId, astronaut_id, cover_letter, "Processing"], (err2, result2) => {
+                    if(err2){
+                        reject(err2);
+                    }
+                    else{
+                        resolve(result2);
+                    }
+                });
+            }
+        });
+    });
+};
+
 const getApplications = async (astronaut_id, data) => {
     return new Promise((resolve, reject) => {
         const { start_date, end_date, mission_id, application_status } = data;

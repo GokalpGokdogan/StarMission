@@ -6,9 +6,11 @@ const db = require('../../database');
 
 const getApplicantData = async (data) => {
     return new Promise((resolve, reject) => {
-        const { astronautId } = data;
-        db.query(`SELECT * FROM astronaut a, user u WHERE u.user_id = a.user_id AND a.user_id = ?`,
-            [astronautId],
+        const { astronautId, missionId } = data;
+        db.query(`SELECT a.*, u.*, s.name as mission_name, s.budget FROM astronaut a, user u, space_mission s
+                  WHERE u.user_id = a.user_id AND a.user_id = ?
+                  AND s.mission_id = ?;`,
+            [astronautId, missionId, missionId],
             (err, result) => {
                 if (err) {
                     reject(err);
@@ -148,10 +150,6 @@ const acceptApplicationC = async (data) => {
                 }
             );
         }
-
-
-
-
     });
 }
 
