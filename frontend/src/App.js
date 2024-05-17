@@ -195,6 +195,8 @@ function AppContent() {
                             <Route path="/mission-postings" element={<MissionPostingsAstronaut />} />
                             <Route path="/apply/:missionId" element={<MissionDetailsAstronaut />} />
                             <Route path="/astronaut-past-missions" element={<PastMissionsAstronaut />} />
+                            <Route path="/astronaut-mission-details/:missionId" element={<MissionDetailsAstronaut />} />
+                            <Route path="/astronaut-past-mission-details/:missionId" element={<MissionDetailsAstronaut />} />
                         </Route>
                         <Route element={<Auth allowedRoles={["admin"]} />}>
                             <Route path='/admin' element={<DashboardAdmin />} />

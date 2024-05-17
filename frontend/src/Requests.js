@@ -625,13 +625,12 @@ export const getCurrentMission = async () => {
 }
 
 
-export const getPastMissions = async (astronaut_id, searchText, startDate, endDate, location, companyName, minBudget, maxBudget) => {
+export const getPastMissions = async (searchText, startDate, endDate, location, companyName, minBudget, maxBudget) => {
     let res = await axios({
         method: 'get',
         url: `http://${API_HOST}/astronaut/getMissionInfo/getPastMissions`,
         headers: { 'Content-Type': 'application/json' },
         params: {
-            astronaut_id: astronaut_id,
             searchText: searchText, 
             startDate: startDate, 
             endDate: endDate, 

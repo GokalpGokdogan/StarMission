@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import MissionItem from '../../components/MissionItem';
+import MissionItemAstro from '../../components/MissionItemAstro';
 import SearchBar from '../../components/SearchBar';
 import Alert from '@mui/material/Alert';
 import IconButton from "@mui/material/IconButton";
@@ -72,9 +72,11 @@ const PastMissionsAstronaut = () => {
 
 
   const fetchPastMissions = async () => {
+
     try {
-      const res = await getPastMissions(userId, searchText, startDate, endDate, location, companyName, minBudget, maxBudget);
+      const res = await getPastMissions(searchText, startDate, endDate, location, companyName, minBudget, maxBudget);
       setMissions(res);
+      console.log(res);
     } catch (error) {
       console.error('Error fetching past missions:', error);
     } finally {
@@ -188,9 +190,9 @@ const PastMissionsAstronaut = () => {
               </div>
               {missions && missions.length > 0 ?
                 (missions.map(mission => (
-                  <MissionItem
+                  <MissionItemAstro
                     title={mission.name}
-                    company={mission.name}
+                    company={mission.company_name}
                     location={mission.location ? mission.location : "No location specified"}
                     id={mission.mission_id}
                   />
