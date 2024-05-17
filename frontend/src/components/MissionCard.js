@@ -16,11 +16,11 @@ const MissionCard = ({ missionData }) => {
 
   return (
     <div className="w-full">
-      <div className="flex flex-col p-4 rounded-xl bg-grey-bg shadow-lg min-h-64">
+      <div className="flex flex-col p-4 rounded-xl bg-grey-bg shadow-lg min-h-72">
         <div className="flex items-center justify-between">
           <h2 className="text-xl text-main-text font-semibold px-2 mb-4">Current Mission</h2>
         </div>
-        <div className="flex flex-col rounded-xl bg-white p-4">
+       {missionData && missionData.length > 0 ? ( <div className="flex flex-col rounded-xl bg-white p-4">
           <h2 className="text-2xl font-bold text-main-text ml-4">{missionData.name}</h2>
           <div className="flex items-center mt-4">
             <img width="90" height="90" src="https://seekvectorlogo.com/wp-content/uploads/2018/02/nasa-vector-logo.png" alt="NASA Logo" />
@@ -44,7 +44,12 @@ const MissionCard = ({ missionData }) => {
               </div>
             </>
           )}
-        </div>
+        </div>) 
+        : (
+            <div className="flex justify-center w-full h-full my-auto">
+                <p className="text-xl font-semibold leading-6 text-main-text my-auto" >No data</p>
+            </div>
+        )}
       </div>
     </div>
 
