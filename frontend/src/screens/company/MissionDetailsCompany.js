@@ -15,6 +15,7 @@ const MissionDetailsCompany = () => {
   const [missionData, setMissionData] = useState({});
   const [loading, setLoading] = useState(true);
 
+
   const fetchMissionData = async () => {
     try{
         const mission = await getMissionData(missionId);
@@ -146,7 +147,8 @@ const formatDate = (date) => {
                     value={amount}
                     onChange={handleAmountChange}
                     className="bg-transparent border border-gray-300 rounded-lg p-2 ml-8 mb-4 w-64"
-                  />
+                  /> 
+                  <h2 className="text-sm font-bold text-main-text mt-4 ml-8">Your current balance: ${userId}</h2>
                   <h2 className="text-sm font-bold text-main-text mt-4 ml-8">Description</h2>
                   <textarea
                     type="description"
