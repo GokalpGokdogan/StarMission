@@ -1,4 +1,5 @@
 import React from 'react'
+import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 
 const MissionCard = ({ missionData }) => {
 
@@ -28,7 +29,7 @@ const MissionCard = ({ missionData }) => {
               <p className="text-lg font-semibold text-main-text">{missionData.company_name}</p>
               <p className="truncate text-base font-medium text-sub-text">{missionData.location}</p>
               <p className="break-all text-sm font-medium text-sub-text">{formattedStart} - {formattedEnd}</p>
-              <div className='bg-green-300 p-2'><p className="break-all text-sm font-medium text-sub-text text-main-bg">Salary: {missionData.salary}</p></div>
+              <div className='flex flex-row'><AttachMoneyIcon  style={{ marginLeft:'-4px', marginRight:'-2px', color: '#25854e', fontSize: '20px' }}/><p className="break-all text-sm font-medium text-sub-text text-main-bg">{missionData.salary}</p></div>
             </div>
           </div>
           <div className="flex flex-col px-4 py-5 mt-4 mb-4 bg-grey-bg rounded-xl">
