@@ -72,7 +72,7 @@ const DashboardTableAstronaut = ({data, showHeader, searchText}) => {
         <div className="flex items-center justify-between">
           <h2 className="text-xl text-main-text font-semibold px-2 mb-4">My Applications</h2>
         </div>
-          <ApplicationsTable dataSource={dataSource} columns={columns} />
+          <ApplicationsTable dataSource={dataSource.slice(0, 3)} columns={columns} />
 
       </ul>) :
       (   <ApplicationsTable dataSource={dataSource} columns={columns} />
