@@ -64,8 +64,9 @@ const getPastMissions = async (astronaut_id, data) => {
             if(searchedName != null){searchedName = "%"+searchedName+"%";}
 
         const query = `SELECT DISTINCT s.*, o.starting_date, o.leaving_date, o.salary 
-                        FROM mission_of o, space_mission s 
+                        FROM mission_of o, space_mission s, user u
                         WHERE o.astronaut_id = ? AND o.mission_id = s.mission_id 
+                        AND s.leading_firm_id = u.user_id
                         AND o.leaving_date IS NOT NULL 
                         AND s.end_date < CURDATE()
                         AND (CASE WHEN ? IS NOT NULL THEN s.name LIKE ? ELSE 1 END) 
