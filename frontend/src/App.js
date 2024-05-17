@@ -96,7 +96,11 @@ function LayoutWithSidebar() {
                         link: 'dashboard'
                     },
                     {
-                        title: 'Applications',
+                        title: 'My Applications',
+                        link: 'my-applications'
+                    },
+                    {
+                        title: 'Past Missions',
                         link: 'my-applications'
                     },
                     {
@@ -165,7 +169,6 @@ function AppContent() {
                     <Route path="/" element={<Login />} />
                     <Route path="/sign-up" element={<SignUp />} />
                     <Route element={<LayoutWithSidebar />}>
-                        <Route path="/past-missions" element={<PastMissions />} />
                         <Route path="/mission-applicant" element={<MissionApplicant />} />
                         <Route element={<Auth allowedRoles={["company"]} />}>
                             <Route path="/company-dashboard" element={<DashboardCompany />} />
@@ -183,6 +186,7 @@ function AppContent() {
                             <Route path="/bid-details/:bidId" element={<BidDetailsCompany />} />
                             <Route path="edit-company-profile" element={<EditProfile type={'company'} />} />
                             <Route path="profile-company" element={<ProfileCompany />} />
+                            <Route path="/past-missions" element={<PastMissions />} />
                         </Route>
                         <Route element={<Auth allowedRoles={["astronaut"]} />}>
                             <Route path="/dashboard" element={<DashboardAstronaut />} />
