@@ -18,7 +18,8 @@ module.exports = {
         "grey-bg": "#F4F7FE",
         "blue-bg": "#eef3ff",
         "home-bg": "#E6E9F7",
-        "filter-bg": "#c2c8ed"
+        "filter-bg": "#c2c8ed",
+        "bid-money": "#64dc76"
       },
         fontFamily: {
           poppins: ["Poppins", "sans-serif"],

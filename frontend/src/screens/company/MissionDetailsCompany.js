@@ -1,7 +1,7 @@
 import React, { Fragment, useState, useEffect } from 'react';
 import { Link, Route, useParams } from 'react-router-dom';
 import BidModal from '../../components/BidModal';
-import { getMissionData, bidToMission } from '../../Requests';
+import { getMissionData, getCompanyData, bidToMission } from '../../Requests';
 import { useUser } from '../../UserProvider';
 import Header from '../../components/Header';
 import { DateRange } from 'react-date-range';
@@ -14,12 +14,12 @@ const MissionDetailsCompany = () => {
   const {type} = useParams();
   const [missionData, setMissionData] = useState({});
   const [loading, setLoading] = useState(true);
-
+  const [companyData, setCompanyData] = useState({});
 
   const fetchMissionData = async () => {
     try{
         const mission = await getMissionData(missionId);
-        if(mission == "No applications found with these filters")
+        if(mission == "No missions found with these filters")
         {
           console.log("ahah")
         }
@@ -30,10 +30,29 @@ const MissionDetailsCompany = () => {
         }
         
     } catch (error){
-        console.error('Error fetching apps:', error);
+        console.error('Error fetching missions:', error);
     } finally {
       setTimeout(() => setLoading(false), 300);
+        console.error('Error fetching missions:', error);
     }
+};
+
+const fetchCompanyData = async () => {
+  try{
+      const companyData = await getCompanyData(userId);
+      if(companyData == "No companies found with these filters")
+      {
+        console.log("ahah")
+      }
+      else
+      {
+        setCompanyData(companyData);
+        console.log(companyData);
+      }
+      
+  } catch (error){
+      console.error('Error fetching companies:', error);
+  }
 };
 
 const formatDate = (date) => {
@@ -56,6 +75,7 @@ const formatDate = (date) => {
 
   useEffect(() => {
     fetchMissionData();
+    fetchCompanyData();
 }, []);
 
   const [searchText, setSearchText] = useState('');
@@ -146,9 +166,9 @@ const formatDate = (date) => {
                     placeholder="Enter amount in dollars"
                     value={amount}
                     onChange={handleAmountChange}
-                    className="bg-transparent border border-gray-300 rounded-lg p-2 ml-8 mb-4 w-64"
+                    className="bg-transparent border border-gray-300 rounded-lg p-2 ml-8 mb-1 w-64"
                   /> 
-                  <h2 className="text-sm font-bold text-main-text mt-4 ml-8">Your current balance: ${userId}</h2>
+                  <h2 className="text-sm font-bold bg-bid-money p-1 w-64 border text-main-text ml-8">Current balance: ${companyData.balance}</h2>
                   <h2 className="text-sm font-bold text-main-text mt-4 ml-8">Description</h2>
                   <textarea
                     type="description"

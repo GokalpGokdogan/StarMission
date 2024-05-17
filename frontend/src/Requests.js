@@ -256,6 +256,21 @@ export const getMissionData = async (missionId) => {
     return res.data;
 };
 
+export const getCompanyData = async (companyId) => {
+    let res = await axios({
+        method: 'get',
+        url: `http://${API_HOST}/company/profile/getCompanyData`,
+        headers: { 'Content-Type': 'application/json' },
+        params: {
+            companyId: companyId,
+        },
+        withCredentials: true
+    });
+
+    console.log(res.data);
+    return res.data;
+};
+
 export const getAstronautData = async (astronautId) => {
     let res = await axios({
         method: 'get',
