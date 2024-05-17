@@ -176,7 +176,7 @@ function AppContent() {
                             <Route path="/company-mission-postings" element={<MissionPostingsCompany />} />
                             <Route path="/leading-missions" element={<LeadingMissions />} />
                             <Route path="/partnered-missions" element={<PartneredMissions />} />
-                            <Route path="/mission-details/:missionId" element={<MissionDetailsCompany />} />
+                            <Route path="/mission-details/:missionId/:type" element={<MissionDetailsCompany />} />
                             <Route path="/application-details/:astronautId/:missionId/:appliedDate" element={<MissionApplicantCompany />} />
                             <Route path="/employee-details/:employeeId" element={<EmployeeDetailsCompany />} />
                             <Route path="/manage-employees" element={<ManageEmployees />} />

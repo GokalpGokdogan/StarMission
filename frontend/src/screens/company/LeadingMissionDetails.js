@@ -54,8 +54,8 @@ const LeadingMissionDetails = () => {
                 <img width="90" height="90" src="https://seekvectorlogo.com/wp-content/uploads/2018/02/nasa-vector-logo.png" alt="NASA Logo" />
                 <div>
                   <p className="text-xl font-semibold leading-5 mt-3 text-main-text">{missionData.company_name}</p>
-                  <p className="truncate text-base leading-5 text-sub-text">{missionData.location}</p>
-                  <p className="truncate text-sm leading-5 text-sub-text">Mission Start-End: {new Date(missionData.start_date).toLocaleDateString('en-GB').replace(/\//g, '.')} - {new Date(missionData.end_date).toLocaleDateString('en-GB').replace(/\//g, '.')}</p>
+                  <p className="truncate text-base font-medium leading-5 text-sub-text">{missionData.location}</p>
+                  <p className="truncate text-sm font-medium leading-5 text-sub-text">Mission Start-End: {new Date(missionData.start_date).toLocaleDateString('en-GB').replace(/\//g, '.')} - {new Date(missionData.end_date).toLocaleDateString('en-GB').replace(/\//g, '.')}</p>
                 </div>
               </div>
               <div className="flex flex-col px-1 py-5 ml-8 mr-8 mt-8 mb-4 w-128 bg-grey-bg rounded-xl">

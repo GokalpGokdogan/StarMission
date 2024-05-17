@@ -260,6 +260,7 @@ const PastMissions = () => {
                     company={!isLeadingSelected ? [mission.name] : ""}
                     location={mission.location ? mission.location : "No location specified"}
                     id={mission.mission_id}
+                    type="past"
                   />
                 ))) : (
                   <div className="flex justify-center w-[60%] h-[80%]">
