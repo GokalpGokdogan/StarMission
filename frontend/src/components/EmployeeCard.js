@@ -41,6 +41,22 @@ const EmployeeCard = ({ employee }) => {
         }
     }
 
+    const formatDate = (date) => {
+        var day = new Date(date).getDate();
+        var month = new Date(date).getMonth() + 1;
+        var year = new Date(date).getFullYear();
+      
+        if(day < 10){
+          day = "0" + day;
+        }
+      
+        if(month < 10){
+          month = "0" + month;
+        }
+      
+        return day + "." + month + "." + year;
+    }
+
     useEffect(() => {
         fetchMission();
     }, [employee]);
@@ -73,13 +89,13 @@ const EmployeeCard = ({ employee }) => {
                                 <p className="text-sm font-medium leading-6 text-main-text">Age: {employee.age}</p>
                                 <p className="text-sm font-medium leading-6 text-main-text">Height: {employee.height} cm</p>
                                 <p className="text-sm font-medium leading-6 text-main-text">Weight: {employee.weight} kg</p>
-                                <p className="text-sm font-medium leading-6 text-main-text">Birthday: {employee.birth_date}</p>
+                                <p className="text-sm font-medium leading-6 text-main-text">Birthday: {formatDate(employee.birth_date)}</p>
                             </div>
                         </div>
                         <div className="bg-blue-bg p-2 rounded-xl mt-5 ml-16 mr-44">
                             <h2 className="text-md text-purple-text font-semibold">Mission Information</h2>
                             <p className="text-sm font-medium leading-6 text-purple-text">Name: {mission.name}</p>
-                            <p className="text-sm font-medium leading-6 text-purple-text">Starting Date: {mission.starting_date}</p>
+                            <p className="text-sm font-medium leading-6 text-purple-text">Starting Date: {formatDate(mission.starting_date)}</p>
                             <p className="text-sm font-medium leading-6 text-purple-text">Salary: {mission.salary} €</p>
                         </div>
                     </div>

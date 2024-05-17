@@ -107,6 +107,22 @@ const MissionApplicant = ({application}) => {
         return !isNaN(parseFloat(salary)) && isFinite(parseFloat(salary) && parseFloat(salary) > 0);
     };
 
+    const formatDate = (date) => {
+        var day = new Date(date).getDate();
+        var month = new Date(date).getMonth() + 1;
+        var year = new Date(date).getFullYear();
+      
+        if(day < 10){
+          day = "0" + day;
+        }
+      
+        if(month < 10){
+          month = "0" + month;
+        }
+      
+        return day + "." + month + "." + year;
+    }
+
     const handleAccept = async () => {
         const date = formatStartDate();
         if (!application){
@@ -183,7 +199,7 @@ const MissionApplicant = ({application}) => {
                                 <p className="text-sm font-medium leading-6 text-main-text">Age: {applicant?.age}</p>
                                 <p className="text-sm font-medium leading-6 text-main-text">Height: {applicant?.height} cm</p>
                                 <p className="text-sm font-medium leading-6 text-main-text">Weight: {applicant?.weight} kg</p>
-                                <p className="text-sm font-medium leading-6 text-main-text">Birthday: {applicant?.birth_date}</p>
+                                <p className="text-sm font-medium leading-6 text-main-text">Birthday: {formatDate(applicant?.birth_date)}</p>
                             </div>
                         </div>
                     </div>

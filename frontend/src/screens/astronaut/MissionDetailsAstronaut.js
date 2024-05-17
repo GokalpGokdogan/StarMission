@@ -74,6 +74,22 @@ useEffect(() => {
     setCoverletter(e.target.value);
     setShowCoverletterPlaceholder(e.target.value === '');
   };
+
+  const formatDate = (date) => {
+    var day = new Date(date).getDate();
+    var month = new Date(date).getMonth() + 1;
+    var year = new Date(date).getFullYear();
+  
+    if(day < 10){
+      day = "0" + day;
+    }
+  
+    if(month < 10){
+      month = "0" + month;
+    }
+  
+    return day + "." + month + "." + year;
+  }
   
 
   return (
@@ -90,7 +106,7 @@ useEffect(() => {
               <div>
                 <p className="text-xl font-semibold leading-5 mt-3 text-main-text">{missionData.company_name}</p>
                 <p className="truncate text-base leading-5 text-sub-text">{missionData.location}</p>
-                <p className="truncate text-sm leading-5 text-sub-text">Mission Start-End: {missionData.start_date} - {missionData.start_date}</p>
+                <p className="truncate text-sm leading-5 text-sub-text">Mission Start-End: {formatDate(missionData.start_date)} - {formatDate(missionData.end_date)}</p>
               </div>
             </div>
             <div className="flex flex-col px-1 py-1 ml-8 mr-8 mt-8 mb-4 w-128 bg-grey-bg rounded-xl">
@@ -124,7 +140,7 @@ useEffect(() => {
                     <div>
                       <p className="text-xl font-semibold leading-5 mt-3 text-main-text">{missionData.company_name}</p>
                       <p className="truncate text-base leading-5 text-sub-text">{missionData.location}</p>
-                      <p className="truncate text-sm leading-5 text-sub-text">Mission Start-End: {missionData.start_date} - {missionData.end_date}</p>
+                      <p className="truncate text-sm leading-5 text-sub-text">Mission Start-End: {formatDate(missionData.start_date)} - {formatDate(missionData.end_date)}</p>
                     </div>
                   </div>
                   
