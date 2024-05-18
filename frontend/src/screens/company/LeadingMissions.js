@@ -108,7 +108,7 @@ const LeadingMissions = () => {
 
   const fetchMissions = async () => {
     try{
-      const missions = await getLeadingMissions(userId);    
+      const missions = await getLeadingMissions(userId, searchText, startDate, endDate, location, minBudget, maxBudget);    
       setMissions(missions);        
     } catch (error){
         console.error('Error fetching missions:', error);
