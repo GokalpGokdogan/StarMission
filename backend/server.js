@@ -22,6 +22,7 @@ const astronautProfileRoute = require("./routes/astronaut/profileRoute");
 
 const manageReportsRoute = require("./routes/admin/manageReportsRoute");
 const createViewsRoute = require("./routes/admin/createViewsRoute");
+const adminProfileRoute = require('./routes/admin/profileRoute');
 
 app.use(cors({origin: true, credentials: true}));
 app.use(express.json());
@@ -63,6 +64,7 @@ app.use('/astronaut/manageApplications', manageApplicationsRoute);
 
 app.use('/admin/manageReports', manageReportsRoute);
 app.use('/admin/createViews', createViewsRoute);
+app.use('/admin/profile', adminProfileRoute);
 
 app.use('/company/profile', companyProfileRoute);
 app.use('/astronaut/profile', astronautProfileRoute);
