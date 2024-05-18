@@ -22,7 +22,7 @@ const DashboardTable = ({data, showHeader, searchText}) => {
       key: `${i + 1}`,
       name: item.name,
       progress: item.bid_status === 'In Progress' ? 'In progress' : item.bid_status,
-      amount: item.requested_amount + " $",
+      amount: "$" + item.requested_amount,
       date: formattedDate,
     });
     }

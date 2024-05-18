@@ -16,6 +16,7 @@ const EditProfileCompany = () => {
   const [foundation_date, setFoundationDate] = useState(companyInfo?.foundation_date);
   const [description, setDescription] = useState(companyInfo?.description);
   const [balance, setBalance] = useState(companyInfo?.balance);
+  const [url, setUrl] = useState(companyInfo?.image_url);
   const [showAlert, setShowAlert] = useState(false);
   const [alertText, setAlertText] = useState('');
 
@@ -60,13 +61,15 @@ const EditProfileCompany = () => {
     setBalance(companyInfo.balance);
     setFoundationDate(companyInfo.foundation_date);
     setDescription(companyInfo.description);
+    setUrl(companyInfo.image_url);
   }, [companyInfo]);
 
   const handleSubmit = async (e) => {
       e.preventDefault();
       try{
-        const mis = await editCompanyProfile(userId, companyInfo.name, companyInfo.email, companyInfo.phone, companyInfo.password, foundation_date, description, 
-          balance);
+        const mis = await editCompanyProfile(userId, companyInfo.name, companyInfo.email, companyInfo.phone, 
+          companyInfo.password, foundation_date, description, 
+          balance, url);
 
         setAlertText('Profile edited successfully! Redirecting to View Profile page...');
         setShowAlert(true);
@@ -115,7 +118,7 @@ const EditProfileCompany = () => {
               </div>
               <div>
                 <p className="text-xl font-semibold leading-5 mt-8 mr-3 text-main-text">Profile url:</p>
-                <input type="text" name="name" value={`${companyInfo.image_url}`} id="name" className="bg-grey-bg w-64 mt-4 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block p-2.5 mr-10" placeholder="Edit foundation date" ></input>
+                <input type="text" name="name" value={`${url ? url : ''}`} onChange={(e)=>{setUrl(e.target.value)}} id="name" className="bg-grey-bg w-64 mt-4 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block p-2.5 mr-10" placeholder="Edit foundation date" ></input>
               </div>
             </div>
             <div className="flex justify-end mr-8 mt-16 mb-4">

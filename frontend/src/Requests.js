@@ -126,7 +126,7 @@ export const getImageByName = async (username) => {
 
 //company functions
 
-export const editCompanyProfile = async (companyId, name, email, phone, password, foundation_date, description, balance) => {
+export const editCompanyProfile = async (companyId, name, email, phone, password, foundation_date, description, balance, image_url) => {
     const body = {
         'companyId': companyId,
         'name': name,
@@ -135,7 +135,8 @@ export const editCompanyProfile = async (companyId, name, email, phone, password
         'password': password,
         'foundation_date': foundation_date,
         'description': description,
-        'balance': balance
+        'balance': balance,
+        'image_url' : image_url,
     };
     let res = await axios({
         method: 'post',
