@@ -52,21 +52,16 @@ const Header = ({title}) => {
             </button>
             <div className="relative">
             <div className='flex flex-row items-center mr-4'>
-             {/*  <div 
-                  className="w-8 h-8 rounded-full overflow-hidden flex justify-center items-center"
-                
-              >
-                  <img className='h-full' src="https://seekvectorlogo.com/wp-content/uploads/2018/02/nasa-vector-logo.png" alt="Company Logo" />
-              </div> */}
                 <Avatar alt="Remy Sharp" src={url} onClick={()=>setIsOpen(!isOpen)} className='hover:cursor-pointer'/>
               <KeyboardArrowDownIcon style={{color:"#FFFF"}} className="text-white transition-transform duration-300 hover:scale-110 hover:cursor-pointer" onClick={()=>setIsOpen(!isOpen)} ></KeyboardArrowDownIcon>
             </div>
-            {isOpen && (
+            {isOpen && (userType === "company" || userType === "astronaut" )
+            && (
                 <div className="absolute right-0 mt-2 py-2 w-32 bg-white rounded-md shadow-xl z-20">
-                    <NavLink to="/profile-company" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                    <NavLink to={userType === "company" ? `/profile-company`: `/profile-astronaut`} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
                         View Profile
                     </NavLink>
-                    <NavLink to="/edit-company-profile" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                    <NavLink to={userType === "company" ? `/edit-company-profile`: `/edit-astronaut-profile`} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
                         Edit Profile
                     </NavLink>
                 </div>

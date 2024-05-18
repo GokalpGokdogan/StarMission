@@ -84,7 +84,8 @@ const MissionPostingsAstronaut = () => {
 
   const fetchRecentMissions = async () => {
     try{
-        const mission = await getRecentMissions();
+        const mission = await getRecentMissions(searchText, startDate, endDate, location,
+          companyName, minBudget, maxBudget);
         if(mission == "No applications found with these filters")
         {
           console.log("ahah")
@@ -125,6 +126,10 @@ const MissionPostingsAstronaut = () => {
   useEffect(() => {
     fetchRecentMissions();
 }, []);
+
+useEffect(() => {
+  fetchRecentMissions();
+}, [searchText]);
 
   return (
     <div className="bg-home-bg h-full">

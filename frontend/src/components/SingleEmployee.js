@@ -1,13 +1,32 @@
-import React, { Fragment } from "react";
+import React, {useState, useEffect, Fragment } from "react";
 import { NavLink } from "react-router-dom";
+import { getImageByName } from "../Requests";
+import { Avatar } from "@mui/material";
 
 const SingleEmployee = ({ name, missions, profession, age, location, astronaut_id }) => {
+    const [url, setUrl] = useState(''); 
+
+    const fetchImage = async () => {
+        try{
+            const mis = await getImageByName(name);
+  
+            setUrl(mis);
+            console.log(mis);      
+        } catch (error){
+            console.error('Error fetching missions:', error);
+        } 
+    }
+  
+    useEffect(() => {
+        fetchImage();
+      }, []);
+    
     return (
         <li className="flex py-1 px-2">
             <div className="flex" style={{ width: "654px" }}>
                 <div className="flex w-full min-w-0 py-2 border rounded-xl border-transparent p-2 border-10 bg-white">
                     <div className="flex items-center">
-                        <img width="60" height="60" src="https://seekvectorlogo.com/wp-content/uploads/2018/02/nasa-vector-logo.png" />
+                        <Avatar sx={{height: 32, width: 32}} alt="Remy Sharp" src={url} className="mr-2"/> 
                     </div>
                     <div className="min-w-0 flex-auto">
                         <p className="text-sm font-semibold leading-6 text-main-text">{name}</p>

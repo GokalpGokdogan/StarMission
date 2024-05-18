@@ -1,16 +1,33 @@
 import React from "react";
-import { getMissionOfAstronaut, fireEmployee } from '../Requests';
+import { getMissionOfAstronaut, fireEmployee, getImageById } from '../Requests';
 import { useState, useEffect } from 'react';
 import CircularProgress from '@mui/material/CircularProgress';
 import Alert from '@mui/material/Alert';
 import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
+import { Avatar } from "@mui/material";
 
 const EmployeeCard = ({ employee }) => {
     const [loading, setLoading] = useState(true);
     const [mission, setMission] = useState({}); 
     const [showAlert, setShowAlert] = useState(false);
     const [alertText, setAlertText] = useState('');
+    const [url, setUrl] = useState(''); 
+
+    const fetchImage = async () => {
+        try{
+            const mis = await getImageById(employee.user_id);
+  
+            setUrl(mis);
+            console.log(mis);      
+        } catch (error){
+            console.error('Error fetching missions:', error);
+        } 
+    }
+  
+    useEffect(() => {
+        fetchImage();
+      }, []);
 
     const fetchMission = async () => {
         try{
@@ -74,7 +91,7 @@ const EmployeeCard = ({ employee }) => {
             <div className="flex flex-col max-w-4xl w-full h-96 p-8 border rounded-xl bg-white shadow-lg justify-between">
                 <div className="flex">
                     <div className="flex items-start">
-                        <img width="120" height="120" src="https://seekvectorlogo.com/wp-content/uploads/2018/02/nasa-vector-logo.png" alt="NASA Logo" />
+                        <Avatar sx={{height: 56, width: 56}} alt="Remy Sharp" src={url} className="mr-2"/> 
                     </div>
                     <div className="flex flex-col flex-1">
                         <h2 className="text-2xl text-main-text font-semibold ml-2 mb-4">{employee.name}</h2>

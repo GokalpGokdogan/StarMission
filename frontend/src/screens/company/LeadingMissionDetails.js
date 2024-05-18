@@ -2,9 +2,11 @@ import React, { Fragment, useState, useEffect } from 'react';
 import { Link, Route, useParams } from 'react-router-dom';
 import CompanyListModal from '../../components/CompanyListModal';
 import CompanyItem from '../../components/CompanyItem';
-import { getMissionData, getIncomingBids } from '../../Requests';
+import { getMissionData, getIncomingBids, getImageById } from '../../Requests';
 import Header from '../../components/Header';
 import CircularProgress from '@mui/material/CircularProgress';
+import { Avatar } from '@mui/material';
+import { useUser } from '../../UserProvider';
 
 const LeadingMissionDetails = () => {
   const { missionId } = useParams();
@@ -12,6 +14,24 @@ const LeadingMissionDetails = () => {
   const [incomingBids, setIncomingBids] = useState([]);
   const [showModal, setShowModal] = useState(false); // Define showModal state
   const [loading, setLoading] = useState(true);
+  const [url, setUrl] = useState(''); 
+  const {userId} = useUser();
+
+  const fetchImage = async () => {
+      try{
+    const mis = await getImageById(userId);
+        setUrl(mis);
+        console.log(mis);      
+    } catch (error){
+        console.error('Error fetching missions:', error);
+    } 
+
+  }
+
+  useEffect(() => {
+     fetchImage();
+
+  }, []);
 
   const fetchMissionData = async () => {
     try {
@@ -65,7 +85,7 @@ const LeadingMissionDetails = () => {
             <div className='flex-auto flex-col flex p-4 mb-10 ml-60 mr-60 mt-10 border rounded-xl border-transparent border-10 bg-white shadow-lg'>
               <h2 className="text-3xl font-bold text-main-text mt-8 ml-12">{missionData.name}</h2>
               <div className="flex items-center ml-8 mt-8">
-                <img width="90" height="90" src="https://seekvectorlogo.com/wp-content/uploads/2018/02/nasa-vector-logo.png" alt="NASA Logo" />
+                <Avatar sx={{height: 56, width: 56}} alt="Remy Sharp" src={url} className="mr-4"/> 
                 <div>
                   <p className="text-xl font-semibold leading-5 mt-3 text-main-text">{missionData.company_name}</p>
                   <p className="truncate text-base font-medium leading-5 text-sub-text">{missionData.location}</p>

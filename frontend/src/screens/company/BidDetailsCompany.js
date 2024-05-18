@@ -1,18 +1,37 @@
 import React, { Fragment, useState, useEffect } from 'react';
 import { Link, Route, useParams } from 'react-router-dom';
-import { getBidData, rejectIncomingBid, acceptIncomingBid } from '../../Requests';
+import { getBidData, rejectIncomingBid, acceptIncomingBid, getImageById } from '../../Requests';
 import Alert from '@mui/material/Alert';
 import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
 import { useUser } from '../../UserProvider';
 import Header from '../../components/Header';
+import { Avatar } from '@mui/material';
 
 const BidDetailsCompany = () => {
   const [showAlert, setShowAlert] = useState(false);
   const [alertText, setAlertText] = useState('');
   const { bidId } = useParams();
-  const { userId } = useUser();
   const [bidData, setBidData] = useState({});
+  const [url, setUrl] = useState(''); 
+  const {userId} = useUser();
+
+  const fetchImage = async () => {
+        try{
+      const mis = await getImageById(bidData.bidding_company_id);
+          setUrl(mis);
+          console.log(mis);      
+      } catch (error){
+          console.error('Error fetching missions:', error);
+      } 
+     
+  }
+
+  useEffect(() => {
+     fetchImage();
+
+  }, [bidData]);
+
 
   const fetchBidData = async () => {
     try {
@@ -88,7 +107,7 @@ const handleAcceptIncomingBid = async () => {
             <div className='flex-auto flex-col flex p-4 mb-10 ml-60 mr-60 mt-10 border rounded-xl border-transparent border-10 bg-white shadow-lg'>
               <h2 className="text-3xl font-bold text-main-text mt-8 ml-12">{bidData.mission_name}</h2>
               <div className="flex items-center ml-8 mt-8">
-                <img width="90" height="90" src="https://seekvectorlogo.com/wp-content/uploads/2018/02/nasa-vector-logo.png" alt="NASA Logo" />
+              <Avatar sx={{height: 56, width: 56}} alt="Remy Sharp" src={url} className="mr-4"/> 
                 <div>
                   <p className="text-xl font-semibold leading-5 mt-3 text-main-text">{bidData.company_name}</p>
                   <p className="truncate text-sm leading-5 mt-1 text-sub-text">Bid on {bidData.bid_date}</p>

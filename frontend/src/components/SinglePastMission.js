@@ -25,9 +25,9 @@ const SinglePastMission = ({title, location, type}) => {
         <li className="flex justify-between py-1 px-2">
             <div className="flex w-full min-w-0 gap-2 py-2 border rounded-xl border-transparent p-2 border-10 bg-white shadow-sm">
                 <div className="flex items-center">
-{/*                     <img width="60" height="60" src="https://seekvectorlogo.com/wp-content/uploads/2018/02/nasa-vector-logo.png" />
- */}             <Avatar sx={{height: 32, width: 32}} alt="Remy Sharp" src={url} /> </div>
-                <div className="min-w-0 flex flex-col w-full">
+                    <Avatar sx={{height: 32, width: 32}} alt="Remy Sharp" src={url} /> 
+                </div>
+                 <div className="min-w-0 flex flex-col w-full">
                     <p className="text-sm font-semibold leading-6 text-main-text">{title}</p>
                     <p className="truncate text-xs leading-5 text-sub-text">{location}</p>
                 </div>

@@ -33,7 +33,7 @@ const EmployeeDetailsCompany = () => {
 
     return (
         <div className="bg-home-bg h-full min-h-screen flex flex-col">
-        <Header title={"Application"}/>
+        <Header title={"Employee Details"}/>
         <div className="flex flex-grow justify-center items-center">
             <EmployeeCard employee={employeeData}></EmployeeCard>        
         </div>

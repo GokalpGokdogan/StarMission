@@ -1,13 +1,14 @@
 import React, { Fragment, useState, useEffect } from 'react';
 import { Link, Route, useParams } from 'react-router-dom';
 import BidModal from '../../components/BidModal';
-import { getMissionData, getApplicationsAstro } from '../../Requests';
+import { getMissionData, getApplicationsAstro, getImageByName } from '../../Requests';
 import { applyToMission } from '../../Requests';
 import Header from '../../components/Header';
 import Alert from '@mui/material/Alert';
 import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
 import CircularProgress from '@mui/material/CircularProgress';
+import { Avatar } from '@mui/material';
 
 //Kodun indentationı bozuk, daha sonra düzeltilsin!!!!
 const MissionDetailsAstronaut = () => {
@@ -19,6 +20,22 @@ const MissionDetailsAstronaut = () => {
   const [showAlert, setShowAlert] = useState(false);
   const [alertText, setAlertText] = useState('');
   const [loading, setLoading] = useState(true);
+  const [url, setUrl] = useState(''); 
+
+  const fetchImage = async () => {
+      try{
+          const mis = await getImageByName(missionData.company_name);
+
+          setUrl(mis);
+          console.log(mis);      
+      } catch (error){
+          console.error('Error fetching missions:', error);
+      } 
+  }
+
+  useEffect(() => {
+      fetchImage();
+    }, [missionData]);
 
   const fetchMissionData = async () => {
     try{
@@ -133,7 +150,7 @@ useEffect(() => {
           <div className='flex-auto flex-col flex p-4 mb-10 ml-60 mr-60 mt-10 border rounded-xl border-transparent border-10 bg-white shadow-lg'>
             <h2 className="text-3xl font-bold text-main-text mt-8 ml-12">{missionData.name}</h2>
             <div className="flex items-center ml-8 mt-8">
-              <img width="90" height="90" src="https://seekvectorlogo.com/wp-content/uploads/2018/02/nasa-vector-logo.png" alt="NASA Logo" />
+            <Avatar sx={{height: 56, width: 56}} alt="Remy Sharp" src={url} className="mr-2"/> 
               <div>
                 <p className="text-xl font-semibold leading-5 mt-3 text-main-text">{missionData.company_name}</p>
                 <p className="truncate text-base font-medium leading-5 text-sub-text">{missionData.location}</p>
@@ -182,7 +199,7 @@ useEffect(() => {
           <BidModal isVisible={showModal} onClose={() => setShowModal(false)}>  
                 <h2 className="text-3xl font-bold text-main-text mt-8 ml-12">Apply to {missionData.name}</h2>
                 <div className="flex items-center ml-8 mt-8">
-                <img width="90" height="90" src="https://seekvectorlogo.com/wp-content/uploads/2018/02/nasa-vector-logo.png" alt="NASA Logo" />
+                <Avatar sx={{height: 56, width: 56}} alt="Remy Sharp" src={url} className="mr-2"/> 
                 <div>
                   <p className="text-xl font-semibold leading-5 mt-3 text-main-text">{missionData.company_name}</p>
                   <p className="truncate text-base leading-5 text-sub-text">{missionData.location}</p>

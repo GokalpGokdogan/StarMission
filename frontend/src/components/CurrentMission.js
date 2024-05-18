@@ -1,13 +1,31 @@
-import {React, useState} from 'react'
+import {React, useState, useEffect} from 'react'
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import { leaveCurrentMission } from '../Requests';
 import Alert from '@mui/material/Alert';
 import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
+import { getImageById } from '../Requests';
+import { Avatar } from '@mui/material';
 
 const CurrentMission = ({ missionData }) => {
   const [showAlert, setShowAlert] = useState(false);
   const [alertText, setAlertText] = useState('');
+  const [url, setUrl] = useState(''); 
+
+  const fetchImage = async () => {
+      try{
+          const mis = await getImageById(missionData.leading_firm_id);
+
+          setUrl(mis);
+          console.log(mis);      
+      } catch (error){
+          console.error('Error fetching missions:', error);
+      } 
+  }
+
+  useEffect(() => {
+      fetchImage();
+    }, [missionData]);
 
   const formattedStart = new Date(missionData.start_date).toLocaleDateString('en-GB', {
     day: '2-digit',
@@ -52,22 +70,22 @@ const CurrentMission = ({ missionData }) => {
           <h2 className="text-xl text-main-text font-semibold px-2 mb-4">Current Mission</h2>
         </div>
        {missionData ? ( <div className="flex flex-col rounded-xl bg-white p-4">
-          <div className="flex justify-between mr-8 mb-4">
-            <h2 className="text-2xl font-bold text-main-text ml-4">{missionData.name}</h2>
-            <button type="button" className="w-32 bg-button-red text-white text-sm px-2 py-3 rounded-xl ml-4" onClick={() => {handleLeaveCurrentMission();}}>
+          <div className="flex justify-between mr-2 mb-4">
+            <h2 className="text-xl font-bold text-main-text ml-4">{missionData.name}</h2>
+            <button type="button" className="w-32 bg-button-red text-white text-sm  py-2 rounded-xl " onClick={() => {handleLeaveCurrentMission();}}>
               Leave
             </button>
           </div>
-          <div className="flex items-center mt-4">
-            <img width="90" height="90" src="https://seekvectorlogo.com/wp-content/uploads/2018/02/nasa-vector-logo.png" alt="NASA Logo" />
+          <div className="flex items-center">
+            <Avatar sx={{ width: 56, height: 56 }} alt="Remy Sharp" src={url} className='mr-2'/>
             <div className='flex-1 ml-4 py-2'>
-              <p className="text-lg font-semibold text-main-text">{missionData.company_name}</p>
-              <p className="truncate text-base font-medium text-sub-text">{missionData.location}</p>
+              <p className="text-md font-semibold text-main-text">{missionData.company_name}</p>
+              <p className="truncate text-md text-base font-medium text-sub-text">{missionData.location}</p>
               <p className="break-all text-sm font-medium text-sub-text">{formattedStart} - {formattedEnd}</p>
               <div className='flex flex-row'><AttachMoneyIcon  style={{ marginLeft:'-4px', marginRight:'-2px', color: '#25854e', fontSize: '20px' }}/><p className="break-all text-sm font-medium text-sub-text text-main-bg">{missionData.salary}</p></div>
             </div>
           </div>
-          <div className="flex flex-col px-4 py-5 mt-4 mb-4 bg-grey-bg rounded-xl">
+          <div className="flex flex-col px-4 py-4 mt-4 mb-4 bg-grey-bg rounded-xl">
             <p className="text-sm font-semibold text-sub-text">{missionData.description}</p>
           </div>
 

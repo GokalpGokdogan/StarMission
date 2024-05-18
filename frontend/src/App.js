@@ -36,6 +36,8 @@ import CreateReport from './screens/admin/CreateReport';
 import Reports from './screens/admin/Reports';
 import { ReportDetails } from './screens/admin/ReportDetails';
 import AnotherCompanyProfile from './screens/company/AnotherCompanyProfile';
+import EditProfileAstronaut from './screens/astronaut/EditProfileAstronaut';
+import ProfileAstronaut from './screens/astronaut/ViewProfileAstronaut';
 
 function App() {
     return (
@@ -189,7 +191,6 @@ function AppContent() {
                             <Route path="/edit-company-profile" element={<EditProfileCompany/>} />
                             <Route path="/profile-company" element={<ProfileCompany />} />
                             <Route path="/past-missions" element={<PastMissions />} />
-                            <Route path="/company-info/:companyId" element={<AnotherCompanyProfile />} />
                         </Route>
                         <Route element={<Auth allowedRoles={["astronaut"]} />}>
                             <Route path="/dashboard" element={<DashboardAstronaut />} />
@@ -199,6 +200,8 @@ function AppContent() {
                             <Route path="/astronaut-past-missions" element={<PastMissionsAstronaut />} />
                             <Route path="/astronaut-mission-details/:missionId" element={<MissionDetailsAstronaut />} />
                             <Route path="/astronaut-past-mission-details/:missionId" element={<MissionDetailsAstronaut />} />
+                            <Route path="/edit-astronaut-profile" element={<EditProfileAstronaut/>} />
+                            <Route path="/profile-astronaut" element={<ProfileAstronaut />} />
                         </Route>
                         <Route element={<Auth allowedRoles={["admin"]} />}>
                             <Route path='/admin' element={<DashboardAdmin />} />
