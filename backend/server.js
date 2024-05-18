@@ -14,10 +14,11 @@ const myBidsRoute = require('./routes/company/myBidsRoute');
 const createMissionRoute = require('./routes/company/createMissionRoute');
 const ledMissionsRoute = require('./routes/company/ledMissionsRoute');
 const manageIncomingBidsRoute = require('./routes/company/manageIncomingBidsRoute');
-const profileRoute = require('./routes/company/profileRoute');
+const companyProfileRoute = require('./routes/company/profileRoute');
 
 const getMissionInfoRoute = require("./routes/astronaut/getMissionInfoRoute");
 const manageApplicationsRoute = require("./routes/astronaut/manageApplicationsRoute");
+const astronautProfileRoute = require("./routes/astronaut/profileRoute");
 
 const manageReportsRoute = require("./routes/admin/manageReportsRoute");
 const createViewsRoute = require("./routes/admin/createViewsRoute");
@@ -63,7 +64,8 @@ app.use('/astronaut/manageApplications', manageApplicationsRoute);
 app.use('/admin/manageReports', manageReportsRoute);
 app.use('/admin/createViews', createViewsRoute);
 
-app.use('/company/profile', profileRoute);
+app.use('/company/profile', companyProfileRoute);
+app.use('/astronaut/profile', astronautProfileRoute);
 
 app.listen(3001, () => {
     console.log('Server is running on port 3001');

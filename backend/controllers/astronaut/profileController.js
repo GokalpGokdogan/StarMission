@@ -1,11 +1,11 @@
 const db = require('../../database');
 
-const getCompanyData = async (data) => {
+const getAstronautData = async (data) => {
     return new Promise((resolve, reject) => {
         
-        const { companyId } = data;
-        let query = `SELECT * from company c, user u WHERE c.user_id = u.user_id AND u.user_id = ?;`;
-        db.query(query, [companyId], (err, result) => {
+        const { astronautId } = data;
+        let query = `SELECT * from astronaut a, user u WHERE a.user_id = u.user_id AND u.user_id = ?;`;
+        db.query(query, [astronautId], (err, result) => {
                 if (err) {
                     reject(err);
                 }
@@ -20,101 +20,73 @@ const getCompanyData = async (data) => {
     });
 };
 
-const editProfile = async (companyId, data) => {
-    return new Promise( async (resolve, reject) => {
-        let error = ""
-        let result = ""
-        const { name, email, phone, password, foundation_date, description, balance } = data;
+
+const editProfile = async (data) => {
+    return new Promise((resolve, reject) => {
+
+        const { astronautId, name, email, phone, password, address, birth_date,
+             weight, height, description, sex, profession, nationality} = data;
         
+        let query = ``;
         if(name){
-            let query = `UPDATE user SET name = ? WHERE user_id = ?;`;
-            await db.query(query, [name, companyId], (err, result) => {
-                if(err) {
-                    error += err;
-                }
-                else {
-                    result += result;
-                }
-            });
+            query += `UPDATE user SET name = '${name}' WHERE user_id = ${astronautId};`;
         }
 
         if(email){
-            query = `UPDATE user SET email = ? WHERE user_id = ?;`;
-            await db.query(query, [email, companyId], (err, result) => {
-                if(err) {
-                    error += err;
-                }
-                else {
-                    result += result;
-                }
-            });
+            query += `UPDATE user SET email = '${email}' WHERE user_id = ${astronautId};`;
         }
 
         if(phone){
-            query = `UPDATE user SET phone = ? WHERE user_id = ?;`;
-            await db.query(query, [phone, companyId], (err, result) => {
-                if(err) {
-                    error += err;
-                }
-                else {
-                    result += result;
-                }
-            });
+            query += `UPDATE user SET phone = '${phone}' WHERE user_id = ${astronautId};`;
         }
 
         if(password){
-            query = `UPDATE user SET password = ? WHERE user_id = ?;`;
-            await db.query(query, [password, companyId], (err, result) => {
-                if(err) {
-                    error += err;
-                }
-                else {
-                    result += result;
-                }
-            });
-        }
-
-        if(foundation_date){    
-            query = `UPDATE company SET foundation_date = ? WHERE user_id = ?;`;
-            await db.query(query, [foundation_date, companyId], (err, result) => {
-                if(err) {
-                    error += err;
-                }
-                else {
-                    result += result;
-                }
-            });
+            query += `UPDATE user SET password = '${password}' WHERE user_id = ${astronautId};`;
         }
 
         if(description){
-            query = `UPDATE company SET description = ? WHERE user_id = ?;`;
-            await db.query(query, [description, companyId], (err, result) => {
-                if(err) {
-                    error += err;
-                }
-                else {
-                    result += result;
-                }
-            });
+            query += `UPDATE astronaut SET description = '${description}' WHERE user_id = ${astronautId};`;
         }
 
-        if(balance){
-            query = `UPDATE company SET balance = ? WHERE user_id = ?;`;
-            await db.query(query, [balance, companyId], (err, result) => {
-                if(err) {
-                    error += err;
-                }
-                else {
-                    result += result;
-                }
-            });
-        }
-        if(error){
-            reject(error);
+        if(address){
+            query += `UPDATE astronaut SET address = '${address}' WHERE user_id = ${astronautId};`;
         }
 
-        resolve(result);
+        if(birth_date){
+            query += `UPDATE astronaut SET birth_date = '${birth_date}' WHERE user_id = ${astronautId};`;
+        }
+
+        if(weight){
+            query += `UPDATE astronaut SET weight = ${weight} WHERE user_id = ${astronautId};`;
+        }
+
+        if(height){
+            query += `UPDATE astronaut SET height = ${height} WHERE user_id = ${astronautId};`;
+        }
+
+        if(sex){
+            query += `UPDATE astronaut SET sex = '${sex}' WHERE user_id = ${astronautId};`;
+        }
+
+        if(profession){
+            query += `UPDATE astronaut SET profession = '${profession}' WHERE user_id = ${astronautId};`;
+        }
+
+        if(nationality){
+            query += `UPDATE astronaut SET nationality = '${nationality}' WHERE user_id = ${astronautId};`;
+        }
+
+
+        db.query(query, [], (err, result) => {
+            console.log(data);
+            if(err){
+                reject(err);
+            }
+            else{
+                resolve(result);
+            }
+        });
     });
 }
 
-module.exports = { getCompanyData, editProfile };
+module.exports = { getAstronautData, editProfile };
