@@ -6,6 +6,7 @@ import { getCurrentMission, getPastMissions, getApplicationsAstro, getRecentMiss
 import MissionCard from '../../components/MissionCard';
 import Header from '../../components/Header';
 import CircularProgress from '@mui/material/CircularProgress';
+import CurrentMission from '../../components/CurrentMission';
 
 const DashboardAstronaut = () => {
   const { userId } = useUser();
@@ -113,7 +114,7 @@ const DashboardAstronaut = () => {
         <div className="grid grid-cols-2 grid-rows-2 mt-12">
           <div className="flex items-center justify-center px-4 py-1 ml-24">
             {/* <SimpleList title={"Current Mission"} data={mission} type={'mission'}/> */}
-            <MissionCard missionData={mission}></MissionCard>
+            <CurrentMission missionData={mission}></CurrentMission>
           </div>
           <div className="flex items-center justify-center px-4 py-1 mr-24">
             <DashboardTableAstronaut data={applications} showHeader={true} searchText={''} />
