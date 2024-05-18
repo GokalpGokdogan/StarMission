@@ -185,7 +185,7 @@ const getLeadingFirmNames = async (data) => {
 
 const getMissionData = async (data) => {
     return new Promise((resolve, reject) => {
-        const { missionId } = data;4
+        const { missionId } = data;
         let query = `SELECT DISTINCT s.*, u.name AS company_name FROM space_mission s, company c, user u WHERE s.mission_id = ? AND c.user_id = s.leading_firm_id AND c.user_id = u.user_id;
 
                      SELECT DISTINCT u.name as company_name
