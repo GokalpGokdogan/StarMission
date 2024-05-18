@@ -6,6 +6,7 @@ import Header from '../../components/Header';
 import { getCompanyData } from '../../Requests';
 import { useUser } from '../../UserProvider';
 import EditIcon from '@mui/icons-material/Edit';
+import { Avatar } from '@mui/material';
 
 const ProfileCompany = () => {
 
@@ -30,6 +31,22 @@ const ProfileCompany = () => {
     }
 };
 
+const formatDate = (date) => {
+  var day = new Date(date).getDate();
+  var month = new Date(date).getMonth() + 1;
+  var year = new Date(date).getFullYear();
+
+  if(day < 10){
+    day = "0" + day;
+  }
+
+  if(month < 10){
+    month = "0" + month;
+  }
+
+  return day + "." + month + "." + year;
+}
+
 useEffect(() => {
   fetchCompanyInfo();
 }, []);
@@ -42,12 +59,11 @@ return (
       <div className="flex justify-center">
         <div className="flex flex-col justify-center" style={{ width: '1600px', minHeight: '250px' }}>
           <div className='flex-auto flex-col flex p-4 mb-10 ml-60 mr-60 mt-10 border rounded-xl border-transparent border-10 bg-white shadow-lg'>
-            <NavLink className='w-full flex justify-end'><EditIcon className='flex justify-end' style={{color: "#4f07a5"}}/></NavLink>
-            <div className="flex items-center ml-8 mt-8">
-              <img width="120" height="120" src="https://seekvectorlogo.com/wp-content/uploads/2018/02/nasa-vector-logo.png" alt="NASA Logo" />
+            <div className="flex items-center ml-8 mt-8 gap-4">
+              <Avatar sx={{ width: 56, height: 56 }} alt="Remy Sharp" src="https://seekvectorlogo.com/wp-content/uploads/2018/02/nasa-vector-logo.png" />
               <div>
               <h2 className="text-3xl font-bold text-main-text mt-5">{companyInfo.name}</h2>
-            <p className="truncate text-sm leading-5 text-sub-text">Foundation date: {companyInfo.foundation_date ? companyInfo.foundation_date : "Not specified" }</p>
+            <p className="break-all text-md leading-5 font-medium text-sub-text">Foundation date: {companyInfo.foundation_date ? formatDate(companyInfo.foundation_date) : "Not specified" }</p>
               </div>
             </div>
             <p className="text-xl font-semibold leading-5 mt-12 ml-10 mr-3 text-main-text">Company Description</p>

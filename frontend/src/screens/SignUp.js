@@ -131,18 +131,9 @@ const SignUp = () => {
         }
     }
 
-    const checkPassword = () => {
-        if (/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()_+])[0-9a-zA-Z!@#$%^&*()_+]{8,}$/.test(password)) {
-            return 1;
-        } else {
-            return 0;
-        }
-    }
-
     const handleRegisterCompany = async () => {
         let validEmail = checkEmail();
         let validBirthDate = checkBirthday(); 
-        let validPassword = checkPassword();
         
         if (validEmail == 0)
         {
@@ -150,9 +141,9 @@ const SignUp = () => {
             setShowAlert(true);
             return;
         }
-        else if(validPassword == 0)
+        else if(password.length <= 0)
         {
-            setAlertText('Your password should have min. 8 characters, must contain at least one uppercase, lowercase, number, and special character.');
+            setAlertText('You should enter a valid password');
             setShowAlert(true);
             return;
         }
@@ -182,8 +173,7 @@ const SignUp = () => {
     const handleRegisterAstronaut = async () => {
         let validEmail = checkEmail();
         let validBirthDate = checkBirthday(); 
-        let validPassword = checkPassword();
-        
+
         if (validEmail == 0)
         {
             setAlertText('Invalid email address');
@@ -208,9 +198,9 @@ const SignUp = () => {
             setShowAlert(true);
             return;
         }
-        else if(validPassword == 0)
+        else if(password.length <= 0)
         {
-            setAlertText('Your password should have min. 8 characters, must contain at least one uppercase, lowercase, number, and special character.');
+            setAlertText('You should enter a valid password');
             setShowAlert(true);
             return;
         }
