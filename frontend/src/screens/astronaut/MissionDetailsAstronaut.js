@@ -67,35 +67,34 @@ const fetchApplications = async () => {
 };
 
 const handleApplyToMission = async () => {
-  try{
-    await applyToMission(missionData.mission_id, coverletter);
-    //resetInputFields();
-    setShowModal(false);
-    setAlertText('Application successful! Redirecting to mission postings...');
-    setShowAlert(true);
-    setTimeout(() => {
-        window.location.href = '/mission-postings';
-    }, 2000);
-    //redirect here
+  try {
+      await applyToMission(missionData.mission_id, coverletter);
+      setShowModal(false);
+      setAlertText('Application successful! Redirecting to mission postings...');
+      setShowAlert(true);
+      setTimeout(() => {
+          window.location.href = '/mission-postings';
+      }, 2000);
   } catch (error) {
-    if (error.response && error.response.status) {
-      const status = error.response.status;
-
-      if (status === 409) {
-        setShowModal(false);
-        setAlertText('You can not apply since you are already in another mission!');
-        setShowAlert(true);
+      if (error.response && error.response.status) {
+          const status = error.response.status;
+          if (status === 409) {
+              setShowModal(false);
+              setAlertText('You cannot apply since you are already in another mission!');
+              setShowAlert(true);
+          } else if (status === 400) {
+              setShowModal(false);
+              setAlertText("You already worked for this mission!");
+              setShowAlert(true);
+              
+          } else {
+              console.error(`Error applying to mission:`, error);
+          }
+      } else {
+          console.error(`Error applying to mission:`, error);
       }
-      else{
-        console.error(`Error applying to mission:`, error);  
-      }    
-    }
-    else{
-      console.error(`Error applying to mission:`, error); 
-    }
   }
-}
-
+};
 useEffect(() => {
   fetchApplications();
 }, []);
