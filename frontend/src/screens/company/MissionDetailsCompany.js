@@ -44,7 +44,6 @@ const MissionDetailsCompany = () => {
     try{
       const bids = await getMyBids(userId);
       console.log(bids);
-  
       for(var i = 0; i < bids.length; i++){
         if(bids[i].mission_id == missionId && bids[i].bid_status == "In progress"){
           setIsBidBefore(true);
@@ -224,7 +223,7 @@ const formatDate = (date) => {
                 </div>
               </>
               )}
-              {isBidBefore ? (<div className="flex justify-end mr-8 mt-16 mb-4">
+              {!isBidBefore ? (<div className="flex justify-end mr-8 mt-16 mb-4">
               <button type="button" className="w-32 bg-button-purple text-white text-sm px-2 py-3 rounded-xl" onClick={() => setShowModal(true)}>
                   Bid to Mission
                 </button>
