@@ -34,9 +34,11 @@ const MissionApplicant = ({application}) => {
         } 
     }
 
+
     const handleSalaryChange = (e) => {
         setSalary(e.target.value);
     };
+
 
     const handleStartDateChange = (e) => {
         setStartDate(e.target.value);
@@ -122,6 +124,10 @@ const MissionApplicant = ({application}) => {
         return !isNaN(parseFloat(salary)) && isFinite(parseFloat(salary) && parseFloat(salary) > 0);
     };
 
+    const isBalanceEnough = () => {
+        return salary <= application.budget;
+    };
+
     const formatDate = (date) => {
         var day = new Date(date).getDate();
         var month = new Date(date).getMonth() + 1;
@@ -145,6 +151,11 @@ const MissionApplicant = ({application}) => {
         }
         if(!isSalaryValid()){
             setAlertText('Invalid salary');
+            setShowAlert(true);
+            return;
+        }
+        if(!isBalanceEnough()){
+            setAlertText('Balance does not afford the salary you entered');
             setShowAlert(true);
             return;
         }
