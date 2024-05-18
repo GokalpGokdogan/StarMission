@@ -148,10 +148,23 @@ const formatDate = (date) => {
                   <p className="break-all text-sm font-medium leading-5 text-sub-text">Mission Start-End: {formatDate(missionData.start_date)} - {formatDate(missionData.end_date)}</p>
                 </div>
               </div>
+              {missionData.partner_firms && missionData.partner_firms.length > 0 && (
+                <>
+                  <h2 className="text-sm font-bold text-main-text mt-1 ml-8">Partners</h2>
+                  <div className="flex flex-col ml-8 mr-8 w-128 rounded-xl">
+                    <p className="text-sm font-semibold leading-5 mb-1 ml-3 mr-3 text-main-text">
+                      <ul className="list-disc list-inside">
+                        {missionData.partner_firms.map((partner, index) => (
+                          <li key={index} className="text-sm">{partner}</li>
+                        ))}
+                      </ul>
+                    </p>
+                  </div>
+                </>
+              )}
               <div className="flex flex-col px-1 py-5 ml-8 mr-8 mt-8 mb-4 w-128 bg-grey-bg rounded-xl">
                 <p className="text-sm font-semibold leading-5 ml-3 mr-3 text-sub-text">{missionData.description}</p>
               </div>
-
                {missionData.important_notes && missionData.important_notes.length > 0 && (
               <>
                 <h2 className="text-xl font-bold text-main-text mt-4 ml-8">Important Notes</h2>
