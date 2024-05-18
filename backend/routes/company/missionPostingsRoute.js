@@ -48,9 +48,6 @@ router.post('/terminateMission', async (req, res) => {
 // Body: { companyId: int, searchedName: str(255), startDate: date, endDate: date, location: str(255),
 // leadingCompanyName: str(255), minBudget: int, maxBudget: int }
 
-// Body: { companyId: int, searchedName: str(255), startDate: date, endDate: date, location: str(255), 
-// leadingCompanyName: str(255), minBudget: int, maxBudget: int }
-
 router.get('/getPastMissionPostingsLead', async (req, res) => {
     try {
         
