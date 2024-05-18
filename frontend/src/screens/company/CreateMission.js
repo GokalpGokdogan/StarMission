@@ -175,7 +175,7 @@ const CreateMission = () => {
     return (
         <div className="bg-home-bg">
             <Header title={"Create Mission"}/>
-            <div className="bg-white mt-5 py-2 border rounded-xl border-transparent p-2 border-10 py-8 px-4 mx-auto max-w-2xl lg:py-16">
+            <div className="bg-white mt-5 py-2 border rounded-xl border-transparent p-2 border-10 px-4 mx-auto max-w-2xl lg:py-16">
                 <h2 className="mb-4 text-xl font-bold text-main-text">Create New Mission</h2>
                 <div className="grid gap-4 sm:grid-cols-2 sm:gap-6">
                     <div className="sm:col-span-2">
