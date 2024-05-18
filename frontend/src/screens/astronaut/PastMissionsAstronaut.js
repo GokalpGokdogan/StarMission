@@ -59,9 +59,6 @@ const PastMissionsAstronaut = () => {
   };
 
   useEffect(() => {
-    console.log(selectedDateRange);
-    console.log(formatDate(selectedDateRange[0].startDate));
-    console.log(formatDate(selectedDateRange[0].endDate));
     setStartDate(formatDate(selectedDateRange[0].startDate));
     setEndDate(formatDate(selectedDateRange[0].endDate));
   }, [selectedDateRange]);
@@ -69,7 +66,6 @@ const PastMissionsAstronaut = () => {
   const handleSearchChange = (event) => {
     setSearchText(event.target.value);
   };
-
 
   const fetchPastMissions = async () => {
 
@@ -129,10 +125,7 @@ const PastMissionsAstronaut = () => {
   }, []);
 
   useEffect(() => {
-  }, []);
-
-
-  useEffect(() => {
+    fetchPastMissions();
   }, [searchText]);
 
   return (
