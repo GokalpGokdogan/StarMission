@@ -3,6 +3,7 @@ import MissionApplicant from "../../components/MissionApplicant";
 import {useParams} from "react-router-dom";
 import {getApplicationData} from "../../Requests";
 import Header from '../../components/Header';
+import { getImageById } from '../../Requests';
 
 const MissionApplicantCompany = () => {
     const { astronautId, missionId, appliedDate } = useParams();
@@ -29,6 +30,7 @@ const MissionApplicantCompany = () => {
     useEffect(() => {
         fetchApplicationData();
     }, []);
+
 
     return (
     <div className="bg-home-bg h-full min-h-screen flex flex-col">

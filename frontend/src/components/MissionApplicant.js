@@ -9,6 +9,8 @@ import PendingIcon from '@mui/icons-material/Pending';
 import CancelIcon from '@mui/icons-material/Cancel';
 import BlockIcon from '@mui/icons-material/Block';
 import { useUser } from "../UserProvider";
+import { getImageById } from "../Requests";
+import { Avatar } from "@mui/material";
 
 const MissionApplicant = ({application}) => {
     const [showAlert, setShowAlert] = useState(false);
@@ -18,6 +20,19 @@ const MissionApplicant = ({application}) => {
     const [applicant, setApplicant] = useState({});
     const [isLoading, setLoading] = useState(true);
     const [isProcessing, setProcessing] = useState(false);
+
+    const [url, setUrl] = useState(''); 
+
+    const fetchImage = async () => {
+        try{
+            const mis = await getImageById(applicant.user_id);
+  
+            setUrl(mis);
+            console.log(mis);      
+        } catch (error){
+            console.error('Error fetching missions:', error);
+        } 
+    }
 
     const handleSalaryChange = (e) => {
         setSalary(e.target.value);
@@ -157,6 +172,10 @@ const MissionApplicant = ({application}) => {
 
     }, [application]);
 
+    useEffect(() => {
+        fetchImage();
+      }, [applicant]);
+
     return (
         <div className="flex justify-center items-center h-full w-full">
             {isLoading ?
@@ -170,7 +189,7 @@ const MissionApplicant = ({application}) => {
                 (<div className="flex flex-col p-8 border rounded-xl min-h-96 bg-white shadow-lg justify-between" style={{ minWidth: '800px' }}>
                 <div className="flex">
                     <div className="flex items-center">
-                        <img width="120" height="120" src="https://seekvectorlogo.com/wp-content/uploads/2018/02/nasa-vector-logo.png" />
+                        <Avatar sx={{ width: 56, height: 56 }} alt="Remy Sharp" src={url} className="mr-4"/>
                     </div>
                     <div className="flex flex-col flex-1">
                         <div className="flex justify-between">

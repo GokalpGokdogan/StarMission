@@ -303,7 +303,7 @@ const SignUp = () => {
                         <label htmlFor="password" className="mt-2 text-white text-sm">Password</label>
                         <input
                             type="password"
-                            placeholder="Min. 8 characters"
+                            placeholder="Password"
                             value={password}
                             maxLength={100}
                             onChange={handlePasswordChange}
@@ -409,7 +409,7 @@ const SignUp = () => {
                         <label htmlFor="password" className="mt-2 text-white text-sm">Password</label>
                         <input
                             type="password"
-                            placeholder="Min. 8 characters"
+                            placeholder="Password"
                             value={password}
                             onChange={handlePasswordChange}
                             className="bg-transparent border border-gray-300 rounded-lg p-2 mb-4 text-white w-full"

@@ -2,6 +2,7 @@ import React, { Fragment, useState, useEffect } from 'react';
 import { Link, Route, useParams } from 'react-router-dom';
 import BidModal from '../../components/BidModal';
 import { getMissionData } from '../../Requests';
+import { Avatar } from '@mui/material';
 
 const ApplicationDetailsCompany = () => {
   const { missionId } = useParams();
@@ -63,7 +64,7 @@ const ApplicationDetailsCompany = () => {
             <div className='flex-auto flex-col flex p-4 mb-10 ml-60 mr-60 mt-10 border rounded-xl border-transparent border-10 bg-white shadow-lg'>
               <h2 className="text-3xl font-bold text-main-text mt-8 ml-12">{missionData.name}</h2>
               <div className="flex items-center ml-8 mt-8">
-                <img width="90" height="90" src="https://seekvectorlogo.com/wp-content/uploads/2018/02/nasa-vector-logo.png" alt="NASA Logo" />
+              <Avatar sx={{ width: 56, height: 56 }} alt="Remy Sharp" src={companyInfo.image_url} />
                 <div>
                   <p className="text-xl font-semibold leading-5 mt-3 text-main-text">{missionData.company_name}</p>
                   <p className="truncate text-base leading-5 text-sub-text">{missionData.location}</p>
@@ -90,7 +91,7 @@ const ApplicationDetailsCompany = () => {
                  <BidModal isVisible={showModal} onClose={() => setShowModal(false)}>
                   <h2 className="text-3xl font-bold text-main-text mt-8 ml-12">Bid to {missionData.name}</h2>
                   <div className="flex items-center ml-8 mt-8">
-                    <img width="90" height="90" src="https://seekvectorlogo.com/wp-content/uploads/2018/02/nasa-vector-logo.png" alt="NASA Logo" />
+                     <Avatar sx={{ width: 56, height: 56 }} alt="Remy Sharp" src={companyInfo.image_url} />
                     <div>
                       <p className="text-xl font-semibold leading-5 mt-3 text-main-text">{missionData.company_name}</p>
                       <p className="truncate text-base leading-5 text-sub-text">{missionData.location}</p>
