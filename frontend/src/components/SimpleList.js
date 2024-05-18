@@ -3,6 +3,7 @@ import SinglePastMission from './SinglePastMission'
 import { getPastMissions } from '../Requests';
 
 const SimpleList = ({ title, data, type }) => {
+
     return (
         <div className="w-full">
             <ul className="flex-auto flex-col flex p-4 border rounded-xl border-transparent border-10 bg-grey-bg shadow-lg px-4 min-h-72">
@@ -12,11 +13,11 @@ const SimpleList = ({ title, data, type }) => {
                 {data && data.length > 0 ? (
                     type === 'mission' ? (
                         data.slice(0, Math.min(3, data.length)).map(value => (
-                            <SinglePastMission key={value.id} title={value.name} location={value.location} />
+                            <SinglePastMission key={value.id} title={value.name} location={value.location} type={type}/>
                         ))
                     ) : (
                         data.slice(0, Math.min(3, data.length)).map(value => (
-                            <SinglePastMission key={value.id} title={value.astronaut_name} location={value.name} />
+                            <SinglePastMission key={value.id} title={value.astronaut_name} location={value.name} type={type}/>
                         ))
                     )
                 ) : (

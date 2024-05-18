@@ -93,7 +93,60 @@ export const logout = async (navigate, setUserType, setUserId) => {
 
 };
 
+export const getImageById = async (userId) => {
+    let res = await axios({
+        method: 'get',
+        url: `http://${API_HOST}/getImageById`,
+        headers: { 'Content-Type': 'application/json' },
+        params: {
+            userId: userId,
+        },
+        withCredentials: true
+    });
+
+    console.log(res.data);
+    return res.data;
+}
+
+export const getImageByName = async (username) => {
+    let res = await axios({
+        method: 'get',
+        url: `http://${API_HOST}/getImageByName`,
+        headers: { 'Content-Type': 'application/json' },
+        params: {
+            username: username,
+        },
+        withCredentials: true
+    });
+
+    console.log(res.data);
+    return res.data;
+}
+
+
 //company functions
+
+export const editCompanyProfile = async (companyId, name, email, phone, password, foundation_date, description, balance) => {
+    const body = {
+        'companyId': companyId,
+        'name': name,
+        'email': email,
+        'phone': phone,
+        'password': password,
+        'foundation_date': foundation_date,
+        'description': description,
+        'balance': balance
+    };
+    let res = await axios({
+        method: 'post',
+        url: `http://${API_HOST}/company/profile/editProfile`,
+        headers: { 'Content-Type': 'application/json', },
+        data: body,
+    })
+    console.log(res.data);
+    return res.data
+}
+
 export const getEmployees = async (companyId, searchedName, profession, minAge, maxAge, 
     sex, minWeight, maxWeight, minHeight, maxHeight, nationality, missionName) => {
     let res = await axios({
@@ -286,6 +339,7 @@ export const getAstronautData = async (astronautId) => {
     console.log(res.data);
     return res.data;
 };
+
 
 export const getMissionOfAstronaut = async (astronautId) => {
     let res = await axios({
@@ -612,7 +666,31 @@ export const getLeadingCompanyNames = async (companyId) => {
 
 // Astronaut functions
 
-
+export const editAstronautProfile = async (astronautId, name, email, phone, password, address, birth_date, weight, height, description, sex, profession, nationality) => {
+    const body = {
+        'astronautId': astronautId,
+        'name': name,
+        'email': email,
+        'phone': phone,
+        'password': password,
+        'address': address,
+        'birth_date': birth_date,
+        'weight': weight,
+        'height': height,
+        'description': description,
+        'sex': sex,
+        'profession': profession,
+        'nationality': nationality
+    };
+    let res = await axios({
+        method: 'post',
+        url: `http://${API_HOST}/astronaut/profile/editProfile`,
+        headers: { 'Content-Type': 'application/json', },
+        data: body,
+    })
+    console.log(res.data);
+    return res.data
+} 
 export const getCurrentMission = async () => {
     let res = await axios({
         method: 'get',

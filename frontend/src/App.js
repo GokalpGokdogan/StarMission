@@ -27,7 +27,7 @@ import Cookies from 'js-cookie';
 import { useNavigate, useLocation } from 'react-router-dom';
 import MissionApplicantCompany from "./screens/company/MissionApplicantCompany";
 import MyBidsCompany from './screens/company/MyBidsCompany';
-import EditProfile from './screens/EditProfile';
+import EditProfileCompany from './screens/company/EditProfileCompany';
 import BidDetailsCompany from './screens/company/BidDetailsCompany';
 import ProfileCompany from './screens/company/ProfileCompany';
 import MissionDetailsAstronaut from './screens/astronaut/MissionDetailsAstronaut';
@@ -186,7 +186,7 @@ function AppContent() {
                             <Route path="/create-mission" element={<CreateMission />} />
                             <Route path="/leading-mission-details/:missionId" element={<LeadingMissionDetails />} />
                             <Route path="/bid-details/:bidId" element={<BidDetailsCompany />} />
-                            <Route path="/edit-company-profile" element={<EditProfile type={'company'} />} />
+                            <Route path="/edit-company-profile" element={<EditProfileCompany/>} />
                             <Route path="/profile-company" element={<ProfileCompany />} />
                             <Route path="/past-missions" element={<PastMissions />} />
                             <Route path="/company-info/:companyId" element={<AnotherCompanyProfile />} />

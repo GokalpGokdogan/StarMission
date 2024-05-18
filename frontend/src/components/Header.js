@@ -1,7 +1,7 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {useNavigate, NavLink } from 'react-router-dom';
 import { useUser } from '../UserProvider';
-import {logout } from '../Requests';
+import {getImageById, logout } from '../Requests';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import Avatar from '@mui/material/Avatar';
 
@@ -9,8 +9,26 @@ const Header = ({title}) => {
     const navigate = useNavigate();
     const {setUserType} = useUser();
     const {setUserId} = useUser();
+    const {userId} = useUser();
     const {userType} = useUser();
     const [isOpen, setIsOpen] = useState(false);
+    const [url, setUrl] = useState(''); 
+
+    const fetchImage = async () => {
+        try{
+            const mis = await getImageById(userId);
+
+            setUrl(mis);
+            console.log(mis);      
+        } catch (error){
+            console.error('Error fetching missions:', error);
+        } 
+    }
+
+    useEffect(() => {
+        fetchImage();
+      }, []);
+
 
     
     return (
@@ -40,7 +58,7 @@ const Header = ({title}) => {
               >
                   <img className='h-full' src="https://seekvectorlogo.com/wp-content/uploads/2018/02/nasa-vector-logo.png" alt="Company Logo" />
               </div> */}
-                <Avatar alt="Remy Sharp" src="https://seekvectorlogo.com/wp-content/uploads/2018/02/nasa-vector-logo.png" />
+                <Avatar alt="Remy Sharp" src={url} onClick={()=>setIsOpen(!isOpen)} className='hover:cursor-pointer'/>
               <KeyboardArrowDownIcon style={{color:"#FFFF"}} className="text-white transition-transform duration-300 hover:scale-110 hover:cursor-pointer" onClick={()=>setIsOpen(!isOpen)} ></KeyboardArrowDownIcon>
             </div>
             {isOpen && (
