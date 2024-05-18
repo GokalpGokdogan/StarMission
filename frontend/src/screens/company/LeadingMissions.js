@@ -24,12 +24,8 @@ const LeadingMissions = () => {
   const [searchText, setSearchText] = useState('');
   const [minBudget, setMinBudget] = useState(null);
   const [maxBudget, setMaxBudget] = useState(null);
-  const [leadingCompanyOptions, setLeadingCompanyOptions] = useState([]);
-  const [leadingCompanies, setLeadingCompanies] = useState([]);
-  const [formattedDate, setFormattedDate] = useState(null);
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
-  const [leadingCompanyName, setLeadingCompanyName] = useState(null);
   const [location, setLocation] = useState(null);
   const [selectedDateRange, setSelectedDateRange] = useState([
     {
@@ -103,17 +99,6 @@ const LeadingMissions = () => {
   };
 
   useEffect(() => {
-    const options = [
-      { value: null, label: "Not specified" },
-      ...leadingCompanies.map(item => ({
-        value: item.name,
-        label: item.name
-      }))
-    ];
-    setLeadingCompanyOptions(options);
-  }, [leadingCompanies]);
-
-  useEffect(() => {
     fetchMissions();
   }, []);
 
@@ -170,17 +155,6 @@ const LeadingMissions = () => {
                   Reset
                 </button>
               </div>
-            </div>
-            <div className="mb-4">
-              <label className="block mb-1 text-main-text text-md font-medium">Leading Company</label>
-              <Select
-                value={leadingCompanyName}
-                onChange={(e)=> {setLeadingCompanyName(e); console.log(e);}}
-                options={leadingCompanyOptions}
-                isSearchable={true}
-                placeholder="Select Leading Company"
-                className="w-full"
-              />
             </div>
             <div className="flex">
               <div className="mb-4">

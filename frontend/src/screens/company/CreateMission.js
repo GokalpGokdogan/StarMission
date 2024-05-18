@@ -81,6 +81,16 @@ const CreateMission = () => {
         return regex.test(date);
     }
 
+    const isFirstDateBefore = (date1, date2) => {
+        let dateArray1 = date1.split(".");        
+        let dateA = new Date(dateArray1[2], dateArray1[1] - 1, dateArray1[0]);
+    
+        let dateArray2 = date2.split(".");        
+        let dateB = new Date(dateArray2[2], dateArray2[1] - 1, dateArray2[0]);
+
+        return dateA <= dateB;
+    }
+
     const handleCreateMission = async (e) => {
         if(!name){
             setAlertText('Please enter a name!');
@@ -102,6 +112,12 @@ const CreateMission = () => {
         }
         if(!isDateValid(end_date)){
             setAlertText('Invalid end date');
+            setShowAlert(true);
+
+            return;
+        }
+        if(!isFirstDateBefore(start_date, end_date)){
+            setAlertText('Start date can not be later than end date!');
             setShowAlert(true);
 
             return;
@@ -145,9 +161,7 @@ const CreateMission = () => {
         const day = parseInt(dateArray[0], 10);
         const month = parseInt(dateArray[1], 10) - 1;
         const year = parseInt(dateArray[2], 10);
-    
-        console.log("day: " + day + " month: " + month + " year: " + year);
-    
+        
         // Check if the day component is valid for the given month and year
         if (day > 0 && day <= new Date(year, month + 1, 0).getDate()) {
             const dateObject = new Date(`${newDate}T00:00:00Z`); // Set time zone offset to 0
