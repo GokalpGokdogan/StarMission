@@ -1,7 +1,7 @@
 import React, { Fragment, useState, useEffect } from 'react';
 import { Link, Route, useParams } from 'react-router-dom';
 import BidModal from '../../components/BidModal';
-import { getMissionData, getCompanyData, bidToMission } from '../../Requests';
+import { getMissionData, getCompanyData, bidToMission, getMyBids } from '../../Requests';
 import { useUser } from '../../UserProvider';
 import Header from '../../components/Header';
 import { DateRange } from 'react-date-range';
@@ -21,6 +21,22 @@ const MissionDetailsCompany = () => {
   const [companyData, setCompanyData] = useState({});
   const [showAlert, setShowAlert] = useState(false);
   const [alertText, setAlertText] = useState('');
+  const [isBidBefore, setIsBidBefore] = useState(false);
+
+  const fetchBidData = async () => {
+    try{
+      const bids = await getMyBids(userId);
+      console.log(bids);
+  
+      for(var i = 0; i < bids.length; i++){
+        if(bids[i].mission_id == missionId && bids[i].bid_status == "In progress"){
+          setIsBidBefore(true);
+        }
+      }     
+    } catch (error){
+      console.error('Error fetching bids:', error);
+    }
+  }
 
   const fetchMissionData = async () => {
     try{
@@ -81,6 +97,7 @@ const formatDate = (date) => {
   useEffect(() => {
     fetchMissionData();
     fetchCompanyData();
+    fetchBidData();
 }, []);
 
   const [searchText, setSearchText] = useState('');
@@ -116,8 +133,8 @@ const formatDate = (date) => {
       setTimeout(() => {
           window.location.href = '/company-mission-postings';
       }, 2000);
-    } catch{
-
+    } catch (error){
+      console.error("Error bidding to the mission", error);
     } finally{
       resetInputFields();
       setShowModal(false);
@@ -179,10 +196,10 @@ const formatDate = (date) => {
                 </div>
               </>
               )}
-              <div className="flex justify-end mr-8 mt-16 mb-4">
-              {type === "company" && (<button type="button" className="w-32 bg-button-purple text-white text-sm px-2 py-3 rounded-xl" onClick={() => setShowModal(true)}>
+              {!isBidBefore ? (<div className="flex justify-end mr-8 mt-16 mb-4">
+              <button type="button" className="w-32 bg-button-purple text-white text-sm px-2 py-3 rounded-xl" onClick={() => setShowModal(true)}>
                   Bid to Mission
-                </button>)}
+                </button>
                  <BidModal isVisible={showModal} 
                   onClose={() => { 
                     setShowModal(false);
@@ -228,7 +245,6 @@ const formatDate = (date) => {
                     </button>
                     <button type="button" className="w-32 bg-button-purple text-white text-sm px-2 py-3 rounded-xl ml-4" 
                     onClick={() => {
-                      console.log("jjjj");
                       handleBidToMission();
                     }}
                   >
@@ -236,7 +252,11 @@ const formatDate = (date) => {
                     </button>
                   </div>
                 </BidModal> 
-              </div>
+              </div>) : (
+                  <div className="flex mt-16 justify-center">
+                    <p>You already have a bid in progress for this mission!</p>
+                  </div>
+                )}
             </div>
           </div>
         </div>)}
