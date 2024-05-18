@@ -24,6 +24,8 @@ const manageReportsRoute = require("./routes/admin/manageReportsRoute");
 const createViewsRoute = require("./routes/admin/createViewsRoute");
 const adminProfileRoute = require('./routes/admin/profileRoute');
 
+const imageRoute = require("./routes/imageRoute");
+
 app.use(cors({origin: true, credentials: true}));
 app.use(express.json());
 app.use(cookieParser());
@@ -50,6 +52,7 @@ app.use((err, req, res, next) => {
 
 // routes
 app.use('/logReg', logRegRoute);
+app.use('/', imageRoute);
 
 app.use('/company/manageEmployees', manageEmployeesRoute); 
 app.use('/company/applications', applicationsRoute);
