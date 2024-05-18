@@ -67,8 +67,7 @@ const getPastMissions = async (astronaut_id, data) => {
                         FROM mission_of o, space_mission s, user u
                         WHERE o.astronaut_id = ? AND o.mission_id = s.mission_id 
                         AND s.leading_firm_id = u.user_id
-                        AND o.leaving_date IS NOT NULL 
-                        AND s.end_date < CURDATE()
+                        AND o.leaving_date IS NOT NULL
                         AND (CASE WHEN ? IS NOT NULL THEN s.name LIKE ? ELSE 1 END) 
                         AND (CASE WHEN ? IS NOT NULL THEN s.start_date >= ? ELSE 1 END) 
                         AND (CASE WHEN ? IS NOT NULL THEN s.end_date <= ? ELSE 1 END)
