@@ -63,7 +63,8 @@ const getPastMissions = async (astronaut_id, data) => {
             leadingCompanyName, minBudget, maxBudget } = data;
             if(searchedName != null){searchedName = "%"+searchedName+"%";}
 
-        const query = `SELECT DISTINCT s.*, u.name AS company_name, o.starting_date, o.leaving_date, o.salary 
+        // , o.starting_date, o.leaving_date, o.salary
+        const query = `SELECT DISTINCT s.*, u.name AS company_name 
                         FROM mission_of o, space_mission s, user u
                         WHERE o.astronaut_id = ? AND o.mission_id = s.mission_id 
                         AND s.leading_firm_id = u.user_id
