@@ -34,7 +34,7 @@ const leaveMission = async (astronaut_id, data) => {
         let query = `UPDATE mission_of m
                     SET m.leaving_date = CURDATE()
                     WHERE m.mission_id = ? AND m.astronaut_id = ? AND m.leaving_date IS NULL;`;
-        db.query(query, [missionId, astronautId], (err, result) => {
+        db.query(query, [missionId, astronaut_id], (err, result) => {
             if(err){
                 reject(err);
             }

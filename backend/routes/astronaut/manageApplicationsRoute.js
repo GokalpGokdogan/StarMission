@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { applyToMission, getApplications} = require("../../controllers/astronaut/manageApplicationsController.js");
+const { applyToMission, getApplications, leaveMission} = require("../../controllers/astronaut/manageApplicationsController.js");
 
 router.get('/getApplications', async(req, res) => {
     try {
@@ -29,7 +29,7 @@ router.post('/applyToMission', async(req, res) => {
         const data = req.body;
 
         if(astronaut_id && user_type == "astronaut"){
-            const response = await applyToMission(astronaut_id, data);
+            const response = await leaveMission(astronaut_id, data);
             res.status(200).json(response);
         }
         else{
@@ -53,14 +53,14 @@ router.post('/leaveMission', async(req, res) => {
         const data = req.body;
 
         if(astronaut_id && user_type == "astronaut"){
-            const response = await applyToMission(astronaut_id, data);
+            const response = await leaveMission(astronaut_id, data);
             res.status(200).json(response);
         }
         else{
             res.status(401).send("NOT_AUTHORIZED_USER");
         }
     } catch (error) {
-        res.status(400).send("An error occurred in get recent mission postings for astronaut" + error);
+        res.status(400).send("An error occurred in leaving mission for astronaut" + error);
     }
 });
 
