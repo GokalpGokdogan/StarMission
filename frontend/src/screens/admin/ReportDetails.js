@@ -32,6 +32,30 @@ export const ReportDetails = () => {
     fetchReportData();
   }, []);
 
+  const formatContainerName = (contName) => {
+    if (contName.startsWith("MostBudget")) {
+        return "Missions with the Most Budget";
+    }
+    else if(contName.startsWith("MostPartnered"))
+    {
+        return "Missions with the Most Number of Partner Companies";
+    }
+    else if(contName.startsWith("ClosestEndTimeMissions"))
+    {
+        return "Missions with the Closest End Time";
+    }
+    else if(contName.startsWith("MostActiveMissionCompanies"))
+    {
+        return "Companies with the Most Number of Active Missions";
+    }
+    else if(contName.startsWith("MostPastMissionAstronauts"))
+    {
+        return "Astronauts with the Most Number of Past Missions";
+    }
+    
+}
+
+
     return (
         <div className="bg-home-bg min-h-screen">
             <Header title={"Report Details"}/>
@@ -61,7 +85,7 @@ export const ReportDetails = () => {
 
                                 return (
                                     <div >
-                                        <label className="block mb-2 text-sm font-medium text-main-text">{value.container_name}</label>
+                                        <label className="block mb-2 text-sm font-medium text-main-text">{formatContainerName( value.container_name ) }</label>
                                         <ContainerTable columnNames={columnData} data={data}></ContainerTable>         
                                     </div>
                                 );

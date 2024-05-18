@@ -13,7 +13,7 @@ const CreateMission = () => {
     const [start_date, setStartDate] = useState('');
     const [end_date, setEndDate] = useState('');
     const [description, setDescription] = useState('');
-    const [budget, setBudget] = useState(0);
+    const [budget, setBudget] = useState('');
     const [important_notes, setImportantNotes] = useState('');
     const [inputs, setInputs] = useState([{ note: "" }]);
     const {userId} = useUser();
@@ -47,10 +47,15 @@ const CreateMission = () => {
         setDescription(e.target.value);
     };
 
+    const handleBudgetChange = (e) => {
+        setBudget(e.target.value);
+    };
+
+
     const handleCreateMission = async (e) => {
         try{
             e.preventDefault(); // Prevent default form submission behavior
-            await createMission(userId, name, location, start_date, end_date, description, 0, important_notes);
+            await createMission(userId, name, location, start_date, end_date, description, budget, important_notes);
                      
             setAlertText('Create mission successful! Redirecting to leading missions...');
             setShowAlert(true);
@@ -106,6 +111,10 @@ const CreateMission = () => {
                         <div className="w-full">
                             <label htmlFor="end-date" className="block mb-2 text-sm font-medium text-main-text">End Date</label>
                             <input value={end_date} onChange={handleEndDateChange} type="text" name="start-date" id="start-date" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 " placeholder="dd.mm.yyyy" required="" />
+                        </div>
+                        <div className="sm:col-span-2">
+                            <label htmlFor="budget" className="block mb-2 text-sm font-medium text-main-text">Budget ($)</label>
+                            <input value={budget} onChange={handleBudgetChange} type="text" name="budget" id="budget" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" placeholder="Enter Budget" required="" />
                         </div>
                         <div className="sm:col-span-2">
                             <label htmlFor="description" className="block mb-2 text-sm font-medium text-main-text">Description</label>

@@ -88,7 +88,7 @@ const EditProfileCompany = () => {
         <div className="flex flex-col justify-center" style={{ width: '1600px', minHeight: '250px' }}>
           <div className='flex-auto flex-col flex p-4 mb-10 ml-60 mr-60 mt-10 border rounded-xl border-transparent border-10 bg-white shadow-lg'>
             <div className="flex items-center ml-8 mt-8 gap-4">
-              <Avatar sx={{ width: 56, height: 56, zIndex:0 }} alt="Remy Sharp" src={companyInfo.image_url} />
+              <Avatar sx={{ width: 56, height: 56, zIndex: 0 }} alt="Remy Sharp" src={companyInfo.image_url} />
               <div>
                 <h2 className="text-3xl font-bold text-main-text mt-5">{companyInfo.name}</h2>
                 <div className='flex flex-row gap-2 items-center'>
