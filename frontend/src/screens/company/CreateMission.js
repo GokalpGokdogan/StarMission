@@ -126,26 +126,25 @@ const CreateMission = () => {
         const day = parseInt(dateArray[0], 10);
         const month = parseInt(dateArray[1], 10) - 1;
         const year = parseInt(dateArray[2], 10);
-
+    
         console.log("day: " + day + " month: " + month + " year: " + year);
-
+    
         // Check if the day component is valid for the given month and year
         if (day > 0 && day <= new Date(year, month + 1, 0).getDate()) {
-            const date = new Date(`${newDate}T00:00:00Z`); // Set time zone offset to 0
-
+            const dateObject = new Date(`${newDate}T00:00:00Z`); // Set time zone offset to 0
+    
             // Check if the constructed Date object is valid
             if (
-                date.getUTCFullYear() === year &&
-                date.getUTCMonth() === month &&
-                date.getUTCDate() === day
+                dateObject.getUTCFullYear() === year &&
+                dateObject.getUTCMonth() === month &&
+                dateObject.getUTCDate() === day
             ) {
                 return newDate; // Valid date
             }
         }
-
-        return null;
-    }
-
+    
+        return null; // Invalid date
+    };
 
     useEffect(() => {
         console.log(inputs);
