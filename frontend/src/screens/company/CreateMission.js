@@ -95,7 +95,7 @@ const CreateMission = () => {
         }
         try{
             e.preventDefault(); // Prevent default form submission behavior
-            await createMission(userId, name, location, start_date, end_date, description, budget, important_notes);
+            await createMission(userId, name, location, formatDate(start_date), formatDate(end_date), description, budget, important_notes);
                      
             setAlertText('Create mission successful! Redirecting to leading missions...');
             setShowAlert(true);
@@ -119,6 +119,32 @@ const CreateMission = () => {
             console.log(error.response.data);
         }
     };
+
+    const formatDate = (date) => {
+        let dateArray = date.split(".");
+        let newDate = `${dateArray[2]}-${dateArray[1]}-${dateArray[0]}`;
+        const day = parseInt(dateArray[0], 10);
+        const month = parseInt(dateArray[1], 10) - 1;
+        const year = parseInt(dateArray[2], 10);
+
+        console.log("day: " + day + " month: " + month + " year: " + year);
+
+        // Check if the day component is valid for the given month and year
+        if (day > 0 && day <= new Date(year, month + 1, 0).getDate()) {
+            const date = new Date(`${newDate}T00:00:00Z`); // Set time zone offset to 0
+
+            // Check if the constructed Date object is valid
+            if (
+                date.getUTCFullYear() === year &&
+                date.getUTCMonth() === month &&
+                date.getUTCDate() === day
+            ) {
+                return newDate; // Valid date
+            }
+        }
+
+        return null;
+    }
 
 
     useEffect(() => {
