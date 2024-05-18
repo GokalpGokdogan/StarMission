@@ -167,7 +167,7 @@ const MissionApplicant = ({application}) => {
                     </div>
                 )
                 :
-                (<div className="flex flex-col p-8 border rounded-xl h-96 bg-white shadow-lg justify-between" style={{ minWidth: '800px' }}>
+                (<div className="flex flex-col p-8 border rounded-xl min-h-96 bg-white shadow-lg justify-between" style={{ minWidth: '800px' }}>
                 <div className="flex">
                     <div className="flex items-center">
                         <img width="120" height="120" src="https://seekvectorlogo.com/wp-content/uploads/2018/02/nasa-vector-logo.png" />
@@ -208,50 +208,65 @@ const MissionApplicant = ({application}) => {
                         </div>
                     </div>
                 </div>
-                <div className="flex-auto flex-col flex min-w-0 mt-2 p-2 border rounded-xl border-transparent border-10 bg-grey-bg">
+                <div className="flex-auto flex-col flex min-w-0 mt-6 p-2 border rounded-xl border-transparent border-10 bg-grey-bg">
                     <p className="truncate text-sm font-medium leading-6 text-main-text">{application.cover_letter}</p>
                 </div>
+                {application.application_status == "Processing" && (
+                        <div className="flex flex-col items-center justify-center mt-4  w-full">
+                            <div className="flex flex-col mt-2 w-full border bg-grey-bg rounded border-main-text">
+                                <div className="flex-auto flex-col flex rounded p-1 w-64 justify-end min-w-0  mt-2">
+                                    <p className="truncate text-sm font-medium text-main-text">Mission Name: {application.mission_name}</p>
+                                </div>
+                                <div className="flex-auto flex-col flex rounded p-1 w-64 justify-end min-w-0">
+                                    <p className="truncate text-sm font-medium text-main-text">Mission Budget: ${application.budget}</p>
+                                </div>
+                            </div>
+                            
+                            <div className="flex flex-col items-center justify-center w-3/4">
+                               
+                                <div className="flex  items-center justify-center">
+                                <div className="flex mt-4 mr-2 w-full">
+                                    <span className="h-10 w-32 flex-shrink-0 z-10 inline-flex items-center py-2 px-3 text-sm font-medium text-center text-gray-900 bg-gray-100 border border-e-0 border-gray-300 rounded-s-lg focus:ring-4 focus:outline-none focus:ring-gray-300" type="button">Start Date:</span>
+                                    <div className="relative w-full">
+                                        <input
+                                            className="h-10 block p-2 w-full z-20 text-sm text-gray-900 bg-gray-50 rounded-e-lg rounded-s-2 border border-gray-300"
+                                            placeholder="dd.mm.yyyy"
+                                            value={startDate}
+                                            onChange={handleStartDateChange}
+                                            required />
+                                    </div>
+                                </div>
 
-                {application.application_status == "Processing" && (<div className= "flex justify-end">
-                    <div className="flex">
-                        <div className="flex mt-4 mb-2 mr-4">
-                            <span className="h-10 flex-shrink-0 z-10 inline-flex items-center py-2 px-3 text-sm font-medium text-center text-gray-900 bg-gray-100 border border-e-0 border-gray-300 rounded-s-lg focus:ring-4 focus:outline-none focus:ring-gray-300" type="button">Start Date:</span>
-                            <div className="relative w-28">
-                                <input
-                                    className="h-10 block p-2 w-full z-20 text-sm text-gray-900 bg-gray-50 rounded-e-lg rounded-s-gray-100 rounded-s-2 border border-gray-300"
-                                    placeholder="dd.mm.yyyy"
-                                    value={startDate}
-                                    onChange={handleStartDateChange}
-                                    required />
+                                <div className="flex mt-4 ml-2 w-full">
+                                    <span className="h-10 w-32 flex-shrink-0 z-10 inline-flex items-center py-2 px-3 text-sm rounded-s-lg font-medium text-center text-gray-900 bg-gray-100 border border-e-0 border-gray-300 focus:ring-4 focus:outline-none focus:ring-gray-300" type="button">Salary:</span>
+                                    <div className="relative w-full">
+                                        <input
+                                            className="h-10 block p-2 w-full z-20 text-sm text-gray-900 bg-gray-50 rounded-e-lg rounded-s-2 border border-gray-300"
+                                            placeholder="Enter Salary"
+                                            value={salary}
+                                            onChange={handleSalaryChange}
+                                            required />
+                                    </div>
+                                </div>
+                                </div>
+                                <div className="flex justify-center mt-4 w-full">
+                                    <button
+                                        className="h-10 mr-2 bg-button-green"
+                                        style={{ width: '120px', padding: '10px 20px', color: 'white', border: 'none', borderRadius: '5px', cursor: 'pointer', textAlign: 'center', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+                                        onClick={handleAccept}>
+                                        Accept
+                                    </button>
+                                    <button
+                                        className="h-10 ml-2 bg-button-red"
+                                        style={{ width: '120px', padding: '10px 20px', color: 'white', border: 'none', borderRadius: '5px', cursor: 'pointer', textAlign: 'center', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+                                        onClick={handleReject}>
+                                        Reject
+                                    </button>
+                                </div>
                             </div>
                         </div>
-                        <div className="flex mt-4 mb-2 mr-4">
-                            <span className="h-10 flex-shrink-0 z-10 inline-flex items-center py-2 px-3 text-sm font-medium text-center text-gray-900 bg-gray-100 border border-e-0 border-gray-300  focus:ring-4 focus:outline-none focus:ring-gray-300" type="button">Salary:</span>
-                            <div className="relative w-28">
-                                <input
-                                    className="h-10 block p-2 w-full z-20 text-sm text-gray-900 bg-gray-50 rounded-e-lg rounded-s-gray-100 rounded-s-2 border border-gray-300"
-                                    placeholder="Enter Salary"
-                                    value={salary}
-                                    onChange={handleSalaryChange}
-                                    required />
-                            </div>
-                        </div>
-
-                        <button
-                            className="h-10 mt-4 mr-4 bg-button-green"
-                            style={{width: '120px',padding: '10px 20px', color: 'white', border: 'none', borderRadius: '5px', cursor: 'pointer', textAlign: 'center', display: 'flex', alignItems: 'center', justifyContent: 'center'}}
-                            onClick={handleAccept}>
-                            Accept
-                        </button>
-                        <button
-                            className="h-10 mt-4 mr-4 bg-button-red"
-                            style={{width: '120px',padding: '10px 20px', color: 'white', border: 'none', borderRadius: '5px', cursor: 'pointer', textAlign: 'center', display: 'flex', alignItems: 'center', justifyContent: 'center'}}
-                            onClick={handleReject}>
-                            Reject
-                        </button>
-                    </div>
-                </div>)}
-            </div>)
+                    )}
+                </div>)
             }
             {showAlert && (
                 <div className={`fixed bottom-4 right-4 max-w-96 flex ${alertText.length > 40 ? 'flex-col items-end justify-center' : 'flex-row items-center'}`}>

@@ -38,6 +38,7 @@ const SingleApplication = ({application}) => {
                             </p>                        
                     </div>
                     <div className="flex items-center justify-end mr-2">
+    
                         <NavLink
                             to={`/application-details/${application.astronaut_id}/${application.mission_id}/${application.applied_date}`}
                             className={`text-button-purple text-sm font-medium rounded-xl hover:text-indigo-700 flex justify-center`}

@@ -32,7 +32,7 @@ const MissionApplicantCompany = () => {
 
     return (
     <div className="bg-home-bg h-full min-h-screen flex flex-col">
-        <Header title={"Application"}/>
+        <Header title={"Application to " + applicationData.mission_name}/>
         <div className="flex flex-grow justify-center items-center">
             <MissionApplicant application={applicationData}/>
         </div>
