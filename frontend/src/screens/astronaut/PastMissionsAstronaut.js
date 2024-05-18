@@ -12,6 +12,7 @@ import { DateRange } from 'react-date-range';
 import 'react-date-range/dist/styles.css';
 import 'react-date-range/dist/theme/default.css';
 import Header from '../../components/Header';
+import { set } from 'date-fns';
 
 const PastMissionsAstronaut = () => {
   const [missionsPartner, setMissionsPartner] = useState([]);
@@ -31,7 +32,6 @@ const PastMissionsAstronaut = () => {
   const [endDate, setEndDate] = useState(null);
   const [companyName, setcompanyName] = useState(null);
   const [location, setLocation] = useState(null);
-
 
   const [selectedDateRange, setSelectedDateRange] = useState([
     {
@@ -110,6 +110,20 @@ const PastMissionsAstronaut = () => {
     setLeadingCompanyOptions(options);
   }, [leadingCompanies]);*/
 
+  const handleDateReset = () => {
+     const resetDate = [
+      {
+        startDate: null,
+        endDate: null,
+        key: 'selection'
+      }
+    ];
+
+    setStartDate(null);
+    setEndDate(null);
+    setSelectedDateRange(resetDate);
+  }
+
   useEffect(() => {
     fetchPastMissions();
   }, []);
@@ -146,6 +160,14 @@ const PastMissionsAstronaut = () => {
                 style={{ width: '100%' }}
                 className="w-full"
               />
+              <div className="flex justify-end">
+                <button 
+                  type="button" 
+                  className="bg-button-red text-white text-sm mt-2 px-2 py-2 rounded-xl ml-4"
+                  onClick={() => handleDateReset()}>
+                  Reset
+                </button>
+              </div>          
             </div>
             
             <div className="flex">

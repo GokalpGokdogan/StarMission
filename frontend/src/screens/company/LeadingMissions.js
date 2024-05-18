@@ -56,6 +56,20 @@ const LeadingMissions = () => {
     return `${year}-${formattedMonth}-${formattedDay}`;
   };
 
+  const handleDateReset = () => {
+    const resetDate = [
+     {
+       startDate: null,
+       endDate: null,
+       key: 'selection'
+     }
+   ];
+
+   setStartDate(null);
+   setEndDate(null);
+   setSelectedDateRange(resetDate);
+ }
+
   useEffect(() => {
     console.log(selectedDateRange);
     console.log(formatDate(selectedDateRange[0].startDate));
@@ -148,6 +162,14 @@ const LeadingMissions = () => {
                 style={{ width: '100%' }}
                 className="w-full"
               />
+              <div className="flex justify-end">
+                <button 
+                  type="button" 
+                  className="bg-button-red text-white text-sm mt-2 px-2 py-2 rounded-xl ml-4"
+                  onClick={() => handleDateReset()}>
+                  Reset
+                </button>
+              </div>
             </div>
             <div className="mb-4">
               <label className="block mb-1 text-main-text text-md font-medium">Leading Company</label>
