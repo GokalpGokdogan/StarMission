@@ -29,7 +29,7 @@ router.post('/applyToMission', async(req, res) => {
         const data = req.body;
 
         if(astronaut_id && user_type == "astronaut"){
-            const response = await leaveMission(astronaut_id, data);
+            const response = await applyToMission(astronaut_id, data);
             res.status(200).json(response);
         }
         else{
