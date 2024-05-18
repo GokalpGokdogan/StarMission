@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import AddDynamicInputFields from "../../components/AddDynamicInputFields";
-import { createMission } from "../../Requests";
+import { createMission, getCompanyData } from "../../Requests";
 import Header from '../../components/Header';
 import Alert from '@mui/material/Alert';
 import IconButton from "@mui/material/IconButton";
@@ -19,6 +19,7 @@ const CreateMission = () => {
     const {userId} = useUser();
     const [showAlert, setShowAlert] = useState(false);
     const [alertText, setAlertText] = useState('');
+    const [companyData, setCompanyData] = useState({});
 
     const getJoinedString = () => {
         // Extract values efficiently using map
@@ -26,6 +27,24 @@ const CreateMission = () => {
         console.log("values " + values);
         return values.join('$$$$'); // Consistent delimiter usage
     };
+
+    const fetchCompanyData = async () => {
+        try{
+            const companyData = await getCompanyData(userId);
+            if(companyData == "No companies found with these filters")
+            {
+              console.log("ahah")
+            }
+            else
+            {
+              setCompanyData(companyData);
+              console.log(companyData);
+            }
+            
+        } catch (error){
+            console.error('Error fetching companies:', error);
+        }
+      };
 
     const handleNameChange = (e) => {
         setName(e.target.value);
@@ -148,6 +167,7 @@ const CreateMission = () => {
 
     useEffect(() => {
         console.log(inputs);
+        fetchCompanyData();
         const joinedString = getJoinedString();
         setImportantNotes(joinedString);
     }, [inputs]);
@@ -175,7 +195,8 @@ const CreateMission = () => {
                         <input value={end_date} onChange={handleEndDateChange} type="text" name="start-date" id="start-date" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 " placeholder="dd.mm.yyyy" required="" />
                     </div>
                     <div className="sm:col-span-2">
-                        <label htmlFor="budget" className="block mb-2 text-sm font-medium text-main-text">Budget ($)</label>
+                        <label htmlFor="budget" className="block text-sm font-medium text-main-text">Budget ($)</label>
+                        <h2 className="text-sm font-bold bg-bid-money p-1 w-64 border text-main-text">Current balance: ${companyData.balance}</h2>
                         <input                             
                         className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" 
                         placeholder="Enter Budget" 
