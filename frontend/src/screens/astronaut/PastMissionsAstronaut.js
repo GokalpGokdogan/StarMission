@@ -63,16 +63,16 @@ const PastMissionsAstronaut = () => {
     setEndDate(formatDate(selectedDateRange[0].endDate));
   }, [selectedDateRange]);
 
-  const handleSearchChange = (event) => {
-    setSearchText(event.target.value);
+  const handleSearchChange = (e) => {
+    setSearchText(e.target.value);
   };
 
   const fetchPastMissions = async () => {
-
     try {
-      const res = await getPastMissions(searchText, startDate, endDate, location, companyName, minBudget, maxBudget);
-      setMissions(res);
+      const res = await getPastMissions(searchText, startDate, endDate, location, companyName, minBudget, maxBudget); 
       console.log(res);
+      
+      setMissions(res);
     } catch (error) {
       console.error('Error fetching past missions:', error);
     } finally {
@@ -201,7 +201,7 @@ const PastMissionsAstronaut = () => {
           <div className="w-3/4 p-4">
             <div className="flex flex-col flex-wrap">
               <div className="mt-6 mb-4">
-                <SearchBar input={searchText} onChange={handleSearchChange} />
+                <SearchBar input={searchText} onChange={(e) => handleSearchChange(e)}/>
               </div>
               {missions && missions.length > 0 ?
                 (missions.map(mission => (
