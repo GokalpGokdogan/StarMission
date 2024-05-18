@@ -128,7 +128,7 @@ const MissionPostingsAstronaut = () => {
 
   return (
     <div className="bg-home-bg h-full">
-      <Header title={"Past Missions"} />
+      <Header title={"Mission Postings"} />
       {initialLoading || loading ? (
         <div className="flex-grow flex items-center justify-center">
           <div className="text-center mt-32">

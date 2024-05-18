@@ -52,6 +52,14 @@ const fetchApplications = async () => {
 const handleApplyToMission = async () => {
   try{
     await applyToMission(missionData.mission_id, coverletter);
+    //resetInputFields();
+    setShowModal(false);
+    setAlertText('Application successful! Redirecting to mission postings...');
+    setShowAlert(true);
+    setTimeout(() => {
+        window.location.href = '/mission-postings';
+    }, 2000);
+    //redirect here
   } catch (error) {
     if (error.response && error.response.status) {
       const status = error.response.status;
