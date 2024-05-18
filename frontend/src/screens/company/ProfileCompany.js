@@ -1,10 +1,11 @@
 import React, { Fragment, useState, useEffect } from 'react';
-import { Link, Route, useParams } from 'react-router-dom';
+import { Link, NavLink, Route, useParams } from 'react-router-dom';
 import BidModal from '../../components/BidModal';
 import { getMissionData } from '../../Requests';
 import Header from '../../components/Header';
 import { getCompanyData } from '../../Requests';
 import { useUser } from '../../UserProvider';
+import EditIcon from '@mui/icons-material/Edit';
 
 const ProfileCompany = () => {
 
@@ -33,12 +34,6 @@ useEffect(() => {
   fetchCompanyInfo();
 }, []);
 
-const data = {
-    name: 'Profiline baktiginiz companyy',
-    foundation_date: "06.05.2024",
-    description: 'ted States, Washington DCUnington DCUninited States, Washington DCUninited States, Washington DCUnies, Washington DCUnited States, Washington DCUnited States, Washington DCUnited States, Washington DCUnited States, Washington DCUnited States, Washington DCUnited States, Washington DCUnited States, Washington DCUnited States, Washington DCUnited States, Washington DCUnited States, Washington DCUnited States, Washington DCUnited States, Washington DCUnited States, Washington DCUnited States, Washington DCUnited States, Washington DC',
-    balance: '20.000',
- }
 
 return (
     <div className="bg-home-bg min-h-screen">
@@ -47,6 +42,7 @@ return (
       <div className="flex justify-center">
         <div className="flex flex-col justify-center" style={{ width: '1600px', minHeight: '250px' }}>
           <div className='flex-auto flex-col flex p-4 mb-10 ml-60 mr-60 mt-10 border rounded-xl border-transparent border-10 bg-white shadow-lg'>
+            <NavLink className='w-full flex justify-end'><EditIcon className='flex justify-end' style={{color: "#4f07a5"}}/></NavLink>
             <div className="flex items-center ml-8 mt-8">
               <img width="120" height="120" src="https://seekvectorlogo.com/wp-content/uploads/2018/02/nasa-vector-logo.png" alt="NASA Logo" />
               <div>

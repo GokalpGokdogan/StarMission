@@ -11,9 +11,10 @@ const MissionItem = ({title, company, location, type, id}) => {
                 </div>
                 <div className="min-w-0 flex-auto">
                     <p className="text-sm font-semibold leading-6 text-main-text">{title}</p>
-                    <p className="truncate text-xs font-semibold leading-5 text-sub-text">{company}</p>
+                    {/* <p className="truncate text-xs font-semibold leading-5 text-sub-text">{company}</p> */}
+                   {/*  <NavLink to={`/company-info/${company.id}`}>{company}</NavLink> */}
                     <p className="truncate text-xs leading-5 text-sub-text">{location}</p>
-                </div>
+                </div> 
                 <div className="flex items-center justify-center mb-2 mt-2 mr-2">
                      <NavLink
                          to={type === "leading" ? `/leading-mission-details/${id}` : `/mission-details/${id}/${type}`}

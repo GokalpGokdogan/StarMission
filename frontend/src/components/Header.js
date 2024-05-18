@@ -13,7 +13,7 @@ const Header = ({title}) => {
         <div className='h-16 bg-main-bg flex box-shadow shadow-sm flex-row items-center justify-between'>
           <p className='font-poppins font-bold text-white text-2xl p-4 ml-2 justify-start'>{title}</p>
           
-          <div className='flex flex-row gap-2 items-center'>    
+          <div className='flex flex-row gap-4 items-center'>    
             {userType === "company" && 
             ( <NavLink
                   to={"/create-mission"}
@@ -24,12 +24,12 @@ const Header = ({title}) => {
             }  
             <button
               onClick={()=> logout(navigate, setUserType, setUserId)}
-              className={`w-28 text-white text-sm py-2 rounded-xl hover:font-semibold flex justify-center h-10 mr-3`}
+              className={` text-white text-sm py-2 rounded-xl hover:font-semibold flex justify-center h-10 mr-3`}
             >
               Logout
             </button>
-            <NavLink to={userType === "company" ? "/profile-company" : "/"} className="w-24 h-24 rounded-full overflow-hidden flex justify-center items-center">
-               <img width="60" height="60" src="https://seekvectorlogo.com/wp-content/uploads/2018/02/nasa-vector-logo.png" alt="Company Logo" />
+            <NavLink to={userType === "company" ? "/profile-company" : "/"} className="w-8 h-8 rounded-full overflow-hidden flex justify-center items-center mr-6">
+               <img className='h-full' src="https://seekvectorlogo.com/wp-content/uploads/2018/02/nasa-vector-logo.png" alt="Company Logo" />
             </NavLink>
           </div>  
         </div>
