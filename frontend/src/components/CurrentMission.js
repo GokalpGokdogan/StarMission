@@ -1,7 +1,13 @@
-import React from 'react'
+import {React, useState} from 'react'
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
+import { leaveCurrentMission } from '../Requests';
+import Alert from '@mui/material/Alert';
+import IconButton from "@mui/material/IconButton";
+import CloseIcon from "@mui/icons-material/Close";
 
 const CurrentMission = ({ missionData }) => {
+  const [showAlert, setShowAlert] = useState(false);
+  const [alertText, setAlertText] = useState('');
 
   const formattedStart = new Date(missionData.start_date).toLocaleDateString('en-GB', {
     day: '2-digit',
@@ -17,9 +23,20 @@ const CurrentMission = ({ missionData }) => {
 
   const handleLeaveCurrentMission = () => {
     try{
+      leaveCurrentMission(missionData.mission_id);
 
+      setAlertText('Leave current mission succesful!');
+      setShowAlert(true);
     } catch (error){
-
+      if (error.response && error.response.status && error.response.status === 401) {
+        setAlertText('Astranaut not authorized!');
+        setShowAlert(true);
+      }
+      else{
+        setAlertText('Unknown error!');
+        setShowAlert(true);
+      }
+      console.error("Error leaving the mission", error);
     }
   }
 
@@ -32,7 +49,7 @@ const CurrentMission = ({ missionData }) => {
        {missionData ? ( <div className="flex flex-col rounded-xl bg-white p-4">
           <div className="flex justify-between mr-8 mb-4">
             <h2 className="text-2xl font-bold text-main-text ml-4">{missionData.name}</h2>
-            <button type="button" className="w-32 bg-button-red text-white text-sm px-2 py-3 rounded-xl ml-4" onClick={handleLeaveCurrentMission()}>
+            <button type="button" className="w-32 bg-button-red text-white text-sm px-2 py-3 rounded-xl ml-4" >
               Leave
             </button>
           </div>
@@ -66,6 +83,18 @@ const CurrentMission = ({ missionData }) => {
             </div>
         )}
       </div>
+      {showAlert && (
+                <div className={`fixed bottom-4 right-4 max-w-96 flex ${alertText.length > 40 ? 'flex-col items-end justify-center' : 'flex-row items-center'}`}>
+                    <Alert severity={alertText.includes('successful') ? 'success' : 'error'} className="w-full">
+                        <div className="flex items-center justify-between w-full">
+                            <div>{alertText}</div>
+                            <IconButton onClick={() => setShowAlert(false)}>
+                                <CloseIcon />
+                            </IconButton>
+                        </div>
+                    </Alert>
+                </div>
+            )}
     </div>
 
   )

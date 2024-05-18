@@ -595,7 +595,6 @@ export const bidToMission = async (companyId, missionId, amount, description) =>
     return res.data;
 };
 
-
 export const getLeadingCompanyNames = async (companyId) => {
     let res = await axios({
         method: 'get',
@@ -729,6 +728,21 @@ export const applyToMission = async (mission_id, cover_letter) => {
     }
     return res.data;
 }
+
+export const leaveCurrentMission = async (missionId) => {
+    const body = {
+        'missionId': missionId
+    }
+    let res = await axios({
+        method: 'post',
+        url: `http://${API_HOST}/astronaut/manageApplications/leaveMission`,
+        headers: { 'Content-Type': 'application/json' },
+        data: body
+    });
+
+    console.log(res.data);
+    return res.data;
+};
 
 // start_date, end_date, mission_id, application_status
 export const getApplicationsAstro = async (startDate, endDate, missionId, applicationStatus) => {
