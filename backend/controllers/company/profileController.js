@@ -23,7 +23,7 @@ const getCompanyData = async (data) => {
 const editProfile = async (data) => {
     return new Promise((resolve, reject) => {
 
-        const { companyId, name, email, phone, password, foundation_date, description, balance } = data;
+        const { companyId, name, email, phone, password, foundation_date, description, balance , image_url} = data;
         
         let query = ``;
         if(name){
@@ -52,6 +52,10 @@ const editProfile = async (data) => {
 
         if(balance){
             query += `UPDATE company SET balance = ${balance} WHERE user_id = ${companyId};`;
+        }
+
+        if(image_url){
+            query += `UPDATE user SET image_url = "${image_url}" WHERE user_id = ${companyId};`;
         }
 
         db.query(query, [], (err, result) => {

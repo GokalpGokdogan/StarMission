@@ -25,35 +25,35 @@ const editProfile = async (data) => {
     return new Promise((resolve, reject) => {
 
         const { astronautId, name, email, phone, password, address, birth_date,
-             weight, height, description, sex, profession, nationality} = data;
+             weight, height, description, sex, profession, nationality, image_url} = data;
         
         let query = ``;
         if(name){
-            query += `UPDATE user SET name = '${name}' WHERE user_id = ${astronautId};`;
+            query += `UPDATE user SET name = "${name}" WHERE user_id = ${astronautId};`;
         }
 
         if(email){
-            query += `UPDATE user SET email = '${email}' WHERE user_id = ${astronautId};`;
+            query += `UPDATE user SET email = "${email}" WHERE user_id = ${astronautId};`;
         }
 
         if(phone){
-            query += `UPDATE user SET phone = '${phone}' WHERE user_id = ${astronautId};`;
+            query += `UPDATE user SET phone = "${phone}" WHERE user_id = ${astronautId};`;
         }
 
         if(password){
-            query += `UPDATE user SET password = '${password}' WHERE user_id = ${astronautId};`;
+            query += `UPDATE user SET password = "${password}" WHERE user_id = ${astronautId};`;
         }
 
         if(description){
-            query += `UPDATE astronaut SET description = '${description}' WHERE user_id = ${astronautId};`;
+            query += `UPDATE astronaut SET description = "${description}" WHERE user_id = ${astronautId};`;
         }
 
         if(address){
-            query += `UPDATE astronaut SET address = '${address}' WHERE user_id = ${astronautId};`;
+            query += `UPDATE astronaut SET address = "${address}" WHERE user_id = ${astronautId};`;
         }
 
         if(birth_date){
-            query += `UPDATE astronaut SET birth_date = '${birth_date}' WHERE user_id = ${astronautId};`;
+            query += `UPDATE astronaut SET birth_date = "${birth_date}" WHERE user_id = ${astronautId};`;
         }
 
         if(weight){
@@ -65,15 +65,19 @@ const editProfile = async (data) => {
         }
 
         if(sex){
-            query += `UPDATE astronaut SET sex = '${sex}' WHERE user_id = ${astronautId};`;
+            query += `UPDATE astronaut SET sex = "${sex}" WHERE user_id = ${astronautId};`;
         }
 
         if(profession){
-            query += `UPDATE astronaut SET profession = '${profession}' WHERE user_id = ${astronautId};`;
+            query += `UPDATE astronaut SET profession = "${profession}" WHERE user_id = ${astronautId};`;
         }
 
         if(nationality){
-            query += `UPDATE astronaut SET nationality = '${nationality}' WHERE user_id = ${astronautId};`;
+            query += `UPDATE astronaut SET nationality = "${nationality}" WHERE user_id = ${astronautId};`;
+        }
+
+        if(image_url){
+            query += `UPDATE user SET image_url = "${image_url}" WHERE user_id = ${companyId};`;
         }
 
 
