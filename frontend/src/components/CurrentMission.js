@@ -25,8 +25,13 @@ const CurrentMission = ({ missionData }) => {
     try{
       leaveCurrentMission(missionData.mission_id);
 
-      setAlertText('Leave current mission succesful!');
+      setAlertText('Leave current mission successful!');
       setShowAlert(true);
+
+      setTimeout(() => {
+        window.location.reload();
+    }, 2000);
+
     } catch (error){
       if (error.response && error.response.status && error.response.status === 401) {
         setAlertText('Astranaut not authorized!');
@@ -49,7 +54,7 @@ const CurrentMission = ({ missionData }) => {
        {missionData ? ( <div className="flex flex-col rounded-xl bg-white p-4">
           <div className="flex justify-between mr-8 mb-4">
             <h2 className="text-2xl font-bold text-main-text ml-4">{missionData.name}</h2>
-            <button type="button" className="w-32 bg-button-red text-white text-sm px-2 py-3 rounded-xl ml-4" >
+            <button type="button" className="w-32 bg-button-red text-white text-sm px-2 py-3 rounded-xl ml-4" onClick={() => {handleLeaveCurrentMission();}}>
               Leave
             </button>
           </div>
