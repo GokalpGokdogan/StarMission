@@ -6,10 +6,9 @@ const db = require('../../database');
 
 const getApplicantData = async (data) => {
     return new Promise((resolve, reject) => {
-        const { astronautId, missionId } = data;
-        db.query(`SELECT a.*, u.*, s.name as mission_name, s.budget FROM astronaut a, user u, space_mission s
-                  WHERE u.user_id = a.user_id AND a.user_id = ?
-                  AND s.mission_id = ?;`,
+        const { astronautId } = data;
+        db.query(`SELECT a.*, u.* FROM astronaut a, user u
+                  WHERE u.user_id = a.user_id AND u.user_id = ?;`,
             [astronautId, missionId, missionId],
             (err, result) => {
                 if (err) {
@@ -281,7 +280,7 @@ const acceptApplicationA = async (data) => {
 const getApplicationData = async (data) => {
     return new Promise((resolve, reject) => {
         const { astronaut_id, mission_id, applied_date } = data;
-        db.query(`SELECT * FROM applied_mission a WHERE a.astronaut_id = ? AND a.mission_id = ? AND a.applied_date = ?;`,
+        db.query(`SELECT a.*, s.name as mission_name, s.budget FROM applied_mission a, space_mission s WHERE a.astronaut_id = ? AND a.mission_id = ? AND a.applied_date = ? AND a.mission_id = s.mission_id;`,
             [astronaut_id, mission_id, applied_date],
             (err, result) => {
                 if (err) {
