@@ -107,8 +107,10 @@ const formatDate = (date) => {
   const [showDescriptionPlaceholder, setShowDescriptionPlaceholder] = useState(true);
 
   const handleAmountChange = (e) => {
-    setAmount(e.target.value);
-    setShowAmountPlaceholder(e.target.value === '');
+    const newAmount = e.target.value === '' ? null : Math.max(0, parseFloat(e.target.value));
+
+    setAmount(newAmount);
+    setShowAmountPlaceholder(newAmount === '');
   };
 
   const handleDescriptionChange = (e) => {
@@ -122,6 +124,12 @@ const formatDate = (date) => {
   };
 
   const handleBidToMission = async () => {
+    if(amount > companyData.balance){
+      setAlertText('Bid amount cannot exceed balance!');
+      setShowAlert(true);
+      return;
+    }
+
     try{
       await bidToMission(userId, missionId, amount, description);
       
@@ -138,7 +146,7 @@ const formatDate = (date) => {
     } finally{
       resetInputFields();
       setShowModal(false);
-    }   
+    }
   }
 
   return (
@@ -196,7 +204,7 @@ const formatDate = (date) => {
                 </div>
               </>
               )}
-              {!isBidBefore ? (<div className="flex justify-end mr-8 mt-16 mb-4">
+              {isBidBefore ? (<div className="flex justify-end mr-8 mt-16 mb-4">
               <button type="button" className="w-32 bg-button-purple text-white text-sm px-2 py-3 rounded-xl" onClick={() => setShowModal(true)}>
                   Bid to Mission
                 </button>
@@ -217,9 +225,10 @@ const formatDate = (date) => {
 
                   <h2 className="text-sm font-bold text-main-text mt-8 ml-8">Amount</h2>
                   <input
-                    type="amount"
+                    type="number"
+                    min={0}
                     placeholder="Enter amount in dollars"
-                    value={amount}
+                    value={amount?.toString()}
                     onChange={handleAmountChange}
                     className="bg-transparent border border-gray-300 rounded-lg p-2 ml-8 mb-1 w-64"
                   /> 
