@@ -73,6 +73,9 @@ router.post('/fireEmployee', async(req, res) => {
         if (error === "ER_FIND_NONE") {
             res.status(204).send("No employee found working on the mission with this id");
         }
+        else if (error === "LESS_THAN_6_MONTHS") {
+            res.status(401).send("Can't fire the employee, employee started working in less than 6 months");
+        }
         else {
             res.status(400).send("An error occurred in fire employee: " + error);
         }
