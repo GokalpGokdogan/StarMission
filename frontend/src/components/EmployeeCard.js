@@ -54,7 +54,7 @@ const EmployeeCard = ({ employee }) => {
 
             console.log(mis);    
         } catch (error){
-            if (error.response && error.response.status && error.response.status === 401) {
+            if (error.response && error.response.status && error.response.status === 409) {
                 setAlertText('Astronaut is working for less than 6 months. Can not fire!');
                 setShowAlert(true);
             }
@@ -137,7 +137,7 @@ const EmployeeCard = ({ employee }) => {
         )}
         {showAlert && (
           <div className={`fixed bottom-4 right-4 max-w-96 flex ${alertText.length > 40 ? 'flex-col items-end justify-center' : 'flex-row items-center'}`}>
-              <Alert severity={'success'} className="w-full">
+              <Alert severity={alertText.includes('successful') ? 'success' : 'error'} className="w-full">
                   <div className="flex items-center justify-between w-full">
                       <div>{alertText}</div>
                       <IconButton onClick={() => setShowAlert(false)}>
