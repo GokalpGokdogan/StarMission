@@ -225,10 +225,7 @@ useEffect(() => {
               </button>
             </div>
           </BidModal>
-        </div>
-            
-            )}
-            
+        </div>)}           
           </div>
         </div>
       </div>)}

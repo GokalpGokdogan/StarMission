@@ -54,6 +54,15 @@ const EmployeeCard = ({ employee }) => {
 
             console.log(mis);    
         } catch (error){
+            if (error.response && error.response.status && error.response.status === 401) {
+                setAlertText('Astronaut is working for less than 6 months. Can not fire!');
+                setShowAlert(true);
+            }
+            else{
+                setAlertText('Unknown error!');
+                setShowAlert(true);
+            }
+
             console.error('Error firing the employee:', error);
         }
     }

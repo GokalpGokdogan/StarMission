@@ -52,7 +52,7 @@ const CurrentMission = ({ missionData }) => {
 
     } catch (error){
       if (error.response && error.response.status && error.response.status === 401) {
-        setAlertText('Astranaut not authorized!');
+        setAlertText('Astronaut not authorized!');
         setShowAlert(true);
       }
       else{
