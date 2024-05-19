@@ -176,14 +176,24 @@ const ApplicationsCompany = () => {
   }, []);
 
   useEffect(() => {
-    const options = [
-      { value: null, label: "Not specified" },
-      ...missionNames?.map(item => ({
-        value: item.name,
-        label: item.name
-      }))
-    ];
-    setMissionNameOptions(options);
+    if(missionNames)
+      {
+        const options = [
+        { value: null, label: "Not specified" },
+        ...missionNames.map(item => ({
+          value: item.name,
+          label: item.name
+          }))
+        ];
+        setMissionNameOptions(options);
+      }
+      else 
+      {
+        const options = [
+        { value: null, label: "Not specified" }
+        ];
+        setMissionNameOptions(options);
+      }
   }, [missionNames]);
 
 
