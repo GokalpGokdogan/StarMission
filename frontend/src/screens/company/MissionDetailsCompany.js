@@ -24,6 +24,8 @@ const MissionDetailsCompany = () => {
   const [alertText, setAlertText] = useState('');
   const [isBidBefore, setIsBidBefore] = useState(false);
   const [url, setUrl] = useState(''); 
+  const [isAlreadyPartnered, setIsAlreadyPartnered] = useState(false);
+  const [isPast, setIsPast] = useState(false);
 
   const fetchImage = async () => {
       try{
@@ -53,6 +55,23 @@ const MissionDetailsCompany = () => {
       console.error('Error fetching bids:', error);
     }
   }
+
+  const checkAlreadyPartnered = async () => {
+    if(type === "partnered"){
+        setIsAlreadyPartnered(true);
+    }
+  }
+
+  const checkPast = async () => {
+    if(type === "past"){
+        setIsPast(true);
+    }
+  }
+
+  useEffect(() => {
+      checkAlreadyPartnered();
+      checkPast();
+  }, []);
 
   const fetchMissionData = async () => {
     try{
@@ -217,7 +236,20 @@ const formatDate = (date) => {
                 </div>
               </>
               )}
-              {!isBidBefore ? (<div className="flex justify-end mr-8 mt-16 mb-4">
+              {isPast ? (
+                <div className="flex mt-16 justify-center">
+                    <p>This mission has passed.</p>
+                </div>
+                ):isAlreadyPartnered ? (
+                  <div className="flex mt-16 justify-center">
+                    <p>You are currently a partner of this mission.</p>
+                  </div>
+                ) : isBidBefore ? (
+                  <div className="flex mt-16 justify-center">
+                    <p>You already have a bid in progress for this mission!</p>
+                  </div>
+              ) : (
+              <div className="flex justify-end mr-8 mt-16 mb-4">
               <button type="button" className="w-32 bg-button-purple text-white text-sm px-2 py-3 rounded-xl" onClick={() => setShowModal(true)}>
                   Bid to Mission
                 </button>
@@ -274,10 +306,7 @@ const formatDate = (date) => {
                     </button>
                   </div>
                 </BidModal> 
-              </div>) : (
-                  <div className="flex mt-16 justify-center">
-                    <p>You already have a bid in progress for this mission!</p>
-                  </div>
+              </div>
                 )}
             </div>
           </div>
