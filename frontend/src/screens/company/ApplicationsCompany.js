@@ -355,11 +355,16 @@ const ApplicationsCompany = () => {
               <div className="mt-6 mb-4">
                 <SearchBar input={searchText} onChange={handleSearchChange} />
               </div>
-              {applications && applications.map(application => (
+              {applications && applications.length > 0 ?
+               (applications.map(application => (
                 <SingleApplication
                   application={application}
                 />
-              ))} 
+              ))) : (
+                <div className="flex justify-center w-[60%] h-[80%]">
+                      <p className="text-3xl font-semibold leading-6 text-main-text mt-[30%]" >No data</p>
+                  </div>
+              )} 
             </div>
           </div>
         </div>)}
