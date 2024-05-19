@@ -96,7 +96,7 @@ const getPastMissionPostingsPartner = async (data) => {
             let query = `
                         SELECT s.*, u.name AS company_name FROM space_mission as s,
                         partner_firm p, company c, user u
-                        WHERE p.company_id = ? AND p.company_id = c.user_id AND p.mission_id = s.mission_id
+                        WHERE p.company_id = ? AND c.user_id = s.leading_firm_id AND p.mission_id = s.mission_id
                         AND u.user_id = c.user_id
                         AND s.end_date < CURDATE()
                         AND (CASE WHEN ? IS NOT NULL THEN s.name LIKE ? ELSE 1 END) 
