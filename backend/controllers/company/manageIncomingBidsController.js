@@ -74,12 +74,6 @@ const acceptIncomingBid = async (data) => {
                             }
                             else{
 
-                                let requested_amount = result[0].requested_amount;
-                                let bidding_company_id = result[0].bidding_company_id;
-                                let bidding_company_name = result[0].bidding_company_name;
-                                let mission_name = result[0].mission_name;
-                                let reverse_requested_amount = (-1 * requested_amount);
-
                                 query = `UPDATE mission_bid b, company c1, company c2
                                          SET b.bid_status = 'Accepted',
                                          c1.balance = c1.balance + b.requested_amount,
@@ -94,9 +88,7 @@ const acceptIncomingBid = async (data) => {
                                          WHERE b.bid_id = ?;`
 
                                 db.query(query, [bidId,
-                                                 companyId, bidId,
-                                                 companyId, reverse_requested_amount , `Accepted Bid For Company ${bidding_company_name}`,
-                                                 bidding_company_id, requested_amount, `Accepted Bid For Mission ${mission_name}`], (err,result) => {
+                                                 companyId, bidId], (err,result) => {
                                     if(err){
                                         reject(err);
                                     }
