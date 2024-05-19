@@ -157,7 +157,7 @@ const ManageEmployees = () => {
   useEffect(() => {
     const options = [
       { value: null, label: "Not specified" },
-      ...missionNames.map(item => ({
+      ...missionNames?.map(item => ({
         value: item.name,
         label: item.name
       }))
