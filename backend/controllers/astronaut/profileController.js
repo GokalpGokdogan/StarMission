@@ -77,7 +77,7 @@ const editProfile = async (data) => {
         }
 
         if(image_url){
-            query += `UPDATE user SET image_url = "${image_url}" WHERE user_id = ${companyId};`;
+            query += `UPDATE user SET image_url = "${image_url}" WHERE user_id = ${astronautId};`;
         }
 
 

@@ -118,7 +118,7 @@ const EditProfileCompany = () => {
               </div>
               <div>
                 <p className="text-xl font-semibold leading-5 mt-8 mr-3 text-main-text">Profile url:</p>
-                <input type="text" name="name" value={`${url ? url : ''}`} onChange={(e)=>{setUrl(e.target.value)}} id="name" className="bg-grey-bg w-64 mt-4 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block p-2.5 mr-10" placeholder="Edit foundation date" ></input>
+                <input type="text" name="name" value={`${url ? url : ''}`} onChange={(e)=>{setUrl(e.target.value)}} id="name" className="bg-grey-bg w-64 mt-4 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block p-2.5 mr-10" placeholder="Edit url" ></input>
               </div>
             </div>
             <div className="flex justify-end mr-8 mt-16 mb-4">

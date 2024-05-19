@@ -667,7 +667,7 @@ export const getLeadingCompanyNames = async (companyId) => {
 
 // Astronaut functions
 
-export const editAstronautProfile = async (astronautId, name, email, phone, password, address, birth_date, weight, height, description, sex, profession, nationality) => {
+export const editAstronautProfile = async (astronautId, name, email, phone, password, address, birth_date, weight, height, description, sex, profession, nationality, image_url) => {
     const body = {
         'astronautId': astronautId,
         'name': name,
@@ -681,7 +681,8 @@ export const editAstronautProfile = async (astronautId, name, email, phone, pass
         'description': description,
         'sex': sex,
         'profession': profession,
-        'nationality': nationality
+        'nationality': nationality,
+        'image_url': image_url,
     };
     let res = await axios({
         method: 'post',
@@ -689,6 +690,7 @@ export const editAstronautProfile = async (astronautId, name, email, phone, pass
         headers: { 'Content-Type': 'application/json', },
         data: body,
     })
+    console.log("body " + body);
     console.log(res.data);
     return res.data
 } 
