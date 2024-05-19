@@ -24,7 +24,7 @@ const DashboardAstronaut = () => {
       }
       else {
         setRecentMissions(mission);
-        console.log("Recent Applications");
+        console.log("Recent Missions");
         console.log(mission);
       }
 
