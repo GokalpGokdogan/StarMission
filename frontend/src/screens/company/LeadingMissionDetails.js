@@ -106,10 +106,10 @@ const LeadingMissionDetails = () => {
                   </div>
                 </>
               )}
-              <div className="flex flex-col px-1 py-5 ml-8 mr-8 mt-8 mb-4 w-128 bg-grey-bg rounded-xl">
+              <h2 className="text-sm font-bold bg-bid-money mt-8 p-1 w-64 border text-main-text ml-8">Mission Budget: ${missionData.budget}</h2>
+              <div className="flex flex-col px-1 py-5 ml-8 mr-8 mb-4 w-128 bg-grey-bg rounded-xl">
                 <p className="text-sm font-semibold leading-5 ml-3 mr-3 text-sub-text">{missionData.description}</p>
               </div>
-
               {missionData.important_notes && missionData.important_notes.length > 0 && (
                 <>
                   <h2 className="text-xl font-bold text-main-text mt-4 ml-8">Important Notes</h2>
