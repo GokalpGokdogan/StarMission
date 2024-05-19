@@ -6,6 +6,7 @@ const getMyBids = async (data) => {
         const { companyId, missionId } = data;
         let query = `SELECT DISTINCT b.*, s.name FROM mission_bid b, space_mission s 
                     WHERE s.mission_id = b.mission_id AND b.bidding_company_id = ? 
+                    AND s.start_date > CURDATE()
                     AND (CASE WHEN ? IS NOT NULL THEN s.mission_id = ? ELSE 1 END)
                     ORDER BY b.bid_date DESC;`;
         db.query(query, [companyId, missionId, missionId], (err, result) => {

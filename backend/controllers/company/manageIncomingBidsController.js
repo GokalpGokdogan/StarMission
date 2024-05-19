@@ -4,9 +4,10 @@ const getIncomingBids = async (data) => {
     return new Promise((resolve, reject) => {
         const {missionId} = data;
         const query = ` SELECT DISTINCT b.*, u.name AS company_name
-                        FROM mission_bid b, company c, user u
+                        FROM mission_bid b, company c, user u, space_mission s 
                         WHERE b.mission_id = ? AND b.bidding_company_id = c.user_id AND c.user_id = u.user_id
-                        AND b.bid_status = 'In progress';`
+                        AND b.bid_status = 'In progress'
+                        AND s.mission_id = b.mission_id AND s.start_date > CURDATE();`
         db.query(query,
                 [missionId],
                 (err, result) => {
