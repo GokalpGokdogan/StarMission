@@ -173,7 +173,7 @@ router.post('/bidToMission', async (req, res) => {
     }
     catch (err) {
         if(err === "DATE_CONFLICT"){
-            res.status(409).send(DATE_CONFLICT);
+            res.status(409).send("DATE_CONFLICT");
         }
         else{
             res.status(400).json(err);
