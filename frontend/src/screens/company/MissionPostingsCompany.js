@@ -95,7 +95,7 @@ const MissionPostingsCompany = () => {
 
   const fetchRecentMissions = async () => {
     try{
-      const miss = await getMissionPostings(userId, searchText, null, null, null, null, null, null);
+      const miss = await getMissionPostings(userId, searchText, startDate, endDate, location, leadingCompanyName?.value, minBudget, maxBudget);
       setRecentMissions(miss);
     } catch (error){
         console.error('Error fetching missions:', error);
@@ -121,9 +121,7 @@ const MissionPostingsCompany = () => {
       setLoading(true);
 
       try {
-        //const res = await getPartnerMissions(userId, searchText, startDate, endDate, location, leadingCompanyName, minBudget, maxBudget);
-        console.log(leadingCompanyName?.value);
-        const res = await getMissionPostings(userId, searchText, null, null, location, leadingCompanyName?.value, minBudget, maxBudget);
+        const res = await getMissionPostings(userId, searchText, startDate, endDate, location, leadingCompanyName?.value, minBudget, maxBudget);
 
         setRecentMissions(res);
       } catch (error) {
