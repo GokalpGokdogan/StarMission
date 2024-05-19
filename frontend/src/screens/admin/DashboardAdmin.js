@@ -7,7 +7,6 @@ import Header from '../../components/Header';
 import { useUser } from "../../UserProvider";
 
 const DashboardAdmin = () => {
-
     const {userId} = useUser();
 
     const createView = async () => {

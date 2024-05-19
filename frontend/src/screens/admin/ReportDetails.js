@@ -3,11 +3,12 @@ import { useParams } from 'react-router-dom'
 import { getReportData } from '../../Requests';
 import ContainerTable from '../../components/ContainerTable';
 import Header from '../../components/Header';
+import CircularProgress from '@mui/material/CircularProgress';
 
 export const ReportDetails = () => {
 
     const { reportId } = useParams();
-
+    const [loading, setLoading] = useState(true);
     const [reportData, setReportData] = useState({});
 
     const fetchReportData = async () => {
@@ -25,6 +26,8 @@ export const ReportDetails = () => {
           
       } catch (error){
           console.error('Error fetching apps:', error);
+      } finally{
+        setTimeout(() => setLoading(false), 300);
       }
   };
 
@@ -51,15 +54,20 @@ export const ReportDetails = () => {
     else if(contName.startsWith("MostPastMissionAstronauts"))
     {
         return "Astronauts with the Most Number of Past Missions";
-    }
-    
+    }  
 }
-
 
     return (
         <div className="bg-home-bg min-h-screen">
             <Header title={"Report Details"}/>
-
+            {loading ? (
+            <div className="flex-grow flex items-center justify-center">
+              <div className="text-center mt-32">
+                <CircularProgress sx={{ color: "#635CFF" }} style={{ margin: '20px auto' }} size={50} color="primary" />
+                <p>Loading data...</p>
+              </div>
+            </div>
+            ) : (
             <div className="bg-white mt-5 border rounded-xl border-transparent p-2 border-10 px-4 mx-auto max-w-2xl py-8">
                 <h2 className="mb-2 text-xl font-bold text-main-text">{reportData.report_name}</h2>
                 <div className='flex flex-row gap-2'>
@@ -100,7 +108,7 @@ export const ReportDetails = () => {
                             </div>
                         </div> */}
                     </div>
-            </div>
+            </div>)}
         </div>
     )
 }

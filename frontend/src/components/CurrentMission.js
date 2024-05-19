@@ -107,19 +107,18 @@ const CurrentMission = ({ missionData }) => {
         )}
       </div>
       {showAlert && (
-                <div className={`fixed bottom-4 right-4 max-w-96 flex ${alertText.length > 40 ? 'flex-col items-end justify-center' : 'flex-row items-center'}`}>
-                    <Alert severity={alertText.includes('successful') ? 'success' : 'error'} className="w-full">
-                        <div className="flex items-center justify-between w-full">
-                            <div>{alertText}</div>
-                            <IconButton onClick={() => setShowAlert(false)}>
-                                <CloseIcon />
-                            </IconButton>
-                        </div>
-                    </Alert>
-                </div>
-            )}
+        <div className={`fixed bottom-4 right-4 max-w-96 flex ${alertText.length > 40 ? 'flex-col items-end justify-center' : 'flex-row items-center'}`}>
+          <Alert severity={alertText.includes('successful') ? 'success' : 'error'} className="w-full">
+            <div className="flex items-center justify-between w-full">
+              <div>{alertText}</div>
+              <IconButton onClick={() => setShowAlert(false)}>
+                  <CloseIcon />
+              </IconButton>
+            </div>
+          </Alert>
+        </div>
+      )}
     </div>
-
   )
 }
 
