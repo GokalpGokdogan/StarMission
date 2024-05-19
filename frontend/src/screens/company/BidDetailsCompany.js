@@ -138,8 +138,13 @@ const handleAcceptIncomingBid = async () => {
 
   useEffect(() => {
     fetchBidData();
-    fetchMissionData();
   }, [bidId]);
+
+  useEffect(() => {
+    if (bidData.mission_id) {
+      fetchMissionData();
+    }
+  }, [bidData]);
 
   return (
       <div className="bg-home-bg min-h-screen">
