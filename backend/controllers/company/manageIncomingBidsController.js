@@ -64,7 +64,7 @@ const acceptIncomingBid = async (data) => {
                     else if (result.length != 0) {
                         query = `SELECT DISTINCT *, s.name as mission_name, u.name as bidding_company_name FROM mission_bid b, user u, company c, space_mission s
                                  WHERE u.user_id = ? AND b.bid_id = ? AND u.user_id = c.user_id AND s.mission_id = b.mission_id AND
-                                 b.requested_amount <= c.balance`;
+                                 b.requested_amount <= s.budget`;
                         db.query(query,[companyId, bidId], (err, result) => {
                             if(err){
                                 reject(err);
@@ -74,21 +74,20 @@ const acceptIncomingBid = async (data) => {
                             }
                             else{
 
-                                query = `UPDATE mission_bid b, company c1, company c2
+                                query = `UPDATE mission_bid b, company c1, space_mission s
                                          SET b.bid_status = 'Accepted',
                                          c1.balance = c1.balance + b.requested_amount,
-                                         c2.balance = c2.balance - b.requested_amount
+                                         s.budget = s.budget - b.requested_amount
                                          WHERE b.bid_id = ?
                                          AND c1.user_id = b.bidding_company_id
-                                         AND c2.user_id = ?;
+                                         AND s.mission_id = b.mission_id;
                                          
                                          INSERT INTO partner_firm
                                          SELECT b.mission_id, b.bidding_company_id, CURDATE()
                                          FROM mission_bid b
                                          WHERE b.bid_id = ?;`
 
-                                db.query(query, [bidId,
-                                                 companyId, bidId], (err,result) => {
+                                db.query(query, [bidId, bidId], (err,result) => {
                                     if(err){
                                         reject(err);
                                     }
