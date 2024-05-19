@@ -62,6 +62,7 @@ const getPastMissions = async (astronaut_id, data) => {
         let { searchedName, startDate, endDate, location,
             leadingCompanyName, minBudget, maxBudget } = data;
             if(searchedName != null){searchedName = "%"+searchedName+"%";}
+            if(location != null){location = "%"+location+"%";}
 
         // , o.starting_date, o.leaving_date, o.salary
         const query = `SELECT DISTINCT s.*, u.name AS company_name 
@@ -72,7 +73,7 @@ const getPastMissions = async (astronaut_id, data) => {
                         AND (CASE WHEN ? IS NOT NULL THEN s.name LIKE ? ELSE 1 END) 
                         AND (CASE WHEN ? IS NOT NULL THEN s.start_date >= ? ELSE 1 END) 
                         AND (CASE WHEN ? IS NOT NULL THEN s.end_date <= ? ELSE 1 END)
-                        AND (CASE WHEN ? IS NOT NULL THEN s.location = ? ELSE 1 END)
+                        AND (CASE WHEN ? IS NOT NULL THEN s.location LIKE ? ELSE 1 END)
                         AND (CASE WHEN ? IS NOT NULL THEN u.name LIKE ? ELSE 1 END)
                         AND (CASE WHEN ? IS NOT NULL THEN s.budget >= ? ELSE 1 END)
                         AND (CASE WHEN ? IS NOT NULL THEN s.budget <= ? ELSE 1 END)
@@ -100,6 +101,7 @@ const getRecentMissions = async (astronaut_id, data) => {
         let { searchedName, startDate, endDate, location,
             leadingCompanyName, minBudget, maxBudget } = data;
             if(searchedName != null){searchedName = "%"+searchedName+"%";}
+            if(location != null){location = "%"+location+"%";}
 
         let query = `SELECT DISTINCT *, u.name AS company_name FROM user u, space_mission s WHERE
                     NOT EXISTS (SELECT * FROM mission_of m WHERE s.mission_id = m.mission_id 
@@ -109,7 +111,7 @@ const getRecentMissions = async (astronaut_id, data) => {
                     AND (CASE WHEN ? IS NOT NULL THEN s.name LIKE ? ELSE 1 END) 
                     AND (CASE WHEN ? IS NOT NULL THEN s.start_date >= ? ELSE 1 END) 
                     AND (CASE WHEN ? IS NOT NULL THEN s.end_date <= ? ELSE 1 END)
-                    AND (CASE WHEN ? IS NOT NULL THEN s.location = ? ELSE 1 END)
+                    AND (CASE WHEN ? IS NOT NULL THEN s.location LIKE ? ELSE 1 END)
                     AND (CASE WHEN ? IS NOT NULL THEN u.name LIKE ? ELSE 1 END)
                     AND (CASE WHEN ? IS NOT NULL THEN s.budget >= ? ELSE 1 END)
                     AND (CASE WHEN ? IS NOT NULL THEN s.budget <= ? ELSE 1 END)

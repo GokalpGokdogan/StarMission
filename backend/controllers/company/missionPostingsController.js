@@ -9,7 +9,11 @@ const getMissionPostings = async (data) => {
         
         let { companyId, searchedName, startDate, endDate, location, 
             leadingCompanyName, minBudget, maxBudget } = data;
+
             if(searchedName != null){searchedName = "%"+searchedName+"%";}
+            if(location != null ){location = "%"+location+"%";}
+
+            console.log(data, "data in getMissionPostings");
 
             let query = `SELECT s.*, u.name AS company_name FROM space_mission as s, company as c, user as u
                             WHERE (c.user_id = s.leading_firm_id AND c.user_id <> ? AND c.user_id = u.user_id)
@@ -18,7 +22,7 @@ const getMissionPostings = async (data) => {
                             AND s.end_date >= CURDATE()
                             AND (CASE WHEN ? IS NOT NULL THEN s.start_date >= ? ELSE 1 END) 
                             AND (CASE WHEN ? IS NOT NULL THEN s.end_date <= ? ELSE 1 END)
-                            AND (CASE WHEN ? IS NOT NULL THEN s.location = ? ELSE 1 END)
+                            AND (CASE WHEN ? IS NOT NULL THEN s.location LIKE ? ELSE 1 END)
                             AND (CASE WHEN ? IS NOT NULL THEN u.name LIKE ? ELSE 1 END)
                             AND (CASE WHEN ? IS NOT NULL THEN s.budget >= ? ELSE 1 END)
                             AND (CASE WHEN ? IS NOT NULL THEN s.budget <= ? ELSE 1 END)
@@ -50,6 +54,7 @@ const getPastMissionPostingsLead = async (data) => {
         let { companyId, searchedName, startDate, endDate, location, 
             leadingCompanyName, minBudget, maxBudget } = data;
             if(searchedName != null){searchedName = "%"+searchedName+"%";}
+            if(location != null ){location = "%"+location+"%";}
 
             let query = `SELECT s.*, u.name AS company_name FROM space_mission as s, company as c, user as u
                             WHERE (c.user_id = s.leading_firm_id AND c.user_id = ? AND c.user_id = u.user_id)
@@ -57,7 +62,7 @@ const getPastMissionPostingsLead = async (data) => {
                             AND (CASE WHEN ? IS NOT NULL THEN s.name LIKE ? ELSE 1 END) 
                             AND (CASE WHEN ? IS NOT NULL THEN s.start_date >= ? ELSE 1 END) 
                             AND (CASE WHEN ? IS NOT NULL THEN s.end_date <= ? ELSE 1 END)
-                            AND (CASE WHEN ? IS NOT NULL THEN s.location = ? ELSE 1 END)
+                            AND (CASE WHEN ? IS NOT NULL THEN s.location LIKE ? ELSE 1 END)
                             AND (CASE WHEN ? IS NOT NULL THEN u.name LIKE ? ELSE 1 END)
                             AND (CASE WHEN ? IS NOT NULL THEN s.budget >= ? ELSE 1 END)
                             AND (CASE WHEN ? IS NOT NULL THEN s.budget <= ? ELSE 1 END)
@@ -86,6 +91,7 @@ const getPastMissionPostingsPartner = async (data) => {
         let { companyId, searchedName, startDate, endDate, location, 
             leadingCompanyName, minBudget, maxBudget } = data;
             if(searchedName != null){searchedName = "%"+searchedName+"%";}
+            if(location != null ){location = "%"+location+"%";}
 
             let query = `
                         SELECT s.*, u.name AS company_name FROM space_mission as s,
@@ -96,7 +102,7 @@ const getPastMissionPostingsPartner = async (data) => {
                         AND (CASE WHEN ? IS NOT NULL THEN s.name LIKE ? ELSE 1 END) 
                         AND (CASE WHEN ? IS NOT NULL THEN s.start_date >= ? ELSE 1 END) 
                         AND (CASE WHEN ? IS NOT NULL THEN s.end_date <= ? ELSE 1 END)
-                        AND (CASE WHEN ? IS NOT NULL THEN s.location = ? ELSE 1 END)
+                        AND (CASE WHEN ? IS NOT NULL THEN s.location LIKE ? ELSE 1 END)
                         AND (CASE WHEN ? IS NOT NULL THEN u.name LIKE ? ELSE 1 END)
                         AND (CASE WHEN ? IS NOT NULL THEN s.budget >= ? ELSE 1 END)
                         AND (CASE WHEN ? IS NOT NULL THEN s.budget <= ? ELSE 1 END)
@@ -125,6 +131,7 @@ const getPartnerMissions = async (data) => {
         let { companyId, searchedName, startDate, endDate, location, 
             leadingCompanyName, minBudget, maxBudget } = data;
             if(searchedName != null){searchedName = "%"+searchedName+"%";}
+            if(location != null ){location = "%"+location+"%";}
 
             let query = `SELECT s.*, u_in.name AS company_name FROM space_mission as s, partner_firm p, company c, user u, user u_in
                             WHERE (p.mission_id = s.mission_id AND p.company_id = ? AND c.user_id = u.user_id 
@@ -134,7 +141,7 @@ const getPartnerMissions = async (data) => {
                             AND (CASE WHEN ? IS NOT NULL THEN s.name LIKE ? ELSE 1 END) 
                             AND (CASE WHEN ? IS NOT NULL THEN s.start_date >= ? ELSE 1 END) 
                             AND (CASE WHEN ? IS NOT NULL THEN s.end_date <= ? ELSE 1 END)
-                            AND (CASE WHEN ? IS NOT NULL THEN s.location = ? ELSE 1 END)
+                            AND (CASE WHEN ? IS NOT NULL THEN s.location LIKE ? ELSE 1 END)
                             AND (CASE WHEN ? IS NOT NULL THEN u_in.name LIKE ? ELSE 1 END)
                             AND (CASE WHEN ? IS NOT NULL THEN s.budget >= ? ELSE 1 END)
                             AND (CASE WHEN ? IS NOT NULL THEN s.budget <= ? ELSE 1 END)
