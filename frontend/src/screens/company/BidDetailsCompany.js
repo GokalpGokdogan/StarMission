@@ -129,7 +129,7 @@ const handleAcceptIncomingBid = async () => {
               <Avatar sx={{height: 56, width: 56}} alt="Remy Sharp" src={url} className="mr-4"/> 
                 <div>
                   <p className="text-xl font-semibold leading-5 mt-3 text-main-text">{bidData.company_name}</p>
-                  <p className="truncate text-sm leading-5 mt-1 text-sub-text">Bid on {bidData.bid_date}</p>
+                  <p className=" text-sm leading-5 mt-1 text-sub-text">Bid on {bidData.bid_date}</p>
                 </div>
               </div>
               <p className="text-xl font-semibold leading-5 mt-12 ml-10 mr-3 text-main-text">Requested Amount:</p>

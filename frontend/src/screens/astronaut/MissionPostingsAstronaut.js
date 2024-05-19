@@ -210,8 +210,8 @@ useEffect(() => {
                 (recentMissions.map(post => (
                   <MissionPost
                     key={post.key}
-                    title={post.mission_name}
-                    company={post.name}
+                    title={post.name}
+                    company={post.company_name}
                     location={post.location}
                     id={post.mission_id}
                     type="astronaut"

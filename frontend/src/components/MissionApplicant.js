@@ -239,7 +239,7 @@ const MissionApplicant = ({application}) => {
                     </div>
                 </div>
                 <div className="flex-auto flex-col flex min-w-0 mt-6 p-2 border rounded-xl border-transparent border-10 bg-grey-bg">
-                    <p className="truncate text-sm font-medium leading-6 text-main-text">{application.cover_letter}</p>
+                    <p className="text-sm font-medium leading-6 text-main-text">{application.cover_letter}</p>
                 </div>
                 {application.application_status == "Processing" && (
                         <div className="flex flex-col items-center justify-center mt-4  w-full">

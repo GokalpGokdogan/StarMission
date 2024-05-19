@@ -95,7 +95,7 @@ const ApplicationDetailsCompany = () => {
                     <div>
                       <p className="text-xl font-semibold leading-5 mt-3 text-main-text">{missionData.company_name}</p>
                       <p className="truncate text-base leading-5 text-sub-text">{missionData.location}</p>
-                      <p className="truncate text-sm leading-5 text-sub-text">Mission Start-End: {formatDate(missionData.start_date)} - {formatDate(missionData.end_date)}</p>
+                      <p className="text-sm leading-5 text-sub-text">Mission Start-End: {formatDate(missionData.start_date)} - {formatDate(missionData.end_date)}</p>
                     </div>
                   </div>
 

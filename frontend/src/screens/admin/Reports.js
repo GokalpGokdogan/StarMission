@@ -52,7 +52,7 @@ const {userId} = useUser();
                                 to={`/report-details/${value.report_id}`}
                                 className="text-sm font-semibold leading-6 text-main-text"
                             >{value.name}</NavLink>
-                              <p className="truncate text-xs leading-5 text-sub-text">{new Date(value.creation_date).toLocaleDateString('en-GB', {day: '2-digit',month: '2-digit',year: 'numeric'}).replace(/\//g, '.')}</p>
+                              <p className="text-xs leading-5 text-sub-text">{new Date(value.creation_date).toLocaleDateString('en-GB', {day: '2-digit',month: '2-digit',year: 'numeric'}).replace(/\//g, '.')}</p>
                           </div>
                           <div className="cursor-pointer duration-300 hover:scale-105 ease-in-out" onClick={()=>deleteReport(value.report_id)}><DeleteOutlineIcon style={{ color: '#FF3B30'}}></DeleteOutlineIcon></div>
                       </div>
