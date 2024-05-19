@@ -128,6 +128,18 @@ const MissionApplicant = ({application}) => {
         return salary <= application.budget;
     };
 
+    const isStartDateValid = () => {
+        const currentDate = new Date();
+    
+        let start = startDate.split(".");        
+        let startFormat = new Date(start[2], start[1] - 1, start[0]);
+
+        console.log("cur: " + currentDate);
+        console.log("start: " + startFormat);
+
+        return currentDate <= startFormat;
+    }
+
     const formatDate = (date) => {
         var day = new Date(date).getDate();
         var month = new Date(date).getMonth() + 1;
@@ -159,7 +171,7 @@ const MissionApplicant = ({application}) => {
             setShowAlert(true);
             return;
         }
-        if(!date){
+        if(!date || !isStartDateValid()){
             setAlertText('Invalid start date');
             setShowAlert(true);
             return;
