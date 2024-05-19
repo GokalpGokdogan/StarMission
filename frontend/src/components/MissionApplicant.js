@@ -36,7 +36,8 @@ const MissionApplicant = ({application}) => {
 
 
     const handleSalaryChange = (e) => {
-        setSalary(e.target.value);
+        const newSalary = e.target.value === '' ? null : Math.max(0, parseFloat(e.target.value));
+        setSalary(newSalary);
     };
 
 
@@ -128,6 +129,12 @@ const MissionApplicant = ({application}) => {
         return salary <= application.budget;
     };
 
+    const isDateValid = (date) => {
+        const regex = /^\d{2}\.\d{2}\.\d{4}$/;
+
+        return regex.test(date);
+    }
+
     const isStartDateValid = () => {
         const currentDate = new Date();
     
@@ -157,27 +164,36 @@ const MissionApplicant = ({application}) => {
     }
 
     const handleAccept = async () => {
-        const date = formatStartDate();
         if (!application){
             return;
         }
         if(!isSalaryValid()){
-            setAlertText('Invalid salary');
+            setAlertText('Invalid salary!');
             setShowAlert(true);
             return;
         }
         if(!isBalanceEnough()){
-            setAlertText('Balance does not afford the salary you entered');
+            setAlertText('Balance does not afford the salary you entered!');
             setShowAlert(true);
             return;
         }
-        if(!date || !isStartDateValid()){
-            setAlertText('Invalid start date');
+        if(!startDate){
+            setAlertText('Please enter a start date!');
+            setShowAlert(true);
+            return;
+        }
+        if(!isDateValid(startDate)){
+            setAlertText('Invalid start date!');
+            setShowAlert(true);
+            return;
+        }
+        if(!isStartDateValid()){
+            setAlertText('Start date can not be before the current date!');
             setShowAlert(true);
             return;
         }
         try{
-            console.log(date);
+            const date = formatStartDate();
             await acceptApplication(application.astronaut_id, application.mission_id, salary, date);
 
             setAlertText('Accept application successful! Redirecting to applications...');
@@ -285,8 +301,10 @@ const MissionApplicant = ({application}) => {
                                         <input
                                             className="h-10 block p-2 w-full z-20 text-sm text-gray-900 bg-gray-50 rounded-e-lg rounded-s-2 border border-gray-300"
                                             placeholder="Enter Salary"
-                                            value={salary}
+                                            value={salary?.toString()}
                                             onChange={handleSalaryChange}
+                                            type="number" 
+                                            min={0}
                                             required />
                                     </div>
                                 </div>
