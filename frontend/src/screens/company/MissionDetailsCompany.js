@@ -140,12 +140,6 @@ const formatDate = (date) => {
   };
 
   const handleBidToMission = async () => {
-    if(amount > companyData.balance){
-      setAlertText('Bid amount cannot exceed balance!');
-      setShowAlert(true);
-      return;
-    }
-
     try{
       await bidToMission(userId, missionId, amount, description);
       
