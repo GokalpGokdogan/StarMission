@@ -91,13 +91,7 @@ const acceptIncomingBid = async (data) => {
                                          INSERT INTO partner_firm
                                          SELECT b.mission_id, b.bidding_company_id, CURDATE()
                                          FROM mission_bid b
-                                         WHERE b.bid_id = ?;
-                                         
-                                         INSERT INTO transaction(company_id, transaction_date, transaction_amount, transaction_description)
-                                         VALUES (?, CURDATE(), ?, ?);
-                                         
-                                         INSERT INTO transaction(company_id, transaction_date, transaction_amount, transaction_description)
-                                         VALUES (?, CURDATE(), ?, ?);`
+                                         WHERE b.bid_id = ?;`
 
                                 db.query(query, [bidId,
                                                  companyId, bidId,
