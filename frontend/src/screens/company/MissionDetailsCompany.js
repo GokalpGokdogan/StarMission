@@ -172,6 +172,13 @@ const formatDate = (date) => {
       }, 2000);
     } catch (error){
       console.error("Error bidding to the mission", error);
+      if (error.response && error.response.status === 409) {
+        setAlertText("The specific mission's date span conflicts with other missions of yours.");
+      } else {
+        setAlertText("An error occurred while bidding to the mission.");
+      }
+      setShowAlert(true);
+
     } finally{
       resetInputFields();
       setShowModal(false);
