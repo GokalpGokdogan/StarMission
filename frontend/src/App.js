@@ -123,7 +123,7 @@ function LayoutWithSidebar() {
                         link: 'create-report'
                     },
                     {
-                        title: 'Reports',
+                        title: 'View Reports',
                         link: 'reports'
                     }
                 ];

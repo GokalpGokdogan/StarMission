@@ -3,9 +3,13 @@ import { UserContext } from '../UserProvider';
 import {Link, Route, Navigate, useNavigate} from 'react-router-dom';
 import { login } from '../Requests';
 import { useUser } from '../UserProvider';
-
+import { Alert } from '@mui/material';
+import IconButton from "@mui/material/IconButton";
+import CloseIcon from "@mui/icons-material/Close";
 
 const Login = () => {
+  const [showAlert, setShowAlert] = useState(false);
+  const [alertText, setAlertText] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showEmailPlaceholder, setShowEmailPlaceholder] = useState(true);
@@ -39,7 +43,20 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await login(email, password, navigate, setUserType, setUserId);
+    try {
+      await login(email, password, navigate, setUserType, setUserId);
+    }catch (error){
+      if (error.response && error.response.status) {
+        const status = error.response.status;
+  
+        if (status === 400) {
+          setAlertText('Invalid email of password.');
+        }else {
+          setAlertText('An unknown error occurred. Please try again.');
+        }
+      
+      setShowAlert(true);
+      }}
   };
   
 
@@ -82,6 +99,18 @@ const Login = () => {
           </button>
         </div> 
     </form>
+    {showAlert && (
+                <div className={`fixed bottom-4 right-4 max-w-96 flex ${alertText.length > 40 ? 'flex-col items-end justify-center' : 'flex-row items-center'}`}>
+                    <Alert severity={alertText.includes('successful') ? 'success' : 'error'} className="w-full">
+                        <div className="flex items-center justify-between w-full">
+                            <div>{alertText}</div>
+                            <IconButton onClick={() => setShowAlert(false)}>
+                                <CloseIcon />
+                            </IconButton>
+                        </div>
+                    </Alert>
+                </div>
+            )}
     </div>
   );
 };
