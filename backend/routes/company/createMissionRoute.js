@@ -16,13 +16,19 @@ const {createMission} = require('../../controllers/company/createMissionControll
 
 router.post('/', async(req, res) => {
     try {
-
         const data = req.body;
-
         const response = await createMission(data);
         res.status(200).send(response);
     } catch (error) {
-        res.status(400).send("An error occured while creating mission: "+ error);
+        if(error == "MISSION NAME IS ALREADY TAKEN"){
+            res.status(409).send("MISSION NAME IS ALREADY TAKEN");
+        }
+        else if(error == "MISSION BUDGET EXCEEDS BALANCE"){
+            res.status(401).send("MISSION BUDGET EXCEEDS BALANCE");
+        }
+        else{
+            res.status(400).send("An error occured while creating mission: "+ error);
+        }
     }
 });
 
