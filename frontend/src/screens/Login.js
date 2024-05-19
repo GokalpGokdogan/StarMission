@@ -50,7 +50,7 @@ const Login = () => {
         const status = error.response.status;
   
         if (status === 400) {
-          setAlertText('Invalid email of password.');
+          setAlertText('Invalid email or password.');
         }else {
           setAlertText('An unknown error occurred. Please try again.');
         }
@@ -85,13 +85,7 @@ const Login = () => {
           onChange={handlePasswordChange}
           className="bg-transparent border border-gray-300 rounded-lg p-2 mb-4 text-white w-full"
         />
-        <div className="flex items-center justify-between mt-2 mb-6">
-          <div className="flex items-center">
-            <input type="checkbox" id="keepLoggedIn" checked={isChecked} onChange={handleCheckboxChange} className="mr-2 custom-checkbox" />
-            <label htmlFor="keepLoggedIn" className="text-white text-sm">Keep me logged in</label>
-          </div>
-          <button type="button" className="text-white text-sm cursor-pointer" onClick={handleForgotPasswordClick}>Forgot password?</button>
-        </div>
+
         <label className="mb-2 text-white text-sm">Don't have an account? <Link to="/sign-up" className="text-blue-500">Sign up</Link></label>
         <div className="flex items-center justify-center mb-4 mt-4">
           <button type="submit" className={`w-32 bg-button-purple text-white transition-colors duration-300 ease-in-out hover:bg-indigo-700 hover:text-gray-100 hover:shadow-lg py-2 rounded-lg font-bold`}>

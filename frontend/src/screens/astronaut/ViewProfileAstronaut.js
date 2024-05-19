@@ -67,7 +67,7 @@ const ProfileAstronaut = () => {
               <div>
                 <h2 className="text-3xl font-bold text-main-text mt-5">{astronautInfo.name}</h2>
                 <p className="break-all text-md leading-5 font-medium text-sub-text">{astronautInfo.email}</p>
-                <p className="text-sm font-semibold leading-5  mt-1 mr-3 text-sub-text">{astronautInfo.phone}</p>
+                <p className="text-sm font-semibold leading-5  mt-1 mr-3 text-sub-text">{astronautInfo.phone ? "+" + astronautInfo.phone : null}</p>
               </div>
             </div>
             <div>
