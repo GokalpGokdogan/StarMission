@@ -162,7 +162,18 @@ const PastMissionsAstronaut = () => {
                 </button>
               </div>          
             </div>
-            
+            <div className="mb-4">
+              <label className="block mb-1 text-main-text font-medium">Location</label>
+              <input
+                value={location}
+                type="text" 
+                id="search-input"
+                onChange={(e) => {
+                  setLocation(e.target.value);
+                }}
+                className="w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+              />
+            </div>
             <div className="flex">
               <div className="mb-4">
                 <label className="block mb-1 text-main-text font-medium">Min Budget</label>

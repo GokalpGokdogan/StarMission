@@ -191,6 +191,19 @@ const PartneredMissions = () => {
                 className="w-full"
               />
             </div>
+            <div className="mb-4">
+              <label className="block mb-1 text-main-text font-medium">Location</label>
+              <input
+                value={location}
+                type="text" 
+                id="search-input"
+                onChange={(e) => {
+                  const newLoc = e.target.value === '' ? null : e.target.value;
+                  setLocation(newLoc);
+                }}
+                className="w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+              />
+            </div>
             <div className="flex">
               <div className="mb-4">
                 <label className="block mb-1 text-main-text font-medium">Min Budget</label>
