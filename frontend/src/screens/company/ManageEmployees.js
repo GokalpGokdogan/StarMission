@@ -60,6 +60,10 @@ const ManageEmployees = () => {
     const [showAlert, setShowAlert] = useState(false);
     const [alertText, setAlertText] = useState('');
 
+    const isNumberValid = (budget) => {
+      return !isNaN(parseFloat(budget)) && isFinite(parseFloat(budget) && parseFloat(budget) > 0);
+    };
+
     const handleSearchChange = (event) => {
         setSearchText(event.target.value);
       };
@@ -103,17 +107,28 @@ const ManageEmployees = () => {
     };
 
     const applyFilter = async () => {
+      if(!isNumberValid(minBudget) || !isNumberValid(maxBudget) || !isNumberValid(minAge) 
+        || !isNumberValid(maxAge) || !isNumberValid(minHeight) || !isNumberValid(maxHeight)
+        || !isNumberValid(minWeight) || !isNumberValid(maxWeight)){
+        
+        setAlertText('Please enter valid numbers!');
+        setShowAlert(true);
+        return;
+      }
       if((minAge != null &&  maxAge != null) && minAge > maxAge){
         setAlertText('Min Age cannot be bigger than Max Age!');
         setShowAlert(true);
+        return;
       }
       else if((minWeight != null &&  maxWeight != null) && minWeight > maxWeight){
         setAlertText('Min Weight cannot be bigger than Max Weight!');      
         setShowAlert(true);
+        return;
       }
       else if((minHeight != null &&  maxHeight != null) && minHeight > maxHeight){
         setAlertText('Min Height cannot be bigger than Max Height!');
         setShowAlert(true);
+        return;
       }
       else{
         setLoading(true);

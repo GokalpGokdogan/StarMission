@@ -63,6 +63,10 @@ const MissionPostingsAstronaut = () => {
     return `${year}-${formattedMonth}-${formattedDay}`;
   };
 
+  const isNumberValid = (budget) => {
+    return !isNaN(parseFloat(budget)) && isFinite(parseFloat(budget) && parseFloat(budget) > 0);
+  };
+
   useEffect(() => {
     setStartDate(formatDate(selectedDateRange[0].startDate));
     setEndDate(formatDate(selectedDateRange[0].endDate));
@@ -73,9 +77,15 @@ const MissionPostingsAstronaut = () => {
   };
 
   const applyFilter = async () => {
-    if ((minBudget != null && maxBudget != null) && minBudget > maxBudget) {
+    if(!isNumberValid(minBudget) || !isNumberValid(minBudget)){
+      setAlertText('Please enter valid numbers!');
+      setShowAlert(true);
+      return;
+    }
+    else if ((minBudget != null && maxBudget != null) && minBudget > maxBudget) {
       setAlertText('Min Budget cannot be bigger than Max Budget!');
       setShowAlert(true);
+      return;
     }
     else {
       fetchRecentMissions();
