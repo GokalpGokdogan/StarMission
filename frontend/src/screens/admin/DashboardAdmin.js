@@ -33,20 +33,21 @@ const DashboardAdmin = () => {
     return (
         <div className="bg-home-bg h-full">
         <Header title={"Admin Panel"}/>
-
-        <div className='p-4'>
-            <NavLink
-                to={'/create-report'}
-                className={`w-28 bg-button-purple text-white text-sm py-2 rounded-xl hover:bg-indigo-700 flex justify-center`}
-            >
-                Create Report
-            </NavLink>
-            <NavLink
-                to={'/reports'}
-                className={`w-28 mt-4 bg-button-purple text-white text-sm py-2 rounded-xl hover:bg-indigo-700 flex justify-center`}
-            >
-                View Reports
-            </NavLink>
+        <div className="flex justify-center items-center mt-64">
+            <div className='flex flex-row gap-4'>
+                <NavLink
+                    to={'/create-report'}
+                    className={`bg-indigo-700 text-white text-sm py-10 px-4 rounded-xl hover:bg-button-purple flex justify-center`}
+                >
+                    Create Report
+                </NavLink>
+                <NavLink
+                    to={'/reports'}
+                    className={`bg-indigo-700 text-white text-sm py-10 px-4 rounded-xl hover:bg-button-purple flex justify-center`}
+                >
+                    View Reports
+                </NavLink>
+            </div>
         </div>
       </div>
     )
