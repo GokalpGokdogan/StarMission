@@ -165,8 +165,8 @@ const PastMissions = () => {
   }, []);
 
   useEffect(() => {
-    fetchPastMissionsPartner();
-  }, []);
+  {/*fetchPastMissionsPartner();*/}isLeadingSelected ? fetchPastMissionsLead() : fetchPastMissionsPartner();
+  }, [isLeadingSelected]);
 
   useEffect(() => {
     isLeadingSelected ? fetchPastMissionsLead() : fetchPastMissionsPartner();

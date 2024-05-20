@@ -101,7 +101,7 @@ const getPastMissionPostingsPartner = async (data) => {
                         AND s.end_date < CURDATE()
                         AND (CASE WHEN ? IS NOT NULL THEN s.name LIKE ? ELSE 1 END) 
                         AND (CASE WHEN ? IS NOT NULL THEN s.start_date >= ? ELSE 1 END) 
-                        AND (CASE WHEN ? IS NOT NULL THEN s.end_date <= ? ELS  E 1 END)
+                        AND (CASE WHEN ? IS NOT NULL THEN s.end_date <= ? ELSE 1 END)
                         AND (CASE WHEN ? IS NOT NULL THEN s.location LIKE ? ELSE 1 END)
                         AND (CASE WHEN ? IS NOT NULL THEN u.name LIKE ? ELSE 1 END)
                         AND (CASE WHEN ? IS NOT NULL THEN s.budget >= ? ELSE 1 END)
