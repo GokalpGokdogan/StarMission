@@ -202,6 +202,10 @@ const MissionApplicant = ({application}) => {
                 window.location.href = '/company-applications';
             }, 2000);
         } catch (error){
+            if(error.response && error.response.data === "An error occurred in accept application: ER_DATE") {
+                setAlertText("Start date cannot be later than the end of the mission!");
+                setShowAlert(true);
+            }
             console.error('Error accepting the application:', error);
         }
     };
