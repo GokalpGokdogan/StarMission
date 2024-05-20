@@ -77,12 +77,7 @@ const MissionPostingsAstronaut = () => {
   };
 
   const applyFilter = async () => {
-    if(!isNumberValid(minBudget) || !isNumberValid(minBudget)){
-      setAlertText('Please enter valid numbers!');
-      setShowAlert(true);
-      return;
-    }
-    else if ((minBudget != null && maxBudget != null) && minBudget > maxBudget) {
+    if ((minBudget != null && maxBudget != null) && minBudget > maxBudget) {
       setAlertText('Min Budget cannot be bigger than Max Budget!');
       setShowAlert(true);
       return;

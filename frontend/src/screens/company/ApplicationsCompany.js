@@ -138,14 +138,7 @@ const ApplicationsCompany = () => {
   };
 
   const applyFilter = async () => {
-    if(!isNumberValid(minBudget) || !isNumberValid(maxBudget) || !isNumberValid(minAge) 
-      || !isNumberValid(maxAge) || !isNumberValid(minHeight) || !isNumberValid(maxHeight)
-      || !isNumberValid(minWeight) || !isNumberValid(maxWeight)){
-        setAlertText('Please enter valid numbers!');
-        setShowAlert(true);
-        return;
-    }
-    else if((minAge != null &&  maxAge != null) && minAge > maxAge){
+    if((minAge != null &&  maxAge != null) && minAge > maxAge){
       setAlertText('Min Age cannot be bigger than Max Age!');
       setShowAlert(true);
       return;

@@ -107,14 +107,6 @@ const ManageEmployees = () => {
     };
 
     const applyFilter = async () => {
-      if(!isNumberValid(minBudget) || !isNumberValid(maxBudget) || !isNumberValid(minAge) 
-        || !isNumberValid(maxAge) || !isNumberValid(minHeight) || !isNumberValid(maxHeight)
-        || !isNumberValid(minWeight) || !isNumberValid(maxWeight)){
-        
-        setAlertText('Please enter valid numbers!');
-        setShowAlert(true);
-        return;
-      }
       if((minAge != null &&  maxAge != null) && minAge > maxAge){
         setAlertText('Min Age cannot be bigger than Max Age!');
         setShowAlert(true);
