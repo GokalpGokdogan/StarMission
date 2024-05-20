@@ -125,7 +125,7 @@ const EditProfileAstronaut = () => {
               onChange={(e)=>setDescription(e.target.value)}
             />
             <p className="text-lg font-semibold leading-5 mt-4 ml-10 mr-3 text-main-text">Address</p>
-            <input type="text" name="name" value={`${address ? address : ''}`} onChange={(e)=>{setProfession(e.target.value)}} id="name" className="bg-grey-bg mt-4 ml-8 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block p-2.5 mr-10" placeholder="Edit address" ></input>
+            <input type="text" name="name" value={`${address ? address : ''}`} onChange={(e)=>{setAddress(e.target.value)}} id="name" className="bg-grey-bg mt-4 ml-8 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block p-2.5 mr-10" placeholder="Edit address" ></input>
             <div className='flex flex-row justify-between'>
               <div>
                 <p className="text-xl font-semibold leading-5 mt-8 ml-10 mr-3 text-main-text">Weight (kg)</p>

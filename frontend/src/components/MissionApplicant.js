@@ -173,7 +173,7 @@ const MissionApplicant = ({application}) => {
             return;
         }
         if(!isBalanceEnough()){
-            setAlertText('Balance does not afford the salary you entered!');
+            setAlertText('Mission budget does not afford the salary you entered!');
             setShowAlert(true);
             return;
         }
@@ -272,10 +272,10 @@ const MissionApplicant = ({application}) => {
                 {application.application_status == "Processing" && (
                         <div className="flex flex-col items-center justify-center mt-4  w-full">
                             <div className="flex flex-col mt-2 w-full border bg-grey-bg rounded border-main-text">
-                                <div className="flex-auto flex-col flex rounded p-1 w-64 justify-end min-w-0  mt-2">
+                                <div className="flex-auto flex-col flex rounded p-1 w-full justify-end min-w-0  mt-2">
                                     <p className="truncate text-sm font-medium text-main-text">Mission Name: {application.mission_name}</p>
                                 </div>
-                                <div className="flex-auto flex-col flex rounded p-1 w-64 justify-end min-w-0">
+                                <div className="flex-auto flex-col flex rounded p-1 w-full justify-end min-w-0">
                                     <p className="truncate text-sm font-medium text-main-text">Mission Budget: ${application.budget}</p>
                                 </div>
                             </div>

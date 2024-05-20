@@ -209,7 +209,7 @@ const ApplicationsCompany = () => {
 
   return (
     <div className="bg-home-bg h-full">
-     <Header title={"Application"}/>
+     <Header title={"Applications"}/>
       {initialLoading || loading? (
         <div className="flex-grow flex items-center justify-center">
           <div className="text-center mt-32">
